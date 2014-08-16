@@ -1,0 +1,38 @@
+body {
+        margin: 0;
+        padding: 0;
+        background-color: #FAFAFA;
+    }
+    * {
+        font: 10pt "Tahoma";
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+    
+    @page {
+        size: A4;
+        margin: 1cm;
+    }
+    @media print
+    {
+      table { page-break-after:auto }
+      tr    { page-break-inside:avoid; page-break-after:auto }
+      td    { page-break-inside:avoid; page-break-after:auto }
+      thead { display:table-header-group }
+      tfoot { display:table-footer-group }
+    }
+h1 { font-size: 17px; margin-bottom: 0; }
+.tabel-laporan { border: 1px solid #000;empty-cells: show; border-radius:5px; margin-top:5px; clear: both; border-collapse: collapse; background: #fff; color: #000}
+.tabel-laporan th{text-align: center; font-weight: bold;}
+.tabel-laporan td, th{ border: 1px solid #000; padding-left:5px; padding-right:5px; line-height: 20px; }
+.tabel-laporan .number{text-align: center;}
+.tabel-laporan th rowspan, td rowspan{vertical-align: middle;}
+.tabel-laporan td table td { border: none; }
+
+.tabel-hasil { border-bottom: 1px solid #000;empty-cells: show; border-radius:5px; margin-top:5px; clear: both; border-collapse: collapse; background: #fff; color: #000}
+.tabel-hasil th{text-align: center;}
+.tabel-hasil th{border: 1px solid #000;line-height: 20px;}
+.tabel-hasil .number{text-align: center;}
+.tabel-hasil th rowspan, td rowspan{vertical-align: middle;}
+.table-hasil td {padding-top: 5px;}
+.tabel-hasil td table td { border: none; }

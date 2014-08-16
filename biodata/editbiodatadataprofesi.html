@@ -1,0 +1,238 @@
+<?
+include("config.inc");
+$link=mysql_connect($server,$user,$pass);
+mysql_select_db($db);
+$j=mysql_num_rows(mysql_query("select user from LOGUSER where sid='$sid' and sub_app='biodata' LIMIT 1"));
+if ($j > 0 )
+{
+	$sid2=md5(date("Y-m-d").date("H:i:s").$REMOTE_ADDR);
+	$o=mysql_fetch_array(mysql_query("select B_03A,B_03,B_03B from bkd.MASTFIP1 where B_02='$NIP' LIMIT 1"));
+	$nama=print_nama($o[B_03A],$o[B_03],$o[B_03B]);
+	
+	?>
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>:: editbiodata-data-profesi ::</title>
+<style>
+.inputnip    { font-family: Arial; font-size: 8pt; font-weight: bold; 
+               border: 1px solid #000000 }
+td {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+   }
+.button {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	border: 1px solid #95884D;
+	font-weight: bold;
+	color: #000000;
+	background-color: #CCCC99;
+	}
+
+.select {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	border: 1px solid #95884D;
+	font-weight: bold;
+	color: #000000;
+	background-color: #CCCC99;
+}
+input {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	border: 1px solid #95884D;
+	font-weight: bold;
+	color: #000000;
+}
+.inputkecil {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	border: 1px solid #95884D;
+	font-weight: bold;
+	color: #000000;
+}
+.tanggal {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	font-style: normal;
+	line-height: normal;
+	font-weight: bold;
+	font-variant: normal;
+	color: #000000;
+	text-decoration: none;
+	white-space: none;
+	float: none;
+	clear: none;
+	border: 1pt solid #95884D;
+	width: 15pt;
+}
+.tahun {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	font-style: normal;
+	line-height: normal;
+	font-weight: bold;
+	font-variant: normal;
+	color: #000000;
+	text-decoration: none;
+	white-space: none;
+	float: none;
+	clear: none;
+	border: 1pt solid #95884D;
+	width: 25pt;
+}
+a {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	font-weight: bold;
+	text-decoration: none;
+	color: #000000;
+}
+a:link {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	font-weight: bold;
+	text-decoration: none;
+}
+a:visited {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	font-weight: bold;
+	text-decoration: none;
+}
+a:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	font-weight: bold;
+	text-decoration: none;
+}
+a:active {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	font-weight: bold;
+	text-decoration: none;
+}
+</style>
+
+</head>
+
+<body topmargin="0" bgcolor="#CCCCCC">
+
+<?
+if ($simpan)
+{
+	
+	for ($i=1;$i<=$jmlloop;$i++)
+	{
+		if (strlen(ereg_replace(" ","",$PR_03[$i])) > 0)
+		{
+			if ($updated[$i]=='1')
+				mysql_query("update pupns.MSTPROF1 set PR_03=UCASE('$PR_03[$i]'), PR_04='$PR_04[$i]' where PR_01='$NIP' and PR_02='$PR_02[$i]'") or die (mysql_error());
+			else if ($updated[$i]=='0')
+				mysql_query("insert into pupns.MSTPROF1 set PR_01='$NIP', PR_03=UCASE('$PR_03[$i]'), PR_04='$PR_04[$i]'") or die (mysql_error());
+		}
+	}
+	echo "<script>window.location='editbiodatadataprofesi.html?sid=$sid&sid2=$sid2&NIP=$NIP'</script>";
+	
+};
+
+if ($do=='delete')
+{
+	mysql_query("delete from pupns.MSTPROF1 where PR_02='$ID' and PR_01='$NIP' LIMIT 1") or die (mysql_error());
+	echo "<script>window.location='editbiodatadataprofesi.html?sid=$sid&sid2=$sid2&NIP=$NIP'</script>";
+}
+
+?>
+			
+
+<table border="1" cellpadding="2" style="border-collapse: collapse" bordercolor="#111111" width="80%" id="AutoNumber1" align="center">
+<form name="addprofesi" method="post" action="?sid=<?=$sid?>&sid2=<?=$sid2?>">
+<input type="hidden" name="NIP" value="<?=$NIP?>">
+  <tr>
+    <td width="133%" align="left" colspan="4" bgcolor="#CCDD88"><b>Data 
+    Pendidikan Profesi yang dimiliki oleh: Sdr. <?=$nama?> ( 
+    <?=$NIP?> )</b></td>
+  </tr>
+  <tr>
+    <td width="6%" align="center" bgcolor="#DDDDDD"><b>No</b></td>
+    <td width="70%" align="center" bgcolor="#DDDDDD"><b>Nama Pendidikan Profesi</b></td>
+    <td width="14%" align="center" bgcolor="#DDDDDD"><b>Tahun</b></td>
+    <td width="10%" bgcolor="#DDDDDD">&nbsp;</td>
+  </tr>
+<?
+$q="select PR_02,PR_03,PR_04 from pupns.MSTPROF1 where PR_01='$NIP' order by PR_04";
+$r=mysql_query($q) or die (mysql_error());
+$no=0;
+while ($row=mysql_fetch_array($r))
+{
+	$no++;
+	?>
+  <tr>
+    <input type="hidden" name="updated[<?=$no?>]" value="1">
+    <input type="hidden" name="PR_02_ORG[<?=$no?>]" value="<?=$row[PR_02]?>">
+    <input type="hidden" name="PR_03_ORG[<?=$no?>]" value="<?=$row[PR_03]?>">
+    <input type="hidden" name="PR_04_ORG[<?=$no?>]" value="<?=$row[PR_04]?>">
+    <td width="6%" align="right"><?=$no?></td>
+    <td width="70%"><input type="text" name="PR_03[<?=$no?>]" size="60" maxlength="100" value="<?=$row[PR_03]?>"></td>
+    <td width="14%" align="center"><input type="text" name="PR_04[<?=$no?>]" size="4" maxlength="4" value="<?=$row[PR_04]?>"></td>
+    <td width="10%" align="center"><b><a href="?sid=<?=$sid?>&sid2=<?=$sid2?>&NIP=<?=$NIP?>&do=delete&ID=<?=$row[PR_02]?>">DEL</a></b></td>
+  </tr>
+  	<?
+}
+
+if ($jmltambah>0 )
+{
+	for ($i=1;$i<=$jmltambah;$i++)
+	{
+		$no++;
+?>  
+  <tr>
+    <input type="hidden" name="updated[<?=$no?>]" value="0">
+    <td width="6%" align="right"><?=$no?></td>
+    <td width="70%"><input type="text" name="PR_03[<?=$no?>]" size="60" maxlength="100"></td>
+    <td width="14%" align="center"><input type="text" name="PR_04[<?=$no?>]" size="4" maxlength="4"></td>
+    <td width="10%" align="center"></td>
+  </tr>
+<?
+	}
+}
+?>
+
+  <tr>
+    <input type="hidden" name="jmlloop" value="<?=$no?>">
+    <td width="100%" align="left" colspan="4"><b>Jumlah Data yang akan 
+    ditambahkan :</b>&nbsp;<select name="jmltambah" class="select"
+      onChange="window.location='?sid=<?=$sid?>&sid2=<?=$sid2?>&NIP=<?=$NIP?>&jmltambah='+this.value+''">
+        <option value="">-</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select>&nbsp;<input type="submit" value="SIMPAN" name="simpan" class="button">
+      <input type="button" value="Batal" name="batal" class="button"
+      onClick="window.location='?sid=<?=$sid?>&sid2=<?=$sid2?>&NIP=<?=$NIP?>&jmltambah='">
+      <input type="button" name="tutup" value="Tutup" onClick="opener.location.reload();window.close();"</td>
+  </tr>
+  <tr>
+    <td width="100%" align="left" colspan="4"><b>Perhatian </b>: Data akan 
+    diurutkan berdasar pada Tahun Perolehan.</td>
+  </tr>
+</form>
+</table>
+
+</body>
+
+</html>
+	<?
+}
+else header("Location:index.html");
+?>

@@ -1,0 +1,51 @@
+body {
+        margin: 0;
+        padding: 0;
+        background-color: #FAFAFA;
+    }
+    * {
+        font: 10pt "Tahoma";
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+    .page {
+        width: 21cm;
+        min-height: 33cm;
+        padding: 2cm;
+        padding-top: 1cm;
+        margin: 1cm auto;
+        border: 1px #D3D3D3 solid;
+        border-radius: 5px;
+        background: white;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+    .subpage {
+        padding: 1cm;
+        border: 5px red solid;
+        height: 237mm;
+        outline: 2cm #FFEAEA solid;
+    }
+    
+    @page {
+        size: F4;
+        margin: 0;
+    }
+    @media print {
+        .page {
+            margin: 0;
+            border: initial;
+            border-radius: initial;
+            width: initial;
+            min-height: initial;
+            box-shadow: initial;
+            background: initial;
+            page-break-after: always;
+        }
+    }
+h1 { font-size: 17px; margin-bottom: 0; }
+.tabel-laporan { border: 1px solid #000;empty-cells: show; border-radius:5px; margin-top:5px; clear: both; border-collapse: collapse; background: #fff; color: #000}
+.tabel-laporan th{text-align: center;}
+.tabel-laporan td, th{border: 1px solid #000;line-height: 20px;}
+.tabel-laporan .number{text-align: center;}
+.tabel-laporan th rowspan, td rowspan{vertical-align: middle;}
+.tabel-laporan td table td { border: none; }

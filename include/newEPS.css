@@ -1,0 +1,34 @@
+td           { font-family: Verdana; font-size: 8pt; }
+.pilihan     { font-family: Verdana; font-size: 8pt; border: 1px solid #333399; 
+               background-color: #C0C0C0 }
+.tombol      { font-family: Tahoma; font-size: 10pt; color: #0000FF; font-weight: bold; 
+               background-color: #C0C0C0 }
+.box_isian   { font-family: Tahoma; font-size: 12px; border: 1px solid #333399; 
+               background-color: #C0C0C0 }
+.box_isian2   { font-family: Tahoma; font-size: 10px; font-weight:bold; 
+border: 1px solid #333399; 
+               background-color: #FFFFFF }
+.pilihan2     { font-family: Verdana; font-size: 8pt; font-weight:bold; border: 1px solid #333399; 
+               background-color: #FFFFFF }
+
+.footer      { font-family: Tahoma; font-size: 10px; line-height: 150% }
+.berita_isi  { font-family: Arial; font-size: 10pt }
+.berita_judul { font-family: Verdana; font-size: 14pt; line-height: 200% }
+.tombol2      { font-family: Tahoma; font-size: 10px; color: #0000FF; font-weight: bold; 
+               background-color: #C0C0C0 }
+
+
+.menu {
+	BORDER-RIGHT: #C0C0C0 1px solid; BORDER-TOP: #C0C0C0 1px solid; FONT-WEIGHT: bold; FONT-SIZE: 11px; BORDER-LEFT: #C0C0C0 1px solid; WIDTH: 152px; CURSOR: se-resize; COLOR: #000000; BORDER-BOTTOM: #666666 1px solid; FONT-FAMILY: verdana; POSITION: absolute
+}
+.item_panel {
+	BORDER-RIGHT: #808080 1px solid; BORDER-BOTTOM-COLOR: black; BORDER-LEFT: #999999 1px solid; WIDTH: 152px; CLIP: rect(0px 152px 0px 0px); BORDER-TOP-COLOR: black; POSITION: absolute
+}
+.item_panel A {
+	CURSOR: hand; COLOR: black; TEXT-DECORATION: none
+}
+.item {
+	FONT-SIZE: 10px; WIDTH: 150px; COLOR: #ffffff; FONT-FAMILY: verdana; BACKGROUND-COLOR: #333399
+}
+.isinya { font-family: Verdana; font-size: 10px; }
+

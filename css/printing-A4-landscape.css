@@ -1,0 +1,22 @@
+    * {
+        font: 10pt "Tahoma";
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+    @page {
+        size: landscape;
+        margin: 1cm; 
+    }
+    @page:first {
+        margin-top: 0.5cm; 
+    }
+    .page {
+        page-break-inside: avoid !important;
+    }
+    
+h1 { font-size: 14px; margin-bottom: 0; }
+.tabel-laporan { border: 1px solid #000;empty-cells: show;clear: both; border-collapse: collapse; background: #fff; color: #000}
+.tabel-laporan tr th{text-align: center; vertical-align: top;}
+.tabel-laporan tr td, .tabel-laporan tr th{border: 1px solid #000; }
+.tabel-laporan .number{text-align: center;}
+.tabel-laporan th rowspan, td rowspan{vertical-align: middle;}

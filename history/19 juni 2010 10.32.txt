@@ -1,0 +1,7 @@
+History 
+merubah file nominatif.php 
+
+
+ $qupt="select * from TABLOKB08 where A_01='$uk' and A_02<>'00' and ESEL like '41' order by A_02";
+
+$qupt="select * from TABLOKB08 where A_01='$uk' and A_02<>'00' and A_03 like '00' order by A_02";

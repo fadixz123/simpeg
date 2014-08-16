@@ -1,0 +1,4 @@
+* Added STRUKTUR
+* Added NOMINATIF
+* Nominatif sudah di-link dengan pencarian PNS
+* Added addslashes di anak.inc (nama 'Ma'ruf' error)
