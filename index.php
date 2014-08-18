@@ -2,7 +2,7 @@
 session_start();
 include("include/config.inc");
 $isloggedin=false;
-if ($sid==='') $sid=md5(date("Y-m-d").date("H:i:s").$REMOTE_ADDR."ItsABeautifulDay");
+//if ($sid==='') $sid=md5(date("Y-m-d").date("H:i:s").$REMOTE_ADDR."ItsABeautifulDay");
 
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
@@ -50,6 +50,7 @@ if ($logout) {
 		$level=$roj[1];
 		$isloggedin=true;
 		}
+if (isset($_SESSION['username'])) {
 
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
@@ -238,3 +239,7 @@ if ($logout) {
     </div>
 </body>
 </html>
+<?php } else { 
+    header("location: login.php");
+}
+?>

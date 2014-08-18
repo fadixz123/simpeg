@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('config.inc');
 include('fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
@@ -90,6 +91,46 @@ if (isset($_GET['search'])) {
             $data[] = $rows;
         }
         die(json_encode($data));
+    }
+    
+    if ($cari === 'logmein_fucker') {
+        $isloggedin=false;
+        if ($_GET['sid'] === '') { $sid=md5(date("Y-m-d").date("H:i:s").$REMOTE_ADDR."ItsABeautifulDay"); }
+        if (isset($_POST['username'])) {
+		$q="select u.*, m.`A_01`, m.`A_02`, m.`A_03`, m.`A_04`, m.`A_05`,m.`B_03` as nama, g.nama as nama_group from USER u
+                    join mastfip08 m on (u.B_02 = m.B_02)
+                    join group_users g on (u.id_group_user = g.id)
+                    where u.username='".$_POST['username']."' and password='".md5($_POST['password'])."'";
+                //echo $q;
+		$r=mysql_query($q) or die(mysql_error());
+		$j=mysql_num_rows($r);
+		
+		if ($j > 0) {
+			$ro=mysql_fetch_array($r);
+                        $_SESSION['username'] = $ro['username'];
+                        $_SESSION['group_user'] = $ro['id_group_user'];
+                        $_SESSION['nama_group'] = $ro['nama_group'];
+                        $_SESSION['skpd'] = $ro['A_01'];
+                        $_SESSION['nama'] = $ro['nama'];
+			mysql_query("delete from LOGUSER where TANGGAL='0000-00-00'") or die (mysql_error());
+			$xtgl=date("Y-m-d",mktime(0,0,0,date("m")  ,date("d")-1,date("Y")));
+			mysql_query("delete from LOGUSER where TANGGAL <= '$xtgl'") or die (mysql_error());		
+			mysql_query("insert into LOGUSER set sub_app='".$ro[level]."', user='$username', sid='$sid',TANGGAL='".date("Y-m-d")."'") or die (mysql_error());
+		}
+	}
+	$qj="select user,sub_app from LOGUSER where sid='$sid' LIMIT 1";
+	$rj=mysql_query($qj) or die(mysql_error());
+	$j=mysql_num_rows($rj);
+	if ($j > 0 ) {
+            $roj=mysql_fetch_row($rj);
+            $level=$roj[1];
+            $isloggedin=true;
+            $result['status'] = TRUE;
+            $result['sid'] = $sid;
+        } else {
+            $result['status'] = FALSE;
+        }
+        die(json_encode($result));
     }
 }
 ?>
