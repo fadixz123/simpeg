@@ -95,7 +95,8 @@ if (isset($_GET['search'])) {
     
     if ($cari === 'logmein_fucker') {
         $isloggedin=false;
-        if ($_GET['sid'] === '') { $sid=md5(date("Y-m-d").date("H:i:s").$REMOTE_ADDR."ItsABeautifulDay"); }
+        $sid = NULL;
+        $sid=md5(date("Y-m-d").date("H:i:s").$REMOTE_ADDR."ItsABeautifulDay");
         if (isset($_POST['username'])) {
 		$q="select u.*, m.`A_01`, m.`A_02`, m.`A_03`, m.`A_04`, m.`A_05`,m.`B_03` as nama, g.nama as nama_group from USER u
                     join mastfip08 m on (u.B_02 = m.B_02)

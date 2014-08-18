@@ -43,7 +43,7 @@
                     dataType: 'json',
                     success: function(data) {
                         if(data.status === true){
-                            //location.href='index.php?sid='+data.sid;
+                            location.href='index.php?sid='+data.sid;
                         } else {
                             $('#username-label').html('Username :');
                             $('#password-label').html('Password :');

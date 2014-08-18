@@ -12,7 +12,7 @@ $or=mysql_query($oq);
 $orow=mysql_fetch_row($or);
 $nama_unit_kerja=$orow[0];
 
-if ($logout) {
+if (isset($_GET['logout'])) {
 	mysql_query("delete from LOGUSER where sid='$sid' LIMIT 1") or die (mysql_error());
         session_destroy();
         header("location: index.php?sid=".$sid);
