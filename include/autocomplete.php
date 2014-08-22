@@ -133,5 +133,15 @@ if (isset($_GET['search'])) {
         }
         die(json_encode($result));
     }
+    
+    if ($cari === 'jurusan') {
+        $dik = $_GET['kode'];
+        $qj = mysql_query("select * from TABDIK".$dik." order by ket");
+        $data = array();
+        while ($rows = mysql_fetch_object($qj)) {
+            $data[] = $rows;
+        }
+        die(json_encode($data));
+    }
 }
 ?>

@@ -3,19 +3,19 @@ include('config.inc');
 include('fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
-if ($cari) {
-	
-	if (strlen($B_03) > 0 && isset($uk)) {
+if (isset($_GET['cari'])) {
+	//echo $_GET['B_03'];
+	if (strlen($_GET['B_03']) > 0 && isset($_GET['uk'])) {
 		$q="select A_01,A_02,A_03,A_04,B_02,B_03A,B_03,B_03B,I_05,I_06,F_03 from MASTFIP08 where B_03 LIKE '%$B_03%' ";
-		if ($uk != 'all') {
-			$q.="and A_01='$uk' ";
+		if ($_GET['uk'] != 'all') {
+			$q.="and A_01='".$_GET['uk']."'";
 		}
 		$q.="order by I_06 ASC, F_03 DESC";
 		$r=mysql_query($q) or die (mysql_error());
 		if (mysql_num_rows($r) >= 1) $status=2; else $status=4;
 	}
 	
-	if (isset($nip) && (strlen($nip)==9 || strlen($nip)==18)) {
+	if (isset($_GET['nip']) && (strlen($_GET['nip'])==9 || strlen($_GET['nip'])==18)) {
 		$q="select A_01,A_02,A_03,A_04,B_02,B_03A,B_03,B_03B,I_05,I_06,F_03 from MASTFIP08 where B_02='$nip' or B_02B='$nip' LIMIT 1";
 		$r=mysql_query($q) or die (mysql_error());
 		if (mysql_num_rows($r) == 1) {
@@ -73,13 +73,14 @@ if ($cari) {
                   <?
                   }
                   if ($status==1) {
-	               	$q="select * from MASTFIP08 where B_02='$nip' or B_02B='$nip' LIMIT 1";
+	               	$q="select * from MASTFIP08 where B_02='".$_GET['nip']."' or B_02B='".$_GET['nip']."' LIMIT 1";
 					$r=mysql_query($q) or die (mysql_error());
 					$row=mysql_fetch_array($r);
                   ?>
                   <tr>
                     <td height="200" colspan="3" valign="top">
       <!--<a href="?sid=<?=$sid?>&do=biodata&page=awal&NIP=<?=$row[B_02]?>">Edit Biodata PNS ini</a>-->
+                        <div class="fotoshow"><img src="showfoto.php?nip=<?=$row['B_02']?>" width="120"> </div>
                         <table width="100%" class="table table-condensed table-bordered table-hover no-margin">
                          <tr> 
                            <td colspan="3" class="sectiontableheader">IDENTITAS</td>

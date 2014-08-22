@@ -85,7 +85,7 @@ if (isset($_SESSION['username'])) {
         $('body').block({ 
               message: '<span><img src="images/loading-black.gif" /> Loading ...</span>', 
               css: { 
-                  border: '1px solid #000',
+                  border: '1px solid #ccc',
                   padding: '5px',
                   backgroundColor: '#f4f4f4', 
                   '-webkit-border-radius': '10px', 
@@ -111,7 +111,7 @@ if (isset($_SESSION['username'])) {
     <div class="link">
         <a href="index.php?sid=<?= $sid ?>&do=home">Home</a> 
         <?php if (isset($_SESSION['username'])) { ?>
-            &nbsp; | &nbsp; <a href="index.php?sid=<?= $sid ?>&logout=true"> <?= $_SESSION['username'] ?> (Logout)</a>
+            &nbsp; | &nbsp; <a href="index.php?sid=<?= $_GET['sid'] ?>&logout=true"> <?= $_SESSION['username'] ?> (Logout)</a>
         <?php } ?>
     </div>
     <div class="link2">
@@ -156,7 +156,7 @@ if (isset($_SESSION['username'])) {
                                         where gp.id_group_users = '".$_SESSION['group_user']."' and m.id = '".$data['id']."'");
                                         while ($data2 = mysql_fetch_array($sql2)) { ?>
                                         <tr align="left">
-                                            <td><a href="<?= $data2['url'] ?><?= $sid ?>" class="mainlevel"><img src="images/icons/<?= $data2['icon'] ?>" align="center" /> <?= $data2['menu'] ?></a></td>
+                                            <td><a href="<?= $data2['url'] ?><?= $_GET['sid'] ?>" class="mainlevel"><img src="images/icons/<?= $data2['icon'] ?>" align="center" /> <?= $data2['menu'] ?></a></td>
                                         </tr>
                                         <?php } ?>
                                     </table>
