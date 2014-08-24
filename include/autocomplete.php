@@ -143,5 +143,35 @@ if (isset($_GET['search'])) {
         }
         die(json_encode($data));
     }
+    
+    if ($cari === 'suk_upt') {
+        $uk    = $_GET['uk'];
+        $qcu="select distinct A_02 from TABLOKB08 where A_01='$uk'";
+        $rcu=mysql_query($qcu);
+        $hasupt = FALSE;
+        if (mysql_num_rows($rcu) > 1) { $hasupt=TRUE; }
+        if ($hasupt) {
+            $label = 'Induk/UPT';
+            $qupt="select `A_02` as code, `NALOK` from TABLOKB08 where A_01='$uk' and A_02<>'00' and A_03 like '00' and A_04 like '00' order by A_02";
+            $rupt=mysql_query($qupt) or die(mysql_error());
+            $data = array();
+            while ($roupt=mysql_fetch_object($rupt)) {
+                $data[] = $roupt;
+            }
+        } else {
+            $label = 'Sub Unit Kerja';
+            $query = "select `KOLOK` as code, `NALOK` from tablokb08 ";
+            if (strlen($uk)==2) { $query.="where A_01='$uk' "; }
+            else { $query.="where A_01='".substr($uk,0,2)."' and A_02 ='".substr($uk,2,2)."' and A_03 ='".substr($uk,4,2)."' "; }
+            $query.="order by KOLOK";
+            //echo $query;
+            $sql = mysql_query($query);
+            $data = array();
+            while ($rows = mysql_fetch_object($sql)) {
+                $data[] = $rows;
+            }
+        }
+        die(json_encode(array('hasupt' => $hasupt, 'label' => $label, 'data' => $data)));
+    }
 }
 ?>

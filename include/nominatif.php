@@ -49,7 +49,30 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
                     });
                 }
             }); 
-        }); 
+        });
+        
+        $('#uk').change(function() {
+            $.ajax({
+                url: 'include/autocomplete.php?search=suk_upt',
+                dataType: 'json',
+                data: 'uk='+$(this).val(),
+                success: function(data) {
+                    $('#subuk').empty();
+                    if (data.label === 'Induk/UPT') {
+                        stri = '<option value="all">Semua ...</option>'+
+                                '<option value="00">INDUK</option>';
+                    } else {
+                        stri = '<option value="">Semua ...</option>';
+                    }
+                    $('#label-uk').html(data.label);
+                    $('#subuk').append(stri);
+                    $.each(data.data, function(i, v) {
+                        str = '<option value="'+v.code+'">'+v.NALOK+'</option>';
+                        $('#subuk').append(str);
+                    });
+                }
+            });
+        });
     });
     
     function paging(page, tab, search) {
@@ -292,7 +315,7 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
                         <tr>
                           <td>Unit Kerja:</td>
                           <td>
-                            <select name="uk" id="uk" class="form-control" onchange="nominatif1.submit();">
+                            <select name="uk" id="uk" class="form-control">
                             <option value="all">Semua ...</option>
                             <?
                             $quk="select * from tablok08 order by kd";
@@ -303,39 +326,16 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
                                         <? } ?>
                             </select></td>
                         </tr>
-                <? if ($hasupt) { ?>
+                
                         <tr>
-                          <td>Induk/UPT:</td>
+                          <td id="label-uk"></td>
                           <td>
                             <select name="subuk" id="subuk" class="form-control">
-                            <option value="all">Semua ...</option>
-                            <option value="00" <? if ($subuk=='00') echo "selected "?>>INDUK</option>
-                        <?
-                        $qupt="select * from TABLOKB08 where A_01='$uk' and A_02<>'00' and A_03 like '00' and A_04 like '00' order by A_02";
-                        $rupt=mysql_query($qupt) or die(mysql_error());
-                        while ($roupt=mysql_fetch_array($rupt)) {
-                                        ?>
-                                        <option value="<?=$roupt[A_02]?>" <?= $roupt[A_02]==$subuk ? "selected" : ""?>><?=$roupt[NALOK]?></option>
-                                        <? } ?>
+                                
                             </select>
                           </td>
                         </tr>
-                <? } else { ?>
-                        <tr>
-                          <td>Sub Unit Kerja:</td>
-                          <td>
-                            <select name="subuk" id="subuk" class="form-control">
-                            <option value="all">Semua ...</option>
-                        <?
-                        $rupt=listSubUnitKerja($uk);
-                        foreach ($rupt as $key=>$value) {
-                                        ?>
-                                        <option value="<?=$value[0]?>" <?= $value[0]==$subuk ? "selected" : ""?>><?=$value[1]?></option>
-                                        <? } ?>
-                            </select>
-                          </td>
-                        </tr>
-                <? }?>
+                
                         <tr>
                           <td>Urut:</td>
                           <td> 
