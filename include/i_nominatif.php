@@ -1,4 +1,4 @@
-<?
+<?php
 include('config.inc');
 include('fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
@@ -9,18 +9,38 @@ mysql_select_db($db);
 <HEAD>
 <TITLE>:: e-PersonalSystem ::</TITLE>
 <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<SCRIPT LANGUAGE="JavaScript" src="eps.js"></SCRIPT>
-
-<LINK REL="STYLESHEET" TYPE="TEXT/CSS" href="/include/newEPS.css">
+<link rel="stylesheet" href="../css/printing-A4-landscape.css" media="all" />
+<script type="text/javascript">
+    function cetak() {
+        setTimeout(function(){ window.close();},300);
+        window.print();    
+    }
+</script>
 
 </HEAD>
-<BODY BGCOLOR=#FFFFFF LEFTMARGIN=0 TOPMARGIN=0 MARGINWIDTH=0 
-MARGINHEIGHT=0>
-<?
+<body onload="cetak();">
+<?php
+$unitkerja  = $_GET['unitkerja'];
+
 $qcu="select distinct A_02 from TABLOKB08 where A_01='$unitkerja'";
 $rcu=mysql_query($qcu) or die(mysql_error());
 if (mysql_num_rows($rcu)>1) $hasupt=true;
-
+//$uk     = $_GET['uk'];
+$subuk  = $_GET['subuk'];
+$hasupt = $_GET['hasupt'];
+$radio1 = $_GET['radio1'];
+$gol1   = $_GET['gol1'];
+$gol2   = $_GET['gol2'];
+$status = $_GET['status'];
+$jabatan= $_GET['jabatan'];
+$jabfung= $_GET['jabfung'];
+$eselon = $_GET['eselon'];
+$kelamin= $_GET['kelamin'];
+$agama  = $_GET['agama'];
+$diklat = $_GET['diklat'];
+$dik    = $_GET['dik'];
+$jur    = $_GET['jur'];
+//$urut   = $_GET['urut'];
 if ($unitkerja !='') {
 	$tahun=date("Y");
 	$thskr=$tahun-56;
@@ -94,70 +114,66 @@ if ($unitkerja !='') {
 	}
 	$query.="order by F_03 DESC,F_TMT ASC, I_06,F_04 DESC, H_4A ASC, H_1A DESC, H_02 ASC, B_05 ASC ";
 	$no=0;
+        //echo $query;
 	$r=mysql_query($query) or die (mysql_error());
 ?>
 		
-<table border="0" cellspacing="0" width="100%" style="border-collapse: collapse">
+<table>
 <tr><td align="center"><h3>UNIT KERJA : 
-<?if ($unitkerja!='all') {
+<?php if ($unitkerja!='all') {
 	if (strlen($unitkerja)==2) echo lokasiKerjaB($unitkerja);
 	else echo sublokasiKerjaB($unitkerja);}
 else {echo "SEMUA UNIT KERJA";}?><br><?= $subuk!='' && $subuk!='all' ? ( $hasupt ? sublokasiKerjaB($unitkerja,$subuk,'00','00','00') : sublokasiKerjaB(substr($subuk,0,2),substr($subuk,2,2),substr($subuk,4,2),substr($subuk,6,2),substr($subuk,8,2))) : ""?></h3></td></tr>
 <tr><td>
-<?
+<?php
 if ($eselon!='all' && $eselon!='str') echo "Eselon : ".eselon($eselon)."<br>";
 if ($kelamin!='all') echo "Jenis kelamin : ".jenisKelamin($kelamin)."<br>";
 if ($agama!='all') echo "Agama : ".agama1($agama)."<br>";
 ?>
 </td></tr>
-<tr><td><table border="1" cellspacing="0" width="100%" style="border-collapse: collapse" bordercolor="#808080">
+<tr><td><table width="100%" class="tabel-laporan">
   <tr>
-    <td colspan="10" align="center"><b>HASIL :
-      <?=mysql_num_rows($r)?>
-      Record</b></td>
+    <th width="10">NO</th>
+    <th width="5">NIP LAMA</th>
+    <th width="110">NIP BARU</th>
+    <th width="150">NAMA</th>
+    <?php if ($showalamat=="true") { ?>
+    <th width="30%">ALAMAT</th>
+    <?php } ?>
+	<th>TEMPAT LAHIR</th>
+        <th>TGL LAHIR</th>
+    <?php if ($showcpns=="true") { ?>
+    <th width="7%">TMT CPNS</th>
+    <?php } ?>
+    <?php if ($showjk=="true") { ?>
+    <th width="5%">JENIS KELAMIN</th>
+    <?php } ?>
+    <th width="100">JABATAN</th>
+    <th colspan="3">UNIT KERJA</th>
+    <th width="50">ESEL</th>
+    <th width="50">G/R</th>
+    <th>TMT</th>
+    <th width="250">ALAMAT</th>
+    <th width="10">PENDIDIKAN</th>
+<th width="10">JURUSAN</th>
+<th width="10">LULUS</th>
+    <?php if ($showpdd=="true") { ?>
+    <?php } ?>
   </tr>
-  <tr>
-    <td align="center" bgcolor="#DDDDDD" width="10"><font face="Tahoma" size="1"><b>NO</b></td>
-    <td align="center" bgcolor="#DDDDDD" width="5"><font face="Tahoma" size="1"><b>NIP LAMA</b></td>
-    <td align="center" bgcolor="#DDDDDD" width="110"><font face="Tahoma" size="1"><b>NIP BARU</b></td>
-    <td align="center" bgcolor="#DDDDDD" width="150"><font face="Tahoma" size="1"><b>NAMA</b></td>
-    <? if ($showalamat=="true") { ?>
-    <td width="30%" align="center" bgcolor="#DDDDDD"><font face="Tahoma" size="1"><b>ALAMAT</b></td>
-    <? } ?>
-	<td align="center" width="7%" bgcolor="#DDDDDD"><font face="Tahoma" size="1"><b>TEMPAT LAHIR</b></td>
-    <td align="center" width="7%" bgcolor="#DDDDDD"><font face="Tahoma" size="1"><b>TGL LAHIR</b></td>
-    <? if ($showcpns=="true") { ?>
-    <td width="7%" align="center" bgcolor="#DDDDDD"><font face="Tahoma" size="1"><b>TMT CPNS</b></td>
-    <? } ?>
-    <? if ($showjk=="true") { ?>
-    <td width="5%" align="center" bgcolor="#DDDDDD"><font face="Tahoma" size="1"><b>JENIS KELAMIN</b></td>
-    <? } ?>
-    <td align="center" bgcolor="#DDDDDD" width="100"><font face="Tahoma" size="1"><b>JABATAN</b></td>
-    <td align="center" bgcolor="#DDDDDD" colspan="3"><font face="Tahoma" size="1"><b>UNIT KERJA</b></td>
-    <td align="center" bgcolor="#DDDDDD" width="50"><font face="Tahoma" size="1"><b>ESEL</b></td>
-    <td align="center" bgcolor="#DDDDDD" width="50"><font face="Tahoma" size="1"><b>G/R</b></td>
-    <td align="center" bgcolor="#DDDDDD"><font face="Tahoma" size="1"><b>TMT</b></td>
-    <td align="center" bgcolor="#DDDDDD" width="250"><font face="Tahoma" size="1"><b>ALAMAT</b></td>
-    <td align="center" bgcolor="#DDDDDD" width="10"><font face="Tahoma" size="1"><b>PENDIDIKAN</b></td>
-<td align="center" bgcolor="#DDDDDD" width="10"><font face="Tahoma" size="1"><b>JURUSAN</b></td>
-<td align="center" bgcolor="#DDDDDD" width="10"><font face="Tahoma" size="1"><b>LULUS</b></td>
-    <? if ($showpdd=="true") { ?>
-    <? } ?>
-  </tr>
-  <?
+  <?php
 		$z=0;
 		while ($row=mysql_fetch_array($r)) {
 		  	$no++;
 			$z++;
 		?>
-  <tr class="isinya">
-    <td valign="top" class="isinya" align="right">
+  <tr>
+    <td valign="top" class="isinya" align="center">
       <?=$no?>
     </td>
     <td valign="top" class="isinya" align="center">
       <?=$row[B_02]?>
     </td>
-    <td valign="top" class="isinya" align="center">
+    <td valign="top" class="isinya">
       <?=$row[B_02B] =='' ? $row[B_02] : format_nip_baru($row[B_02B])?>
     </td>
 	
@@ -166,24 +182,24 @@ if ($agama!='all') echo "Agama : ".agama1($agama)."<br>";
     </td>
 	<td align="center" valign="top" class="isinya" width="7%"><?=$row[B_04]?>
     </td>
-    <? if ($showalamat=="true") { ?>
+    <?php if ($showalamat=="true") { ?>
     <td valign="top" class="isinya" width="30%">
       <?=$row[B_12]?>
     </td>
 	
-     <? } ?>
-    <td align="center" valign="top" class="isinya" width="7%"><?= format_tanggal($row[B_05])?>
+     <?php } ?>
+    <td align="center" valign="top" class="isinya" width="7%"><?= datefmysql($row[B_05])?>
     </td>
-    <? if ($showcpns=="true") { ?>
+    <?php if ($showcpns=="true") { ?>
     <td valign="top" class="isinya" width="7%">
-      <?=format_tanggal($row[D_04])?>
+      <?=datefmysql($row[D_04])?>
     </td>
-    <? } ?>
-    <? if ($showjk=="true") { ?>
+    <?php } ?>
+    <?php if ($showjk=="true") { ?>
     <td valign="top" class="isinya" width="5%">
       <?= jenisKelamin($row[B_06])?>
     </td>
-    <? } ?>
+    <?php } ?>
     <td valign="top" class="isinya">
       <?= getNaJab($row[B_02])?>
     </td>
@@ -203,7 +219,7 @@ if ($agama!='all') echo "Agama : ".agama1($agama)."<br>";
       <?=pktH($row[F_03])?>
     </td>
     <td valign="top" class="isinya" align="center">
-      <?=format_tanggal($row[F_TMT])?>
+      <?=  datefmysql($row[F_TMT])?>
     </td>
     <td valign="top" class="isinya" width="5%">
       <?=$row[B_12]?>
@@ -211,14 +227,14 @@ if ($agama!='all') echo "Agama : ".agama1($agama)."<br>";
 	<td valign="top" class="isinya" width="5%"><?= tktdidik($row[H_1A])?></td>
 <td valign="top" class="isinya" width="5%"><?= jurusan($row[H_1A],$row[H_1B])?></td>
 <td valign="top" class="isinya" width="5%"><?=($row[H_02])?></td>
-    <? if ($showpdd=="true") { ?>
-    <? } ?>
+    <?php if ($showpdd=="true") { ?>
+    <?php } ?>
   </tr>
-  <? } ?>
+  <?php } ?>
 </table></td>
 </tr>
 </table>
-<? } ?>
+<?php } ?>
 
         
 </body>

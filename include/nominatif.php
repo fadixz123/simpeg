@@ -19,7 +19,23 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
             var dHeight= wHeight * 1;
             var x = screen.width/2 - dWidth/2;
             var y = screen.height/2 - dHeight/2;
-            window.open('include/i_nominatif.html?gol1=<?=$gol1?>&gol2=<?=$gol2?>&radio1=<?=$radio1?>&status=<?=$status?>&eselon=<?=$eselon?>&jabatan=<?=$jabatan?>&jabfung=<?=$jabfung?>&dik=<?=$dik?>&jur=<?=$jur?>&diklat=<?=$diklat?>&kelamin=<?=$kelamin?>&agama=<?=$agama?>&unitkerja=<?=$uk?>&subuk=<?=$subuk?>&urut=<?=$urut?>','myPoppp','width='+dWidth+', height='+dHeight+', left='+x+',top='+y)
+            var gol1    = $('#gol1').val();
+            var gol2    = $('#gol2').val();
+            var radio1  = $('input[name=radio]:checked').val();
+            var status  = $('#status').val();
+            var eselon  = $('#eselon').val();
+            var jabatan = $('#jabatan').val();
+            var jabfung = $('#jabfung').val();
+            var dik     = $('#dik').val();
+            var jurusan = $('#jur').val();
+            var diklat  = $('#diklat').val();
+            var kelamin = $('#kelamin').val();
+            var agama   = $('#agama').val();
+            var unitkerja = $('#uk').val();
+            var subuk   = $('#subuk').val();
+            var urut    = $('#urut').val();
+            var hasupt  = $('#hasupt').val();
+            window.open('include/i_nominatif.php?gol1='+gol1+'&gol2='+gol2+'&radio1='+radio1+'&status='+status+'&eselon='+eselon+'&jabatan='+jabatan+'&jabfung='+jabfung+'&dik='+dik+'&jur='+jurusan+'&diklat='+diklat+'&kelamin='+kelamin+'&agama='+agama+'&unitkerja='+unitkerja+'&subuk='+subuk+'&urut='+urut+'&hasupt='+hasupt,'myPoppp','width='+dWidth+', height='+dHeight+', left='+x+',top='+y)
         });
         $('#jabfung-autoshow').hide();
         $('#searching').click(function() {
@@ -65,6 +81,7 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
                         stri = '<option value="">Semua ...</option>';
                     }
                     $('#label-uk').html(data.label);
+                    $('#hasupt').val(data.hasupt);
                     $('#subuk').append(stri);
                     $.each(data.data, function(i, v) {
                         str = '<option value="'+v.code+'">'+v.NALOK+'</option>';
@@ -76,7 +93,7 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
     });
     
     function paging(page, tab, search) {
-        
+        get_list_nominatif(page);
     }
     
     function reset_form() {
@@ -84,7 +101,7 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
         $('a .select2-chosen').html('&nbsp;');
     }
     
-    function get_list_nominatif() {
+    function get_list_nominatif(page) {
         $.ajax({
             type: 'GET',
             url: 'include/nominatif-list.php?page='+page,
@@ -163,11 +180,11 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
                 </select>
                 &nbsp;
 
-                <input type="radio" name="radio1" value="1" class="radio1" <? if ($radio1==1) echo "checked"; ?>>
+                <input type="radio" name="radio1" name="radio" value="1" class="radio1" <? if ($radio1==1) echo "checked"; ?>>
                 keatas&nbsp;
-                <input type="radio" name="radio1" value="2" class="radio1" <? if ($radio1==2) echo "checked"; ?>>
+                <input type="radio" name="radio1" name="radio" value="2" class="radio1" <? if ($radio1==2) echo "checked"; ?>>
                 kebawah
-                <input type="radio" name="radio1" value="3" class="radio1" <? if ($radio1==3) echo "checked"; ?>>
+                <input type="radio" name="radio1" name="radio" value="3" class="radio1" <? if ($radio1==3) echo "checked"; ?>>
                 antara </td>
                           </tr>
                         <tr> 
@@ -315,16 +332,18 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
                         <tr>
                           <td>Unit Kerja:</td>
                           <td>
-                            <select name="uk" id="uk" class="form-control">
-                            <option value="all">Semua ...</option>
-                            <?
-                            $quk="select * from tablok08 order by kd";
-                            $ruk=mysql_query($quk) or die(mysql_error());
-                            while ($rouk=mysql_fetch_array($ruk)) {
-                                        ?>
-                                        <option value="<?=$rouk[kd]?>" <?= $rouk[kd]==$uk ? "selected" : ""?>><?=$rouk[nm]?></option>
-                                        <? } ?>
-                            </select></td>
+                                <select name="uk" id="uk" class="form-control">
+                                <option value="all">Semua ...</option>
+                                <?
+                                $quk="select * from tablok08 order by kd";
+                                $ruk=mysql_query($quk) or die(mysql_error());
+                                while ($rouk=mysql_fetch_array($ruk)) {
+                                            ?>
+                                            <option value="<?=$rouk[kd]?>" <?= $rouk[kd]==$uk ? "selected" : ""?>><?=$rouk[nm]?></option>
+                                            <? } ?>
+                                </select>
+                              <input type="hidden" id="hasupt" name="hasupt" />
+                          </td>
                         </tr>
                 
                         <tr>
@@ -349,7 +368,7 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="get_list_nominatif();"><i class="fa fa-search"></i> Tampilkan</button>
+                <button type="button" class="btn btn-primary" onclick="get_list_nominatif(1);"><i class="fa fa-search"></i> Tampilkan</button>
                 <button type="button" class="btn btn-primary" id="cetak"><i class="fa fa-print"></i> Cetak</button>
             </div>
         </div>
@@ -365,15 +384,15 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
 <div id="result">
     <table class="table table-bordered table-stripped table-hover" id="table_data_no">
         <thead>      
-        <tr bgcolor="#CCCCCC">
-            <th>No</th>
-            <th>NIP</th>
-            <th>NAMA</th>
-            <th>TGL LHR</th>
-            <th>JABATAN</th>
-            <th>UNIT KERJA</th>
-            <th>Esl</th>
-            <th>GOL/RNG</th>
+        <tr>
+            <th width="4%">No</th>
+            <th width="13%" class="left">NIP</th>
+            <th width="17%" class="left">NAMA</th>
+            <th width="6%">TGL LHR</th>
+            <th width="10%" class="left">JABATAN</th>
+            <th width="40%" colspan="3">UNIT KERJA</th>
+            <th width="5%">Esl</th>
+            <th width="5%">GOL/RNG</th>
         </tr>
         </thead>
     </table>
