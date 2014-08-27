@@ -59,8 +59,7 @@ $sid = $_GET['sid'];
                 <?=lokasiKerjaB($row[A_01])?></small><br>
                 <small><i><?=getNaJab($row[B_02])?></i></small></td>
                 <td>
-                    <button type="button" onclick="load_detail('include/main-tabs.php?sid=<?=$sid?>&do=cari&nip=<?=$row[B_02]?>&cari=NIP');" class="btn btn-default btn-xs"><i class="fa fa-eye"></i></button> 
-                    <button type="button" onclick="print_data('<?= $sid ?>','<?=$row[B_02]?>');" class="btn btn-default btn-xs"><i class="fa fa-print"></i> </button>
+                    <button type="button" onclick="load_detail('include/arsip-tabs.php?sid=<?=$sid?>&do=cari&nip=<?=$row[B_02]?>&cari=NIP');" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Input</button> 
                 </td>
               </tr>
                 <?

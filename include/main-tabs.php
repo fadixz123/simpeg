@@ -1,3 +1,7 @@
+<?php
+$sid = $_GET['sid'];
+$nip = $_GET['nip'];
+?>
 <script type="text/javascript" src="Scripts/library.js"></script>
 <script type="text/javascript">
 	$(function() {

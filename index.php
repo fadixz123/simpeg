@@ -226,6 +226,7 @@ if (isset($_SESSION['username'])) {
                 case 'rekapskp'   : include("include/rekap-skp.php");break;
                 case 'baperjakat': include("include/baperjakat.php"); break;
                 case 'arsip': include("include/arsip.php"); break;
+                case 'arsip_kategori': include("include/arsip-kategori.php"); break;
 		default : include("include/berita.php");
 	}
 	?>

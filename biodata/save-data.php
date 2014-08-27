@@ -395,4 +395,19 @@ if ($opsi === 'skp') {
     mysql_query("insert into rekap_skp set id_kegiatan_skp = '$id_keg', B_02 = '$nip', jumlah = '$jumlah'");
     die(json_encode(array('status' => TRUE)));
 }
+
+if ($opsi === 'kategori_arsip') {
+    $id     = $_POST['id'];
+    $nama   = $_POST['nama'];
+    $keterangan = $_POST['keterangan'];
+    if ($id === '') {
+        $sql = "insert into arsip_kategori set nama = '$nama', keterangan = '$keterangan'";
+        $act = 'add';
+    } else {
+        $sql = "update arsip_kategori set nama = '$nama', keterangan = '$keterangan' where id = '$id'";
+        $act = 'edit';
+    }
+    mysql_query($sql);
+    die(json_encode(array('status' => TRUE, 'act' => $act)));
+}
 ?>

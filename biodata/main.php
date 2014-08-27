@@ -2,9 +2,10 @@
 session_start();
 include("include/config.inc");
 include("include/fungsi.inc");
-$link=mysql_connect($server,$user,$pass);
+mysql_connect($server,$user,$pass);
 mysql_select_db($db);
 $warnaMenu = '#FFFFFF';
+$sid = $_GET['sid'];
 $j=mysql_num_rows(mysql_query("select user from LOGUSER where sid='$sid' LIMIT 1"));
 if ($j > 0 ) {
 	$sid2=md5(date("Y-m-d").date("H:i:s").$REMOTE_ADDR);
