@@ -224,6 +224,8 @@ if (isset($_SESSION['username'])) {
 		case 'detilhistory'   : include("webmaster/detailaktivitas.php");break;
                 case 'skp'   : include("include/skp-tabs.php");break;
                 case 'rekapskp'   : include("include/rekap-skp.php");break;
+                case 'baperjakat': include("include/baperjakat.php"); break;
+                case 'arsip': include("include/arsip.php"); break;
 		default : include("include/berita.php");
 	}
 	?>
