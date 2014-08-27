@@ -1,1 +1,1 @@
-<h4 class="title">Arsip Dokumen Pegawai</h4>
+<h4 class="title">ARSIP DOKUMEN PEGAWAI</h4>
