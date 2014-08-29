@@ -410,4 +410,64 @@ if ($opsi === 'kategori_arsip') {
     mysql_query($sql);
     die(json_encode(array('status' => TRUE, 'act' => $act)));
 }
+
+if ($opsi === 'arsip_digital') {
+    $id = $_POST['id'];
+    $UploadDirectory	= '../arsip/'; //Upload Directory, ends with slash & make sure folder exist
+    $NewFileName= "";
+    //die($UploadDirectory);
+        // replace with your mysql database details
+    if (!@file_exists($UploadDirectory)) {
+            //destination folder does not exist
+            die('No upload directory');
+    }
+    if ($id === '') {
+        if(isset($_FILES['mFile']['name'])) {
+
+                $foto               = $_POST['foto'];
+                $FileName           = strtolower($_FILES['mFile']['name']); //uploaded file name
+                $FileTitle		= 'slide';
+                $ImageExt		= substr($FileName, strrpos($FileName, '.')); //file extension
+                $FileType		= $_FILES['mFile']['type']; //file type
+                //$FileSize		= $_FILES['mFile']["size"]; //file size
+                $RandNumber   		= rand(0, 9999999999); //Random number to make each filename unique.
+                //$uploaded_date		= date("Y-m-d H:i:s");
+                if ($foto !== '') {
+                    @unlink('../arsip/'.$foto);
+                }
+                switch(strtolower($FileType))
+                {
+                        //allowed file types
+                        case 'image/png': //png file
+                        case 'image/gif': //gif file 
+                        case 'image/jpeg': //jpeg file
+                        case 'application/pdf': //PDF file
+                        case 'application/msword': //ms word file
+                        case 'application/vnd.ms-excel': //ms excel file
+                        case 'application/x-zip-compressed': //zip file
+                        case 'text/plain': //text file
+                        case 'text/html': //html file
+                                break;
+                        default:
+                                die('Unsupported File!'); //output error
+                }
+
+
+                //File Title will be used as new File name
+                $NewFileName = preg_replace(array('/\s/', '/\.[\.]+/', '/[^\w_\.\-]/'), array('_', '.', ''), strtolower($FileTitle));
+                $NewFileName = $NewFileName.'_'.$RandNumber.$ImageExt;
+           //Rename and save uploded file to destination folder.
+           if(move_uploaded_file($_FILES['mFile']["tmp_name"], $UploadDirectory . $NewFileName ))
+           {
+                //die('Success! File Uploaded.');
+           }else{
+                //die('error uploading File!');
+           }
+        }
+        //
+        $result['id'] = '';
+        $result['act']= 'add';
+        return $result;
+    }
+}
 ?>

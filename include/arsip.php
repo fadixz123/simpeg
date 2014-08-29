@@ -138,6 +138,7 @@ if ($j > 0 ) {
         function load_detail(url) {
             $('#detail-pegawai').empty();
             $('#datamodal_search_detail').modal('show');
+            $('body').unbind('load');
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -406,7 +407,6 @@ else if (strlen($NIP)!=0) {
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-refresh"></i> Close</button>
-            <button type="button" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
         </div>
     </div>
     </div>

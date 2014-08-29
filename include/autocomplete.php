@@ -173,5 +173,26 @@ if (isset($_GET['search'])) {
         }
         die(json_encode(array('hasupt' => $hasupt, 'label' => $label, 'data' => $data)));
     }
+    
+    if ($cari === 'arsip') {
+        $sql = mysql_query("select k.nama, a.* from arsip a join arsip_kategori k on (a.id_arsip_kategori = k.id) where a.B_02 = '$nip' order by k.nama");
+        $data= array();
+        while ($rows = mysql_fetch_object($sql)) {
+            $data[] = $rows;
+        }
+        die(json_encode($data));
+    }
+    
+    if ($cari === 'arsip_kategori') {
+        $data = array();
+        $query = "select id, nama as list, keterangan from arsip_kategori where nama like ('%".$q."%')";
+        $sql = mysql_query($query);
+        while ($rows = mysql_fetch_object($sql)) {
+            $data[] = $rows;
+        }
+        $pilih[] = array('id'=>'', 'list' => '<i>Pilih ...</i>');
+        $total = mysql_num_rows(mysql_query($query));
+        die(json_encode(array('data' => array_merge($pilih, $data), 'total' => $total)));
+    }
 }
 ?>
