@@ -9,78 +9,88 @@ mysql_select_db($db);
 <script type="text/javascript">
     $(function() {
         load_data_arsip();
-        $('#kategori').select2({
-            ajax: {
-                url: 'include/autocomplete.php?search=arsip_kategori',
-                dataType: 'json',
-                quietMillis: 100,
-                data: function (term, page) { // page is the one-based page number tracked by Select2
-                    return {
-                        q: term, //search term
-                        page: page, // page number
-                        uk: $('#uk').val(),
-                        suk: $('#suk').val()
-                    };
-                },
-                results: function (data, page) {
-                    var more = (page * 20) < data.total; // whether or not there are more results available
-
-                    // notice we return the value of more so Select2 knows if more results can be loaded
-                    return {results: data.data, more: more};
-                }
-            },
-            formatResult: function(data){
-                var markup = data.list;
-                return markup;
-            }, 
-            formatSelection: function(data){
-                return data.list;
-            }
-        });
-        
     });
-    
-    $('#formadd').on('submit', function(e){
-        e.preventDefault();
-//            if($('#keterangan').val() === ''){
-//                dc_validation('#keterangan','Keterangan tidak boleh kosong !');
-//                return false;
-//            }
-        if ($('#gambar').val() === '') {
-            dc_validation('#gambar','Gambar tidak boleh kosong !');
+    function save_arsip_digital() {
+        if ($('#kategori').val() === '') {
+            dc_validation('#kategori','Kategori harus dipilih!'); return false;
         }
-        $(this).ajaxSubmit({
+        dc_validation_remove('#kategori');
+        if ($('#file').val() === '') {
+            dc_validation('#file','File harus dipilih!'); return false;
+        }
+        dc_validation_remove('#file');
+        $('#formadd').ajaxSubmit({
             target: '#output',
             dataType: 'json',
+            data: $('#formadd').serialize(),
+            beforeSend: function() {
+                show_ajax_indicator();
+            },
             success: function(msg) {
+                hide_ajax_indicator();
+                $('input[type=text],input[type=file], select').val('');
                 if (msg.act === 'add') {
                     message_add_success();
+                    load_data_arsip();
                 } else {
                     message_edit_success();
+                    load_data_arsip();
                 }
+            },
+            error: function() {
+                hide_ajax_indicator();
+                dinamic_alert('File yang di upload harus bertipe PDF!');
             }
         });
-    });
-    
-    function add_new_rows() {
-        var id_kategori = $('#kategori').val();
-        var kat_name    = $('#s2id_kategori a .select2-chosen').html();
-        var file        = $('input[type=file]').val();
-        var keterangan  = $('#keterangan').val();
-        var num         = $('.rows').length+1;
         
-        var str = '<tr class="rows '+((num%2===0)?'even':'odd')+'">'+
-                    '<td align="center">'+num+'</td>'+
-                    '<td>'+kat_name+' <input name="id_kategori[]" type="hidden" value="'+id_kategori+'" /></td>'+
-                    '<td>'+keterangan+' <input type="hidden" name="keterangan[]" value="'+keterangan+'" /></td>'+
-                    '<td><input name="[]" type="file" value="'+file+'" /></td>'+
-                    '<td></td>'+
-                '</tr>';
-        $('#load-arsip tbody').append(str);
     }
     
-    function save_arsip_digital() {
-        $('#formadd').submit();
+//    function save_arsip_digital() {
+//        $('#formadd').submit();
+//    }
+    function get_name_value() {
+        var nama = $('#kategori option:selected').text();
+        $('#nama_arsip').val(nama);
+    }
+    
+    function delete_arsip(id, nama_file) {
+        bootbox.dialog({
+          message: "Anda yakin akan menghapus data ini?",
+          title: "Hapus Data",
+          buttons: {
+            batal: {
+              label: '<i class="fa fa-refresh"></i> Batal',
+              className: "btn-default",
+              callback: function() {
+                
+              }
+            },
+            hapus: {
+              label: '<i class="fa fa-trash-o"></i>  Hapus',
+              className: "btn-primary",
+              callback: function() {
+                $.ajax({
+                    url: 'include/delete.php?delete=arsip',
+                    data: 'id='+id+'&nama_file='+nama_file,
+                    cache: false,
+                    dataType : 'json',
+                    beforeSend: function() {
+                        show_ajax_indicator();
+                    },
+                    success: function(data) {
+                        load_data_arsip();
+                        message_delete_success();
+                        hide_ajax_indicator();
+                    },
+                    error: function(e){
+                         message_delete_failed();
+                         hide_ajax_indicator();
+                    }
+                });
+              }
+            }
+          }
+        });
     }
     
     function load_data_arsip() {
@@ -92,10 +102,11 @@ mysql_select_db($db);
                 $('#load-arsip tbody').empty();
                 $.each(data, function(i, v) {
                     var str = '<tr class="rows '+((i%2===0)?'even':'odd')+'">'+
-                                '<td align="center"></td>'+
+                                '<td align="center">'+(++i)+'</td>'+
                                 '<td>'+v.nama+'</td>'+
                                 '<td>'+v.keterangan+'</td>'+
-                                '<td></td>'+
+                                '<td><a target="_BLANK" href="arsip/'+v.nama_file+'">'+v.nama_file+'</a></td>'+
+                                '<td><button title="Klik untuk hapus file" onclick="delete_arsip('+v.id+', \''+v.nama_file+'\');" type="button" class="btn btn-default btn-xs"><i class="fa fa-minus-circle"></i> </button> </td>'+
                             '</tr>';
                     $('#load-arsip tbody').append(str);
                 });
@@ -105,10 +116,21 @@ mysql_select_db($db);
 </script>
 <br/>
 <form id="formadd" method="POST" action="biodata/save-data.php?save=arsip_digital" enctype="multipart/form-data">
+    <input type="hidden" name="nip" id="nip" value="<?= $_GET['nip'] ?>" />
     <input type="hidden" name="id" id="id" />
+    <input type="hidden" name="nama_arsip" id="nama_arsip" />
 <table width="100%">
     <tr>
-        <td width="20%">Kategori Arsip:</td><td><input type="text" name="kategori" id="kategori" class="select2-input" /></td>
+        <td width="20%">Kategori Arsip:</td><td>
+            <select name="kategori" id="kategori" onchange="get_name_value();" class="form-control-static" style="width: 300px;">
+                <option value="">Pilih ...</option>
+            <?php
+            $sql = mysql_query("select * FROM arsip_kategori order by nama");
+            while ($data = mysql_fetch_array($sql)) { ?>
+                <option value="<?= $data['id'] ?>"><?= $data['nama'] ?></option>
+            <?php } ?>
+            </select>
+        </td>
     </tr>
     <tr>
         <td>File:</td><td><input type="file" name="mFile" id="file" class="form-control-static" /></td>
@@ -119,7 +141,7 @@ mysql_select_db($db);
     <tr>
         <td></td>
         <td>
-            <button class="btn btn-primary" onclick="save_arsip_digital();"><i class="fa fa-plus-circle"></i> Simpan</button>
+            <button class="btn btn-primary" onclick="save_arsip_digital(); return false;"><i class="fa fa-plus-circle"></i> Simpan</button>
         </td>
     </tr>
 </table>
@@ -132,8 +154,8 @@ mysql_select_db($db);
                 <th width="5%">No</th>
                 <th width="30%" class="left">Nama Arsip</th>
                 <th width="30%" class="left">Keterangan</th>
-                <th width="30%" class="left">File(s)</th>
-                <th width="5%" class='nowrap'></th>
+                <th width="34%" class="left">File(s)</th>
+                <th width="1%" class='nowrap'></th>
             </tr>
         </thead>
         <tbody>

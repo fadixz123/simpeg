@@ -175,6 +175,7 @@ if (isset($_GET['search'])) {
     }
     
     if ($cari === 'arsip') {
+        $nip = $_GET['nip'];
         $sql = mysql_query("select k.nama, a.* from arsip a join arsip_kategori k on (a.id_arsip_kategori = k.id) where a.B_02 = '$nip' order by k.nama");
         $data= array();
         while ($rows = mysql_fetch_object($sql)) {

@@ -415,6 +415,9 @@ if ($opsi === 'arsip_digital') {
     $id = $_POST['id'];
     $UploadDirectory	= '../arsip/'; //Upload Directory, ends with slash & make sure folder exist
     $NewFileName= "";
+    $id_kategori= $_POST['kategori'];
+    $nip        = $_POST['nip'];
+    $keterangan = $_POST['keterangan'];
     //die($UploadDirectory);
         // replace with your mysql database details
     if (!@file_exists($UploadDirectory)) {
@@ -426,11 +429,11 @@ if ($opsi === 'arsip_digital') {
 
                 $foto               = $_POST['foto'];
                 $FileName           = strtolower($_FILES['mFile']['name']); //uploaded file name
-                $FileTitle		= 'slide';
+                $FileTitle		= $_POST['nama_arsip'].'_'.$nip;
                 $ImageExt		= substr($FileName, strrpos($FileName, '.')); //file extension
                 $FileType		= $_FILES['mFile']['type']; //file type
                 //$FileSize		= $_FILES['mFile']["size"]; //file size
-                $RandNumber   		= rand(0, 9999999999); //Random number to make each filename unique.
+                $RandNumber   		= rand(0, 99999); //Random number to make each filename unique.
                 //$uploaded_date		= date("Y-m-d H:i:s");
                 if ($foto !== '') {
                     @unlink('../arsip/'.$foto);
@@ -438,15 +441,15 @@ if ($opsi === 'arsip_digital') {
                 switch(strtolower($FileType))
                 {
                         //allowed file types
-                        case 'image/png': //png file
-                        case 'image/gif': //gif file 
-                        case 'image/jpeg': //jpeg file
+//                        case 'image/png': //png file
+//                        case 'image/gif': //gif file 
+//                        case 'image/jpeg': //jpeg file
                         case 'application/pdf': //PDF file
-                        case 'application/msword': //ms word file
-                        case 'application/vnd.ms-excel': //ms excel file
-                        case 'application/x-zip-compressed': //zip file
-                        case 'text/plain': //text file
-                        case 'text/html': //html file
+//                        case 'application/msword': //ms word file
+//                        case 'application/vnd.ms-excel': //ms excel file
+//                        case 'application/x-zip-compressed': //zip file
+//                        case 'text/plain': //text file
+//                        case 'text/html': //html file
                                 break;
                         default:
                                 die('Unsupported File!'); //output error
@@ -459,15 +462,20 @@ if ($opsi === 'arsip_digital') {
            //Rename and save uploded file to destination folder.
            if(move_uploaded_file($_FILES['mFile']["tmp_name"], $UploadDirectory . $NewFileName ))
            {
-                //die('Success! File Uploaded.');
-           }else{
+                $query = "insert into arsip set 
+                id_arsip_kategori = '$id_kategori',
+                B_02 = '$nip',
+                nama_file = '$NewFileName',
+                keterangan = '$keterangan'";
+                mysql_query($query);
+           } else {
                 //die('error uploading File!');
            }
         }
-        //
+        
         $result['id'] = '';
         $result['act']= 'add';
-        return $result;
+        die(json_encode($result));
     }
 }
 ?>
