@@ -59,7 +59,7 @@ mysql_select_db($db);
                 <small><?=subLokasiKerjaB($row[A_01],$row[A_02],$row[A_03],$row[A_04],$row[A_05])?>
                 <?=lokasiKerjaB($row[A_01])?></small><br>
                 <small><i><?=getNaJab($row[B_02])?></i></small></td>
-                <td><button type="button" onclick="load_detail('include/cari-detail.php?sid=<?=$sid?>&B_03=<?= $row['B_03'] ?>&uk=<?= $_GET['uk'] ?>&do=cari&nip=<?=$row[B_02]?>&cari=NIP');" class="btn btn-default btn-xs"><i class="fa fa-eye"></i> Detail</button></td>
+                <td><button type="button" onclick="load_detail('include/cari-detail.php?sid=<?=$_GET['sid']?>&B_03=<?= $row['B_03'] ?>&uk=<?= $_GET['uk'] ?>&do=cari&nip=<?=$row[B_02]?>&cari=NIP');" class="btn btn-default btn-xs"><i class="fa fa-eye"></i> Detail</button></td>
               </tr>
                 <?
         }
