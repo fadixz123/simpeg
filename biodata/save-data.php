@@ -478,4 +478,40 @@ if ($opsi === 'arsip_digital') {
         die(json_encode($result));
     }
 }
+
+if ($opsi === 'baperjakat') {
+    
+    if ($_POST['id_baperjakat'] === '') {
+        $nama   = $_POST['jabatan'];
+        $awal   = date2mysql($_POST['awal']);
+        $akhir  = date2mysql($_POST['akhir']);
+        $nip    = $_POST['nip']; // array
+        $pilih  = $_POST['pilih'];
+        
+        $insert = "insert into baperjakat set
+                jabatan = '$nama',
+                periode_mulai = '$awal',
+                periode_selesai = '$akhir',
+                status = 'Ditetapkan'";
+        
+        mysql_query($insert);
+        $id = mysql_insert_id();
+        foreach ($nip as $key => $data) {
+            $insertt = "insert into detail_baperjakat set
+                id_baperjakat = '$id',
+                B_02 = '$data',
+                terpilih = 'Tidak'";
+            mysql_query($insertt);
+        }
+
+        mysql_query("update detail_baperjakat set terpilih = 'Ya' where id_baperjakat = '$id' and `B_02` = '$pilih'");
+        $get = mysql_fetch_array(mysql_query("select * from mastfip08 where `B_02` = '$pilih'"));
+        
+        $q  ="insert into MASTJAB1 set A_01='".$get->A_01."',A_02='".$get->$A_02."',A_03='".$get->A_03."',A_04='".$get->A_04."', JF_01='".$get->B_02."', JF_03 = '$nama'";
+        mysql_query($q);
+        $result['status'] = TRUE;
+        $result['act'] = 'add';
+    }
+    die(json_encode($result));
+}
 ?>

@@ -71,8 +71,51 @@
         });
     }
     
+    function save_baperjakat() {
+        if ($('#jabatan').val() === '') {
+            dinamic_alert('Jabatan tidak boleh kosong !'); return false;
+        }
+        dc_validation_remove('#jabatan');
+        if ($('#awal').val() === '' || $('#akhir').val() === '') {
+            dinamic_alert('Awal tidak boleh kosong!'); return false;
+        }
+        var jml =  $('input:checked').length;
+        if (parseFloat(jml) === 0) {
+            dinamic_alert('Pegawai belum ada yang dipilih !'); return false;
+        }
+        $.ajax({
+            type: 'POST',
+            url: 'biodata/save-data.php?save=baperjakat',
+            dataType: 'json',
+            data: $('#form-save').serialize(),
+            beforeSend: function() {
+                show_ajax_indicator();
+            },
+            success: function(data) {
+                if (data.status === true) {
+                    $('#s2id_nip a .select2-chosen').html('&nbsp;');
+                    $('#nip').val('');
+                    if (data.act === 'add') {
+                        message_add_success();
+                        load_data_pemilihan(1);
+                    } else {
+                        message_edit_success();
+                    }
+                } else {
+                    message_add_failed();
+                }
+                hide_ajax_indicator();
+            }, error: function() {
+                hide_ajax_indicator();
+            }
+        });
+    }
+    
     function add_new_row() {
         var nip = $('#nip').val();
+        if (nip === '') {
+            dinamic_alert('Nama pegawai belum dipilih !'); return false;
+        }
         $.ajax({
             type: 'GET',
             url: 'include/kandidat.php?sid=<?= $_GET['sid'] ?>&nip='+nip,
@@ -81,10 +124,22 @@
             },
             success: function(data) {
                 $('#filter').append(data);
+                $('#s2id_nip a .select2-chosen').html('&nbsp;');
+                $('#nip').val('');
                 hide_ajax_indicator();
             }
         });
         return false;
+    }
+    
+    function detail_seleksi(id) {
+        $.ajax({
+            url: 'include/baperjakat-detail.php?id='+id,
+            success: function(data) {
+                $('#datamodal_detail').modal('show');
+                $('#detail-seleksi').html(data);
+            }
+        });
     }
     
     function paging(page, tab, search) {
@@ -109,7 +164,8 @@
             </div>
         </div>
         <div class="modal-body">
-            <form id="form-search" role="form" class="form-horizontal">
+            <form id="form-save" role="form" class="form-horizontal">
+                <input type="hidden" name="id_baperjakat" id="id_baperjakat" />
             <div class="row">
                 <div class="col-md-12">
                     <div class="widget-body">
@@ -145,7 +201,25 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-refresh"></i> Batal</button>
-            <button type="button" class="btn btn-primary" onclick=""><i class="fa fa-save"></i> Simpan</button>
+            <button type="button" class="btn btn-primary" onclick="save_baperjakat();"><i class="fa fa-save"></i> Simpan</button>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div id="datamodal_detail" class="modal fade">
+    <div class="modal-dialog" style="width: 1024px; height: 100%;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <div class="widget-header">
+                <div class="title">
+                    <h4> Detail Seleksi BAPERJAKAT</h4>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body" id="detail-seleksi">
+            
         </div>
     </div>
     </div>

@@ -4,8 +4,9 @@ include('fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
 
-	//echo $_GET['B_03'];
-$q="select * from MASTFIP08 where B_02='".$_GET['nip']."' or B_02B='".$_GET['nip']."' LIMIT 1";
+$sql = mysql_query("select * from detail_baperjakat where id_baperjakat = '".$_GET['id']."'");
+while ($data = mysql_fetch_array($sql)) {
+$q="select * from MASTFIP08 where B_02='".$data['B_02']."'";
 $r=mysql_query($q) or die (mysql_error());
 $row=mysql_fetch_array($r);
 ?>
@@ -21,7 +22,7 @@ $row=mysql_fetch_array($r);
       <td height="200" colspan="3" valign="top">
           <table width="100%" class="table table-condensed table-bordered table-hover no-margin">
            <tr> 
-               <td colspan="3" class="sectiontableheader"><input type="radio" name="pilih" value="<?= $_GET['nip'] ?>" /> IDENTITAS</td>
+               <td colspan="3" class="sectiontableheader"><?= ($data['terpilih'] === 'Ya')?'<span class="blinker"><i class="fa fa-check-square"></i> '.namaPNS($row[B_03A],$row[B_03],$row[B_03B]).' TERPILIH</span>':'IDENTITAS' ?> </td>
            </tr>
            <tr>
                 <td>Foto</td>
@@ -32,7 +33,7 @@ $row=mysql_fetch_array($r);
              <td width="170" class="garisbawah">Nama</td>
              <td width="4" align="center" class="garisbawah">:</td>
              <td width="335"> 
-               <? echo namaPNS($row[B_03A],$row[B_03],$row[B_03B]); ?>
+               <?php echo namaPNS($row[B_03A],$row[B_03],$row[B_03B]); ?>
              </td>
            </tr>
            <tr> 
@@ -172,3 +173,4 @@ $row=mysql_fetch_array($r);
     </tr>
   </table>
 </div>
+<?php } ?>

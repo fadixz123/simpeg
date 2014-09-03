@@ -15,7 +15,7 @@ h4.title { margin-top: 0; font-size: 13px; font-weight: bold; border-bottom: 1px
 .clsDatePicker {
 z-index: 100000;
 }
-.fotoshow { position: absolute; right: 6px; }
+/*.fotoshow { position: absolute; right: 6px; }*/
 .block { 
     position: relative;
     float: left;
@@ -814,3 +814,13 @@ padding: 0px;
     padding-top: 10px;
 }
 span.utama { font-size: 16px; }
+@-webkit-keyframes blinker {  
+  from { opacity: 1.0; }
+  to { opacity: 0.0; }
+}
+.blinker {
+  -webkit-animation-name: blinker;  
+  -webkit-animation-iteration-count: infinite;  
+  -webkit-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+  -webkit-animation-duration: 1s; 
+}
