@@ -95,6 +95,7 @@ if (empty($buker)) {
 </script>
 <br/>
 <form name="lokasi" id="form-pegawai" action="index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=lokid&NIP=<?=$NIP?>" method="post">
+    <input type="hidden" name="sid" id="sid" value="<?= $_GET['sid'] ?>" />
     <table width="100%" class="table table-condensed table-bordered table-hover no-margin">
           <tr class="sectiontableheader"> 
             <td>LOKASI KERJA</td>

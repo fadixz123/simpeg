@@ -85,6 +85,7 @@ if (isset($_GET['cari'])) {
                   <tr>
                     <td height="200" colspan="3" valign="top">
       <!--<a href="?sid=<?=$sid?>&do=biodata&page=awal&NIP=<?=$row[B_02]?>">Edit Biodata PNS ini</a>-->
+                        <div style="position: absolute; right: 0;"><img src="showfoto.php?nip=<?=$row['B_02']?>" width="120"> </div>
                         <table width="100%" class="table table-condensed table-bordered table-hover no-margin">
                          <tr> 
                            <td colspan="3" class="sectiontableheader">IDENTITAS</td>

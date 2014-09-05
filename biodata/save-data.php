@@ -6,12 +6,34 @@ mysql_select_db($db);
 $opsi = $_GET['save'];
 
 if ($opsi === 'pegawai') {
-    $NIP = $_POST['nip'];
+    $NIP    = $_POST['nip'];
+    $loker  = $_POST['loker'];
+    $B_02B  = $_POST['B_02B'];
+    $B_03A  = $_POST['B_03A'];
+    $sid    = $_POST['sid'];
+    $TGLAHIR= $_POST['TGLAHIR'];
+    $B_03B  = $_POST['B_03B'];
+    $B_04   = $_POST['B_04'];
+    $B_06   = $_POST['B_06'];
+    $B_07   = $_POST['B_07'];
+    $B_08   = $_POST['B_08'];
+    $B_09   = $_POST['B_09'];
+    $B_11   = $_POST['B_11'];
+    $B_12   = $_POST['B_12'];
+    $gd     = $_POST['gd'];
+    $J_01   = $_POST['J_01'];
+    $L_1A   = $_POST['L_1A'];
+    $L_02   = $_POST['L_02'];
+    $L_03   = $_POST['L_03'];
+    $L_04   = $_POST['L_04'];
+    $B_NOTELP   = $_POST['B_NOTELP'];
+    $B_NOARSIP  = $_POST['B_NOARSIP'];
+    $nik    = $_POST['nik'];
     $q="update MASTFIP08 set A_01='".substr($loker,0,2)."', A_02='".substr($loker,2,2)."',A_03='".substr($loker,4,2)."', A_04='".substr($loker,6,2)."',A_05='".substr($loker,8,2)."' where B_02='".$_POST['nip']."'";
     mysql_query($q) or die (mysql_error());
     if (mysql_affected_rows() > 0) { lethistory($sid,"UPDATE LOKASI KE ".subLokasiKerjaB($loker),$NIP); }
     
-    $B_03=addslashes($B_03);
+    $B_03=addslashes($_POST['B_03']);
     $qupdate="update MASTFIP08 set B_02B='$B_02B',B_03A='$B_03A', B_03='$B_03', B_03B='$B_03B', ";
     $qupdate=$qupdate." B_04='$B_04', B_05='".date2mysql($TGLAHIR)."', ";
     $qupdate=$qupdate." B_06='$B_06',gd='$gd', B_07='$B_07', B_08='$B_08', B_09='$B_09', B_11='$B_11', B_12='$B_12', ";
@@ -25,8 +47,16 @@ if ($opsi === 'pegawai') {
     die(json_encode(array('status' => TRUE)));
 }
 
-if ($opsi === 'cpns') {
-    $NIP = $_POST['nip'];
+else if ($opsi === 'cpns') {
+    $NIP    = $_POST['nip'];
+    $D_02   = $_POST['D_02'];
+    $TGTMTCAPEG = $_POST['TGTMTCAPEG'];
+    $TGSKCAPEG  = $_POST['TGSKCAPEG'];
+    $D_05   = $_POST['D_05'];
+    $A_01   = $_POST['A_01'];
+    $A_02   = $_POST['A_02'];
+    $A_03   = $_POST['A_03'];
+    $A_04   = $_POST['A_04'];
     $qupdate="update mastfip08 set D_02='$D_02', D_04='".date2mysql($TGTMTCAPEG)."',D_03='".date2mysql($TGSKCAPEG)."', D_05='$D_05' WHERE B_02='$NIP'";
     $res=mysql_query($qupdate) or die(mysql_error());	
     //upd_cp('1',$D_05,$D_02,$THSKCAPEG."-".$BLSKCAPEG."-".$TGSKCAPEG,$THTMTCAPEG."-".$BLTMTCAPEG."-".$TGTMTCAPEG,$NIP,$sid);
@@ -52,8 +82,17 @@ if ($opsi === 'cpns') {
     die(json_encode(array('status' => TRUE)));
 }
 
-if ($opsi === 'pns') {
-    $NIP = $_POST['nip'];
+else if ($opsi === 'pns') {
+    $NIP    = $_POST['nip'];
+    $E_02   = $_POST['E_02'];
+    $TGSKPNS= $_POST['TGSKPNS'];
+    $TGTMTPNS = $_POST['TGTMTPNS'];
+    $E_05   = $_POST['E_05'];
+    $E_06   = $_POST['E_06'];
+    $A_01   = $_POST['A_01'];
+    $A_02   = $_POST['A_02'];
+    $A_03   = $_POST['A_03'];
+    $A_04   = $_POST['A_04'];
     // ----------------- update MASTFIP08
     $qupdate="update MASTFIP08 set E_02='$E_02', E_03='".date2mysql($TGSKPNS)."', E_04='".date2mysql($TGTMTPNS)."', E_05='$E_05', E_06='$E_06' WHERE B_02='$NIP'";
     $res=mysql_query($qupdate) or die(mysql_error());
@@ -80,9 +119,23 @@ if ($opsi === 'pns') {
     die(json_encode(array('status' => TRUE)));
 }
 
-if ($opsi === 'pangkat_gaji') {
+else if ($opsi === 'pangkat_gaji') {
     // update MASTFIP08
     $NIP = $_POST['nip'];
+    $F_04A  = $_POST['F_04A'];
+    $F_04B  = $_POST['F_04B'];
+    $G_02A  = $_POST['G_02A'];
+    $G_02B  = $_POST['G_02B'];
+    $TGPKT  = $_POST['TGPKT'];
+    $TGGAJI = $_POST['TGGAJI'];
+    $F_03   = $_POST['F_03'];
+    $F_01   = $_POST['F_01'];
+    $TGGOL  = $_POST['TGGOL'];
+    $F_SK   = $_POST['F_SK'];
+    $A_01   = $_POST['A_01'];
+    $A_02   = $_POST['A_02'];
+    $A_03   = $_POST['A_03'];
+    $A_04   = $_POST['A_04'];
     if (strlen($F_04A) >= 0 && strlen($F_04A) < 2) $F_04A='0'.$F_04A;
     if (strlen($F_04B) >= 0 && strlen($F_04B) < 2) $F_04B='0'.$F_04B;
     if (strlen($G_02A) >= 0 && strlen($G_02A) < 2) $G_02A='0'.$G_02A;
@@ -145,12 +198,24 @@ if ($opsi === 'pangkat_gaji') {
     die(json_encode(array('status' => TRUE)));
 }
 
-if ($opsi === 'jabatan') {
+else if ($opsi === 'jabatan') {
     
     //update MASTFIP08
-    $NIP = $_POST['nip'];
-    if ($I_5A=='1') $I_JB=addslashes(jabatan($I_05));
-    if ($I_5A=='1' && $I_06=='99') $I_5A='4';
+    $NIP    = $_POST['nip'];
+    $I_5A   = $_POST['I_5A'];
+    $I_05   = $_POST['I_05'];
+    $I_06   = $_POST['I_06'];
+    $I_01   = $_POST['I_01'];
+    $I_02   = $_POST['I_02'];
+    $TGSKJAB= $_POST['TGSKJAB'];
+    $TGTMTJAB = $_POST['TGTMTJAB'];
+    
+    $A_01   = $_POST['A_01'];
+    $A_02   = $_POST['A_02'];
+    $A_03   = $_POST['A_03'];
+    $A_04   = $_POST['A_04'];
+    if ($I_5A=='1') { $I_JB=addslashes(jabatan($I_05)); }
+    if ($I_5A=='1' && $I_06=='99') { $I_5A='4'; }
 
     $q  ="update MASTFIP08 set I_01='$I_01', I_02='$I_02', I_03='".date2mysql($TGSKJAB)."', ";
     $q .="I_04='".date2mysql($TGTMTJAB)."', I_05='$I_05', ";
@@ -191,14 +256,21 @@ if ($opsi === 'jabatan') {
     die(json_encode(array('status' => TRUE)));
 }
 
-if ($opsi === 'pendidikan') {
+else if ($opsi === 'pendidikan') {
     $NIP = $_POST['nip'];
+    $H_1A   = $_POST['H_1A'];
+    $H_1B   = $_POST['H_1B'];
     $arrtkdik=array('10'=>'SD','20'=>'SLTP','30'=>'SLTA','41'=>'D-I','42'=>'D-II','43'=>'D-III','44'=>'D-IV','50'=>'SARMUD','60'=>'SARMUD NON AK','70'=>'S1','80'=>'S2','90'=>'S3','99'=>'P');
     $jurusan=jurusan($H_1A,$H_1B);
 
     //-------------update dik umum akhir
+    $tg_H_TGL_IJAZAH = $_POST['tg_H_TGL_IJAZAH'];
     $tgl_ijazah=date2mysql($tg_H_TGL_IJAZAH);
     $th_H_TGL_IJAZAH = substr($tgl_ijazah, 0, 4);
+    $H_SEKOLAH  = $_POST['H_SEKOLAH'];
+    $H_TEMPAT   = $_POST['H_TEMPAT'];
+    $H_KASEK    = $_POST['H_KASEK'];
+    $H_IJAZAH   = $_POST['H_IJAZAH'];
     $q1="update MASTFIP08 set H_1A='$H_1A', H_1B='$H_1B', H_02='$th_H_TGL_IJAZAH',H_SEKOLAH='$H_SEKOLAH',H_TEMPAT='$H_TEMPAT',H_KASEK='$H_KASEK',
     H_IJAZAH='$H_IJAZAH',H_TGL_IJAZAH='$tgl_ijazah' where B_02='$NIP'";
     //echo $q1;
@@ -220,24 +292,33 @@ if ($opsi === 'pendidikan') {
     die(json_encode(array('status' => TRUE)));
 }
 
-if ($opsi === 'dikstruakhir') {
-    $NIP = $_POST['nip'];
+else if ($opsi === 'dikstruakhir') {
+    $NIP    = $_POST['nip'];
+    $H_4A   = $_POST['H_4A'];
+    $TGDIKSTRU  = $_POST['TGDIKSTRU'];
     $q1="update MASTFIP08 set H_4A='$H_4A', H_4B='".date2mysql($TGDIKSTRU)."' where B_02='$NIP'";
     mysql_query($q1) or die (mysql_error());
     lethistory($sid,'UPDATE DIK STRU AKHIR '.dikStru($H_4A),$NIP);
     die(json_encode(array('status' => TRUE)));
 }
 
-if ($opsi === 'ortu') {
+else if ($opsi === 'ortu') {
     $NIP = $_POST['nip'];
     //------------------- CEK DATA AYAH ---------------------------
     $q1="select count(*) from MSTORTU1 WHERE NM_02='1' AND NM_01='$NIP' LIMIT 0,1";
     $r=mysql_query($q1);
     $o=mysql_fetch_array($r);
+    
+    $NM_041 = $_POST['NM_041'];
+    $NM_051 = $_POST['NM_051'];
+    $TGNM_061 = $_POST['TGNM_061'];
     if ($o['count(*)']=='1')
     {
             //----------------UPDATE DATA AYAH -----------------
+            
             $NM_041=addslashes($NM_041);
+            
+            $NM_071 = $_POST['NM_071'];
             $q  ="update MSTORTU1 set NM_04='$NM_041',NM_05='$NM_051',NM_06='".date2mysql($TGNM_061)."', ";
             $q .="NM_07='$NM_071' WHERE NM_02='1' AND NM_01='$NIP'";
             $r=mysql_query($q);
@@ -259,6 +340,10 @@ if ($opsi === 'ortu') {
     $q1="select count(*) from MSTORTU1 WHERE NM_02='2' AND NM_01='$NIP' LIMIT 0,1";
     $r=mysql_query($q1);
     $o=mysql_fetch_array($r);
+    $NM_042     = $_POST['NM_042'];
+    $TGNM_062   = $_POST['TGNM_062'];
+    $NM_072     = $_POST['NM_072'];
+    $NM_052     = $_POST['NM_052'];
     if ($o['count(*)']=='1')
     {
             //----------------UPDATE DATA IBU -----------------
@@ -282,14 +367,20 @@ if ($opsi === 'ortu') {
     die(json_encode(array('status' => TRUE)));
 }
 
-if ($opsi === 'keluarga') {
-    $NIP = $_POST['nip'];
+else if ($opsi === 'keluarga') {
+    $NIP    = $_POST['nip'];
+    $ini    = $_POST['ini'];
     $q="select count(*) from MASTKEL1 WHERE KF_01='$NIP' AND KF_02='1' AND KF_03='1' LIMIT 0,1";
     $r=mysql_query($q);
     $o=mysql_fetch_array($r);
     if ($ini=='DATA SUAMI') { $KF_10='LAKI-LAKI'; } else { $KF_10='PEREMPUAN'; }
     
     $nip_couple = $_POST['KF_04'];
+    $TGKF_05    = $_POST['TGKF_05'];
+    $TGKF_06    = $_POST['TGKF_06'];
+    $an         = $_POST['an'];
+    $KF_07      = $_POST['KF_07'];
+    $KF_09      = $_POST['KF_09'];
     if ($o['count(*)']>'0')
     {
             //------------- UPDATE SUAMI/ISTRI---------------
@@ -312,7 +403,7 @@ if ($opsi === 'keluarga') {
     die(json_encode(array('status' => TRUE)));
 }
 
-if ($opsi === 'usersystem') {
+else if ($opsi === 'usersystem') {
     $password_baru = md5($_POST['password_baru']);
     $password_baru1= md5($_POST['password_baru1']);
     $id_user       = $_POST['id'];
@@ -344,7 +435,7 @@ if ($opsi === 'usersystem') {
     die(json_encode(array('status' => TRUE)));
 }
 
-if ($opsi === 'groupusersystem') {
+else if ($opsi === 'groupusersystem') {
     $id     = $_POST['id'];
     $nama   = $_POST['nama'];
     if ($id !== '') {
@@ -358,7 +449,7 @@ if ($opsi === 'groupusersystem') {
     die(json_encode(array('status' => TRUE, 'act' => $act)));
 }
 
-if ($opsi === 'hakakses') {
+else if ($opsi === 'hakakses') {
     $id_group   = $_POST['id'];
     $privileges = $_POST['data'];
     if (is_array($privileges)) {
@@ -373,7 +464,7 @@ if ($opsi === 'hakakses') {
     die(json_encode(array('status' => TRUE)));
 }
 
-if ($opsi === 'skpsetting') {
+else if ($opsi === 'skpsetting') {
     $id         = $_POST['id'];
     $nama       = $_POST['nama'];
     $jml_bln    = $_POST['jml_bulan'];
@@ -388,7 +479,7 @@ if ($opsi === 'skpsetting') {
     die(json_encode(array('status' => TRUE, 'act' => $act)));
 }
 
-if ($opsi === 'skp') {
+else if ($opsi === 'skp') {
     $nip    = $_POST['nama'];
     $id_keg = $_POST['kegiatan'];
     $jumlah = $_POST['jumlah'];
@@ -396,7 +487,7 @@ if ($opsi === 'skp') {
     die(json_encode(array('status' => TRUE)));
 }
 
-if ($opsi === 'kategori_arsip') {
+else if ($opsi === 'kategori_arsip') {
     $id     = $_POST['id'];
     $nama   = $_POST['nama'];
     $keterangan = $_POST['keterangan'];
@@ -411,7 +502,7 @@ if ($opsi === 'kategori_arsip') {
     die(json_encode(array('status' => TRUE, 'act' => $act)));
 }
 
-if ($opsi === 'arsip_digital') {
+else if ($opsi === 'arsip_digital') {
     $id = $_POST['id'];
     $UploadDirectory	= '../arsip/'; //Upload Directory, ends with slash & make sure folder exist
     $NewFileName= "";
@@ -479,7 +570,7 @@ if ($opsi === 'arsip_digital') {
     }
 }
 
-if ($opsi === 'baperjakat') {
+else if ($opsi === 'baperjakat') {
     
     if ($_POST['id_baperjakat'] === '') {
         $nama   = $_POST['jabatan'];

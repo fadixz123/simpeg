@@ -8,7 +8,7 @@ $nip = $_GET['nip'];
                 $('#mytab a:first').tab('show');
                 my_ajax('include/main-detail.php?sid=<?=$sid?>&do=cari&nip=<?=$nip?>&cari=NIP','#tab1');
                 
-                $(".link_tab").live('click',function() {
+                $(".link_tab").die('click').live('click',function() {
                         var tab_id = $(this).attr('id');
                         switch(tab_id){
                             case 'pegawai':
