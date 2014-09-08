@@ -154,6 +154,54 @@ if ($j > 0 ) {
         function paging(page, tab, search) {
             search_data_pns(page);
         }
+        
+        function load_riwayat() {
+            /*switch ($page)
+            {
+                    case "awal" 	: include ("awal.inc");break;
+                    case "lokid"	: include ("lokid.php");break;
+                    case "cpnspns"	: include ("cpnspns.php");break;
+                    case "pkt"	: include ("pktgaji.php");break;
+                    case "dik"	: include ("dik.php");break;
+                    case "jab"	: include ("jabatan.php");break;
+                    case "rpk"	: include ("rpkt.inc");break;
+                    case "rjb"	: include ("rjab.inc");break;
+                    case "rtj"	: include ("rtj.inc");break;
+                    case "rtg"	: include ("rln.inc");break;
+                    case "bhs"	: include ("bahasa.inc");break;
+                    case "rdu"	: include ("rdikum.inc");break;
+                    case "rst"	: include ("rdikstru.inc");break;
+                    case "rfu" 	: include ("rdikfung.inc");break;
+                    case "rdt" 	: include ("rdiktekn.inc");break;
+                    case "rpt" 	: include ("rtatar.inc");break;
+                    case "rsm" 	: include ("rsemi.inc");break;
+                    case "rku" 	: include ("rkursus.inc");break;
+                    case "ortu"	: include ("ortu.php");break;
+                    case "smistri"	: include ("smistri.php");break;
+                    case "anak"	: include ("anak.php");break;
+                    case "pupns"	: include ("pupns.inc");break;
+
+            }*/
+            var riwayat = $('#do').val();
+            var url = '';
+            if (riwayat === 'rpk') { url = 'biodata/rpkt.php'; }
+            if (riwayat === 'rjb') { url = 'biodata/rjab.php'; }
+            if (riwayat === 'rtj') { url = 'biodata/rtj.php'; }
+            if (riwayat === 'rtg') { url = 'biodata/rln.php'; }
+            if (riwayat === 'bhs') { url = 'biodata/bahasa.php'; }
+            if (riwayat === 'rdu') { url = 'biodata/rdikum.php'; }
+            $.ajax({
+                type: 'GET',
+                url: url,
+                beforeSend: function() {
+                    show_ajax_indicator();
+                },
+                success: function(data) {
+                    hide_ajax_indicator();
+                    $('#detail-pegawai').html(data);
+                }
+            });
+        }
 </script>
 <h4 class="title">EDIT PROFILE PEGAWAI</h4>
 <div class="form-toolbar">
@@ -266,7 +314,7 @@ else if (strlen($NIP)!=0) {
   			                   <option value="rsm"  <? if ($page=='rsm') echo "selected"?>>RIWAYAT SEMI/LOKA/SIMP</option>
   			                   <option value="rku"  <? if ($page=='rku') echo "selected"?>>RIWAYAT
   			                   KURSUS DI DLM & LUAR NEGERI</option>
-                        </select>
+                            </select>
                         | 
                         <a href="index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=pupns&NIP=">NIP Lain</a>
                         
@@ -384,7 +432,7 @@ else if (strlen($NIP)!=0) {
     </div>
 </div>
 <div id="datamodal_search_detail" class="modal fade">
-    <div class="modal-dialog" style="width: 1024px; height: 100%;">
+    <div class="modal-dialog" style="width: 1124px; height: 100%;">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
