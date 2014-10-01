@@ -605,4 +605,198 @@ else if ($opsi === 'baperjakat') {
     }
     die(json_encode($result));
 }
+
+else if ($opsi === 'rpangkat') {
+    $no     = $_POST['no'];
+    $PF_03  = $_POST['PF_03'];
+    $NIP    = $_POST['NIP'];
+    $A_01   = $_POST['A_01'];
+    $A_02   = $_POST['A_02'];
+    $A_03   = $_POST['A_03'];
+    $A_04   = $_POST['A_04'];
+    $TGSK   = $_POST['TGSK'];
+    $TGTMT  = $_POST['TGTMT'];
+    $PF_04  = $_POST['PF_04'];
+    $ID     = $_POST['ID'];
+    foreach ($PF_03 as $key => $data) {
+        $no++;
+        $TGSK = date2mysql($TGSK[$key]);
+        $TGTMT= date2mysql($TGTMT[$key]);
+                
+		//$q="select * from MASTPKT1 where PF_01='$NIP' and PF_03='".$PF_03[$key]."' and PF_05='".$TGSK."' and PF_06='".$TGTMT."' LIMIT 1";
+                
+		if ($ID[$key] === '')
+		{
+			$q  ="insert into MASTPKT1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+			$q .="PF_01='$NIP',PF_02='$no',PF_03='".$PF_03[$key]."',PF_04='".$PF_04[$key]."',PF_05='".$TGSK."',PF_06='".$TGTMT."'";
+			mysql_query($q) or die (mysql_error());
+                        $result['status'] = TRUE;
+                        $result['act'] = 'add';
+		}
+		else
+		{
+			$q  ="update MASTPKT1 set ";
+			$q .="PF_04='".$PF_04[$key]."',PF_05='".$TGSK."',PF_06='".$TGTMT."' where ID = '".$ID[$key]."'";
+			mysql_query($q) or die (mysql_error());
+                        $result['status'] = TRUE;
+                        $result['act'] = 'edit';
+		}
+                
+		if (mysql_affected_rows() > 0) $u++;
+		// update MASTFIP08 untuk pkt terakhir;
+		mysql_query("update MASTFIP08 set F_02='".$TGSK."', F_TMT='".$TGTMT."' where B_02='$NIP' and F_03='".$PF_03[$key]."'");		
+	}
+        if ($u > 0) { lethistory($sid,"UPDATE RIWAYAT PANGKAT",$NIP); }
+        
+        die(json_encode($result));
+}
+
+else if ($opsi === 'rjabatan') {
+    $u=0;
+    $no     = $_POST['JF_02ORG'];
+    $NIP    = $_POST['NIP'];
+    $xtgjf07=$_POST['TGJF_07'];
+    $xtgjf06=$_POST['TGJF_06'];
+    $JF_03  = $_POST['JF_03'];
+    $JF_04  = $_POST['JF_04'];
+    $JF_05  = $_POST['JF_05'];
+    $ID     = $_POST['ID'];
+    $A_01   = $_POST['A_01'];
+    $A_02   = $_POST['A_02'];
+    $A_03   = $_POST['A_03'];
+    $A_04   = $_POST['A_04'];
+    
+    foreach ($no as $key => $data) {
+    $I_JB=ereg_replace('\'','\"',$JF_03[$key]);
+            //$j=mysql_num_rows(mysql_query("select * from MASTJAB1 where JF_01='$NIP' and JF_07='$xtgjf07' LIMIT 1"));
+            if ($ID[$key] === '') {
+                $q  ="insert into MASTJAB1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+                $q .="JF_02='$data',JF_01='$NIP',JF_03='$I_JB',JF_04='".$JF_04[$key]."', ";
+                $q .="JF_05='".$JF_05[$key]."',JF_06='".date2mysql($xtgjf06[$key])."', JF_07='".date2mysql($xtgjf07[$key])."'";
+                mysql_query($q) or die (mysql_error());
+                $result['act'] = 'add';
+            }
+            else {
+                $q  ="update MASTJAB1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+                $q .="JF_02='$JF_02ORG[$i]',JF_03='$I_JB',JF_04='$JF_04[$i]', ";
+                $q .="JF_05='$JF_05[$i]',JF_06='$xtgjf06', JF_07='$xtgjf07' where JF_01='$NIP' and ";
+                $q .="ID='$IDORG[$i]'";// and ";
+/*			$q .="JF_03='$JF_03ORG[$i]' and ";
+                $q .="JF_04='$JF_04ORG[$i]' and ";
+                $q .="JF_05='$JF_05ORG[$i]' and ";
+                $q .="JF_06='$JF_06ORG[$i]' and ";
+                $q .="JF_07='$JF_07ORG[$i]' ";*/
+                mysql_query($q) or die (mysql_error());
+                $result['act'] = 'edit';
+            }
+            if (mysql_affected_rows() > 0) $u++;			
+    }
+    if ($u > 0) lethistory($sid,"UPDATE RIWAYAT JABATAN",$NIP);
+    die(json_encode($result));
+}
+
+else if ($opsi === 'rtanda_jasa') {
+    $ID     = $_POST['ID'];
+    $A_01   = $_POST['A_01'];
+    $A_02   = $_POST['A_02'];
+    $A_03   = $_POST['A_03'];
+    $A_04   = $_POST['A_04'];
+    $NIP    = $_POST['NIP'];
+    $JS_03  = $_POST['JS_03'];
+    $JS_04  = $_POST['JS_04'];
+    $JS_05  = $_POST['JS_05'];
+    $JS_06  = $_POST['JS_06'];
+    $JS_07  = $_POST['JS_07'];
+    $TGJS_05= $_POST['TGJS_05'];
+    $ID     = $_POST['ID'];
+    if ($JS_03) {
+        foreach ($JS_03 as $key => $data) {
+                $xtgjs05=date2mysql($TGJS_05[$key]);
+                $JS03=strtoupper($JS_03[$key]);
+                $JS07=strtoupper($JS_07[$key]);
+                $auto = mysql_num_rows(mysql_query("select * from mstjasa1 where `A_01` = '$A_01' and `A_02` = '$A_02' and `A_03` = '$A_03' and `A_04` = '$A_04' and `JS_01` = '$NIP'"));
+                if ($ID[$key] === '') {
+                    $q  ="insert into MSTJASA1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+                    $q .="JS_01='$NIP',JS_02='".($auto+1)."',JS_03='$JS03',JS_04='$JS_04[$key]',JS_05='$xtgjs05', ";
+                    $q .="JS_06='$JS_06[$key]',JS_07='$JS07'";
+                    mysql_query($q) or die (mysql_error());
+                    $result['act'] = 'add';
+                } else {
+                    $q  ="update MSTJASA1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+                    $q .="JS_02='$i',JS_03='$JS03',JS_04='$JS_04[$key]',JS_05='$xtgjs05', ";
+                    $q .="JS_06='$JS_06[$key]',JS_07='$JS07' where ID = '".$ID[$key]."'";
+
+                    mysql_query($q) or die (mysql_error());
+                    $result['act'] = 'edit';
+                }
+                if (mysql_affected_rows() > 0) $u++;
+        }
+    }
+    if ($u > 0) lethistory($sid,"UPDATE RIWAYAT TANDA JASA",$NIP);
+    die(json_encode($result));
+}
+
+else if ($opsi === 'rtluarnegeri') {
+    
+    $A_01   = $_POST['A_01'];
+    $A_02   = $_POST['A_02'];
+    $A_03   = $_POST['A_03'];
+    $A_04   = $_POST['A_04'];
+    $NIP    = $_POST['NIP'];
+    $TG_03  = $_POST['TG_03'];
+    $TG_04  = $_POST['TG_04'];
+    $TG_05  = $_POST['TG_05'];
+    $TG_06  = $_POST['TG_06'];
+    $TGTG_07= $_POST['TGTG_07'];
+    $TGTG_08= $_POST['TGTG_08'];
+    $TGTG_09= $_POST['TGTG_09'];
+    mysql_query("delete from MSTTGAS1 where TG_01 = '$NIP'");
+    if ($TG_03) {
+        foreach ($TG_03 as $i => $data) {
+            $TG03=strtoupper($TG_03[$i]);
+            $TG04=strtoupper($TG_04[$i]);
+            $TG05=strtoupper($TG_05[$i]);
+            $xtgtg07    = date2mysql($TGTG_07[$i]);
+            $xtgtg08    = date2mysql($TGTG_08[$i]);
+            $xtgtg09    = date2mysql($TGTG_09[$i]);
+
+            $q  ="insert into MSTTGAS1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+            $q .="TG_01='$NIP',TG_02='".($i+1)."',TG_03='$TG03',TG_04='$TG04',TG_05='$TG05', ";
+            $q .="TG_06='$TG_06[$i]',TG_07='$xtgtg07',TG_08='$xtgtg08',TG_09='$xtgtg09'";
+
+            mysql_query($q) or die (mysql_error());
+            $result['act'] = 'add';
+
+            if (mysql_affected_rows() > 0) $u++;
+        }
+    }
+    if ($u > 0) lethistory($sid,"UPDATE RIWAYAT TUGAS KE LN",$NIP);
+    die(json_encode($result));
+}
+
+else if ($opsi === 'rbahasa') {
+    $A_01   = $_POST['A_01'];
+    $A_02   = $_POST['A_02'];
+    $A_03   = $_POST['A_03'];
+    $A_04   = $_POST['A_04'];
+    $NIP    = $_POST['NIP'];
+    
+    $BS_03  = $_POST['BS_03'];
+    $BS_04  = $_POST['BS_04'];
+    $BS_05  = $_POST['BS_05'];
+    mysql_query("delete from MSTBHSA1 where `BS_01` = '$NIP'");
+    if ($BS_03) {
+        foreach ($BS_03 as $i => $data) {
+            $BS04=strtoupper($BS_04[$i]);
+
+            $q  ="insert into MSTBHSA1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+            $q .="BS_01='$NIP',BS_02='$i',BS_03='$BS_03[$i]',BS_04='$BS04',BS_05='$BS_05[$i]'";
+            mysql_query($q) or die (mysql_error());
+            $result['act'] = 'edit';
+            if (mysql_affected_rows() > 0) $u++;
+        }
+    }
+    lethistory($sid,"UPDATE KEMAMPUAN BAHASA",$NIP);
+    die(json_encode($result));
+}
 ?>

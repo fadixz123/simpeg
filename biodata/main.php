@@ -6,6 +6,7 @@ mysql_connect($server,$user,$pass);
 mysql_select_db($db);
 $warnaMenu = '#FFFFFF';
 $sid = $_GET['sid'];
+$NIP = $_GET['nip'];
 $j=mysql_num_rows(mysql_query("select user from LOGUSER where sid='$sid' LIMIT 1"));
 if ($j > 0 ) {
 	$sid2=md5(date("Y-m-d").date("H:i:s").$REMOTE_ADDR);
@@ -155,7 +156,7 @@ if ($j > 0 ) {
             search_data_pns(page);
         }
         
-        function load_riwayat() {
+        function load_riwayat(nip) {
             /*switch ($page)
             {
                     case "awal" 	: include ("awal.inc");break;
@@ -190,17 +191,26 @@ if ($j > 0 ) {
             if (riwayat === 'rtg') { url = 'biodata/rln.php'; }
             if (riwayat === 'bhs') { url = 'biodata/bahasa.php'; }
             if (riwayat === 'rdu') { url = 'biodata/rdikum.php'; }
-            $.ajax({
-                type: 'GET',
-                url: url,
-                beforeSend: function() {
-                    show_ajax_indicator();
-                },
-                success: function(data) {
-                    hide_ajax_indicator();
-                    $('#detail-pegawai').html(data);
-                }
-            });
+            if (riwayat === 'rst') { url = 'biodata/rdikstru.php'; }
+            if (riwayat === 'rfu') { url = 'biodata/rdikfung.php'; }
+            if (riwayat === 'rdt') { url = 'biodata/rdiktekn.php'; }
+            if (riwayat === 'rpt') { url = 'biodata/rtatar.php'; }
+            if (riwayat === 'rsm') { url = 'biodata/rsemi.php'; }
+            if (riwayat === 'rku') { url = 'biodata/rkursus.php'; }
+        
+            if (riwayat !== '') {
+                $.ajax({
+                    type: 'GET',
+                    url: url+'?sid=<?= $sid ?>&nip='+nip,
+                    beforeSend: function() {
+                        show_ajax_indicator();
+                    },
+                    success: function(data) {
+                        hide_ajax_indicator();
+                        $('#load-riwayat').html(data);
+                    }
+                });
+            }
         }
 </script>
 <h4 class="title">EDIT PROFILE PEGAWAI</h4>

@@ -1,7 +1,7 @@
 <br/>
 <table width="100%">
     <tr><td width="15%">Pilih Riwayat:</td><td>
-    <select name="do" class="form-control-static" id="do" onchange="load_riwayat();">
+    <select name="do" class="form-control-static" id="do" onchange="load_riwayat('<?= $_GET['nip'] ?>');">
         <option value="">Pilih ...</option>
         <option value="rpk" <?php if ($page=='rpk') echo "selected"?>>RIWAYAT PANGKAT</option>
         <option value="rjb"  <?php if ($page=='rjb') echo "selected"?>>RIWAYAT JABATAN</option>
@@ -18,3 +18,5 @@
     </select>
     </td></tr>
 </table>
+<br/>
+<div id="load-riwayat"></div>

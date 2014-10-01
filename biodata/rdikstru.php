@@ -1,24 +1,32 @@
-<?
+<?php
+include('../include/config.inc');
+include('../include/fungsi.inc');
+mysql_connect($server,$user,$pass);
+mysql_select_db($db);
+$NIP = $_GET['nip'];
 if ($what=='delete')
-	mysql_query("delete from MSTKURS1 where LT_01='$NIP' and ID='$ID' LIMIT 1") or die (mysql_error());
+	mysql_query("delete from MSTSTRU1 where LT_01='$NIP' and ID='$ID' LIMIT 1") or die (mysql_error());
 
-
-if ($simpankursus)
+$aJab=array(1=>"SEPADA","SEPALA","SEPADYA","ADUM","ADUMLA","SPAMA","SESPA","SPAMEN","SESPANAS","SPATI","LEMHANAS","DIKLATPIM Tk.I","DIKLATPIM Tk.II","DIKLATPIM Tk.III","DIKLATPIM Tk.IV","DIKLATPIM PEMDA");
+if ($simpandikstru)
 {
-	$u=0;
+	$u=0;	
 	$z=0;
 	for ($i=1;$i<=$no;$i++)
 	{
 		$xtglt07=$THLT_07[$i]."-".$BLLT_07[$i]."-".$TGLT_07[$i];
 		$xtglt08=$THLT_08[$i]."-".$BLLT_08[$i]."-".$TGLT_08[$i];
 		$xtglt11=$THLT_11[$i]."-".$BLLT_11[$i]."-".$TGLT_11[$i];
-		$LT03=strtoupper($LT_03[$i]);
+		
+		$z=$i-1;
+		$LT03=$aJab[$LT_03[$i]];
+		
 		$LT04=strtoupper($LT_04[$i]);
 		$LT05=strtoupper($LT_05[$i]);
-		$a[$i]=$xtglt08;
+		$a[$i]=$LT_03[$i];
 		if ($upd[$i]=='1')
 		{
-			$q  ="insert into MSTKURS1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+			$q  ="insert into MSTSTRU1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
 			$q .="LT_01='$NIP',LT_02='$i',LT_03='$LT03',LT_04='$LT04',LT_05='$LT05', ";
 			$q .="LT_06='$LT_06[$i]',LT_07='$xtglt07',LT_08='$xtglt08',LT_09='$LT_09[$i]', ";
 			$q .="LT_10='$LT_10[$i]', LT_11='$xtglt11'";
@@ -27,11 +35,11 @@ if ($simpankursus)
 		}
 		else if ($upd[$i]=='0')
 		{
-			$q  ="update MSTKURS1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+			$q  ="update MSTSTRU1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
 			$q .="LT_02='$i',LT_03='$LT03',LT_04='$LT04',LT_05='$LT05', ";
 			$q .="LT_06='$LT_06[$i]',LT_07='$xtglt07',LT_08='$xtglt08',LT_09='$LT_09[$i]', ";
 			$q .="LT_10='$LT_10[$i]', LT_11='$xtglt11' ";
-			$q .="where LT_01='$NIP' and ID='$IDORG[$i]'";
+			$q .="where LT_01='$NIP' and ID='$IDORG[$i]'";// and ";
 /*			$q .="LT_02='$LT_02ORG[$i]' and ";
 			$q .="LT_03='$LT_03ORG[$i]' and ";
 			$q .="LT_04='$LT_04ORG[$i]' and ";
@@ -47,13 +55,15 @@ if ($simpankursus)
 		}
 		if (mysql_affected_rows() > 0) $u++;
 	}
-	if ($u > 0) lethistory($sid,"UPDATE RIWAYAT KURSUS",$NIP);
+	if ($u > 0) lethistory($sid,"UPDATE RIWAYAT DIKLAT STRUKTURAL",$NIP);
 	sort($a);
 	$z=0;
 	for ($i=1;$i<=$no;$i++)
 	{
 		$z=$i-1;
-		$q="update MSTKURS1 set LT_02='$i' where LT_01='$NIP' and LT_08='$a[$z]'";
+		$m=intval($a[$z]);;
+		
+		$q="update MSTSTRU1 set LT_02='$i' where LT_01='$NIP' and LT_03='$aJab[$m]'";
 		
 		mysql_query($q) or die (mysql_error());
 	}
@@ -63,20 +73,20 @@ $x=mysql_fetch_array(mysql_query("select A_01,A_02,A_03,A_04 from MASTFIP08 wher
 
 ?>
 <table border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse" bordercolor="#111111">
-<form name="rkursusform" action="index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rku&NIP=<?=$NIP?>" method="post">
+<form name="rdikstruform" action="index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rst&NIP=<?=$NIP?>" method="post">
     <input type="hidden" name="A_01" value="<?=$x[A_01]?>">
     <input type="hidden" name="A_02" value="<?=$x[A_02]?>">
     <input type="hidden" name="A_03" value="<?=$x[A_03]?>">
     <input type="hidden" name="A_04" value="<?=$x[A_04]?>">
   <tr bgcolor="<? echo $warnarow2; ?>">
-    <td width="37" align="center"><b>T</b></td>
-    <td width="538" colspan="4"><b>RIWAYAT KURSUS DIDALAM DAN LUAR NEGERI</b></td>
+    <td width="37" align="center"><b>O</b></td>
+    <td width="538" colspan="4"><b>RIWAYAT DIKLAT STRUKTURAL</b></td>
   </tr>
   <tr bgcolor="<? echo $warnarow3; ?>">
     <td width="37" align="center" rowspan="2"><b>No</b></td>
-    <td align="center"><b>KURSUS DIDALAM DAN LUAR NEGERI</b></td>
+    <td align="center"><b>DIKLAT</b></td>
     <td align="center"><b>TANGGAL</b></td>
-    <td align="center"><b>SERTIFIKAT</b></td>
+    <td align="center"><b>STPP</b></td>
     <td width="40" align="center" rowspan="2">&nbsp;</td>
   </tr>
   <tr bgcolor="<? echo $warnarow3; ?>">
@@ -91,7 +101,7 @@ $x=mysql_fetch_array(mysql_query("select A_01,A_02,A_03,A_04 from MASTFIP08 wher
     TANGGAL</b></td>
   </tr>
 <?
-$r=mysql_query("select ID,LT_01,LT_02,LT_03,LT_04,LT_05,LT_06,LT_07,LT_08,LT_09,LT_10,LT_11 from MSTKURS1 where LT_01='$NIP' order by LT_02") or die (mysql_error());
+$r=mysql_query("select ID,LT_01,LT_02,LT_03,LT_04,LT_05,LT_06,LT_07,LT_08,LT_09,LT_10,LT_11 from MSTSTRU1 where LT_01='$NIP' order by LT_02") or die (mysql_error());
 $no=0;
 while ($row=mysql_fetch_array($r))
 {
@@ -112,26 +122,44 @@ while ($row=mysql_fetch_array($r))
     <input type="hidden" name="LT_11ORG[<?=$no?>]" value="<?=$row[LT_11]?>">
     <td width="37" align="right" valign="top"><b><?=$no?></b></td>
     <td valign="top">
-    <input type="text" size="30" name="LT_03[<?=$no?>]" value="<?=$row[LT_03]?>"><br>
+    <select size="1" name="LT_03[<?=$no?>]" >
+    <option value="-">-</option>
+          <option value="1"	<? if ($row["LT_03"]=="SEPADA") echo "selected"; ?>>SEPADA</option>
+          <option value="2"	<? if ($row["LT_03"]=="SEPALA") echo "selected"; ?>>SEPALA</option>
+          <option value="3"	<? if ($row["LT_03"]=="SEPADYA") echo "selected"; ?>>SEPADYA</option>
+          <option value="4"	<? if ($row["LT_03"]=="ADUM") echo "selected"; ?>>ADUM</option>
+          <option value="5"	<? if ($row["LT_03"]=="ADUMLA") echo "selected"; ?>>ADUMLA</option>
+          <option value="6"	<? if ($row["LT_03"]=="SPAMA") echo "selected"; ?>>SPAMA</option>
+          <option value="7"	<? if ($row["LT_03"]=="SESPA") echo "selected"; ?>>SESPA</option>
+          <option value="8"	<? if ($row["LT_03"]=="SPAMEN") echo "selected"; ?>>SPAMEN</option>
+          <option value="9"	<? if ($row["LT_03"]=="SESPANAS") echo "selected"; ?>>SESPANAS</option>
+          <option value="10"	<? if ($row["LT_03"]=="SPATI") echo "selected"; ?>>SPATI</option>
+          <option value="11"	<? if ($row["LT_03"]=="LEMHANAS") echo "selected"; ?>>LEMHANAS</option>
+          <option value="12"	<? if ($row["LT_03"]=="DIKLATPIM Tk.I") echo "selected"; ?>>DIKLATPIM Tk.I</option>
+          <option value="13"	<? if ($row["LT_03"]=="DIKLATPIM Tk.II") echo "selected"; ?>>DIKLATPIM Tk.II</option>
+          <option value="16"	<? if ($row["LT_03"]=="DIKLATPIM PEMDA") echo "selected"; ?>>DIKLATPIM PEMDA</option>
+          <option value="14"	<? if ($row["LT_03"]=="DIKLATPIM Tk.III") echo "selected"; ?>>DIKLATPIM Tk.III</option>
+          <option value="15"	<? if ($row["LT_03"]=="DIKLATPIM Tk.IV") echo "selected"; ?>>DIKLATPIM Tk.IV</option>
+    </select><br>
     <input type="text" size="30" name="LT_04[<?=$no?>]" value="<?=$row[LT_04]?>"><br>
     <input type="text" size="30" name="LT_05[<?=$no?>]" value="<?=$row[LT_05]?>"><br>
     <input type="text" size="5"  name="LT_06[<?=$no?>]" value="<?=$row[LT_06]?>"></td>
     <td valign="top">
     	<input type="text" name="TGLT_07[<?=$no?>]" size="1" maxlength="2"  value="<?=substr($row[LT_07],8,2)?>" class="tanggal"> 
         <input type="text" name="BLLT_07[<?=$no?>]" size="1" maxlength="2"  value="<?=substr($row[LT_07],5,2)?>" class="tanggal"> 
-        <input type="text" name="THLT_07[<?=$no?>]" size="2" maxlength="4"  value="<?=substr($row[LT_07],0,4)?>" class="tahun"><br>
+        <input type="text" name="THLT_07[<?=$no?>]" size="2" maxlength="4"  value="<?=substr($row[LT_07],0,4)?>" class="tahun">
+        <br>
     	<input type="text" name="TGLT_08[<?=$no?>]" size="1" maxlength="2"  value="<?=substr($row[LT_08],8,2)?>" class="tanggal"> 
         <input type="text" name="BLLT_08[<?=$no?>]" size="1" maxlength="2"  value="<?=substr($row[LT_08],5,2)?>" class="tanggal"> 
         <input type="text" name="THLT_08[<?=$no?>]" size="2" maxlength="4"  value="<?=substr($row[LT_08],0,4)?>" class="tahun"><br>
         <input type="text" name="LT_09[<?=$no?>]" size="2" maxlength="4"  value="<?=$row[LT_09]?>" class="tahun">
     </td>
     <td valign="top">
-    	<input type="text" size="25" name="LT_10[<?=$no?>]" value="<?=$row[LT_10]?>"><br>
+    	<input type="text" size="20" name="LT_10[<?=$no?>]" value="<?=$row[LT_10]?>"><br>
     	<input type="text" name="TGLT_11[<?=$no?>]" size="1" maxlength="2" value="<?=substr($row[LT_11],8,2)?>" class="tanggal"> 
         <input type="text" name="BLLT_11[<?=$no?>]" size="1" maxlength="2" value="<?=substr($row[LT_11],5,2)?>" class="tanggal"> 
-        <input type="text" name="THLT_11[<?=$no?>]" size="2" maxlength="4" value="<?=substr($row[LT_11],0,4)?>" class="tahun">
-    </td>
-    <td width="40" align="center" valign="top"><b><a href="index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rku&NIP=<?=$NIP?>&what=delete&ID=<?=$row[ID]?>">DEL</a></b></td>
+        <input type="text" name="THLT_11[<?=$no?>]" size="2" maxlength="4" value="<?=substr($row[LT_11],0,4)?>" class="tahun"></td>
+    <td width="40" align="center" valign="top"><b><a href="index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rst&NIP=<?=$NIP?>&what=delete&ID=<?=$row[ID]?>">DEL</a></b></td>
   </tr>
   
 <?
@@ -146,26 +174,43 @@ if ($jmltambah>0 )
     <input type="hidden" name="upd[<?=$no?>]" value="1">
     <td width="37" align="right" valign="top"><b><?=$no?></b></td>
     <td valign="top">
-    <input type="text" size="30" name="LT_03[<?=$no?>]"><br>
+    <select size="1" name="LT_03[<?=$no?>]" >
+    <option value="-">-</option>
+          <option value="1">SEPADA</option>
+          <option value="2">SEPALA</option>
+          <option value="3">SEPADYA</option>
+          <option value="4">ADUM</option>
+          <option value="5">ADUMLA</option>
+          <option value="6">SPAMA</option>
+          <option value="7">SESPA</option>
+          <option value="8">SPAMEN</option>
+          <option value="9">SESPANAS</option>
+          <option value="10">SPATI</option>
+          <option value="11">LEMHANAS</option>
+          <option value="12">DIKLATPIM Tk.I</option>
+          <option value="13">DIKLATPIM Tk.II</option>
+          <option value="16">DIKLATPIM PEMDA</option>
+          <option value="14">DIKLATPIM Tk.III</option>
+          <option value="15">DIKLATPIM Tk.IV</option>
+    </select><br>
     <input type="text" size="30" name="LT_04[<?=$no?>]"><br>
     <input type="text" size="30" name="LT_05[<?=$no?>]"><br>
-    <input type="text" size="5"  name="LT_06[<?=$no?>]">
-    </td>
+    <input type="text" size="5"  name="LT_06[<?=$no?>]"></td>
     <td valign="top">
     	<input type="text" name="TGLT_07[<?=$no?>]" size="1" maxlength="2" class="tanggal"> 
         <input type="text" name="BLLT_07[<?=$no?>]" size="1" maxlength="2" class="tanggal"> 
-        <input type="text" name="THLT_07[<?=$no?>]" size="2" maxlength="4" class="tahun"><br>
+        <input type="text" name="THLT_07[<?=$no?>]" size="2" maxlength="4" class="tahun">
+        <br>
     	<input type="text" name="TGLT_08[<?=$no?>]" size="1" maxlength="2" class="tanggal"> 
         <input type="text" name="BLLT_08[<?=$no?>]" size="1" maxlength="2" class="tanggal"> 
         <input type="text" name="THLT_08[<?=$no?>]" size="2" maxlength="4" class="tahun"><br>
         <input type="text" name="LT_09[<?=$no?>]" size="2" maxlength="4" class="tahun">
     </td>
     <td valign="top">
-    	<input type="text" size="25" name="LT_10[<?=$no?>]"><br>
+    	<input type="text" size="20" name="LT_10[<?=$no?>]"><br>
     	<input type="text" name="TGLT_11[<?=$no?>]" size="1" maxlength="2" class="tanggal"> 
         <input type="text" name="BLLT_11[<?=$no?>]" size="1" maxlength="2" class="tanggal"> 
-        <input type="text" name="THLT_11[<?=$no?>]" size="2" maxlength="4" class="tahun">
-    </td>
+        <input type="text" name="THLT_11[<?=$no?>]" size="2" maxlength="4" class="tahun"></td>
     <td width="40" align="center" valign="top">&nbsp;</td>
   </tr>
 <?
@@ -176,7 +221,7 @@ if ($jmltambah>0 )
   <tr bgcolor="<? echo $warnarow2; ?>">
     <td width="586" colspan="5"><b>Jumlah Riwayat yang Akan Ditambahkan :</b>&nbsp;
     <select name="jmltambah" 
-      onChange="window.location='index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rku&NIP=<?=$NIP?>&jmltambah='+this.value+''">
+      onChange="window.location='index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rst&NIP=<?=$NIP?>&jmltambah='+this.value+''">
         <option value="">-</option>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -189,14 +234,14 @@ if ($jmltambah>0 )
         <option value="9">9</option>
         <option value="10">10</option>
       </select>
-    &nbsp;<input class="tombol2" name="simpankursus" type="submit" value="Simpan">
+    &nbsp;<input class="tombol2" name="simpandikstru" type="submit" value="Simpan">
     &nbsp;<button class="tombol2" name="batal"
-    onClick="window.location='index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rku&NIP=<?=$NIP?>&jmltambah='">Batalkan Penambahan</button></td>
+    onClick="window.location='index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rst&NIP=<?=$NIP?>&jmltambah='">Batalkan Penambahan</button></td>
   </tr>
   <input type="hidden" name="no" value="<?=$no?>">
 </form>
   <tr bgcolor="<? echo $warnarow2; ?>">
-    <td width="586" colspan="5"><b>Perhatian : </b>Data Akan Diurutkan otomatis berdasarkan TANGGAL SELSAI &nbsp;
+    <td width="586" colspan="5"><b>Perhatian : </b>Data Akan Diurutkan otomatis berdasarkan TINGKAT PENDIDIKAN &nbsp;
     </td>
   </tr>
 </table>

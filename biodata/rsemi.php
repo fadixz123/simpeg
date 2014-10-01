@@ -1,9 +1,14 @@
-<?
+<?php
+include('../include/config.inc');
+include('../include/fungsi.inc');
+mysql_connect($server,$user,$pass);
+mysql_select_db($db);
+$NIP = $_GET['nip'];
 if ($what=='delete')
-	mysql_query("delete from MSTPTAR1 where LT_01='$NIP' and ID='$ID' LIMIT 1") or die (mysql_error());
+	mysql_query("delete from MSTSEMI1 where LT_01='$NIP' and ID='$ID' LIMIT 1") or die (mysql_error());
 
 
-if ($simpantatar && $no > 0)
+if ($simpansemi)
 {
 	$u=0;
 	$z=0;
@@ -18,7 +23,7 @@ if ($simpantatar && $no > 0)
 		$a[$i]=$xtglt08;
 		if ($upd[$i]=='1')
 		{
-			$q  ="insert into MSTPTAR1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+			$q  ="insert into MSTSEMI1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
 			$q .="LT_01='$NIP',LT_02='$i',LT_03='$LT03',LT_04='$LT04',LT_05='$LT05', ";
 			$q .="LT_06='$LT_06[$i]',LT_07='$xtglt07',LT_08='$xtglt08',LT_09='$LT_09[$i]', ";
 			$q .="LT_10='$LT_10[$i]', LT_11='$xtglt11'";
@@ -27,11 +32,11 @@ if ($simpantatar && $no > 0)
 		}
 		else if ($upd[$i]=='0')
 		{
-			$q  ="update MSTPTAR1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+			$q  ="update MSTSEMI1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
 			$q .="LT_02='$i',LT_03='$LT03',LT_04='$LT04',LT_05='$LT05', ";
 			$q .="LT_06='$LT_06[$i]',LT_07='$xtglt07',LT_08='$xtglt08',LT_09='$LT_09[$i]', ";
 			$q .="LT_10='$LT_10[$i]', LT_11='$xtglt11' ";
-			$q .="where ID='$IDORG[$i]' and LT_01='$NIP'";// and ";
+			$q .="where LT_01='$NIP' and ID='$IDORG[$i]'";
 /*			$q .="LT_02='$LT_02ORG[$i]' and ";
 			$q .="LT_03='$LT_03ORG[$i]' and ";
 			$q .="LT_04='$LT_04ORG[$i]' and ";
@@ -46,35 +51,35 @@ if ($simpantatar && $no > 0)
 			mysql_query($q) or die (mysql_error());
 		}
 		if (mysql_affected_rows() > 0) $u++;
-	//echo $q."<br>";
 	}
-	if ($u > 0) lethistory($sid,"UPDATE RIWAYAT PENATARAN",$NIP);
+	if ($u > 0) lethistory($sid,"UPDATE RIWAYAT SEMI/LOKA/SIMP",$NIP);
 	sort($a);
 	$z=0;
 	for ($i=1;$i<=$no;$i++)
 	{
 		$z=$i-1;
-		$q="update MSTPTAR1 set LT_02='$i' where LT_01='$NIP' and LT_08='$a[$z]'";
+		$q="update MSTSEMI1 set LT_02='$i' where LT_01='$NIP' and LT_08='$a[$z]'";
 		
 		mysql_query($q) or die (mysql_error());
 	}
 }
 
 $x=mysql_fetch_array(mysql_query("select A_01,A_02,A_03,A_04 from MASTFIP08 where B_02='$NIP' LIMIT 1"));
+
 ?>
 <table border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse" bordercolor="#111111">
-<form name="rtatarform" action="index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rpt&NIP=<?=$NIP?>" method="post">
+<form name="rsemiform" action="index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rsm&NIP=<?=$NIP?>" method="post">
     <input type="hidden" name="A_01" value="<?=$x[A_01]?>">
     <input type="hidden" name="A_02" value="<?=$x[A_02]?>">
     <input type="hidden" name="A_03" value="<?=$x[A_03]?>">
     <input type="hidden" name="A_04" value="<?=$x[A_04]?>">
   <tr bgcolor="<? echo $warnarow2; ?>">
-    <td width="37" align="center"><b>R</b></td>
-    <td width="538" colspan="4"><b>RIWAYAT PENATARAN</b></td>
+    <td width="37" align="center"><b>S</b></td>
+    <td width="538" colspan="4"><b>RIWAYAT SEMINAR/LOKAKARYA/SIMPOSIUM</b></td>
   </tr>
   <tr bgcolor="<? echo $warnarow3; ?>">
     <td width="37" align="center" rowspan="2"><b>No</b></td>
-    <td align="center"><b>PENATARAN</b></td>
+    <td align="center"><b>SEMINAR/LOKAKARYA/SIMPOSIUM</b></td>
     <td align="center"><b>TANGGAL</b></td>
     <td align="center"><b>SERTIFIKAT</b></td>
     <td width="40" align="center" rowspan="2">&nbsp;</td>
@@ -91,7 +96,7 @@ $x=mysql_fetch_array(mysql_query("select A_01,A_02,A_03,A_04 from MASTFIP08 wher
     TANGGAL</b></td>
   </tr>
 <?
-$r=mysql_query("select ID,LT_01,LT_02,LT_03,LT_04,LT_05,LT_06,LT_07,LT_08,LT_09,LT_10,LT_11 from MSTPTAR1 where LT_01='$NIP' order by LT_02") or die (mysql_error());
+$r=mysql_query("select ID,LT_01,LT_02,LT_03,LT_04,LT_05,LT_06,LT_07,LT_08,LT_09,LT_10,LT_11 from MSTSEMI1 where LT_01='$NIP' order by LT_02") or die (mysql_error());
 $no=0;
 while ($row=mysql_fetch_array($r))
 {
@@ -131,7 +136,7 @@ while ($row=mysql_fetch_array($r))
         <input type="text" name="BLLT_11[<?=$no?>]" size="1" maxlength="2" value="<?=substr($row[LT_11],5,2)?>" class="tanggal"> 
         <input type="text" name="THLT_11[<?=$no?>]" size="2" maxlength="4" value="<?=substr($row[LT_11],0,4)?>" class="tahun">
     </td>
-    <td width="40" align="center" valign="top"><b><a href="index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rpt&NIP=<?=$NIP?>&what=delete&ID=<?=$row[ID]?>">DEL</a></b></td>
+    <td width="40" align="center" valign="top"><b><a href="index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rsm&NIP=<?=$NIP?>&what=delete&ID=<?=$row[ID]?>">DEL</a></b></td>
   </tr>
   
 <?
@@ -176,7 +181,7 @@ if ($jmltambah>0 )
   <tr bgcolor="<? echo $warnarow2; ?>">
     <td width="586" colspan="5"><b>Jumlah Riwayat yang Akan Ditambahkan :</b>&nbsp;
     <select name="jmltambah" 
-      onChange="window.location='index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rpt&NIP=<?=$NIP?>&jmltambah='+this.value+''">
+      onChange="window.location='index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rsm&NIP=<?=$NIP?>&jmltambah='+this.value+''">
         <option value="">-</option>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -189,9 +194,9 @@ if ($jmltambah>0 )
         <option value="9">9</option>
         <option value="10">10</option>
       </select>
-    &nbsp;<input class="tombol2" name="simpantatar" type="submit" value="Simpan">
+    &nbsp;<input class="tombol2" name="simpansemi" type="submit" value="Simpan">
     &nbsp;<button class="tombol2" name="batal"
-    onClick="window.location='index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rpt&NIP=<?=$NIP?>&jmltambah='">Batalkan Penambahan</button></td>
+    onClick="window.location='index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rsm&NIP=<?=$NIP?>&jmltambah='">Batalkan Penambahan</button></td>
   </tr>
   <input type="hidden" name="no" value="<?=$no?>">
 </form>

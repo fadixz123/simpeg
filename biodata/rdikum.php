@@ -1,4 +1,9 @@
-<?
+<?php
+include('../include/config.inc');
+include('../include/fungsi.inc');
+mysql_connect($server,$user,$pass);
+mysql_select_db($db);
+$NIP = $_GET['nip'];
 if ($what=='delete')
 	mysql_query("delete from MSTPEND1 where DK_01='$NIP' and ID='$ID' LIMIT 1") or die (mysql_error());
 
