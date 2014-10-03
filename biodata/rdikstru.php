@@ -72,57 +72,140 @@ if ($simpandikstru)
 $x=mysql_fetch_array(mysql_query("select A_01,A_02,A_03,A_04 from MASTFIP08 where B_02='$NIP' LIMIT 1"));
 
 ?>
-<table border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse" bordercolor="#111111">
-<form name="rdikstruform" action="index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rst&NIP=<?=$NIP?>" method="post">
+<script type="text/javascript">
+    $(function() {
+        $('.tanggal').datepicker({
+            format: 'dd/mm/yyyy'
+        }).on('changeDate', function(){
+            $(this).datepicker('hide');
+        });
+    });
+    
+    function removeMe(el) {
+        var parent = el.parentNode.parentNode;
+        parent.parentNode.removeChild(parent);
+        var jumlah = $('.tr_rows').length;
+        var col = 0;
+        for (i = 1; i <= jumlah; i++) {
+            $('.tr_rows:eq('+col+')').children('td:eq(0)').html(i);
+            col++;
+        }
+    }
+    
+    function add_new_row_rdikstru(val) {
+        var jml = $('.tr_rows').length;
+        for (i = 1; i <= val; i++) {
+        var str = '<tr class="tr_rows">'+
+            '<td align="center">'+(i+jml)+'</td>'+
+            '<td>'+
+            '<select name="LT_03[]" >'+
+            '<option value="-">-</option>'+
+                  '<option value="1">SEPADA</option>'+
+                  '<option value="2">SEPALA</option>'+
+                  '<option value="3">SEPADYA</option>'+
+                  '<option value="4">ADUM</option>'+
+                  '<option value="5">ADUMLA</option>'+
+                  '<option value="6">SPAMA</option>'+
+                  '<option value="7">SESPA</option>'+
+                  '<option value="8">SPAMEN</option>'+
+                  '<option value="9">SESPANAS</option>'+
+                  '<option value="10">SPATI</option>'+
+                  '<option value="11">LEMHANAS</option>'+
+                  '<option value="12">DIKLATPIM Tk.I</option>'+
+                  '<option value="13">DIKLATPIM Tk.II</option>'+
+                  '<option value="16">DIKLATPIM PEMDA</option>'+
+                  '<option value="14">DIKLATPIM Tk.III</option>'+
+                  '<option value="15">DIKLATPIM Tk.IV</option>'+
+            '</select></td>'+
+            '<td><input type="text" name="LT_04[]"></td>'+
+            '<td><input type="text" name="LT_05[]"></td>'+
+            '<td><input type="text" name="LT_06[]"></td>'+
+            '<td><input type="text" name="TGLT_07[]" class="tanggal"> </td>'+
+            '<td><input type="text" name="TGLT_08[]" class="tanggal"></td>'+
+            '<td><input type="text" name="LT_09[]" maxlength="4" class="tahun"></td>'+
+            '<td><input type="text" name="LT_10[]"></td>'+
+            '<td><input type="text" name="TGLT_11[]" class="tanggal"></td>'+
+            '<td align="center"><button type="button" class="btn btn-default btn-xs" onclick="removeMe(this);"><i class="fa fa-trash-o"></i></button></td>'+
+          '</tr>';
+            $('#rdikstru tbody').append(str);
+            $('.tanggal').datepicker({
+                format: 'dd/mm/yyyy'
+            }).on('changeDate', function(){
+                $(this).datepicker('hide');
+            });
+        }
+    }
+    
+    function save_data_rdikstru() {
+        var jml = $('.tr_rows').length;
+        var stop = false;
+        if (jml === 0) {
+            dc_validation('#tambah','Pilih jumlah jabatan !');
+            stop = true;
+        }
+        for (i = 1; i <= jml; i++) {
+            
+        }
+        if (stop) {
+            return false;
+        }
+        $.ajax({
+            type: 'POST',
+            url: 'biodata/save-data.php?save=rdikstru',
+            data: $('#rdikstru_form').serialize(),
+            dataType: 'json',
+            beforeSend: function() {
+                show_ajax_indicator();
+            },
+            success: function(data) {
+                hide_ajax_indicator();
+                if (data.act === 'edit') {
+                    message_edit_success();
+                } else {
+                    message_add_success();
+                }
+            },
+            error: function() {
+                hide_ajax_indicator();
+            }
+        });
+    }
+    
+</script>
+<form id="rdikstru_form" method="post">
     <input type="hidden" name="A_01" value="<?=$x[A_01]?>">
     <input type="hidden" name="A_02" value="<?=$x[A_02]?>">
     <input type="hidden" name="A_03" value="<?=$x[A_03]?>">
     <input type="hidden" name="A_04" value="<?=$x[A_04]?>">
-  <tr bgcolor="<? echo $warnarow2; ?>">
-    <td width="37" align="center"><b>O</b></td>
-    <td width="538" colspan="4"><b>RIWAYAT DIKLAT STRUKTURAL</b></td>
-  </tr>
-  <tr bgcolor="<? echo $warnarow3; ?>">
-    <td width="37" align="center" rowspan="2"><b>No</b></td>
-    <td align="center"><b>DIKLAT</b></td>
-    <td align="center"><b>TANGGAL</b></td>
-    <td align="center"><b>STPP</b></td>
-    <td width="40" align="center" rowspan="2">&nbsp;</td>
-  </tr>
-  <tr bgcolor="<? echo $warnarow3; ?>">
-    <td align="center"><b>NAMA<br>
-    TEMPAT<br>
-    PENYELENGGARA<br>
-    ANGKATAN</b></td>
-    <td align="center"><b>MULAI<br>
-    SELESAI<br>
-    JML JAM</b></td>
-    <td align="center"><b>NOMOR<br>
-    TANGGAL</b></td>
-  </tr>
-<?
+    <input type="hidden" name="NIP" value="<?= $NIP ?>" />
+<table width="100%" class="table table-condensed table-bordered table-hover no-margin" id="rdikstru">
+    <thead>
+    <tr>
+        <th>No</th>
+        <th>NAMA</th>
+        <th>TEMPAT</th>
+        <th>PENYELENGGARA</th>
+        <th>ANGKATAN</th>
+        <th>TGL MULAI</th>
+        <th>TGL SELESAI</th>
+        <th>JML JAM</th>
+        <th>NOMOR STPP</th>
+        <th>TGL STPP</th>
+        <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+<?php
 $r=mysql_query("select ID,LT_01,LT_02,LT_03,LT_04,LT_05,LT_06,LT_07,LT_08,LT_09,LT_10,LT_11 from MSTSTRU1 where LT_01='$NIP' order by LT_02") or die (mysql_error());
 $no=0;
 while ($row=mysql_fetch_array($r))
 {
   	$no++;
   	?>   
-  <tr bgcolor="<? echo $warnarow; ?>">
-    <input type="hidden" name="upd[<?=$no?>]" value="0">
-    <input type="hidden" name="IDORG[<?=$no?>]" value="<?=$row[ID]?>">
-    <input type="hidden" name="LT_02ORG[<?=$no?>]" value="<?=$row[LT_02]?>">
-    <input type="hidden" name="LT_03ORG[<?=$no?>]" value="<?=$row[LT_03]?>">
-    <input type="hidden" name="LT_04ORG[<?=$no?>]" value="<?=$row[LT_04]?>">
-    <input type="hidden" name="LT_05ORG[<?=$no?>]" value="<?=$row[LT_05]?>">
-    <input type="hidden" name="LT_06ORG[<?=$no?>]" value="<?=$row[LT_06]?>">
-    <input type="hidden" name="LT_07ORG[<?=$no?>]" value="<?=$row[LT_07]?>">
-    <input type="hidden" name="LT_08ORG[<?=$no?>]" value="<?=$row[LT_08]?>">
-    <input type="hidden" name="LT_09ORG[<?=$no?>]" value="<?=$row[LT_09]?>">
-    <input type="hidden" name="LT_10ORG[<?=$no?>]" value="<?=$row[LT_10]?>">
-    <input type="hidden" name="LT_11ORG[<?=$no?>]" value="<?=$row[LT_11]?>">
-    <td width="37" align="right" valign="top"><b><?=$no?></b></td>
-    <td valign="top">
-    <select size="1" name="LT_03[<?=$no?>]" >
+  <tr class="tr_rows">
+    <td align="center"><?= $no ?></td>
+    <td>
+    <select size="1" name="LT_03[]" >
     <option value="-">-</option>
           <option value="1"	<? if ($row["LT_03"]=="SEPADA") echo "selected"; ?>>SEPADA</option>
           <option value="2"	<? if ($row["LT_03"]=="SEPALA") echo "selected"; ?>>SEPALA</option>
@@ -140,108 +223,45 @@ while ($row=mysql_fetch_array($r))
           <option value="16"	<? if ($row["LT_03"]=="DIKLATPIM PEMDA") echo "selected"; ?>>DIKLATPIM PEMDA</option>
           <option value="14"	<? if ($row["LT_03"]=="DIKLATPIM Tk.III") echo "selected"; ?>>DIKLATPIM Tk.III</option>
           <option value="15"	<? if ($row["LT_03"]=="DIKLATPIM Tk.IV") echo "selected"; ?>>DIKLATPIM Tk.IV</option>
-    </select><br>
-    <input type="text" size="30" name="LT_04[<?=$no?>]" value="<?=$row[LT_04]?>"><br>
-    <input type="text" size="30" name="LT_05[<?=$no?>]" value="<?=$row[LT_05]?>"><br>
-    <input type="text" size="5"  name="LT_06[<?=$no?>]" value="<?=$row[LT_06]?>"></td>
-    <td valign="top">
-    	<input type="text" name="TGLT_07[<?=$no?>]" size="1" maxlength="2"  value="<?=substr($row[LT_07],8,2)?>" class="tanggal"> 
-        <input type="text" name="BLLT_07[<?=$no?>]" size="1" maxlength="2"  value="<?=substr($row[LT_07],5,2)?>" class="tanggal"> 
-        <input type="text" name="THLT_07[<?=$no?>]" size="2" maxlength="4"  value="<?=substr($row[LT_07],0,4)?>" class="tahun">
-        <br>
-    	<input type="text" name="TGLT_08[<?=$no?>]" size="1" maxlength="2"  value="<?=substr($row[LT_08],8,2)?>" class="tanggal"> 
-        <input type="text" name="BLLT_08[<?=$no?>]" size="1" maxlength="2"  value="<?=substr($row[LT_08],5,2)?>" class="tanggal"> 
-        <input type="text" name="THLT_08[<?=$no?>]" size="2" maxlength="4"  value="<?=substr($row[LT_08],0,4)?>" class="tahun"><br>
-        <input type="text" name="LT_09[<?=$no?>]" size="2" maxlength="4"  value="<?=$row[LT_09]?>" class="tahun">
-    </td>
-    <td valign="top">
-    	<input type="text" size="20" name="LT_10[<?=$no?>]" value="<?=$row[LT_10]?>"><br>
-    	<input type="text" name="TGLT_11[<?=$no?>]" size="1" maxlength="2" value="<?=substr($row[LT_11],8,2)?>" class="tanggal"> 
-        <input type="text" name="BLLT_11[<?=$no?>]" size="1" maxlength="2" value="<?=substr($row[LT_11],5,2)?>" class="tanggal"> 
-        <input type="text" name="THLT_11[<?=$no?>]" size="2" maxlength="4" value="<?=substr($row[LT_11],0,4)?>" class="tahun"></td>
-    <td width="40" align="center" valign="top"><b><a href="index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rst&NIP=<?=$NIP?>&what=delete&ID=<?=$row[ID]?>">DEL</a></b></td>
+    </select></td>
+    <td><input type="text" name="LT_04[]" value="<?=$row[LT_04]?>"></td>
+    <td><input type="text" name="LT_05[]" value="<?=$row[LT_05]?>"></td>
+    <td><input type="text" name="LT_06[]" value="<?=$row[LT_06]?>"></td>
+    <td><input type="text" name="TGLT_07[]" value="<?=datefmysql($row[LT_07])?>" class="tanggal"> </td>
+    <td><input type="text" name="TGLT_08[]" value="<?=datefmysql($row[LT_08])?>" class="tanggal"></td>
+    <td><input type="text" name="LT_09[]" maxlength="4"  value="<?=$row[LT_09]?>" class="tahun"></td>
+    <td><input type="text" name="LT_10[]" value="<?=$row[LT_10]?>"></td>
+    <td><input type="text" name="TGLT_11[]" value="<?=datefmysql($row[LT_11])?>" class="tanggal"></td>
+    <td align="center"><button type="button" class="btn btn-default btn-xs" onclick="removeMe(this);"><i class="fa fa-trash-o"></i></button></td>
   </tr>
   
 <?
-}
-if ($jmltambah>0 )
-{
-	for ($i=1;$i<=$jmltambah;$i++)
-	{
-		$no++;
-?>  
-  <tr bgcolor="<? echo $warnarow; ?>">
-    <input type="hidden" name="upd[<?=$no?>]" value="1">
-    <td width="37" align="right" valign="top"><b><?=$no?></b></td>
-    <td valign="top">
-    <select size="1" name="LT_03[<?=$no?>]" >
-    <option value="-">-</option>
-          <option value="1">SEPADA</option>
-          <option value="2">SEPALA</option>
-          <option value="3">SEPADYA</option>
-          <option value="4">ADUM</option>
-          <option value="5">ADUMLA</option>
-          <option value="6">SPAMA</option>
-          <option value="7">SESPA</option>
-          <option value="8">SPAMEN</option>
-          <option value="9">SESPANAS</option>
-          <option value="10">SPATI</option>
-          <option value="11">LEMHANAS</option>
-          <option value="12">DIKLATPIM Tk.I</option>
-          <option value="13">DIKLATPIM Tk.II</option>
-          <option value="16">DIKLATPIM PEMDA</option>
-          <option value="14">DIKLATPIM Tk.III</option>
-          <option value="15">DIKLATPIM Tk.IV</option>
-    </select><br>
-    <input type="text" size="30" name="LT_04[<?=$no?>]"><br>
-    <input type="text" size="30" name="LT_05[<?=$no?>]"><br>
-    <input type="text" size="5"  name="LT_06[<?=$no?>]"></td>
-    <td valign="top">
-    	<input type="text" name="TGLT_07[<?=$no?>]" size="1" maxlength="2" class="tanggal"> 
-        <input type="text" name="BLLT_07[<?=$no?>]" size="1" maxlength="2" class="tanggal"> 
-        <input type="text" name="THLT_07[<?=$no?>]" size="2" maxlength="4" class="tahun">
-        <br>
-    	<input type="text" name="TGLT_08[<?=$no?>]" size="1" maxlength="2" class="tanggal"> 
-        <input type="text" name="BLLT_08[<?=$no?>]" size="1" maxlength="2" class="tanggal"> 
-        <input type="text" name="THLT_08[<?=$no?>]" size="2" maxlength="4" class="tahun"><br>
-        <input type="text" name="LT_09[<?=$no?>]" size="2" maxlength="4" class="tahun">
-    </td>
-    <td valign="top">
-    	<input type="text" size="20" name="LT_10[<?=$no?>]"><br>
-    	<input type="text" name="TGLT_11[<?=$no?>]" size="1" maxlength="2" class="tanggal"> 
-        <input type="text" name="BLLT_11[<?=$no?>]" size="1" maxlength="2" class="tanggal"> 
-        <input type="text" name="THLT_11[<?=$no?>]" size="2" maxlength="4" class="tahun"></td>
-    <td width="40" align="center" valign="top">&nbsp;</td>
-  </tr>
-<?
-	}
 }
 ?>   
-  
+ </tbody>
+ <tfoot>
   <tr bgcolor="<? echo $warnarow2; ?>">
-    <td width="586" colspan="5"><b>Jumlah Riwayat yang Akan Ditambahkan :</b>&nbsp;
-    <select name="jmltambah" 
-      onChange="window.location='index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rst&NIP=<?=$NIP?>&jmltambah='+this.value+''">
-        <option value="">-</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-      </select>
-    &nbsp;<input class="tombol2" name="simpandikstru" type="submit" value="Simpan">
-    &nbsp;<button class="tombol2" name="batal"
-    onClick="window.location='index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=rst&NIP=<?=$NIP?>&jmltambah='">Batalkan Penambahan</button></td>
-  </tr>
-  <input type="hidden" name="no" value="<?=$no?>">
-</form>
-  <tr bgcolor="<? echo $warnarow2; ?>">
-    <td width="586" colspan="5"><b>Perhatian : </b>Data Akan Diurutkan otomatis berdasarkan TINGKAT PENDIDIKAN &nbsp;
+    <td colspan="11">Jumlah Riwayat yang Akan Ditambahkan :&nbsp;
+        <select name="jmltambah" onchange="add_new_row_rdikstru(this.value);" style="width: 100px;">
+            <option value="">-</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+        <button type="button" class="btn btn-primary" onclick="save_data_rdikstru(); return false;"><i class="fa fa-save"></i> Simpan</button>
     </td>
   </tr>
+  <tr>
+    <td colspan="11">Perhatian : Data Akan Diurutkan otomatis berdasarkan TINGKAT PENDIDIKAN &nbsp;
+    </td>
+  </tr>
+  </tfoot>
 </table>
+</form>

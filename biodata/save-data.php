@@ -799,4 +799,281 @@ else if ($opsi === 'rbahasa') {
     lethistory($sid,"UPDATE KEMAMPUAN BAHASA",$NIP);
     die(json_encode($result));
 }
+
+else if ($opsi === 'rdikum') {
+    $A_01   = $_POST['A_01'];
+    $A_02   = $_POST['A_02'];
+    $A_03   = $_POST['A_03'];
+    $A_04   = $_POST['A_04'];
+    $NIP    = $_POST['NIP'];
+    
+    $DK_03  = $_POST['DK_03'];
+    $DK_04  = $_POST['DK_04'];
+    $DK_05  = $_POST['DK_05'];
+    $DK_06  = $_POST['DK_06'];
+    $DK_07  = $_POST['DK_07'];
+    $DK_08  = $_POST['DK_08'];
+    $TGDK_09= $_POST['TGDK_09'];
+    
+    mysql_query("delete from MSTPEND1 where DK_01 = '$NIP'");
+    if ($DK_03) {
+        foreach ($DK_03 as $i => $data) {
+
+            $xtgdk09=  date2mysql($TGDK_09[$i]);
+            $DK04=addslashes(strtoupper($DK_04[$i]));
+            $DK05=addslashes(strtoupper($DK_05[$i]));
+            $DK06=addslashes(strtoupper($DK_06[$i]));
+            $DK07=addslashes(strtoupper($DK_07[$i]));
+
+            $q  ="insert into MSTPEND1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+            $q .="DK_01='$NIP',DK_02='$i',DK_03='$DK_03[$i]',DK_04='$DK04',DK_05='$DK05', ";
+            $q .="DK_06='$DK06',DK_07='$DK07',DK_08='$DK_08[$i]',DK_09='$xtgdk09'";
+            
+            mysql_query($q) or die (mysql_error());
+        }
+    }
+    $result['act'] = 'edit';
+    lethistory($sid,"UPDATE PENDIDIKAN UMUM",$NIP);
+    die(json_encode($result));
+}
+
+else if ($opsi === 'rdikstru') {
+    $A_01   = $_POST['A_01'];
+    $A_02   = $_POST['A_02'];
+    $A_03   = $_POST['A_03'];
+    $A_04   = $_POST['A_04'];
+    $NIP    = $_POST['NIP'];
+    
+    $LT_03  = $_POST['LT_03'];
+    $LT_04  = $_POST['LT_04'];
+    $LT_05  = $_POST['LT_05'];
+    $LT_06  = $_POST['LT_06'];
+    $LT_09  = $_POST['LT_09'];
+    $LT_10  = $_POST['LT_10'];
+    
+    $TGLT_07= $_POST['TGLT_07'];
+    $TGLT_08= $_POST['TGLT_08'];
+    $TGLT_11= $_POST['TGLT_11'];
+    $aJab=array(1=>"SEPADA","SEPALA","SEPADYA","ADUM","ADUMLA","SPAMA","SESPA","SPAMEN","SESPANAS","SPATI","LEMHANAS","DIKLATPIM Tk.I","DIKLATPIM Tk.II","DIKLATPIM Tk.III","DIKLATPIM Tk.IV","DIKLATPIM PEMDA");
+    mysql_query("delete from MSTSTRU1 where LT_01 = '$NIP'");
+    if ($LT_03) {
+        foreach ($LT_03 as $i => $data) {
+            $xtglt07    = date2mysql($TGLT_07[$i]);
+            $xtglt08    = date2mysql($TGLT_08[$i]);
+            $xtglt11    = date2mysql($TGLT_11[$i]);
+
+
+            $LT03=$aJab[$LT_03[$i]];
+
+            $LT04=strtoupper($LT_04[$i]);
+            $LT05=strtoupper($LT_05[$i]);
+
+            $q  ="insert into MSTSTRU1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+            $q .="LT_01='$NIP',LT_02='$i',LT_03='$LT03',LT_04='$LT04',LT_05='$LT05', ";
+            $q .="LT_06='$LT_06[$i]',LT_07='$xtglt07',LT_08='$xtglt08',LT_09='$LT_09[$i]', ";
+            $q .="LT_10='$LT_10[$i]', LT_11='$xtglt11'";
+
+            mysql_query($q) or die (mysql_error());
+
+        }
+    }
+    lethistory($sid,"UPDATE RIWAYAT DIKLAT STRUKTURAL",$NIP);
+    $result['act'] = 'edit';
+    die(json_encode($result));
+}
+
+else if ($opsi === 'rdikfung') {
+    $A_01   = $_POST['A_01'];
+    $A_02   = $_POST['A_02'];
+    $A_03   = $_POST['A_03'];
+    $A_04   = $_POST['A_04'];
+    $NIP    = $_POST['NIP'];
+    
+    $LT_03  = $_POST['LT_03'];
+    $LT_04  = $_POST['LT_04'];
+    $LT_05  = $_POST['LT_05'];
+    $LT_06  = $_POST['LT_06'];
+    $LT_09  = $_POST['LT_09'];
+    $LT_10  = $_POST['LT_10'];
+    
+    $TGLT_07= $_POST['TGLT_07'];
+    $TGLT_08= $_POST['TGLT_08'];
+    $TGLT_11= $_POST['TGLT_11'];
+    mysql_query("delete from MSTFUNG1 where LT_01 = '$NIP'");
+    foreach ($LT_03 as $i => $data) {
+        $xtglt07=date2mysql($TGLT_07[$i]);
+        $xtglt08=date2mysql($TGLT_08[$i]);
+        $xtglt11=date2mysql($TGLT_11[$i]);
+        $LT03=strtoupper($LT_03[$i]);
+        $LT04=strtoupper($LT_04[$i]);
+        $LT05=strtoupper($LT_05[$i]);
+        
+        $q  ="insert into MSTFUNG1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+        $q .="LT_01='$NIP',LT_02='$i',LT_03='$LT03',LT_04='$LT04',LT_05='$LT05', ";
+        $q .="LT_06='$LT_06[$i]',LT_07='$xtglt07',LT_08='$xtglt08',LT_09='$LT_09[$i]', ";
+        $q .="LT_10='$LT_10[$i]', LT_11='$xtglt11'";
+
+        mysql_query($q) or die (mysql_error());
+    }
+    
+    lethistory($sid,"UPDATE RIWAYAT DIKLAT FUNGSIONAL",$NIP);
+    $result['act'] = 'edit';
+    die(json_encode($result));
+}
+
+else if ($opsi === 'rdiktekn') {
+    $A_01   = $_POST['A_01'];
+    $A_02   = $_POST['A_02'];
+    $A_03   = $_POST['A_03'];
+    $A_04   = $_POST['A_04'];
+    $NIP    = $_POST['NIP'];
+    
+    $LT_03  = $_POST['LT_03'];
+    $LT_04  = $_POST['LT_04'];
+    $LT_05  = $_POST['LT_05'];
+    $LT_06  = $_POST['LT_06'];
+    $LT_09  = $_POST['LT_09'];
+    $LT_10  = $_POST['LT_10'];
+    
+    $TGLT_07= $_POST['TGLT_07'];
+    $TGLT_08= $_POST['TGLT_08'];
+    $TGLT_11= $_POST['TGLT_11'];
+    mysql_query("delete from MSTTEKN1 where LT_01 = '$NIP'");
+    foreach ($LT_03 as $i => $data) {
+        $xtglt07=date2mysql($TGLT_07[$i]);
+        $xtglt08=date2mysql($TGLT_08[$i]);
+        $xtglt11=date2mysql($TGLT_11[$i]);
+        $LT03=strtoupper($LT_03[$i]);
+        $LT04=strtoupper($LT_04[$i]);
+        $LT05=strtoupper($LT_05[$i]);
+        
+        $q  ="insert into MSTTEKN1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+        $q .="LT_01='$NIP',LT_02='$i',LT_03='$LT03',LT_04='$LT04',LT_05='$LT05', ";
+        $q .="LT_06='$LT_06[$i]',LT_07='$xtglt07',LT_08='$xtglt08',LT_09='$LT_09[$i]', ";
+        $q .="LT_10='$LT_10[$i]', LT_11='$xtglt11'";
+
+        mysql_query($q) or die (mysql_error());
+    }
+    
+    lethistory($sid,"UPDATE RIWAYAT DIKLAT TEKNIS",$NIP);
+    $result['act'] = 'edit';
+    die(json_encode($result));
+}
+
+else if ($opsi === 'rtatar') {
+    $A_01   = $_POST['A_01'];
+    $A_02   = $_POST['A_02'];
+    $A_03   = $_POST['A_03'];
+    $A_04   = $_POST['A_04'];
+    $NIP    = $_POST['NIP'];
+    
+    $LT_03  = $_POST['LT_03'];
+    $LT_04  = $_POST['LT_04'];
+    $LT_05  = $_POST['LT_05'];
+    $LT_06  = $_POST['LT_06'];
+    $LT_09  = $_POST['LT_09'];
+    $LT_10  = $_POST['LT_10'];
+    
+    $TGLT_07= $_POST['TGLT_07'];
+    $TGLT_08= $_POST['TGLT_08'];
+    $TGLT_11= $_POST['TGLT_11'];
+    mysql_query("delete from MSTPTAR1 where LT_01 = '$NIP'");
+    foreach ($LT_03 as $i => $data) {
+        $xtglt07=date2mysql($TGLT_07[$i]);
+        $xtglt08=date2mysql($TGLT_08[$i]);
+        $xtglt11=date2mysql($TGLT_11[$i]);
+        $LT03=strtoupper($LT_03[$i]);
+        $LT04=strtoupper($LT_04[$i]);
+        $LT05=strtoupper($LT_05[$i]);
+        
+        $q  ="insert into MSTPTAR1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+        $q .="LT_01='$NIP',LT_02='$i',LT_03='$LT03',LT_04='$LT04',LT_05='$LT05', ";
+        $q .="LT_06='$LT_06[$i]',LT_07='$xtglt07',LT_08='$xtglt08',LT_09='$LT_09[$i]', ";
+        $q .="LT_10='$LT_10[$i]', LT_11='$xtglt11'";
+
+        mysql_query($q) or die (mysql_error());
+    }
+    
+    lethistory($sid,"UPDATE RIWAYAT PENATARAN",$NIP);
+    $result['act'] = 'edit';
+    die(json_encode($result));
+}
+
+else if ($opsi === 'rsemi') {
+    $A_01   = $_POST['A_01'];
+    $A_02   = $_POST['A_02'];
+    $A_03   = $_POST['A_03'];
+    $A_04   = $_POST['A_04'];
+    $NIP    = $_POST['NIP'];
+    
+    $LT_03  = $_POST['LT_03'];
+    $LT_04  = $_POST['LT_04'];
+    $LT_05  = $_POST['LT_05'];
+    $LT_06  = $_POST['LT_06'];
+    $LT_09  = $_POST['LT_09'];
+    $LT_10  = $_POST['LT_10'];
+    
+    $TGLT_07= $_POST['TGLT_07'];
+    $TGLT_08= $_POST['TGLT_08'];
+    $TGLT_11= $_POST['TGLT_11'];
+    mysql_query("delete from MSTSEMI1 where LT_01 = '$NIP'");
+    foreach ($LT_03 as $i => $data) {
+        $xtglt07=date2mysql($TGLT_07[$i]);
+        $xtglt08=date2mysql($TGLT_08[$i]);
+        $xtglt11=date2mysql($TGLT_11[$i]);
+        $LT03=strtoupper($LT_03[$i]);
+        $LT04=strtoupper($LT_04[$i]);
+        $LT05=strtoupper($LT_05[$i]);
+        
+        $q  ="insert into MSTSEMI1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+        $q .="LT_01='$NIP',LT_02='$i',LT_03='$LT03',LT_04='$LT04',LT_05='$LT05', ";
+        $q .="LT_06='$LT_06[$i]',LT_07='$xtglt07',LT_08='$xtglt08',LT_09='$LT_09[$i]', ";
+        $q .="LT_10='$LT_10[$i]', LT_11='$xtglt11'";
+
+        mysql_query($q) or die (mysql_error());
+    }
+    
+    lethistory($sid,"UPDATE RIWAYAT SEMINAR/LOKAKARYA/SIMPOSIUM",$NIP);
+    $result['act'] = 'edit';
+    die(json_encode($result));
+}
+
+else if ($opsi === 'rkursus') {
+    $A_01   = $_POST['A_01'];
+    $A_02   = $_POST['A_02'];
+    $A_03   = $_POST['A_03'];
+    $A_04   = $_POST['A_04'];
+    $NIP    = $_POST['NIP'];
+    
+    $LT_03  = $_POST['LT_03'];
+    $LT_04  = $_POST['LT_04'];
+    $LT_05  = $_POST['LT_05'];
+    $LT_06  = $_POST['LT_06'];
+    $LT_09  = $_POST['LT_09'];
+    $LT_10  = $_POST['LT_10'];
+    
+    $TGLT_07= $_POST['TGLT_07'];
+    $TGLT_08= $_POST['TGLT_08'];
+    $TGLT_11= $_POST['TGLT_11'];
+    mysql_query("delete from MSTKURS1 where LT_01 = '$NIP'");
+    foreach ($LT_03 as $i => $data) {
+        $xtglt07=date2mysql($TGLT_07[$i]);
+        $xtglt08=date2mysql($TGLT_08[$i]);
+        $xtglt11=date2mysql($TGLT_11[$i]);
+        $LT03=strtoupper($LT_03[$i]);
+        $LT04=strtoupper($LT_04[$i]);
+        $LT05=strtoupper($LT_05[$i]);
+        
+        $q  ="insert into MSTKURS1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+        $q .="LT_01='$NIP',LT_02='$i',LT_03='$LT03',LT_04='$LT04',LT_05='$LT05', ";
+        $q .="LT_06='$LT_06[$i]',LT_07='$xtglt07',LT_08='$xtglt08',LT_09='$LT_09[$i]', ";
+        $q .="LT_10='$LT_10[$i]', LT_11='$xtglt11'";
+
+        mysql_query($q) or die (mysql_error());
+    }
+    
+    lethistory($sid,"UPDATE RIWAYAT KURSUS DLM NEGERI / LUAR NEGERI",$NIP);
+    $result['act'] = 'edit';
+    die(json_encode($result));
+}
 ?>

@@ -824,3 +824,32 @@ span.utama { font-size: 16px; }
   -webkit-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
   -webkit-animation-duration: 1s; 
 }
+
+.wrapp-icon {
+    width: 220px;
+    height: 75px;
+    background: #eae8d8;
+    padding: 5px;
+    border-radius: 3px;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.wrapp-icon:hover {
+    background: #d6d5ca;
+    cursor: pointer;
+}
+.wrapp-image {
+    float: left;
+    width: 64px;
+    height: 64px;
+    margin-right: 10px;
+}
+
+.wrapp-keterangan {
+    padding: 5px;
+}
+
+.wrapp-keterangan:hover {
+    color: #999;
+}

@@ -207,7 +207,7 @@ while ($row=mysql_fetch_array($r))
     </td>
   </tr>
 
-  <tr bgcolor="<? echo $warnarow2; ?>">
+  <tr>
     <td width="586" colspan="7"><b>Perhatian : </b>Data Akan Diurutkan otomatis berdasarkan Tanggal &nbsp;
     </td>
   </tr>
