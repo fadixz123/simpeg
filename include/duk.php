@@ -14,7 +14,8 @@ $pensiun1=($tglskr-61)."-".date("m")."-".date("d");
             var dHeight= wHeight * 1;
             var x = screen.width/2 - dWidth/2;
             var y = screen.height/2 - dHeight/2;
-            window.open('include/cetak_duk.php?starthal=<?=$starthal?>&stophal=<?=$stophal?>&akhir=<?=$akhir?>&A_01=<?=$unitkerja?>&eselon='+cetakDUK.eselon.value+'&jabatan='+cetakDUK.jabatan.value+'&kelamin='+cetakDUK.kelamin.value+'&agama='+cetakDUK.agama.value+'&GOL1='+cetakDUK.gol1.value+'&GOL2='+cetakDUK.gol2.value+'','myPoppp','width='+dWidth+', height='+dHeight+', left='+x+',top='+y)
+            
+            window.open('include/cetak_duk.php?starthal=<?=$starthal?>&stophal=<?=$stophal?>&akhir=<?=$akhir?>&A_01='+uk.value+'&eselon='+cetakDUK.eselon.value+'&jabatan='+cetakDUK.jabatan.value+'&kelamin='+cetakDUK.kelamin.value+'&agama='+cetakDUK.agama.value+'&GOL1='+cetakDUK.gol1.value+'&GOL2='+cetakDUK.gol2.value+'','myPoppp','width='+dWidth+', height='+dHeight+', left='+x+',top='+y)
         });
         
     });
@@ -28,7 +29,7 @@ $pensiun1=($tglskr-61)."-".date("m")."-".date("d");
           <tr>
             <td width="15%">Golongan Antara:</td>
             <td width="603">
-              <select name="gol1" id="gol1" class="form-control-static" onChange="window.location='index.htm?do=duk&sid=<?=$sid?>&sid2=<?=$myid?>&gol1='+this.value+''">
+              <select name="gol1" id="gol1" class="form-control-static">
                 <option value="45" <? if ($gol1=='45') echo "selected"; ?>>IV/e</option>
                 <option value="44" <? if ($gol1=='44') echo "selected"; ?>>IV/d</option>
                 <option value="43" <? if ($gol1=='43') echo "selected"; ?>>IV/c</option>
@@ -47,8 +48,8 @@ $pensiun1=($tglskr-61)."-".date("m")."-".date("d");
                 <option value="12" <? if ($gol1=='12') echo "selected"; ?>>I/b</option>
                 <option value="11" <? if ($gol1=='11') echo "selected"; ?>>I/a</option>
               </select>
-			s/d
-			<select name="gol2" id="gol2" class="form-control-static" onChange="window.location='index.htm?do=duk&sid=<?=$sid?>&sid2=<?=$myid?>&gol1=<?=$gol1?>&gol2='+this.value+''">
+                <span class="form-control-label">s/d</span>
+			<select name="gol2" id="gol2" class="form-control-static">
 			  <option value="45" <? if ($gol2=='45') echo "selected"; ?>>IV/e</option>
 			  <option value="44" <? if ($gol2=='44') echo "selected"; ?>>IV/d</option>
 			  <option value="43" <? if ($gol2=='43') echo "selected"; ?>>IV/c</option>
@@ -68,13 +69,13 @@ $pensiun1=($tglskr-61)."-".date("m")."-".date("d");
 			  <option value="11" <? if ($gol2=='11') echo "selected"; ?>>I/a</option>
 			</select></td>
 			</tr>
-<?
+<?php
 if ($gol1=='') $gol1='11';
 if ($gol2=='') $gol2='45';
 ?>
 <tr>
   <td>Unit Kerja:</td>
-  <td><select name="uk" id="uk" class="form-control-static" onChange="window.location='index.htm?sid=<?=$sid?>&do=duk&gol1=<?=$gol1?>&gol2=<?=$gol2?>&unitkerja='+this.value+''">
+  <td><select name="uk" id="uk" class="form-control-static" style="width: 300px;">
     <option value="">Pilih...</option>
     <option value="xx" <?= $unitkerja=='xx' ? "selected" : ""?>>Semua Unit Kerja</option>
     <?
@@ -86,9 +87,9 @@ if ($gol2=='') $gol2='45';
   </select>
   </td>
 </tr>
-        <tr valign="top">
+        <tr>
           <td align="left">Eselon:
-          <td align="left"><select name="eselon" id="eselon" class="form-control-static" onChange="window.location='index.htm?sid=<?=$sid?>&do=duk&gol1=<?=$gol1?>&gol2=<?=$gol2?>&unitkerja=<?=$unitkerja?>&uks=<?=$uks?>&eselon='+this.value+'&jabatan=<?=$jabatan?>&kelamin=<?=$kelamin?>&agama=<?=$agama?>'">
+          <td align="left"><select name="eselon" id="eselon" class="form-control-static" style="width: 300px;">
             <option value="all" <? if ($eselon=='all') echo "selected" ; ?>>Semua...</option>
             <option value="str" <? if ($eselon=='str') echo "selected" ; ?>>Struktural</option>
             <option value="11" <? if ($eselon=='11') echo "selected" ; ?>>1A</option>
@@ -100,26 +101,26 @@ if ($gol2=='') $gol2='45';
             <option value="41" <? if ($eselon=='41') echo "selected" ; ?>>4A</option>
             <option value="42" <? if ($eselon=='42') echo "selected" ; ?>>4B</option>
           </select>          
-        <tr valign="top">
+        <tr>
           <td align="left">Jabatan:</td>
-          <td align="left"><select name="jabatan" id="jabatan" class="form-control-static" onChange="window.location='index.htm?sid=<?=$sid?>&do=duk&gol1=<?=$gol1?>&gol2=<?=$gol2?>&unitkerja=<?=$unitkerja?>&uks=<?=$uks?>&eselon=<?=$eselon?>&jabatan='+this.value+'&kelamin=<?=$kelamin?>&agama=<?=$agama?>'">
+          <td align="left"><select name="jabatan" id="jabatan" class="form-control-static" style="width: 300px;">
             <option value="all" <? if ($jabatan=='all') echo "selected" ; ?>>Semua...</option>
             <option value="0" <? if ($jabatan=='0') echo "selected" ; ?>>Staff</option>
             <option value="1" <? if ($jabatan=='1') echo "selected" ; ?>>Struktural</option>
             <option value="2" <? if ($jabatan=='2') echo "selected" ; ?>>Fungsional</option>
           </select></td>
         </tr>
-        <tr valign="top">
+        <tr>
           <td align="left">Jenis Kelamin:</td>
-          <td align="left"><select name="kelamin" id="kelamin" class="form-control-static" onChange="window.location='index.htm?sid=<?=$sid?>&do=duk&gol1=<?=$gol1?>&gol2=<?=$gol2?>&unitkerja=<?=$unitkerja?>&uks=<?=$uks?>&eselon=<?=$eselon?>&jabatan=<?=$jabatan?>&kelamin='+this.value+'&agama=<?=$agama?>'">
+          <td align="left"><select name="kelamin" id="kelamin" class="form-control-static" style="width: 300px;">
             <option value="all" <? if ($kelamin=='all') echo "selected" ; ?>>Semua...</option>
             <option value="1" <? if ($kelamin=='1') echo "selected" ; ?>>Laki-laki</option>
             <option value="2" <? if ($kelamin=='2') echo "selected" ; ?>>Perempuan</option>
           </select></td>
         </tr>
-        <tr valign="top">
+        <tr>
           <td align="left">Agama:</td>
-          <td align="left"><select name="agama" id="agama" class="form-control-static" onChange="window.location='index.htm?sid=<?=$sid?>&do=duk&gol1=<?=$gol1?>&gol2=<?=$gol2?>&unitkerja=<?=$unitkerja?>&uks=<?=$uks?>&eselon=<?=$eselon?>&jabatan=<?=$jabatan?>&kelamin=<?=$kelamin?>&agama='+this.value+''">
+          <td align="left"><select name="agama" id="agama" class="form-control-static" style="width: 300px;">
             <option value="all" <? if ($agama=='all') echo "selected" ; ?>>Semua...</option>
             <option value="1" <? if ($agama=='1') echo "selected" ; ?>>Islam</option>
             <option value="2" <? if ($agama=='2') echo "selected" ; ?>>Kristen</option>
@@ -129,7 +130,7 @@ if ($gol2=='') $gol2='45';
           </select></td>
         </tr>
  
-<?
+<?php
 if ($starthal=='') $starthal=1;
 if ($stophal =='') $stophal=$starthal;
 

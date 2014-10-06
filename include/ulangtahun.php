@@ -48,8 +48,8 @@ if (!isset($ultah) || $ultah=='') $ultah=0;
 	</tr>
 	<tr>
 	<td colspan="2">
-		<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000" style="border-collapse: collapse">
-		<tr bgcolor="#CCCCCC">
+		<table width="100%">
+		<tr>
 		<th width="4" ><div align="center">No</div></th>
 		<th><div align="center">NIP</div></th>
 		<th><div align="center">NAMA PNS</div></th>

@@ -7,16 +7,19 @@ mysql_select_db($db,$conn);
 <html>
 <head>
 <title>Jumlah PNS Menurut Umur</title>
-<link rel="stylesheet" href="../css/printing-A4-landscape.css" media="print" />
+<link rel="stylesheet" href="../css/printing-A4-landscape.css" media="all" />
+<script type="text/javascript" src="../Scripts/jquery.min.js" ></script>
 <script type="text/javascript">
     function cetak() {
-        setTimeout(function(){ window.close();},300);
-        window.print();    
+        //setTimeout(function(){ window.close();},300);
+        $('button').hide();
+        window.print();
+        $('button').show();
     }
 </script>
 </head>
 
-<body onload="cetak();">
+<body>
 <?
 $tahun=date("Y");
 $thskr=$tahun-56;
@@ -104,5 +107,7 @@ $jmlumur=$row2[0][jml]+$row2[1][jml]+$row2[2][jml]+$row2[3][jml]+$row2[4][jml]+$
   </table>
 </td></tr>
 </table>
+    <center><button onclick="cetak();">Cetak</button></center>
+    <br/><br/><br/>
 </body>
 </html>

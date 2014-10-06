@@ -109,7 +109,7 @@ if (isset($_SESSION['username'])) {
 <div id="Layer1">
     <div class="logo"></div>
     <div class="link">
-        <a href="index.php?sid=<?= $sid ?>&do=home">Home</a> 
+        <a href="index.php?sid=<?= $_GET['sid'] ?>&do=home">Home</a> 
         <?php if (isset($_SESSION['username'])) { ?>
             &nbsp; | &nbsp; <a href="index.php?sid=<?= $_GET['sid'] ?>&logout=true"> <?= $_SESSION['username'] ?> (Logout)</a>
         <?php } ?>

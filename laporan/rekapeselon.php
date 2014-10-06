@@ -7,16 +7,19 @@ mysql_select_db($db,$conn);
 <html>
 <head>
 <title>Jumlah PNS Menurut Eselon Jabatan</title>
-<link rel="stylesheet" href="../css/printing-A4-landscape.css" media="print" />
+<link rel="stylesheet" href="../css/printing-A4-landscape.css" media="all" />
+<script type="text/javascript" src="../Scripts/jquery.min.js" ></script>
 <script type="text/javascript">
     function cetak() {
-        setTimeout(function(){ window.close();},300);
-        window.print();    
+        //setTimeout(function(){ window.close();},300);
+        $('button').hide();
+        window.print();
+        $('button').show();
     }
 </script>
 </head>
 
-<body onload="cetak();">
+<body>
     <div class="page">
 <?
 $tahun=date("Y");
@@ -30,7 +33,7 @@ $eselon=array("11","12","21","22","31","32","41","42","51");
 $r=listUnitKerjaNoBiro();
 ?>
         <h1>JUMLAH PEGAWAI NEGERI SIPIL MENURUT ESELON JABATAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h1>
-  <table class="tabel-laporan">
+  <table class="tabel-laporan" width="100%">
       <thead>
     <tr>
       <th width="30">No</th>
@@ -99,6 +102,8 @@ $jumlah=$row2[0][jml]+$row2[1][jml]+$row2[2][jml]+$row2[3][jml]+$row2[4][jml]+$r
     </tr>
   </table>
         </div>
+    <center><button onclick="cetak();">Cetak</button></center>
+    <br/><br/><br/>
 </body>
 
 </html>

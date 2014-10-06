@@ -7,16 +7,19 @@ mysql_select_db($db,$conn);
 <html>
 <head>
 <title>Jumlah PNS Menurut Pendidikan</title>
-<link rel="stylesheet" href="../css/printing-A4-landscape.css" media="print" />
+<link rel="stylesheet" href="../css/printing-A4-landscape.css" media="all" />
+<script type="text/javascript" src="../Scripts/jquery.min.js" ></script>
 <script type="text/javascript">
     function cetak() {
-        setTimeout(function(){ window.close();},300);
-        window.print();    
+        //setTimeout(function(){ window.close();},300);
+        $('button').hide();
+        window.print();
+        $('button').show();
     }
 </script>
 </head>
 
-<body onload="cetak();">
+<body>
 <?
 $tahun=date("Y");
 $thskr=$tahun-56;
@@ -147,6 +150,8 @@ $row6=mysql_fetch_array(mysql_query($query6));
     <td width="42" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row6[jml]?></td>
   </tr>
 </table>
+<center><button onclick="cetak();">Cetak</button></center>
+    <br/><br/><br/>
 </body>
 
 </html>

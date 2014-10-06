@@ -12,8 +12,16 @@
       </td>
     </tr>
     </table>-->
+<script type="text/javascript">
+    function cetak_rekap(file) {
+        var wWidth = $(window).width();
+        var dWidth = wWidth * 1;
+        var x = screen.width/2 - dWidth/2;
+        window.open('laporan/'+file,'Cetak Golongan','width='+dWidth+', left='+x);
+    }
+</script>
 <h4 class="title">REKAP PROFILE PNS</h4>
-<div class="wrapp-icon">
+<div class="wrapp-icon" onclick="cetak_rekap('golongan.php');">
     <div class="wrapp-image">
         <img src="./images/cpanel/army-icon.png" />
     </div>
@@ -22,7 +30,7 @@
     </div>
 </div>
 
-<div class="wrapp-icon">
+<div class="wrapp-icon" onclick="cetak_rekap('rekapeselon.php');">
     <div class="wrapp-image">
         <img src="./images/cpanel/eselon.jpg" />
     </div>
@@ -31,7 +39,7 @@
     </div>
 </div>
 
-<div class="wrapp-icon">
+<div class="wrapp-icon" onclick="cetak_rekap('rekappddk.php');">
     <div class="wrapp-image">
         <img src="./images/cpanel/kexi.png" />
     </div>
@@ -40,7 +48,7 @@
     </div>
 </div>
 
-<div class="wrapp-icon">
+<div class="wrapp-icon" onclick="cetak_rekap('rekapdidik.php');">
     <div class="wrapp-image">
         <img src="./images/cpanel/kexi.png" />
     </div>
@@ -49,7 +57,7 @@
     </div>
 </div>
 
-<div class="wrapp-icon">
+<div class="wrapp-icon" onclick="cetak_rekap('rekapagama.php');">
     <div class="wrapp-image">
         <img src="./images/cpanel/kcmdf.png" />
     </div>
@@ -58,7 +66,7 @@
     </div>
 </div>
 
-<div class="wrapp-icon">
+<div class="wrapp-icon" onclick="cetak_rekap('rekapumur.php');">
     <div class="wrapp-image">
         <img src="./images/cpanel/grafik.png" />
     </div>

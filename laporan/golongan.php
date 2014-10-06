@@ -1,4 +1,4 @@
-<?
+<?php
 include ("../include/config.inc");
 include ("../include/fungsi.inc");
 $conn=mysql_connect($server,$user,$pass);
@@ -7,16 +7,19 @@ mysql_select_db($db,$conn);
 <html>
 <head>
 <title>Jumlah PNS per Pangkat/Golongan</title>
-<link rel="stylesheet" href="../css/printing-A4-landscape.css" media="print" />
+<link rel="stylesheet" href="../css/printing-A4-landscape.css" media="all" />
+<script type="text/javascript" src="../Scripts/jquery.min.js" ></script>
 <script type="text/javascript">
     function cetak() {
-        setTimeout(function(){ window.close();},300);
-        window.print();    
+//        setTimeout(function(){ window.close();},300);
+        $('button').hide();
+        window.print();
+        $('button').show();
     }
 </script>
 </head>
 
-<body onload="cetak();">
+<body>
     <div class="page">
 <?
 $tahun=date("Y");
@@ -138,6 +141,8 @@ foreach ($r as $key=>$value) {
   </tr>
 </table>
         </div>
+    <center><button onclick="cetak();">Cetak</button></center>
+    <br/><br/><br/>
 </body>
 
 </html>

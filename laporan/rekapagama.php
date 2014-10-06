@@ -8,16 +8,19 @@ mysql_select_db($db,$conn);
 
 <head>
 <title>Jumlah Pegawai Negeri Sipil Berdasarkan Agama</title>
-<link rel="stylesheet" href="../css/printing-A4-landscape.css" media="print" />
+<link rel="stylesheet" href="../css/printing-A4-landscape.css" media="all" />
+<script type="text/javascript" src="../Scripts/jquery.min.js" ></script>
 <script type="text/javascript">
     function cetak() {
-        setTimeout(function(){ window.close();},300);
-        window.print();    
+        //setTimeout(function(){ window.close();},300);
+        $('button').hide();
+        window.print();
+        $('button').show();
     }
 </script>
 </head>
 
-<body onload="cetak();">
+<body>
 <?
 $tahun=date("Y");
 $thskr=$tahun-56;
@@ -98,7 +101,8 @@ for ($i=0;$i<=4;$i++) {
         <td width="9%" align="right"><?=$row4[jml]?></td>
       </tr>
     </table>
-
+<center><button onclick="cetak();">Cetak</button></center>
+    <br/><br/><br/>
 </body>
 
 </html>

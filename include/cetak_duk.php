@@ -198,15 +198,18 @@ function kepala($jjj,$gol1,$gol2) {
 <meta http-equiv="Content-Language" content="en-us">
 
 <title>::CETAK DUK::</title>
-<link rel="stylesheet" href="../css/printing-A4.css" media="print" />
+<link rel="stylesheet" href="../css/printing-A4-landscape.css" media="all" />
+<script type="text/javascript" src="../Scripts/jquery.min.js" ></script>
 <script type="text/javascript">
     function cetak() {
-        setTimeout(function(){ window.close();},300);
-        window.print();    
+        //setTimeout(function(){ window.close();},300);
+        $('button').hide();
+        window.print();
+        $('button').show();
     }
 </script>
 </head>
-<body onload="cetak();">
+<body>
 <?
 for ($i=$starthal;$i<=$stophal;$i++) {
 	if ($hal=='1') {
@@ -223,10 +226,7 @@ for ($i=$starthal;$i<=$stophal;$i++) {
 	}
 ?>
     <h1>REKAP DAFTAR URUT KEPANGKATAN</h1>
-<table width="750" border="0" height="750" style="border-collapse: collapse" bordercolor="#111111">
-<tr>
-<td valign="top" colspan="3" width="100%">
-<table border="1" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" width="1221" id="AutoNumber2">
+    <table width="100%" class="tabel-laporan" id="AutoNumber2">
   <tr>
     <td width="46" colspan="2" align="center"><b>NO URUT</b></td>
     <td width="206" rowspan="2" align="center"><b>NAMA PEGAWAI<br>
@@ -347,9 +347,9 @@ while ($row=mysql_fetch_array($r)) {
 <tr><td colspan="14" valign="top">
 <table width="100%">
 <tr>
-    <td width="10%" align="left" valign="top">&nbsp;Hal : <?=$hal?></td>
-    <td width="80%" align="center" valign="top">DUK (c)2010 BKD DIKLAT KABUPATEN PEKALONGAN</td>
-    <td width="10%" align="right" valign="top"><? if ($myno < $akhir) echo "No : ".$myno." .... &nbsp;";?></td>
+    <td width="10%" style="border: none;" align="left" valign="top">&nbsp;Hal : <?=$hal?></td>
+    <td width="80%" style="border: none;" align="center" valign="top">DUK (c)2010 BKD DIKLAT KABUPATEN PEKALONGAN</td>
+    <td width="10%" style="border: none;" align="right" valign="top"><? if ($myno < $akhir) echo "No : ".$myno." .... &nbsp;";?></td>
   </tr>
   </table>
 </td>
@@ -357,16 +357,12 @@ while ($row=mysql_fetch_array($r)) {
   
 </table>
 
-</td>
-</tr>
-
-
-</table>
-
 <?
 $hal++;
 }
 ?>
+    <center><button onclick="cetak();">Cetak</button></center>
+    <br/><br/><br/>
 </body>
 
 </html>
