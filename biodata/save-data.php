@@ -1076,4 +1076,29 @@ else if ($opsi === 'rkursus') {
     $result['act'] = 'edit';
     die(json_encode($result));
 }
+
+else if ($opsi === 'ubahnip') {
+    $nip1   = $_POST['nip1'];
+    $nip2   = $_POST['nip2'];
+    
+    $check  = mysql_fetch_object(mysql_query("select count(*) as jumlah from mastfip08 where `B_02` = '$nip2'"));
+    
+    $result['jumlah'] = TRUE;
+    if ($check->jumlah > 0) {
+        $result['jumlah'] = FALSE;
+        $result['status'] = FALSE;
+    } else {
+        $atabel=array(1=>"MASTFIP08","MASTJAB1","MASTKEL1","MASTPKT1","MSTBHSA1","MSTFUNG1","MSTJASA1","MSTKURS1","MSTORTU1","MSTPEND1","MSTPTAR1","MSTSEMI1","MSTSTRU1","MSTTEKN1","MSTTGAS1","MASTJFU");
+        $afield=array(1=> "B_02",     "JF_01",   "KF_01",   "PF_01",   "BS_01",   "LT_01",   "JS_01",   "LT_01",   "NM_01",   "DK_01",   "LT_01",   "LT_01",   "LT_01",   "LT_01",   "TG_01",   "NIP");
+
+         for ($i=1;$i<=count($atabel);$i++)
+         {
+            $q="update $atabel[$i] set $afield[$i]='$nip2' where $afield[$i]='$nip1' ";
+
+            mysql_query($q) or die (mysql_error());
+         }
+         $result['status'] = TRUE;
+    }
+    die(json_encode($result));
+}
 ?>
