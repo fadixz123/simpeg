@@ -1,14 +1,7 @@
 <?php
 include('../include/config.inc');
-$link=mysql_connect($server,$user,$pass);
+mysql_connect($server,$user,$pass);
 mysql_select_db($db);
-
-$hal=$starthal;
-$start=0;
-$stop1=21;
-$stop2=22;
-$no1=0;
-$myF04='';
 
 function dikstru($didik) {
 	switch($didik) {
@@ -167,7 +160,7 @@ function format_nip_baru($nip) {
 $tglskr=date("Y");
 $pensiun=($tglskr-56)."-".date("m");//."-".date("d");
 $pensiun1=($tglskr-61)."-".date("m")."-".date("d");
-
+$A_01   = $_GET['A_01'];
 if ($A_01 =='xx') $jjj="JAJARAN PEMERINTAH";
 else $jjj.=lokker($A_01);
 
@@ -208,9 +201,87 @@ function kepala($jjj,$gol1,$gol2) {
         $('button').show();
     }
 </script>
+<style>
+    * { font-size: 10px; }
+</style>
 </head>
 <body>
-<?
+<?php
+$unitkerja  = $_GET['A_01'];
+$jabatan    = $_GET['jabatan'];
+$eselon     = $_GET['eselon'];
+$kelamin    = $_GET['kelamin'];
+$agama      = $_GET['agama'];
+$gol1       = $_GET['GOL1'];
+$gol2       = $_GET['GOL2'];
+if ($unitkerja !='')
+{
+if ($unitkerja == 'xx'){
+$Q="select count(*) as Jumlah from MASTFIP08 where A_01 !='99' and A_01 !='' ";
+}else{
+if (strlen($unitkerja)==2) $Q="select count(*) as Jumlah from MASTFIP08 where A_01 ='$unitkerja' ";
+else $Q="select count(*) as Jumlah from MASTFIP08 where A_01 ='".substr($unitkerja,0,2)."' and A_02 ='".substr($unitkerja,2,2)."' and A_03 ='".substr($unitkerja,4,2)."' ";
+}
+if ($jabatan!='' && $jabatan!='all') {
+	if ($jabatan=='2') $query="and (I_5A='2' or I_5A='4') ";
+	else $query.="and I_5A='$jabatan' ";
+}
+if ($eselon!='' && $eselon!='all' && $eselon!='str') {
+        $query.="and I_06='$eselon' ";
+}
+if ($eselon=='str') {
+        $query.="and I_06<>'99' and I_06 is not null ";
+}
+if ($kelamin!='' && $kelamin!='all') {
+        $query.="and B_06='$kelamin' ";
+}
+if ($agama!='' && $agama!='all') {
+        $query.="and B_07='$agama' ";
+}
+$Q.=$query;
+$Q.="and F_03 >= '$gol1' and F_03 <= '$gol2' and B_09='2' order by F_03 DESC,F_TMT ASC,F_04 DESC, H_4A ASC, H_1A DESC, H_02 ASC, B_05 ASC";
+
+//echo $Q;
+$row=mysql_fetch_array(mysql_query($Q));   
+
+$akhir=$row[Jumlah];
+if (intval($row[Jumlah]) <=21)
+{
+	$starthal=1;
+	$stophal=1;
+}
+else
+{
+	$tothal=intval($row[Jumlah]);
+	
+	$sisa1 = $tothal - 21;
+	if ($sisa1 <= 22)
+	{
+		$starthal=1;
+		$stophal=2;
+	}
+	else
+	{
+		
+		$sisa2=$sisa1 % 22;
+		
+		$halini= ($sisa1-$sisa2)/22;
+		$starthal=1;
+		$stophal=$halini +2;
+		
+	
+	}
+
+} 
+$hal=$starthal;
+$start=0;
+$stop1=21;
+$stop2=22;
+$no1=0;
+$myF04='';
+}
+$GOL1   = $_GET['GOL1'];
+$GOL2   = $_GET['GOL2'];
 for ($i=$starthal;$i<=$stophal;$i++) {
 	if ($hal=='1') {
 		$start=0;
@@ -224,9 +295,10 @@ for ($i=$starthal;$i<=$stophal;$i++) {
 	    $start=$start+$stop2;
 		$stop=$stop2;
 	}
+        
 ?>
-    <h1>REKAP DAFTAR URUT KEPANGKATAN</h1>
-    <table width="100%" class="tabel-laporan" id="AutoNumber2">
+ 
+<table width="100%" class="tabel-laporan" id="AutoNumber2">
   <tr>
     <td width="46" colspan="2" align="center"><b>NO URUT</b></td>
     <td width="206" rowspan="2" align="center"><b>NAMA PEGAWAI<br>
@@ -275,7 +347,7 @@ for ($i=$starthal;$i<=$stophal;$i++) {
     <td width="35" align="center"><b>19</b></td>
     <td width="176" align="center"><b>20</b></td>
   </tr>
-<?
+<?php
 
 if ($A_01 == 'xx'){
 $Q="select *,to_days(now()) - to_days(F_02) as selisih1,to_days(now()) - to_days(G_01) as selisih2 from MASTFIP08 where A_01 !='99' and A_01 !='' ";
@@ -308,7 +380,7 @@ if ($agama!='' && $agama!='all') {
 
 $Q.=$query;
 $Q.="and F_03 >= '$GOL1' and F_03 <= '$GOL2' and B_09='2' order by F_03 DESC,F_TMT ASC,I_06 ASC, I_04 asc,F_04 DESC, H_4A ASC, H_1A DESC, H_02 ASC, B_05 ASC LIMIT $start,$stop ";
-
+//echo $Q;
 $r=mysql_query($Q) or die (mysql_error());
 
 
@@ -356,7 +428,8 @@ while ($row=mysql_fetch_array($r)) {
 </tr>
   
 </table>
-
+</td></tr></table>
+<br/><br/>
 <?
 $hal++;
 }
