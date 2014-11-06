@@ -10,7 +10,7 @@ if (!$uk) $uk='all';
   
   <tr>
     <td width="15%">Unit Kerja:</td>
-    <td><select name="uk" class="form-control" onchange="window.location='index.htm?do=rekap&sid=<?=$sid?>&uk='+this.value+'&what=<?=$what?>'">
+    <td><select name="uk" class="form-control" style="width: 300px;" onchange="window.location='index.htm?do=rekap&sid=<?=$sid?>&uk='+this.value+'&what=<?=$what?>'">
     <option value="all" <?= $uk=='all' ? "selected" : ""?>>Semua Unit Kerja</option>
     <?
     $lsuk=listUnitKerja();
@@ -22,7 +22,7 @@ if (!$uk) $uk='all';
   </tr>
   <tr>
     <td width="288">Rekap Berdasarkan:</td>
-    <td width="464"><select name="select" class="form-control" onchange="window.location='index.htm?do=rekap&sid=<?=$sid?>&uk=<?=$uk?>&what='+this.value+''">
+    <td width="464"><select name="select" class="form-control" style="width: 300px;" onchange="window.location='index.htm?do=rekap&sid=<?=$sid?>&uk=<?=$uk?>&what='+this.value+''">
     <option>Pilih</option>
     <option value="1" <? if ($what=="1") echo "selected"; ?>>Golongan</option>
     <option value="2" <? if ($what=="2") echo "selected"; ?>>Pendidikan Struktural</option>
