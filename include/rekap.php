@@ -1,28 +1,110 @@
-<?
+<script src="Scripts/highchart/highcharts.js"></script>
+<script src="Scripts/highchart/themes/grid.js"></script>
+<?php
 include('include/config.inc');
 include('include/fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
 if (!$uk) $uk='all';
 ?>
+<script type="text/javascript">
+    $(function() {
+        $('#tampilkan').click(function() {
+            $.ajax({
+                url: 'include/autocomplete.php?search=show_graph',
+                data: $('#form-search-rekap').serialize(),
+                dataType: 'json',
+                success: function(data) {
+                    var jenis = $('#what').val();
+                    if (jenis === '5' || jenis === '6' || jenis === '8') {
+                        draw_pie_chart('#result', data);
+                    } else {
+                        draw_bar_chart('#result', data);
+                    }
+                }
+            });
+            return false;
+        });
+    });
+    function draw_bar_chart(div, data) {
+        $(div).highcharts({
+            chart: {
+                type: 'bar'
+            },
+            exporting: {
+                enabled: false
+            },
+            title: {
+                text: data.title
+            },
+            xAxis: {
+                categories: data.nama
+            },
+            yAxis: {
+                title: {
+                    text: 'Jumlah'
+                }
+            },
+            series: [{
+                name : 'Jumlah Pegawai',
+                data: data.jumlah
+            }]
+        });
+    }
+    
+    function draw_pie_chart(div, data) {
+        $(div).highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: data.title
+            },
+            tooltip: {
+                pointFormat: '{point.y} pegawai ({point.percentage:.1f} %)'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        format: '<b>{point.name}</b><br/>{point.y} pasien ({point.percentage:.1f} %)'
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: data.kategori,
+                data: data.data
+            }]
+        });
+    }
+</script>
 <h4 class="title">REKAP DATA PNS</h4>
+<form id="form-search-rekap">
 <table width="100%">
   
   <tr>
     <td width="15%">Unit Kerja:</td>
-    <td><select name="uk" class="form-control" style="width: 300px;" onchange="window.location='index.htm?do=rekap&sid=<?=$sid?>&uk='+this.value+'&what=<?=$what?>'">
+    <td><select name="uk" class="form-control" style="width: 300px;">
     <option value="all" <?= $uk=='all' ? "selected" : ""?>>Semua Unit Kerja</option>
     <?
     $lsuk=listUnitKerja();
     foreach($lsuk as $key=>$value) {
     ?>
-    <option value="<?=$value[0]?>" <?= $value[0]==$uk ? "selected" : ""?>><?=$value[1]?></option>
+    <option value="<?=$value[0]?>" <?= $value[0]==$uk ? "selected" : ""?>><?=ucfirst(strtolower($value[1]))?></option>
     <? } ?>
 	</select></td>
   </tr>
   <tr>
     <td width="288">Rekap Berdasarkan:</td>
-    <td width="464"><select name="select" class="form-control" style="width: 300px;" onchange="window.location='index.htm?do=rekap&sid=<?=$sid?>&uk=<?=$uk?>&what='+this.value+''">
+    <td width="464"><select name="what" class="form-control" id="what" style="width: 300px;">
     <option>Pilih</option>
     <option value="1" <? if ($what=="1") echo "selected"; ?>>Golongan</option>
     <option value="2" <? if ($what=="2") echo "selected"; ?>>Pendidikan Struktural</option>
@@ -35,24 +117,10 @@ if (!$uk) $uk='all';
     </select></td>
   </tr>
   <tr>
-  <td colspan="3">
-  <?
-  if ($what!="" && $uk!="") {
-  switch ($what) {
-	  case 1: include("pangkat.php");break;
-	  case 2: include("struktural.php");break;
-	  case 3: include("pendidikan.php");break;
-	  case 4: include("eselon.php");break;
-	  case 5: include("agama.php");break;
-	  case 6: include("jeniskelamin.php");break;
-	  case 7: include("usia.php");break;
-	  case 8: include("status.php");break;
-	  }
-  }
-  ?>
-  </td>
+  <td></td>
+  <td><button type="button" class="btn btn-primary" id="tampilkan"><i class="fa fa-eye"></i> Tampilkan</button></td>
   </tr>
   </table>
-<?
-mysql_close();
-?>
+</form>
+<div id="result" style="width: 100%;"></div>
+  

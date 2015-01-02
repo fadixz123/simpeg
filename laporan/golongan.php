@@ -77,7 +77,7 @@ foreach ($r as $key=>$value) {
 	if (strlen($value[0])==2) $query2.="and A_01='".$value[0]."' ";
 	else $query2.="and A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' ";
 	$query2.="and A_01<>'99'";
-	//echo $query;
+	//echo $query2."</br>";
 	$row2[$i]=mysql_fetch_array(mysql_query($query2));
 	$row5[$i][jml]=$row5[$i][jml]+$row2[$i][jml];
 }

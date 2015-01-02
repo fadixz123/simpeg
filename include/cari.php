@@ -166,7 +166,7 @@ if ($cari) {
     </div>
 </div> 
 <div id="datamodal_search" class="modal fade">
-    <div class="modal-dialog" style="width: 600px; height: 100%;">
+    <div class="modal-dialog" style="width: 500px; height: 100%;">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -185,7 +185,7 @@ if ($cari) {
                         <tr>
                             <td width="20%">Unit Kerja:</td>
                             <td>
-                                <select name="uk" class="form-control" id="uk">
+                                <select name="uk" class="form-control" id="uk" style="width: 300px;">
                                       <option value="all">Semua unit kerja...</option>
                                       <?
                                       $lsuk=listUnitKerja();

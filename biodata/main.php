@@ -404,7 +404,7 @@ else if (strlen($NIP)!=0) {
                         <tr>
                             <td width="20%">Unit Kerja:</td>
                             <td>
-                                <select name="uk" class="form-control" id="uk">
+                                <select name="uk" class="form-control" id="uk" style="width: 300px;">
                                       <option value="all">Semua unit kerja...</option>
                                       <?
                                       $lsuk=listUnitKerja();

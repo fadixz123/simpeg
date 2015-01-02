@@ -1,4 +1,4 @@
-<?
+<?php
 include('include/config.inc');
 include('include/fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
@@ -11,6 +11,7 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
 ?>
 <script type="text/javascript">
     $(function() {
+        $('.showhide').hide();
         $('#tampilkan').click(function() {
             var uk  = $('#uk').val();
             var upt = $('#upt').val();
@@ -20,9 +21,37 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
             var dHeight= wHeight * 1;
             var x = screen.width/2 - dWidth/2;
             var y = screen.height/2 - dHeight/2;
-            window.open('include/struktur_org.original.php?sid=<?=$sid?>&uk='+uk+'&upt='+upt+'','pop','width='+dWidth+', height='+dHeight+', left='+x+',top='+y);
+            window.open('include/struktur_org.original.php?sid=<?=$_GET['sid']?>&uk='+uk+'&upt='+upt+'','pop','width='+dWidth+', height='+dHeight+', left='+x+',top='+y);
         });
     });
+    
+    function cek_hasupt(value) {
+        if (value !== '') {
+            $.ajax({
+                url: 'include/autocomplete.php?search=hasupt',
+                data: 'uk='+value,
+                dataType: 'json',
+                success: function(data) {
+                    if (data.hasupt === true) {
+                        $('.showhide').show();
+                        $('#upt').empty();
+                        var stri = '<option value="00">INDUK</option>';
+                        $('#upt').html(stri);
+                        $.each(data.data, function(i, v) {
+                            var str = '<option value="'+v.A_02+'">'+v.NALOK+'</option>';
+                            $('#upt').append(str);
+                        });
+                    } else {
+                        $('#upt').empty();
+                        $('.showhide').hide();
+                    }
+                }
+            });
+        } else {
+            $('#upt').empty();
+            $('.showhide').hide();
+        }
+    }
 </script>
 <h4 class="title">STRUKTUR ORGANISASI PNS</h4>
 <form name="form1" action="?sid=<?=$sid?>&do=struktur" method="post">
@@ -31,9 +60,9 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
   <tr>
   <td width="15%">Unit Kerja:</td>
   <td>
-        <select name="uk" id="uk" class="form-control" onchange="form1.submit()">
-        <option>Pilih Unit Kerja ...</option>
-        <?
+      <select name="uk" id="uk" class="form-control" onchange="cek_hasupt(this.value);" style="width: 300px;">
+          <option value="">Pilih Unit Kerja ...</option>
+        <?php
         $lsuk=listUnitKerja();
         foreach($lsuk as $key=>$value) { ?>
             <option value="<?=$value[0]?>" <?= $value[0]==$uk ? "selected" : ""?>><?= ucwords(strtolower($value[1]))?></option>
@@ -41,29 +70,19 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
         </select>
   </td>
   </tr>
-<? if ($hasupt) { ?>
-<tr>
-  <td>Induk/UPT:</td>
-          <td>
-            <select name="upt" id="upt" class="form-control">
-            <option value="00" <? if ($subuk=='00') echo "selected "?>>INDUK</option>
-        <?
-        $qupt="select * from TABLOKB08 where A_01='$uk' and A_02<>'00' and ESEL like '41' order by A_02";
-        $rupt=mysql_query($qupt) or die(mysql_error());
-        while ($roupt=mysql_fetch_array($rupt)) {
-			?>
-			<option value="<?=$roupt[A_02]?>" <?= $roupt[A_02]==$subuk ? "selected" : ""?>><?=$roupt[NALOK]?></option>
-			<? } ?>
-            </select>
-          </td>
-        </tr>
-<? } else { ?>
-		<input type="hidden" name="upt" value="00">
-<? } ?>
+    <tr class="showhide">
+    <td>Induk/UPT:</td>
+    <td>
+        <select name="upt" id="upt" class="form-control" style="width: 300px;">
+            
+        </select>
+    </td>
+    </tr>
+        <!--<input type="hidden" name="upt" value="00">-->
   <tr>
   <td width="76">&nbsp;</td>
   <td width="339">
-      <button type="button" class="btn btn-primary" id="tampilkan"><i class="fa fa-save"></i> Tampilkan</button>
+      <button type="button" class="btn btn-primary" id="tampilkan"><i class="fa fa-eye"></i> Tampilkan</button>
   </td>
   </tr>
   <tr>

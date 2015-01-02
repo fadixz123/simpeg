@@ -11,6 +11,7 @@ include("charts/charts.php");
 	if ($uk!='all') $query.="A_01='$uk' and ";
 	$query.="F_03<>'' and F_03 is not null and A_01<>'99'";
 	$query.=" group by F_03 order by F_03 ";
+        echo $query;
    	$r=mysql_query($query);
    	while($row=mysql_fetch_array($r)) {
    		switch($row[0]) {

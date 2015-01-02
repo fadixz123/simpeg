@@ -224,13 +224,13 @@ function jurusan($didik,$jur)
 function agama1($kode)
 {
 	switch(intval($kode)) {
-	      case null:
-          case '':
-          case 1: $agama="ISLAM"; break;
-	      case 2: $agama="KRISTEN"; break;
-	      case 3: $agama="KATHOLIK"; break;
-	      case 4: $agama="HINDU"; break;
-	      case 5: $agama="BUDHA"; break;
+            case null: $agama=""; break;
+            case '': $agama=""; break;
+            case 1: $agama="ISLAM"; break;
+            case 2: $agama="KRISTEN"; break;
+            case 3: $agama="KATHOLIK"; break;
+            case 4: $agama="HINDU"; break;
+            case 5: $agama="BUDHA"; break;
 	}
 	return $agama;
 }
@@ -241,6 +241,16 @@ function jenisKelamin($kode) {
 		case 2: $jenisKelamin="PEREMPUAN";break;
 	}
 	return $jenisKelamin;
+}
+
+function status_kawin($kode) {
+    switch(intval($kode)) {
+        case 1: $status="KAWIN";break;
+        case 2: $status="BELUM KAWIN";break;
+        case 3: $status="DUDA";            break;
+        case 4: $status="JANDA";            break;
+    }
+    return $status;
 }
 	
 function masaKerAsli($masapalsu,$masa) {

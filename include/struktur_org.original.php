@@ -15,7 +15,7 @@ A:hover       {font-family: Tahoma; font-size: 9px; text-decoration: underline; 
 </style>
 </head>
 </body>
-<?
+<?php
 include('config.inc');
 
 $link=mysql_connect($server,$user,$pass);
@@ -91,27 +91,27 @@ $posisiBos1 = ceil($jmlKolom/2);
 //---------------- sub kedua
 
 for ($i=1;$i<$jmlKolom;$i++) {
-	if ($isbiro) {
-		$q="select KOLOK,NAJAB from TABLOKB08 where KOLOK like '".rtrim($KOJABB[$i],'0')."%' and ESEL<>'99' ";//and A_02='00' ";
-	} else {
-		$q="select KOLOK,NAJAB from TABLOKB08 where KOLOK like '".substr($KOJABB[$i],0,5)."%' and KOLOK>='$KOJABB[$i]' and A_02='$upt' and ESEL<>'99'";
-	}
-	if ($issetda) $q.=" and ESEL<='22' ";
-	if ($KOJABB[$i+1]!='') $q.=" and KOLOK<'".$KOJABB[$i+1]."'";
-	$q.="and ESEL>='$esel2' order by KOLOK";
-$r=mysql_query($q);
-	$y=0;
-	$jmlX[$i]=mysql_num_rows($r);
-	while($row=mysql_fetch_array($r)) {
-		$y++;
-		$KOJABX[$i][$y] = $row[KOLOK];
-		$NAJABX[$i][$y] = $row[NAJAB];
-	}
+    if ($isbiro) {
+            $q="select KOLOK,NAJAB from TABLOKB08 where KOLOK like '".rtrim($KOJABB[$i],'0')."%' and ESEL<>'99' ";//and A_02='00' ";
+    } else {
+            $q="select KOLOK,NAJAB from TABLOKB08 where KOLOK like '".substr($KOJABB[$i],0,5)."%' and KOLOK>='$KOJABB[$i]' and A_02='$upt' and ESEL<>'99'";
+    }
+    if ($issetda) $q.=" and ESEL<='22' ";
+    if ($KOJABB[$i+1]!='') $q.=" and KOLOK<'".$KOJABB[$i+1]."'";
+    $q.="and ESEL>='$esel2' order by KOLOK";
+    $r=mysql_query($q);
+    $y=0;
+    $jmlX[$i]=mysql_num_rows($r);
+    while($row=mysql_fetch_array($r)) {
+            $y++;
+            $KOJABX[$i][$y] = $row[KOLOK];
+            $NAJABX[$i][$y] = $row[NAJAB];
+    }
 }
 
 // sort
-rsort($jmlX);
-reset($jmlX);
+//rsort($jmlX);
+//reset($jmlX);
 
 ?>
 <tr>

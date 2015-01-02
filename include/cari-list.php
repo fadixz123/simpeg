@@ -18,6 +18,7 @@ mysql_select_db($db);
     </thead>
     <tbody>
         <?php
+        $uk    = $_GET['uk'];
         $limit = 10;
         $page  = $_GET['page'];
         if ($_GET['page'] === '') {
@@ -30,7 +31,7 @@ mysql_select_db($db);
         $q="select *, CONCAT(`A_01`,`A_02`, `A_03`, `A_04`, `A_05`) as kode_sub_lokasi from MASTFIP08 where B_03 LIKE '%$B_03%' 
                 ";
         //echo $q;
-        if ($_GET['uk'] != 'all') {
+        if ($_GET['uk'] !== 'all') {
             $q .="and A_01='".substr($uk,0,2)."' ";
         }
         if ($_GET['nip'] !== '') {
