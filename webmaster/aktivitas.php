@@ -1,60 +1,90 @@
-<?
-include("include/fungsi.inc");
+<?php
+    include("include/fungsi.inc");
 ?>
-<form method="POST" action="?sid=<?=$sid?>&do=history">
-	<table border="0" width="100%" style="border-collapse: collapse">
-		<tr>
-			<td colspan="4">Aktivitas Perubahan Data</td>
-		</tr>
-		<tr>
-			<td width="12%">Dari Tanggal</td>
-			<td width="20%"> 
-              <input type="text" name="tg_tgldari" size="1" maxlength="2" value="<?=$tg_tgldari?>">
-              - 
-              <input type="text" name="bl_tgldari" size="1" maxlength="2" value="<?=$bl_tgldari?>">
-              - 
-              <input type="text" name="th_tgldari" size="2" maxlength="4" value="<?=$th_tgldari?>">
-            </td>
-			<td width="10%">s/d</td>
-			<td width="62%"> 
-              <input type="text" name="tg_tglsampai" size="1" maxlength="2" value="<?=$tg_tglsampai?>">
-              - 
-              <input type="text" name="bl_tglsampai" size="1" maxlength="2" value="<?=$bl_tglsampai?>">
-              - 
-              <input type="text" name="th_tglsampai" size="2" maxlength="4" value="<?=$th_tglsampai?>"></td>
-		</tr>
-	</table>
-	<p><input type="submit" value="Cari" name="cari"></p>
-</form>
+<h4 class="title">History Penggunaan Sistem</h4>
+<script type="text/javascript" src="Scripts/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+    $(function() {
+        search_data_aktivitas(1);
+        $('#awal, #akhir').datepicker({
+            format: 'dd/mm/yyyy'
+        }).on('changeDate', function(){
+            $(this).datepicker('hide');
+        });
+        $('#searching').click(function() {
+            $('#datamodal_search').modal('show');
+        });
+    });
+    function search_data_aktivitas(page) {
+        $.ajax({
+            type: 'GET',
+            url: 'webmaster/aktivitas-list.php?page='+page,
+            data: $('#form-search').serialize(),
+            beforeSend: function() {
+                show_ajax_indicator();
+            },
+            success: function(data) {
+                hide_ajax_indicator();
+                $('#datamodal_search').modal('hide');
+                $('#result').html(data);
+            }
+        });
+    }
+    
+    function reload_data() {
+        $('#awal, #akhir').val('<?= date("d/m/Y") ?>');
+        search_data_aktivitas(1);
+    }
+    
+    function load_detail_history(id_user, awal, akhir) {
+        
+    }
+</script>
+<div id="datamodal_search" class="modal fade">
+    <div class="modal-dialog" style="width: 500px; height: 100%;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <div class="widget-header">
+                <div class="title">
+                    <h4> Parameter Pencarian</h4>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <form id="form-search" role="form" class="form-horizontal">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget-body">
+                    <table>
+                            <tr>
+                                <td>Dari Tanggal: &nbsp;</td>
+                                <td> 
+                                    <input type="text" name="tg_tgldari" id="awal" value="<?=date("d/m/Y")?>" class="form-control" style="width: 145px;" />
+                                </td>
+                                <td align="center">&nbsp; s.d&nbsp; </td>
+                                <td> 
+                                    <input type="text" name="tg_tglsampai" id="akhir" class="form-control" value="<?=date("d/m/Y")?>" style="width: 145px;" />
+                                </td>
+                            </tr>
+                    </table>
+                </div>
+            </div>
+            </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-refresh"></i> Batal</button>
+            <button type="button" class="btn btn-primary" onclick="search_data_aktivitas(1);"><i class="fa fa-save"></i> Tampilkan</button>
+        </div>
+    </div>
+    </div>
+</div>
+<div class="form-toolbar">
+    <div class="toolbar-left">
+        <button id="searching" class="btn btn-primary" data-target=".bs-modal-lg"><i class="fa fa-search"></i> Search</button>
+        <button class="btn" data-target=".bs-modal-lg" onclick="reload_data();"><i class="fa fa-refresh"></i> Reload Data</button>
+    </div>
+</div> 
 
-<?
-if ($_POST['cari']) {
-	$tgldari=$_POST['th_tgldari'].'-'.$_POST['bl_tgldari'].'-'.$_POST['tg_tgldari'];
-	$tglsampai=$_POST['th_tglsampai'].'-'.$_POST['bl_tglsampai'].'-'.$_POST['tg_tglsampai'];
-	$q="select username,count(distinct nipedit) as jml,count(*) as jmlt from HISTORY,USER where user=username ";
-	$q.="and tanggal BETWEEN '$tgldari' and '$tglsampai' group by user";
-	$r=mysql_query($q);
-?>
-<table border="1" width="66%" style="border-collapse: collapse" bordercolor="#000000">
-	<tr>
-		<th width="21">No</th>
-		<th width="156">Username</th>
-		<th width="50">Jml PNS yg Diedit</th>
-		<th width="50">Jml Aktivitas Edit</th>
-		<th width="50">Detil</th>
-	</tr>
-	<?
-	$i=0;
-	while ($ro=mysql_fetch_array($r)) {
-		$i++;
-	?>
-	<tr>
-		<td width="21" align="right"><?=$i?></td>
-		<td width="156"><?=$ro[username]?></td>
-		<td width="50"><?=$ro[jml]?></td>
-		<td width="50"><?=$ro[jmlt]?></td>
-		<td width="50"><a href="?sid=<?=$sid?>&do=detilhistory&det=1&tgdr=<?=$tgldari?>&tgsmp=<?=$tglsampai?>&username=<?=$ro[username]?>">Detil</a></td>
-	</tr>
-	<? } ?>
-</table>
-<? } ?>
+<div id="result"></div>

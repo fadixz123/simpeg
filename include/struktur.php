@@ -21,7 +21,8 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
             var dHeight= wHeight * 1;
             var x = screen.width/2 - dWidth/2;
             var y = screen.height/2 - dHeight/2;
-            window.open('include/struktur_org.original.php?sid=<?=$_GET['sid']?>&uk='+uk+'&upt='+upt+'','pop','width='+dWidth+', height='+dHeight+', left='+x+',top='+y);
+            //window.open('include/struktur_org.original.php?sid=<?=$_GET['sid']?>&uk='+uk+'&upt='+upt+'','pop','width='+dWidth+', height='+dHeight+', left='+x+',top='+y);
+            window.open('include/struktur_org_new.php?sid=<?=$_GET['sid']?>&uk='+uk+'&upt='+upt+'','pop','width='+dWidth+', height='+dHeight+', left='+x+',top='+y);
         });
     });
     

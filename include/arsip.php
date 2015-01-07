@@ -43,7 +43,11 @@ if ($j > 0 ) {
         
         $(function() {
        
-            $('#fucker').datepicker();
+            $('#fucker').datepicker({
+                format: 'dd/mm/yyyy'
+            }).on('changeDate', function(){
+                $(this).datepicker('hide');
+            });
             search_data_pns(1);
             $('#searching').click(function() {
                 $('#datamodal_search').modal('show');
