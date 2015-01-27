@@ -12,30 +12,9 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
 ?>
 <script type="text/javascript">
     $(function() {
+        get_list_nominatif(1);
         $('#cetak').click(function() {
-            var wWidth = $(window).width();
-            var dWidth = wWidth * 1;
-            var wHeight= $(window).height();
-            var dHeight= wHeight * 1;
-            var x = screen.width/2 - dWidth/2;
-            var y = screen.height/2 - dHeight/2;
-            var gol1    = $('#gol1').val();
-            var gol2    = $('#gol2').val();
-            var radio1  = $('input[name=radio]:checked').val();
-            var status  = $('#status').val();
-            var eselon  = $('#eselon').val();
-            var jabatan = $('#jabatan').val();
-            var jabfung = $('#jabfung').val();
-            var dik     = $('#dik').val();
-            var jurusan = $('#jur').val();
-            var diklat  = $('#diklat').val();
-            var kelamin = $('#kelamin').val();
-            var agama   = $('#agama').val();
-            var unitkerja = $('#uk').val();
-            var subuk   = $('#subuk').val();
-            var urut    = $('#urut').val();
-            var hasupt  = $('#hasupt').val();
-            window.open('include/i_nominatif.php?gol1='+gol1+'&gol2='+gol2+'&radio1='+radio1+'&status='+status+'&eselon='+eselon+'&jabatan='+jabatan+'&jabfung='+jabfung+'&dik='+dik+'&jur='+jurusan+'&diklat='+diklat+'&kelamin='+kelamin+'&agama='+agama+'&unitkerja='+unitkerja+'&subuk='+subuk+'&urut='+urut+'&hasupt='+hasupt,'myPoppp','width='+dWidth+', height='+dHeight+', left='+x+',top='+y)
+            window.location='include/i_nominatif.php?'+$('#nominatif1').serialize();
         });
         $('#jabfung-autoshow').hide();
         $('#searching').click(function() {
@@ -368,8 +347,8 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-minus-circle"></i> Cancel</button>
                 <button type="button" class="btn btn-primary" onclick="get_list_nominatif(1);"><i class="fa fa-search"></i> Tampilkan</button>
-                <button type="button" class="btn btn-primary" id="cetak"><i class="fa fa-print"></i> Cetak</button>
             </div>
         </div>
     </div>
@@ -379,6 +358,7 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
     <div class="toolbar-left">
         <button id="searching" class="btn btn-primary" data-target=".bs-modal-lg"><i class="fa fa-search"></i> Search</button>
         <button class="btn" data-target=".bs-modal-lg" onclick="reload_data();"><i class="fa fa-refresh"></i> Reload Data</button>
+        <button class="btn" data-target=".bs-modal-lg" id="cetak"><i class="fa fa-print"></i> Export Excel</button>
     </div>
 </div> 
 <div id="result">

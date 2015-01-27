@@ -3,10 +3,11 @@ include('config.inc');
 include('fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
+$nip = $_GET['nip'];
 if (isset($_GET['cari'])) {
 	//echo $_GET['B_03'];
 	if (strlen($_GET['B_03']) > 0 && isset($_GET['uk'])) {
-		$q="select A_01,A_02,A_03,A_04,B_02,B_03A,B_03,B_03B,I_05,I_06,F_03 from MASTFIP08 where B_03 LIKE '%$B_03%' ";
+		$q="select A_01,A_02,A_03,A_04,B_02,B_03A,B_03,B_03B,I_05,I_06,F_03 from MASTFIP08 where B_03 LIKE '%".$_GET['B_03']."%' ";
 		if ($_GET['uk'] != 'all') {
 			$q.="and A_01='".$_GET['uk']."'";
 		}

@@ -3,24 +3,11 @@ include('config.inc');
 include('fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
+header_excel('rekap-nominatif.xls');
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-<TITLE>:: e-PersonalSystem ::</TITLE>
-<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" href="../css/printing-A4-landscape.css" media="all" />
-<script type="text/javascript">
-    function cetak() {
-        setTimeout(function(){ window.close();},300);
-        window.print();    
-    }
-</script>
-
-</HEAD>
-<body onload="cetak();">
+<body>
 <?php
-$unitkerja  = $_GET['unitkerja'];
+$unitkerja  = $_GET['uk'];
 
 $qcu="select distinct A_02 from TABLOKB08 where A_01='$unitkerja'";
 $rcu=mysql_query($qcu) or die(mysql_error());
@@ -117,46 +104,46 @@ if ($unitkerja !='') {
         //echo $query;
 	$r=mysql_query($query) or die (mysql_error());
 ?>
-		
 <table>
-<tr><td align="center"><h3>UNIT KERJA : 
+<tr><td align="center" colspan="17"><h3>UNIT KERJA : 
 <?php if ($unitkerja!='all') {
 	if (strlen($unitkerja)==2) echo lokasiKerjaB($unitkerja);
 	else echo sublokasiKerjaB($unitkerja);}
 else {echo "SEMUA UNIT KERJA";}?><br><?= $subuk!='' && $subuk!='all' ? ( $hasupt ? sublokasiKerjaB($unitkerja,$subuk,'00','00','00') : sublokasiKerjaB(substr($subuk,0,2),substr($subuk,2,2),substr($subuk,4,2),substr($subuk,6,2),substr($subuk,8,2))) : ""?></h3></td></tr>
-<tr><td>
+<tr><td colspan="17">
 <?php
 if ($eselon!='all' && $eselon!='str') echo "Eselon : ".eselon($eselon)."<br>";
 if ($kelamin!='all') echo "Jenis kelamin : ".jenisKelamin($kelamin)."<br>";
 if ($agama!='all') echo "Agama : ".agama1($agama)."<br>";
 ?>
 </td></tr>
-<tr><td><table width="100%" class="tabel-laporan">
+</table>
+<table width="100%" border="1">
   <tr>
-    <th width="10">NO</th>
-    <th width="5">NIP LAMA</th>
-    <th width="110">NIP BARU</th>
-    <th width="150">NAMA</th>
+    <th>NO</th>
+    <th>NIP LAMA</th>
+    <th>NIP BARU</th>
+    <th >NAMA</th>
     <?php if ($showalamat=="true") { ?>
-    <th width="30%">ALAMAT</th>
+    <th>ALAMAT</th>
     <?php } ?>
 	<th>TEMPAT LAHIR</th>
         <th>TGL LAHIR</th>
     <?php if ($showcpns=="true") { ?>
-    <th width="7%">TMT CPNS</th>
+    <th>TMT CPNS</th>
     <?php } ?>
     <?php if ($showjk=="true") { ?>
-    <th width="5%">JENIS KELAMIN</th>
+    <th>JENIS KELAMIN</th>
     <?php } ?>
-    <th width="100">JABATAN</th>
-    <th colspan="3">UNIT KERJA</th>
-    <th width="50">ESEL</th>
-    <th width="50">G/R</th>
+    <th>JABATAN</th>
+    <th>UNIT KERJA</th>
+    <th>ESEL</th>
+    <th>G/R</th>
     <th>TMT</th>
-    <th width="250">ALAMAT</th>
-    <th width="10">PENDIDIKAN</th>
-<th width="10">JURUSAN</th>
-<th width="10">LULUS</th>
+    <th>ALAMAT</th>
+    <th>PENDIDIKAN</th>
+<th>JURUSAN</th>
+<th>LULUS</th>
     <?php if ($showpdd=="true") { ?>
     <?php } ?>
   </tr>
@@ -231,11 +218,8 @@ if ($agama!='all') echo "Agama : ".agama1($agama)."<br>";
     <?php } ?>
   </tr>
   <?php } ?>
-</table></td>
-</tr>
 </table>
 <?php } ?>
 
         
 </body>
-</html>

@@ -2,7 +2,7 @@
 $server='localhost';
 $user='root';
 $pass='';
-$db='kabpkl';
+$db='kabpkl_newdata';
 $KAB='BKD KABUPATEN PEKALONGAN';
 $KABI='KABUPATEN PEKALONGAN';
 $warnarow="";

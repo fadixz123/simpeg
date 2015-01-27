@@ -91,15 +91,20 @@ else $query.="order by F_03 DESC,F_TMT ASC,I_06,F_04 DESC, H_4A ASC, H_1A DESC, 
 $result=mysql_query($query.'  limit '.$offset.', '.$limit) or die (mysql_error());
 $total_data=mysql_num_rows(mysql_query($query));
 ?>
+<script type="text/javascript">
+    $(function() {
+        $('.mypopover').popover({html: true, trigger:'hover'}); 
+    });
+</script>
 <table width="100%" class="table table-bordered table-stripped table-hover" id="table_data_no">
     <thead>      
     <tr>
         <th width="4%">No</th>
-        <th width="13%" class="left">NIP</th>
-        <th width="17%" class="left">NAMA</th>
+        <th width="15%" class="left">NIP</th>
+        <th width="30%" class="left">NAMA</th>
         <th width="6%">TGL LHR</th>
-        <th width="10%" class="left">JABATAN</th>
-        <th width="40%" colspan="3">UNIT KERJA</th>
+        <th width="40%" class="left">JABATAN</th>
+        <th width="7%">UNIT&nbsp;KERJA</th>
         <th width="5%">Esl</th>
         <th width="5%">GOL/RNG</th>
     </tr>
@@ -109,18 +114,22 @@ $no=0;
 
 while ($row=mysql_fetch_array($result)) {
 $no++;	
+$detail = "<table>
+        <tr><td>".ucwords(strtolower(subLokasiKerjaB($row[A_01].$row[A_02].$row[A_03].$row[A_04])))."</td></tr>
+        <tr><td>".ucwords(strtolower(subLokasiKerjaB($row[A_01].$row[A_02].$row[A_03])))."</td></tr>
+        <tr><td>".ucwords(strtolower(lokasiKerjaB($row[A_01])))."</td></tr>
+        </table>
+        ";
 ?>
     <tr class="<?= ($no%2===0)?'even':'odd' ?>">
-        <td align="center"><?=$no; ?></td>
-        <td><a href="?&sid=<?=$sid?>&do=cari&cari=1&nip=<?=$row[B_02]?>"><?= $row[B_02B]=='' ? $row[B_02] : format_nip_baru($row[B_02B])?></a></td>
-        <td><a href="?&sid=<?=$sid; ?>&do=cari&cari=1&nip=<?=$row[B_02]?>"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B]) ?></a></td>
-        <td><?=datefmysql($row[B_05]); ?></td>
-        <td><?= getNaJab($row[B_02])?></td>
-        <td><?=subLokasiKerjaB($row[A_01].$row[A_02].$row[A_03].$row[A_04])?></td>
-        <td><?=subLokasiKerjaB($row[A_01].$row[A_02].$row[A_03])?></td>
-        <td><?=lokasiKerjaB($row[A_01])?></td>
-        <td align="center"><?= $row[I_06]=='99' ? "-" : eselon($row[I_06])?></td>
-        <td align="center"><?=pktH($row[F_03])?></td>
+        <td align="center"><?=$no+$offset; ?></td>
+        <td class="nowrap"><?= $row[B_02B]=='' ? $row[B_02] : format_nip_baru($row[B_02B])?></td>
+        <td class="nowrap"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B]) ?></td>
+        <td class="nowrap"><?=datefmysql($row[B_05]); ?></td>
+        <td class="nowrap"><small><?= getNaJab($row[B_02])?></small></td>
+        <td class="nowrap"><button type="button" class="btn btn-default btn-xs mypopover" data-container="body" data-toggle="popover" data-placement="top" data-title="Detail Unit Kerja" data-content="<?= $detail ?>">Show</button></td>
+        <td class="nowrap" align="center"><?= $row[I_06]=='99' ? "-" : eselon($row[I_06])?></td>
+        <td class="nowrap" align="center"><?=pktH($row[F_03])?></td>
     </tr>
 <? } ?>
 </table>

@@ -5,14 +5,20 @@ include('fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
 ?>
+<script type="text/javascript">
+    $(function() {
+        $('.mypopover').popover({html: true, trigger:'hover'}); 
+    });
+</script>
 <table class="table table-bordered table-stripped table-hover" id="table_data_no">
     <thead>
     <tr>
       <th width="5%">No</th>
-      <th width="10%" class="left">NIP Lama</th>
-      <th width="10%" class="left">NIP Baru</th>
+      <th width="12%" class="left">NIP Lama</th>
+      <th width="12%" class="left">NIP Baru</th>
       <th width="25%" class="left">Nama</th>
-      <th width="49%" class="left">Unit Kerja Jabatan</th>
+      <th width="35%" class="left">Jabatan</th>
+      <th width="10%" class="left">Unit Kerja</th>
       <th width="1%"></th>
     </tr>
     </thead>
@@ -49,17 +55,20 @@ mysql_select_db($db);
         $r=mysql_query($q.'  limit '.$offset.', '.$limit) or die (mysql_error());
         $total_data = mysql_num_rows(mysql_query($q));
         while($row=mysql_fetch_array($r)) {
+            $detail = "<table>
+                <tr><td class=nowrap>".  ucwords(strtolower(subLokasiKerjaB($row[A_01],$row[A_02],$row[A_03],$row[A_04],$row[A_05])))."</td></tr>
+                <tr><td class=nowrap>".ucwords(strtolower(lokasiKerjaB($row[A_01])))."</td></tr>
+                </table>
+                ";
                 $no++;
                 ?>
               <tr class="<?= ($no%2===0)?'even':'odd' ?>">
-                <td align="center"><?=$no+$offset?></td>
-                <td><?=$row[B_02]?></td>
+                <td class="nowrap" align="center"><?=$no+$offset?></td>
+                <td class="nowrap"><?=$row[B_02]?></td>
                 <td class="nowrap"><?=format_nip_baru($row[B_02B])?></td>
-                <td><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></td>
-                <td>
-                <small><?=subLokasiKerjaB($row[A_01],$row[A_02],$row[A_03],$row[A_04],$row[A_05])?>
-                <?=lokasiKerjaB($row[A_01])?></small><br>
-                <small><i><?=getNaJab($row[B_02])?></i></small></td>
+                <td class="nowrap"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></td>
+                <td class="nowrap"><?=getNaJab($row[B_02])?></td>
+                <td><button type="button" class="btn btn-default btn-xs mypopover" data-container="body" data-toggle="popover" data-placement="top" data-title="Detail Unit Kerja" data-content="<?= $detail ?>">Show</button></td>
                 <td><button type="button" onclick="load_detail('include/cari-detail.php?sid=<?=$_GET['sid']?>&B_03=<?= $row['B_03'] ?>&uk=<?= $_GET['uk'] ?>&do=cari&nip=<?=$row[B_02]?>&cari=NIP');" class="btn btn-default btn-xs"><i class="fa fa-eye"></i> Detail</button></td>
               </tr>
                 <?

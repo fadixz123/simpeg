@@ -17,6 +17,22 @@ function oursid($sid)
         return array($namauser,$time,$date);
 }
 
+function header_excel($namaFile) {
+    header("Pragma: public");
+    header("Expires: 0");
+    header("Cache-Control: must-revalidate, post-check=0,
+            pre-check=0");
+    header("Content-Type: application/force-download");
+    header("Content-Type: application/octet-stream");
+    header("Content-Type: application/download");
+
+    // header untuk nama file
+    header("Content-type: application/vnd.ms-excel"); 
+    header("Content-Disposition: attachment;
+            filename=" . $namaFile . "");
+    header("Content-Transfer-Encoding: binary ");
+}
+
 function lethistory($sid,$what,$NIP)
 {
         list($username,$time,$date)=oursid($sid);
@@ -336,7 +352,7 @@ function getNaJab($nip) {
 		case '2': $nama=getNaJFK($nip);break;
 		default: $nama=getNaJFU($nip);break;
 	}
-	if ($nama=='0') $nama="Jabatan belum diset";
+	if ($nama=='0') $nama="<i>Belum diseting</i>";
 	return $nama;
 }
 
