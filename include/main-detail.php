@@ -91,9 +91,9 @@ if (isset($_GET['cari'])) {
                            <td colspan="3" class="sectiontableheader">IDENTITAS</td>
                          </tr>
                          <tr> 
-                           <td width="170" class="garisbawah">Nama</td>
-                           <td width="4" align="center" class="garisbawah">:</td>
-                           <td width="335"> 
+                           <td width="23%" class="garisbawah">Nama</td>
+                           <td width="1%" align="center" class="garisbawah">:</td>
+                           <td width="76%"> 
                              <? echo namaPNS($row[B_03A],$row[B_03],$row[B_03B]); ?>
                            </td>
                          </tr>

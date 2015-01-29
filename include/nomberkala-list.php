@@ -27,18 +27,19 @@ $query.="order by F_03 DESC,F_TMT ASC,I_06,F_04 DESC, H_4A ASC, H_1A DESC, H_02 
 //echo $query;
 
 ?>
-<table class="table table-bordered table-stripped table-hover" id="table_data_no">
+<div class="content-width">
+<table width="100%" class="table table-bordered table-stripped table-hover" id="table_data_no">
     <thead>
         <tr>
-          <th width="23" align="center">No</th>
-          <th width="110" align="center">NIP</th>
-          <th width="182" align="center">NIP BARU</th>
-          <th width="205" align="center">NAMA</th>
-          <th width="469" align="center">JABATAN</th>
-          <th width="39" align="center">Esl</th>
-          <th width="60" align="center">GOL/RNG</th>
-          <th width="155" align="center">GAJI LAMA</th>
-          <th width="142" align="center">GAJI BARU</th>
+          <th width="5%">No</th>
+          <th width="10%">NIP</th>
+          <th width="10%">NIP BARU</th>
+          <th width="20%" class="left">NAMA</th>
+          <th width="30%" class="left">JABATAN</th>
+          <th width="5%">Esl</th>
+          <th width="7%">GOL/RNG</th>
+          <th width="10%">GAJI LAMA</th>
+          <th width="10%">GAJI BARU</th>
         </tr>
     </thead>
     <tbody>
@@ -60,17 +61,18 @@ while ($row=mysql_fetch_array($result)) {
 	$thmker2=$thmker+2;
 ?>
         <tr>
-          <td width="23" valign="top" align="right"><?=$no+$offset; ?></td>
-          <td width="110" valign="top"><?=$row[B_02]?></td>
-          <td width="182" valign="top"><?=format_nip_baru($row[B_02B])?></td>
-          <td width="205" valign="top"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B]) ?></td>
-          <td width="469" valign="top"><?= getNaJab($row[B_02])?></td>
-          <td width="39" valign="top" align="center"><?= $row[I_06]=='99' ? "-" : eselon($row[I_06])?></td>
-          <td width="60" valign="top" align="center"><?=pktH($row[F_03])?></td>
-          <td width="155" valign="top" align="center"><?=number_format(gaji($row[F_03],$thmker))?></td>
-          <td width="142" valign="top" align="center"><?=number_format(gaji($row[F_03],$thmker2))?></td>
+          <td align="center"><?=$no+$offset; ?></td>
+          <td class="nowrap"><?=$row[B_02]?></td>
+          <td class="nowrap"><?=format_nip_baru($row[B_02B])?></td>
+          <td class="nowrap"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B]) ?></td>
+          <td class="nowrap"><small><?= ucwords(strtolower(getNaJab($row[B_02])))?></small></td>
+          <td class="nowrap" align="center"><?= $row[I_06]=='99' ? "-" : eselon($row[I_06])?></td>
+          <td align="center" class="nowrap"><?=pktH($row[F_03])?></td>
+          <td align="center"><?=number_format(gaji($row[F_03],$thmker))?></td>
+          <td align="center"><?=number_format(gaji($row[F_03],$thmker2))?></td>
         </tr>
 <? } ?>
     </tbody>
 </table>
+</div><br/>
 <?= paging_ajax($total_data, $limit, $page, '1', $_GET['search']) ?>

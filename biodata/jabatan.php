@@ -3,7 +3,7 @@ include('../include/config.inc');
 include('../include/fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
-
+$NIP = $_GET['nip'];
 $q="select * from MASTFIP08 where B_02='$NIP' LIMIT 1";
 $row=mysql_fetch_array(mysql_query($q));
 $I_06=$row[I_06];
@@ -22,7 +22,7 @@ $I_06=$row[I_06];
     function gantijab() {
         //$('.autohide').hide();
         $('.autoshow').show();
-        var str = '<select name="pilihjab" id="pilihjab" class="form-control-static autoshow" onchange="get_jabatan_group();">'+
+        var str = '<select name="pilihjab" id="pilihjab" class="form-control-static autoshow" onchange="get_jabatan_group();" style="width: 20%;">'+
                         '<option value="">Pilih ...</option>'+
                         '<option value="1">STRUKTURAL</option>'+
                         '<option value="2">JFK</option>'+
@@ -109,7 +109,7 @@ $I_06=$row[I_06];
               <td></td>
               <td></td>
               <td>:</td>
-              <td><span id="load-extend-child"></span> &nbsp; <span id="load-extend-child2"></span></td>
+              <td><span id="load-extend-child"></span> <span id="load-extend-child2"></span></td>
           </tr>
           <tr> 
             <td width="3%"> 02</td>
@@ -174,28 +174,15 @@ $I_06=$row[I_06];
             <td width="20%">Tanggal SK Jabatan</td>
             <td> :</td>
             <td width="77%"> 
-            <?
-            	if ($TGSKJAB=='') $TGSKJAB=substr($row[I_03],8,2);
-            	if ($BLSKJAB=='') $BLSKJAB=substr($row[I_03],5,2);
-            	if ($THSKJAB=='') $THSKJAB=substr($row[I_03],0,4);
-            
-            ?>
-              <input name="TGSKJAB" class="form-control-static" id="tgskjab" value="<?=datefmysql($TGSKJAB); ?>">
+              <input name="TGSKJAB" class="form-control-static" id="tgskjab" value="<?=datefmysql($row['I_03']); ?>">
             </td>
           </tr>
           <tr> 
             <td width="3%"> 06</td>
             <td width="20%">TMT Jabatan</td>
             <td> :</td>
-            <td width="77%"> 
-            <?
-            	if ($TGTMTJAB=='') $TGTMTJAB=substr($row[I_04],8,2);
-            	if ($BLTMTJAB=='') $BLTMTJAB=substr($row[I_04],5,2);
-            	if ($THTMTJAB=='') $THTMTJAB=substr($row[I_04],0,4);
-            	  	
-            
-            ?>
-              <input name="TGTMTJAB" class="form-control-static" id="tgtmtjab" value="<?=datefmysql($TGTMTJAB); ?>">
+            <td width="77%">
+              <input name="TGTMTJAB" class="form-control-static" id="tgtmtjab" value="<?=datefmysql($row['I_04']); ?>">
             </td>
           </tr>
           

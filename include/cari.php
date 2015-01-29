@@ -164,7 +164,7 @@ if ($cari) {
         <button id="searching" class="btn btn-primary" data-target=".bs-modal-lg"><i class="fa fa-search"></i> Search</button>
         <button class="btn" data-target=".bs-modal-lg" onclick="reload_data();"><i class="fa fa-refresh"></i> Reload Data</button>
     </div>
-</div> 
+</div>
 <div id="datamodal_search" class="modal fade">
     <div class="modal-dialog" style="width: 500px; height: 100%;">
     <div class="modal-content">

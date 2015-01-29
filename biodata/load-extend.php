@@ -4,7 +4,7 @@ include('../include/fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
 if ($_GET['pilihjab'] === '3') { ?>
-        <select name="I_05" class="form-control-static" onchange="window.location='index.htm?sid=<?=$sid?>&do=biodata&page=jab&NIP=<?=$NIP;?>&I_01='+jabatan.I_01.value+'&I_02='+jabatan.I_02.value+'&TGSKJAB='+jabatan.TGSKJAB.value+'&BLSKJAB='+jabatan.BLSKJAB.value+'&THSKJAB='+jabatan.THSKJAB.value+'&TGTMTJAB='+jabatan.TGTMTJAB.value+'&BLTMTJAB='+jabatan.BLTMTJAB.value+'&THTMTJAB='+jabatan.THTMTJAB.value+'&I_06='+jabatan.I_06.value+'&pilihjab=3&I_05='+this.value+''">
+        <select name="I_05" class="form-control-static" onchange="window.location='index.htm?sid=<?=$sid?>&do=biodata&page=jab&NIP=<?=$NIP;?>&I_01='+jabatan.I_01.value+'&I_02='+jabatan.I_02.value+'&TGSKJAB='+jabatan.TGSKJAB.value+'&BLSKJAB='+jabatan.BLSKJAB.value+'&THSKJAB='+jabatan.THSKJAB.value+'&TGTMTJAB='+jabatan.TGTMTJAB.value+'&BLTMTJAB='+jabatan.BLTMTJAB.value+'&THTMTJAB='+jabatan.THTMTJAB.value+'&I_06='+jabatan.I_06.value+'&pilihjab=3&I_05='+this.value+''" style="width: 80%;">
         <option value="">PILIH KELOMPOK JAB FUNGSIONAL UMUM</option>
                                 <?
                                 $qjfu="select * from TABJFU order by NAJFU";
@@ -44,7 +44,7 @@ if ($_GET['$pilihjab'] === '1') {
 }
 if ($_GET['pilihjab'] === '2') {
         ?>
-        <select name="I_05" class="form-control-static" id="I_05" onchange="load_jab_fungsional_khusus();">
+        <select name="I_05" class="form-control-static" id="I_05" onchange="load_jab_fungsional_khusus();" style="width: 80%;">
         <option value="">PILIH KELOMPOK JAB FUNGSIONAL KHUSUS</option>
         <?
         $ro=mysql_query("select * from TABFNG1 order by NFUNG") or die (mysql_error());
@@ -55,7 +55,7 @@ if ($_GET['pilihjab'] === '2') {
         <?
         }
         ?>
-        </select><br>
+        </select>
         <input type="hidden" name="I_5A" value="2">
         <?
 }

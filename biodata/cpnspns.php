@@ -97,7 +97,7 @@ $row=mysql_fetch_array(mysql_query($q));
             <td>:</td>
             <td width="77%">  
               <? $D_05=$row["D_05"]; ?>
-              <select name="D_05" class="form-control-static" onchange="mypkt(this,'cpns')">
+              <select name="D_05" class="form-control-static" onchange="mypkt(this,'cpns')" style="width: 20%;">
                 <option value="">-</option>
                 <option value="11" <? if ($D_05=="11") echo "selected"; ?>>I/a</option>
                 <option value="12" <? if ($D_05=="12") echo "selected"; ?>>I/b</option>
@@ -118,7 +118,7 @@ $row=mysql_fetch_array(mysql_query($q));
                 <option value="45" <? if ($D_05=="45") echo "selected"; ?>>IV/e</option>
               </select>
                
-              <input type="text" name="pktcpns" class="form-control-static" value="<? echo namapkt($row["D_05"]); ?>" size="28">
+              <input type="text" name="pktcpns" class="form-control-static" value="<? echo namapkt($row["D_05"]); ?>" size="28" style="width: 79%;">
             </td>
           </tr>
           <tr> 
@@ -169,7 +169,7 @@ $row=mysql_fetch_array(mysql_query($q));
             <td>:</td>
             <td width="77%"> 
               <? $E_05=$row["E_05"]; ?>
-              <select name="E_05" class="form-control-static" onchange="mypkt(this,'pns');document.pns.TGTMTPNS.focus()">
+              <select name="E_05" class="form-control-static" onchange="mypkt(this,'pns');document.pns.TGTMTPNS.focus()" style="width: 20%;">
                 <option value="">-</option>
                 <option value="11" <? if ($E_05=="11") echo "selected"; ?>>I/a</option>
                 <option value="12" <? if ($E_05=="12") echo "selected"; ?>>I/b</option>
@@ -190,7 +190,7 @@ $row=mysql_fetch_array(mysql_query($q));
                 <option value="45" <? if ($E_05=="45") echo "selected"; ?>>IV/e</option>
               </select>
                
-              <input type="text" name="pktpns" class="form-control-static" value="<? echo namapkt($row["E_05"]); ?>" size="28">
+              <input type="text" name="pktpns" class="form-control-static" value="<? echo namapkt($row["E_05"]); ?>" size="28" style="width: 79%;">
             </td>
           </tr>
           <tr bgcolor="<? echo $warnarow; ?>"> 

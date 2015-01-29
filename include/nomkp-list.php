@@ -61,23 +61,23 @@ if ($unitkerja !='') {
 	$no=0;
 	$r=mysql_query($query) or die (mysql_error());
 ?>
-<center><b>NOMINATIF KENAIKAN PANGKAT REGULER PERIODE <?=$namabl?> <?=$tahun?><br>
-	UNIT KERJA : 
+<b>NOMINATIF KENAIKAN PANGKAT REGULER PERIODE <?=$namabl?> <?=$tahun?>
+    <div style="text-align: right; float: right;">UNIT KERJA : 
 <?php if ($unitkerja!='all') {
 	if (strlen($unitkerja)==2) echo lokasiKerjaB($unitkerja);
 	else echo sublokasiKerjaB($unitkerja);}
-else {echo "SEMUA UNIT KERJA";}?><br><?= $subuk!='' && $subuk!='all' ? ( $hasupt ? sublokasiKerjaB($unitkerja,$subuk,'00','00','00') : sublokasiKerjaB($subuk)) : ""?></b></center>
+else {echo "SEMUA UNIT KERJA";}?><br><?= $subuk!='' && $subuk!='all' ? ( $hasupt ? sublokasiKerjaB($unitkerja,$subuk,'00','00','00') : sublokasiKerjaB($subuk)) : ""?></div></b>
 <table class="table table-bordered table-stripped table-hover" id="table_data_no">
     <thead>
         <tr>
-            <th>NO</th>
-            <th>NIP</th>
-            <th>NIP BARU</th>
-            <th>NAMA</th>
-            <th>JABATAN</th>
-            <th>ESEL</th>
-            <th>PANGKAT LAMA</th>
-            <th>PANGKAT BARU</th>
+            <th width="5%">NO</th>
+            <th width="10%">NIP</th>
+            <th width="10%">NIP BARU</th>
+            <th width="20%" class="left">NAMA</th>
+            <th width="30%" class="left">JABATAN</th>
+            <th width="5%">ESEL</th>
+            <th width="7%">PKT&nbsp;LAMA</th>
+            <th width="7%">PKT&nbsp;BARU</th>
         </tr>
     </thead>
     <tbody>
@@ -103,14 +103,14 @@ else {echo "SEMUA UNIT KERJA";}?><br><?= $subuk!='' && $subuk!='all' ? ( $hasupt
                 $pkt_b=$pkt_l+1;
         ?>
           <tr class="<?= ($no%2 === 0)?'odd':'even' ?>">
-            <td valign="top" class="isinya" align="right"><?=$no+$offset?></td>
-            <td valign="top" class="isinya" align="center"><?=$row[B_02]?></td>
-            <td valign="top" class="isinya" align="center"><?=format_nip_baru($row[B_02B])?></td>
-            <td valign="top" class="isinya"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></td>
-    <td valign="top"><?= getNaJab($row[B_02])?></td>
-            <td valign="top" class="isinya" align="center"><?=eselon($row[I_06])?></td>
-    <td valign="top" align="center"><?=pktH($row[F_03])?></td>
-    <td valign="top" align="center"><?=pktH($pangkat[$pkt_b])?></td>
+            <td valign="top" class="isinya nowrap" align="center"><?=$no+$offset?></td>
+            <td valign="top" class="isinya nowrap" align="center"><?=$row[B_02]?></td>
+            <td valign="top" class="isinya nowrap" align="center"><?=format_nip_baru($row[B_02B])?></td>
+            <td valign="top" class="isinya nowrap"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></td>
+            <td valign="top" class="nowrap"><small><?= ucwords(strtolower(getNaJab($row[B_02])))?></small></td>
+            <td valign="top" class="isinya nowrap" align="center"><?=eselon($row[I_06])?></td>
+            <td valign="top" align="center"><?=pktH($row[F_03])?></td>
+            <td valign="top" align="center"><?=pktH($pangkat[$pkt_b])?></td>
           </tr>
         <? } ?>
     </tbody>

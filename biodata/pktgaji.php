@@ -45,8 +45,7 @@ $row=mysql_fetch_array(mysql_query($q));
         
         <tr class="sectiontableheader"> 
             <td width="3%" bgcolor="<? echo $warnarow2; ?>"> <div><b>D</b></div></td>
-            <td colspan="3" bgcolor="<? echo $warnarow2; ?>" height="22"><b>P 
-              A N G K A T  / G O L O N G A N T E R A K H I R</b> 
+            <td colspan="3" bgcolor="<? echo $warnarow2; ?>" height="22"><b>PANGKAT / GOLONGAN TERAKHIR</b> 
             </td>
         </tr>
         <tr> 
@@ -89,7 +88,7 @@ $row=mysql_fetch_array(mysql_query($q));
             <td> :</td>
             <td width="77%"> 
               <? $F_03=$row["F_03"]; ?>
-              <select name="F_03" class="form-control-static" onchange="mypkt(this,'pkt')">
+              <select name="F_03" class="form-control-static" onchange="mypkt(this,'pkt')" style="width: 20%;">
                 <option value="">-</option>
                 <option value="11" <? if ($F_03=="11") echo "selected"; ?>>I/a</option>
                 <option value="12" <? if ($F_03=="12") echo "selected"; ?>>I/b</option>
@@ -108,7 +107,7 @@ $row=mysql_fetch_array(mysql_query($q));
                 <option value="43" <? if ($F_03=="43") echo "selected"; ?>>IV/c</option>
                 <option value="44" <? if ($F_03=="44") echo "selected"; ?>>IV/d</option>
                 <option value="45" <? if ($F_03=="45") echo "selected"; ?>>IV/e</option>
-              </select>  <input type="text" class="form-control-static" name="pktpkt" value="<? echo namapkt($row["F_03"]); ?>" size="28"> 
+              </select>  <input type="text" class="form-control-static" name="pktpkt" value="<? echo namapkt($row["F_03"]); ?>" size="28" style="width: 79%;"> 
             </td>
         </tr>
         <tr> 
@@ -123,9 +122,9 @@ $row=mysql_fetch_array(mysql_query($q));
             <td width="3%"> 06</td>
             <td width="20%">Masa kerja</td>
             <td> :</td>
-            <td width="77%"> <input type="text" class="form-control-static" name="F_04A" value="<?=substr($row["F_04"],0,2) ; ?>" size="2" maxlength="2">
+            <td width="77%"> <input type="text" class="form-control-static" name="F_04A" value="<?=substr($row["F_04"],0,2) ; ?>" size="2" maxlength="2" style="width: 20%;">
                 <span class="form-control-label">TAHUN </span>
-              <input type="text" name="F_04B" size="2" class="form-control-static" maxlength="2" value="<?=substr($row["F_04"],2,2) ; ?>">
+              <input type="text" name="F_04B" size="2" class="form-control-static" maxlength="2" value="<?=substr($row["F_04"],2,2) ; ?>" style="width: 20%;">
               <span class="form-control-label">BULAN</span> </td>
         </tr>
         <?
@@ -148,16 +147,16 @@ $row=mysql_fetch_array(mysql_query($q));
             <td width="3%"> 02</td>
             <td width="20%">Masa kerja gaji</td>
             <td> :</td>
-            <td width="77%">  <input type="text" name="G_02A" class="form-control-static" value="<? echo substr($row["G_02"],0,2) ; ?>" size="2" maxlength="2">
+            <td width="77%">  <input type="text" name="G_02A" class="form-control-static" value="<? echo substr($row["G_02"],0,2) ; ?>" size="2" maxlength="2" style="width: 20%;">
                 <span class="form-control-label">TAHUN</span> 
-              <input type="text" name="G_02B" size="2" class="form-control-static" maxlength="2" value="<? echo substr($row["G_02"],2,2) ; ?>">
+              <input type="text" name="G_02B" size="2" class="form-control-static" maxlength="2" value="<? echo substr($row["G_02"],2,2) ; ?>" style="width: 20%;">
                 <span class="form-control-label">BULAN</span></td>
         </tr>
         <tr> 
             <td width="3%"> 03</td>
             <td width="20%">Gaji Pokok</td>
             <td> :</td>
-            <td width="77%"> <input type="text" name="G_03" class="form-control-static" onkeyup="FormNum(this);" value="<? echo $row['G_03']; ?>">
+            <td width="77%"> <input type="text" name="G_03" class="form-control-static" onkeyup="FormNum(this);" value="<? echo $row['G_03']; ?>" style="width: 20%;">
               <- gaji tidak perlu diisi </td>
         </tr>
         <tr> 

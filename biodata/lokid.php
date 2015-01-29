@@ -98,7 +98,7 @@ if (empty($buker)) {
     <input type="hidden" name="sid" id="sid" value="<?= $_GET['sid'] ?>" />
     <table width="100%" class="table table-condensed table-bordered table-hover no-margin">
           <tr class="sectiontableheader"> 
-            <td>LOKASI KERJA</td>
+            <td class="sectiontableheader">LOKASI KERJA</td>
             <td>:</td>
             <td align="left" height="22">&nbsp;</td>
           </tr>
@@ -172,7 +172,7 @@ $row=mysql_fetch_array(mysql_query($q));
             <td width="3%"> 
               <b>A</b>
             </td>
-            <td colspan="3" height="22"><b>IDENTITAS PEGAWAI</b></td>
+            <td colspan="3" height="22" class="sectiontableheader"><b>IDENTITAS PEGAWAI</b></td>
           </tr>
           <tr valign="top" height="25"> 
             <td width="3%">01</td>
@@ -191,9 +191,9 @@ $row=mysql_fetch_array(mysql_query($q));
             <td width="20%">Nama Pegawai</td>
             <td>:</td>
             <td width="77%"> 
-              <input type="text" name="B_03A" class="form-control-static" value="<?=$row[B_03A]?>" size="4"> 
-              <input type="text" name="B_03" class="form-control-static" value="<?=stripslashes($row[B_03])?>" size="30"> 
-              <input type="text" name="B_03B" class="form-control-static" value="<?=$row[B_03B]?>" size="6">
+                <input type="text" name="B_03A" class="form-control-static" value="<?=$row[B_03A]?>" size="4" style="width: 100px;" /> 
+              <input type="text" name="B_03" class="form-control-static" value="<?=stripslashes($row[B_03])?>" size="30" style="width: 300px;" /> 
+              <input type="text" name="B_03B" class="form-control-static" value="<?=$row[B_03B]?>" size="6" style="width: 100px;" />
             </td>
           </tr>
           <tr valign="top"> 

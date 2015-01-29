@@ -57,9 +57,9 @@ $row=mysql_fetch_array(mysql_query($q));
             <td width="20%">Tempat/Tgl Lahir</td>
             <td>:</td>
             <td width="77%"> 
-              <input type="text" tabindex=2 name="NM_051" size="40" class="form-control-static" value="<? echo ortu($NIP,'AYAH','NM_05'); ?>">
+              <input type="text" tabindex=2 name="NM_051" size="40" class="form-control-static" value="<? echo ortu($NIP,'AYAH','NM_05'); ?>" style="width: 30%">
               <span class="form-control-label">/</span> 
-              <input type="text" tabindex=3 name="TGNM_061" id="tgnm_061" class="form-control-static" value="<? echo datefmysql(ortu($NIP,'AYAH','NM_06')); ?>">
+              <input type="text" tabindex=3 name="TGNM_061" id="tgnm_061" class="form-control-static" value="<? echo datefmysql(ortu($NIP,'AYAH','NM_06')); ?>" style="width: 10%">
             </td>
           </tr>
           <tr> 
@@ -89,9 +89,9 @@ $row=mysql_fetch_array(mysql_query($q));
             <td width="20%">Tempat/Tgl Lahir</td>
             <td>:</td>
             <td width="77%">
-                <input type="text" tabindex=8 name="NM_052" size="40" class="form-control-static" value="<? echo ortu($NIP,'IBU','NM_05'); ?>">
+                <input type="text" tabindex=8 name="NM_052" size="40" class="form-control-static" value="<? echo ortu($NIP,'IBU','NM_05'); ?>" style="width: 30%" />
                 <span class="form-control-label">/</span>
-                <input type="text" tabindex=9 name="TGNM_062" id="tgnm_062" class="form-control-static" value="<? echo datefmysql(ortu($NIP,'IBU','NM_06')); ?>">
+                <input type="text" tabindex=9 name="TGNM_062" id="tgnm_062" class="form-control-static" value="<? echo datefmysql(ortu($NIP,'IBU','NM_06')); ?>" style="width: 10%" />
             </td>
           </tr>
           <tr> 

@@ -123,7 +123,7 @@ if ($kelamin!='all') {
                                 )
 			) ";
 		$q.=" order by B_05,F_03 desc";
-		//echo $q;
+		//echo "<pre>".$q."</pre>";
 		$r=mysql_query($q);
 		$no=0;
 		while ($row=mysql_fetch_array($r))
