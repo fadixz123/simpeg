@@ -30,36 +30,7 @@ if ($unitkerja !='') {
 	$tglok=$thskr."-".date("m");//."-".date("d");
 	$tglok1=$thskr1."-".date("m");//."-".date("d");
 
-	$query="select * from MASTFIP08 where ";
-	if ($unitkerja!='all') {
-		if (strlen($unitkerja)==2) $query.="A_01='".$unitkerja."' ";
-		else $query.="A_01='".substr($unitkerja,0,2)."' and A_02='".substr($unitkerja,2,2)."' and A_03='".substr($unitkerja,4,2)."' ";
-	}
-	else $query.="A_01!='99' ";
-
-	if ($subuk!='' && $subuk!='all') {
-		if ($hasupt) $query.="and A_02='$subuk' ";
-		else $query.="and concat(A_01,A_02,A_03,A_04,A_05) like '".rtrim($subuk,'0')."%' ";
-	}
 	
-	if ($bln=='4') {
-		$namabl="APRIL";
-		$query.="and ((substring(F_TMT,6,2) in ('11','12') and substring(F_TMT,1,4)='".$th2."') or (substring(F_TMT,6,2) in ('01','02','03','04') and substring(F_TMT,1,4)='".$th1."')) ";
-	} else {
-		$namabln="OKTOBER";
-		$query.="and (substring(F_TMT,6,2) in ('05','06','07','08','09','10') and substring(F_TMT,1,4)='".$th1."') ";
-	}
-
-	$query.="and (";
-	$query.="(H_1A='10' and F_03<'21') or (H_1A='20' and F_03<'23') or ((H_1A='30' or H_1A='41' or H_1A='42') and F_03<'32') or ";
-	$query.="((H_1A='43' or H_1A='50' or H_1A='60') and F_03<'33') or ";
-	$query.="(((H_1A='70' and H_1B not in ('2304','2305','2306','2307','2308','2309','2311','2312','2313','2314','2315','3013','3058')) or H_1A='44') and F_03<'34') or ";
-	$query.="(((H_1A='70' and H_1B in ('2304','2305','2306','2307','2308','2309','2311','2312','2313','2314','2315','3013','3058')) or H_1A='80') and F_03<'41') or ";
-	$query.="(H_1A='90' and F_03<'42')";
-	$query.=") ";
-	$query.="order by F_03 DESC,F_TMT ASC, I_06,F_04 DESC, H_4A ASC, H_1A DESC, H_02 ASC, B_05 ASC ";
-	$no=0;
-	$r=mysql_query($query) or die (mysql_error());
 ?>
 <b>NOMINATIF KENAIKAN PANGKAT REGULER PERIODE <?=$namabl?> <?=$tahun?>
     <div style="text-align: right; float: right;">UNIT KERJA : 
@@ -94,7 +65,37 @@ else {echo "SEMUA UNIT KERJA";}?><br><?= $subuk!='' && $subuk!='all' ? ( $hasupt
         $z=0;
         //$query .="order by I_06 ASC, F_03 DESC";
         //echo $q.'  limit '.$offset.', '.$limit;
-        $r=mysql_query($query.'  limit '.$offset.', '.$limit) or die (mysql_error());
+        $query="select * from MASTFIP08 where ";
+	if ($unitkerja!='all') {
+		if (strlen($unitkerja)==2) $query.="A_01='".$unitkerja."' ";
+		else $query.="A_01='".substr($unitkerja,0,2)."' and A_02='".substr($unitkerja,2,2)."' and A_03='".substr($unitkerja,4,2)."' ";
+	}
+	else $query.="A_01!='99' ";
+
+	if ($subuk!='' && $subuk!='all') {
+		if ($hasupt) $query.="and A_02='$subuk' ";
+		else $query.="and concat(A_01,A_02,A_03,A_04,A_05) like '".rtrim($subuk,'0')."%' ";
+	}
+	
+	if ($_GET['bln']=='4') {
+		$namabl="APRIL";
+		$query.="and ((substring(F_TMT,6,2) in ('11','12') and substring(F_TMT,1,4)='".$th2."') or (substring(F_TMT,6,2) in ('01','02','03','04') and substring(F_TMT,1,4)='".$th1."')) ";
+	} else {
+		$namabln="OKTOBER";
+		$query.="and (substring(F_TMT,6,2) in ('05','06','07','08','09','10') and substring(F_TMT,1,4)='".$th1."') ";
+	}
+
+	$query.="and (";
+	$query.="(H_1A='10' and F_03<'21') or (H_1A='20' and F_03<'23') or ((H_1A='30' or H_1A='41' or H_1A='42') and F_03<'32') or ";
+	$query.="((H_1A='43' or H_1A='50' or H_1A='60') and F_03<'33') or ";
+	$query.="(((H_1A='70' and H_1B not in ('2304','2305','2306','2307','2308','2309','2311','2312','2313','2314','2315','3013','3058')) or H_1A='44') and F_03<'34') or ";
+	$query.="(((H_1A='70' and H_1B in ('2304','2305','2306','2307','2308','2309','2311','2312','2313','2314','2315','3013','3058')) or H_1A='80') and F_03<'41') or ";
+	$query.="(H_1A='90' and F_03<'42')";
+	$query.=") ";
+	$query.="order by F_03 DESC,F_TMT ASC, I_06,F_04 DESC, H_4A ASC, H_1A DESC, H_02 ASC, B_05 ASC ";
+	$no=0;
+        //echo $query;
+	$r=mysql_query($query) or die (mysql_error());
         $total_data = mysql_num_rows(mysql_query($query));
         while ($row=mysql_fetch_array($r)) {
                 $no++;

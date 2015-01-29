@@ -65,7 +65,7 @@ if ($unitkerja !='') {
 		else $query.="and concat(A_01,A_02,A_03,A_04,A_05) like '".rtrim($subuk,'0')."%' ";
 	}
 	
-	if ($bln=='4') {
+	if ($_GET['bln']=='4') {
 		$namabl="APRIL";
 		$query.="and ((substring(F_TMT,6,2) in ('11','12') and substring(F_TMT,1,4)='".$th2."') or (substring(F_TMT,6,2) in ('01','02','03','04') and substring(F_TMT,1,4)='".$th1."')) ";
 	} else {

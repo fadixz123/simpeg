@@ -505,4 +505,22 @@ function datetimetomysql($dt) {
 
     return $date[2] . "/" . $date[1] . "/" . $date[0] . " " . $time[0] . ":" . $time[1];
 }
+
+function get_tkt_didik($val) {
+    switch ($val) {
+        case '0': $didik="10";            break;
+        case '1': $didik="20";            break;
+        case '2': $didik="30";            break;
+        case '3': $didik="41";            break;
+        case '4': $didik="42";            break;
+        case '5': $didik="43";            break;
+        case '6': $didik="44";            break;
+        case '7': $didik="70";            break;
+        case '8': $didik="80";            break;
+        case '9': $didik="90";
+        default : $didik="-";
+    }
+    return $didik;
+}
+
 ?>

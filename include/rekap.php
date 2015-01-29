@@ -73,7 +73,7 @@ if (!$uk) $uk='all';
                         enabled: true,
                         color: '#000000',
                         connectorColor: '#000000',
-                        format: '<b>{point.name}</b><br/>{point.y} pasien ({point.percentage:.1f} %)'
+                        format: '<b>{point.name}</b><br/>{point.y} pegawai ({point.percentage:.1f} %)'
                     },
                     showInLegend: true
                 }
