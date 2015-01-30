@@ -61,15 +61,46 @@ if ($updpk)
         });
     });
     
-    function removeMe(el) {
-        var parent = el.parentNode.parentNode;
-        parent.parentNode.removeChild(parent);
-        var jumlah = $('.tr_rows').length;
-        var col = 0;
-        for (i = 1; i <= jumlah; i++) {
-            $('.tr_rows:eq('+col+')').children('td:eq(0)').html(i);
-            col++;
-        }
+    function removeMe(el, id) {
+        bootbox.dialog({
+              message: "Anda yakin akan menghapus data ini?",
+              title: "Hapus Data",
+              buttons: {
+                batal: {
+                  label: '<i class="fa fa-refresh"></i> Batal',
+                  className: "btn-default",
+                  callback: function() {
+
+                  }
+                },
+                hapus: {
+                  label: '<i class="fa fa-trash-o"></i>  Hapus',
+                  className: "btn-primary",
+                  callback: function() {
+                    $.ajax({
+                        url: 'biodata/save-data.php?save=delete_rpangkat',
+                        data: 'id='+id,
+                        cache: false,
+                        dataType : 'json',
+                        success: function(data) {
+                            var parent = el.parentNode.parentNode;
+                            parent.parentNode.removeChild(parent);
+                            var jumlah = $('.tr_rows').length;
+                            var col = 0;
+                            for (i = 1; i <= jumlah; i++) {
+                                $('.tr_rows:eq('+col+')').children('td:eq(0)').html(i);
+                                col++;
+                            }
+                        },
+                        error: function(e){
+                             message_delete_failed();
+                        }
+                    });
+                  }
+                }
+              }
+            });
+        
     }
     
     function add_new_pangkat(val) {
@@ -254,7 +285,7 @@ if ($updpk)
           <td height="20" width="50" valign="top">
             <? 
             if ($row[PF_03]==$myF_03) echo "-";
-            else if ($no>2) { ?> <button type="button" class="btn btn-default btn-xs" onclick=""><i class="fa fa-trash-o"></i></button>
+            else if ($no>2) { ?> <button type="button" class="btn btn-default btn-xs" onclick="removeMe(this, '<?= $row['ID'] ?>');"><i class="fa fa-trash-o"></i></button>
             <? } ?>
           </td>
         </tr>

@@ -621,36 +621,42 @@ else if ($opsi === 'rpangkat') {
     $PF_04  = $_POST['PF_04'];
     $ID     = $_POST['ID'];
     foreach ($PF_03 as $key => $data) {
-        $no++;
-        $TGSK = date2mysql($TGSK[$key]);
-        $TGTMT= date2mysql($TGTMT[$key]);
-                
-		//$q="select * from MASTPKT1 where PF_01='$NIP' and PF_03='".$PF_03[$key]."' and PF_05='".$TGSK."' and PF_06='".$TGTMT."' LIMIT 1";
-                
-		if ($ID[$key] === '')
-		{
-			$q  ="insert into MASTPKT1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
-			$q .="PF_01='$NIP',PF_02='$no',PF_03='".$PF_03[$key]."',PF_04='".$PF_04[$key]."',PF_05='".$TGSK."',PF_06='".$TGTMT."'";
-			mysql_query($q) or die (mysql_error());
-                        $result['status'] = TRUE;
-                        $result['act'] = 'add';
-		}
-		else
-		{
-			$q  ="update MASTPKT1 set ";
-			$q .="PF_04='".$PF_04[$key]."',PF_05='".$TGSK."',PF_06='".$TGTMT."' where ID = '".$ID[$key]."'";
-			mysql_query($q) or die (mysql_error());
-                        $result['status'] = TRUE;
-                        $result['act'] = 'edit';
-		}
-                
-		if (mysql_affected_rows() > 0) $u++;
-		// update MASTFIP08 untuk pkt terakhir;
-		mysql_query("update MASTFIP08 set F_02='".$TGSK."', F_TMT='".$TGTMT."' where B_02='$NIP' and F_03='".$PF_03[$key]."'");		
-	}
-        if ($u > 0) { lethistory($sid,"UPDATE RIWAYAT PANGKAT",$NIP); }
         
-        die(json_encode($result));
+        $TGSKs = date2mysql($TGSK[$key]);
+        $TGTMTs= date2mysql($TGTMT[$key]);
+                
+            //$q="select * from MASTPKT1 where PF_01='$NIP' and PF_03='".$PF_03[$key]."' and PF_05='".$TGSK."' and PF_06='".$TGTMT."' LIMIT 1";
+
+            if ($ID[$key] === '')
+            {
+                    $q  ="insert into MASTPKT1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+                    $q .="PF_01='$NIP',PF_02='$no',PF_03='".$PF_03[$key]."',PF_04='".$PF_04[$key]."',PF_05='".$TGSKs."',PF_06='".$TGTMTs."'";
+                    mysql_query($q) or die (mysql_error());
+                    $result['status'] = TRUE;
+                    $result['act'] = 'add';
+            }
+            else
+            {
+                    $q  ="update MASTPKT1 set ";
+                    $q .="PF_04='".$PF_04[$key]."',PF_03='".$PF_03[$key]."',PF_05='".$TGSKs."',PF_06='".$TGTMTs."' where ID = '".$ID[$key]."'";
+                    
+                    mysql_query($q) or die (mysql_error());
+                    $result['status'] = TRUE;
+                    $result['act'] = 'edit';
+            }
+            $no++;
+            if (mysql_affected_rows() > 0) $u++;
+            // update MASTFIP08 untuk pkt terakhir;
+            mysql_query("update MASTFIP08 set F_02='".$TGSK."', F_TMT='".$TGTMT."' where B_02='$NIP' and F_03='".$PF_03[$key]."'");		
+    }
+    if ($u > 0) { lethistory($sid,"UPDATE RIWAYAT PANGKAT",$NIP); }
+
+    die(json_encode($result));
+}
+
+else if ($opsi === 'delete_rpangkat') {
+    mysql_query("delete from mastpkt1 where `ID` = '".$_GET['id']."'");
+    die(json_encode(array('status' => TRUE)));
 }
 
 else if ($opsi === 'rjabatan') {
