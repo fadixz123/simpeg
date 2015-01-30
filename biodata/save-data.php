@@ -207,6 +207,7 @@ else if ($opsi === 'jabatan') {
     $I_06   = $_POST['I_06'];
     $I_01   = $_POST['I_01'];
     $I_02   = $_POST['I_02'];
+    $I_JB   = $_POST['I_JB'];
     $TGSKJAB= $_POST['TGSKJAB'];
     $TGTMTJAB = $_POST['TGTMTJAB'];
     
@@ -327,6 +328,7 @@ else if ($opsi === 'ortu') {
     else
     {
             //----------------INSERT DATA AYAH
+            $NM_071 = $_POST['NM_071'];
             $NM_041=addslashes($NM_041);
             $q  ="insert into MSTORTU1 (NM_01,NM_02,NM_03,NM_04,NM_05,NM_06,NM_07) VALUES ";
             $q .="('$NIP','1','AYAH','$NM_041','$NM_051','".date2mysql($TGNM_061)."', ";

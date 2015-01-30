@@ -16,6 +16,7 @@ $row=mysql_fetch_array(mysql_query($q));
             $(this).datepicker('hide');
         });
     });
+    
     function save_data_ortu() {
         $.ajax({
             type: 'POST',

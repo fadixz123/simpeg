@@ -29,7 +29,7 @@ $I_06=$row[I_06];
                         '<option value="3">JFU</option>'+
                 '</select>'+
                 '<input type="hidden" name="pilihjab" value="0">'+
-                '<span class="form-control-label"><a class="autoshow" href="javascript:batal_submit();">Batal</a></span>';
+                '<button type="button" class="btn btn-default btn-xs" onclick="batal_submit();"><i class="fa fa-minus-circle"></i> Batal</button>';
         $('#load-extend').html(str);
     }
     
@@ -81,10 +81,6 @@ $I_06=$row[I_06];
     <input type="hidden" name="A_02" value="<?=$row[A_02]?>">
     <input type="hidden" name="A_03" value="<?=$row[A_03]?>">
     <input type="hidden" name="A_04" value="<?=$row[A_04]?>">
-    <input type="hidden" name="I_JB" value="<?=$row[I_JB]?>">
-    <input type="hidden" name="I_05" value="<?=$row[I_05]?>">
-    <input type="hidden" name="I_5A" value="<?=$row[I_5A]?>">
-    <input type="hidden" name="I_06" value="<?=$row[I_06]?>">
     <input type="hidden" name="nip" value="<?=$_GET['nip']?>">
     <table width="100%" class="table table-condensed table-bordered table-hover no-margin">
         <tr class="sectiontableheader"> 
@@ -96,7 +92,6 @@ $I_06=$row[I_06];
             <td width="20%">Jabatan Terakhir</td>
             <td>:</td>
             <td width="77%"><b class="autohide"><?=$jabnya=getNaJab($NIP)?></b> <a class="autohide" href="#" onclick="gantijab();">Ganti Jab</a>
-                <input type="hidden" name="I_JB" value="<?=$jabnya?>">
             </td>
           </tr>
           <tr class="autoshow">

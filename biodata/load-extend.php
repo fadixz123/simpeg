@@ -4,14 +4,14 @@ include('../include/fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
 if ($_GET['pilihjab'] === '3') { ?>
-        <select name="I_05" class="form-control-static" onchange="window.location='index.htm?sid=<?=$sid?>&do=biodata&page=jab&NIP=<?=$NIP;?>&I_01='+jabatan.I_01.value+'&I_02='+jabatan.I_02.value+'&TGSKJAB='+jabatan.TGSKJAB.value+'&BLSKJAB='+jabatan.BLSKJAB.value+'&THSKJAB='+jabatan.THSKJAB.value+'&TGTMTJAB='+jabatan.TGTMTJAB.value+'&BLTMTJAB='+jabatan.BLTMTJAB.value+'&THTMTJAB='+jabatan.THTMTJAB.value+'&I_06='+jabatan.I_06.value+'&pilihjab=3&I_05='+this.value+''" style="width: 80%;">
-        <option value="">PILIH KELOMPOK JAB FUNGSIONAL UMUM</option>
+        <select name="I_05" class="form-control-static" onchange="window.location='index.htm?sid=<?=$sid?>&do=biodata&page=jab&NIP=<?=$NIP;?>&I_01='+jabatan.I_01.value+'&I_02='+jabatan.I_02.value+'&TGSKJAB='+jabatan.TGSKJAB.value+'&BLSKJAB='+jabatan.BLSKJAB.value+'&THSKJAB='+jabatan.THSKJAB.value+'&TGTMTJAB='+jabatan.TGTMTJAB.value+'&BLTMTJAB='+jabatan.BLTMTJAB.value+'&THTMTJAB='+jabatan.THTMTJAB.value+'&I_06='+jabatan.I_06.value+'&pilihjab=3&I_05='+this.value+''" style="width: 300px;">
+        <option value=""><?= ucwords(strtolower('PILIH KELOMPOK JAB FUNGSIONAL UMUM')) ?></option>
                                 <?
                                 $qjfu="select * from TABJFU order by NAJFU";
                                 $rjfu=mysql_query($qjfu) or die(mysql_error());
                                 while ($rojfu=mysql_fetch_array($rjfu)) {
                                 ?>
-        <option value="<?=$rojfu[KOJFU]?>" <? if ($I_05==$rojfu[KOJFU]) echo "selected";?>><?=$rojfu[NAJFU]?></option>
+        <option value="<?=$rojfu[KOJFU]?>" <? if ($I_05==$rojfu[KOJFU]) echo "selected";?>><?=ucwords(strtolower($rojfu['NAJFU']))?></option>
                                 <? } ?>
                                 </select>
                                 <?
@@ -23,7 +23,7 @@ if ($_GET['pilihjab'] === '3') { ?>
         <input type="hidden" name="I_JB" value="<?=$xo[NAJFU]?>">
         <input type="hidden" name="I_5A" value="0">
         <input type="hidden" name="pilihjab" value="0">
-        <a href="javascript:refresh_submit()">Batal</a>
+        <button type="button" class="btn btn-default btn-xs" onclick="refresh_submit();"><i class="fa fa-minus-circle"></i> Batal</button>
         <?
 }
 if ($_GET['$pilihjab'] === '1') {
@@ -44,14 +44,14 @@ if ($_GET['$pilihjab'] === '1') {
 }
 if ($_GET['pilihjab'] === '2') {
         ?>
-        <select name="I_05" class="form-control-static" id="I_05" onchange="load_jab_fungsional_khusus();" style="width: 80%;">
-        <option value="">PILIH KELOMPOK JAB FUNGSIONAL KHUSUS</option>
+        <select name="I_05" class="form-control-static" id="I_05" onchange="load_jab_fungsional_khusus();" style="width: 300px;">
+            <option value=""><?= ucwords(strtolower('PILIH KELOMPOK JAB FUNGSIONAL KHUSUS')) ?></option>
         <?
         $ro=mysql_query("select * from TABFNG1 order by NFUNG") or die (mysql_error());
         while ($ox=mysql_fetch_array($ro))
         {
         ?>
-        <option value="<?=$ox[KFUNG]?>" <? if ($I_05==$ox[KFUNG]) echo "selected";?>><?=$ox[NFUNG]?></option>
+        <option value="<?=$ox[KFUNG]?>" <? if ($I_05==$ox[KFUNG]) echo "selected";?>><?=ucwords(strtolower($ox['NFUNG']))?></option>
         <?
         }
         ?>
@@ -68,13 +68,13 @@ if ($_GET['khusus'] === 'detail') {
         }
         $r1=mysql_query($qjenjang) or die (mysql_error());
         ?>
-        <select name="I_07" class="form-control-static" onChange="window.location='index.htm?&sid=<?=$sid?>&do=biodata&page=jab&NIP=<?=$NIP?>&I_01='+jabatan.I_01.value+'&I_02='+jabatan.I_02.value+'&TGSKJAB='+jabatan.TGSKJAB.value+'&BLSKJAB='+jabatan.BLSKJAB.value+'&THSKJAB='+jabatan.THSKJAB.value+'&TGTMTJAB='+jabatan.TGTMTJAB.value+'&BLTMTJAB='+jabatan.BLTMTJAB.value+'&THTMTJAB='+jabatan.THTMTJAB.value+'&I_06='+jabatan.I_06.value+'&pilihjab=2&I_05=<?=$I_05?>&I_07='+this.value+''">
-        <option value="">PILIH JENJANG</option>
+        <select name="I_07" class="form-control-static" onChange="window.location='index.htm?&sid=<?=$sid?>&do=biodata&page=jab&NIP=<?=$NIP?>&I_01='+jabatan.I_01.value+'&I_02='+jabatan.I_02.value+'&TGSKJAB='+jabatan.TGSKJAB.value+'&BLSKJAB='+jabatan.BLSKJAB.value+'&THSKJAB='+jabatan.THSKJAB.value+'&TGTMTJAB='+jabatan.TGTMTJAB.value+'&BLTMTJAB='+jabatan.BLTMTJAB.value+'&THTMTJAB='+jabatan.THTMTJAB.value+'&I_06='+jabatan.I_06.value+'&pilihjab=2&I_05=<?=$I_05?>&I_07='+this.value+''" style="width: 300px;">
+        <option value=""><?= ucwords(strtolower('PILIH JENJANG')) ?></option>
         <?
         while ($x1=mysql_fetch_array($r1))
         {
         ?>
-        <option value="<?=$x1[KJENJANG]?>" <? if ($I_07==$x1[KJENJANG]) echo "selected";?>><?=$x1[JENJANG]?></option>
+        <option value="<?=$x1[KJENJANG]?>" <? if ($I_07==$x1[KJENJANG]) echo "selected";?>><?=ucwords(strtolower($x1['JENJANG']))?></option>
         <?
         }
         ?>

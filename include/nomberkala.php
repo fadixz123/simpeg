@@ -21,8 +21,12 @@ if ($tahun=='') $tahun=date("Y");
             var y = screen.height/2 - dHeight/2;
             window.open('include/i_nomberkala.php?'+$('#nomberkala').serialize(),'myPoppp','width='+dWidth+', height='+dHeight+', left='+x+',top='+y)
         });
+        $('#searching').click(function() {
+            $('#datamodal_search').modal('show');
+        });
     });
     function search_data_nomberkala(page) {
+        $('#datamodal_search').modal('hide');
         $.ajax({
             type: 'GET',
             url: 'include/nomberkala-list.php?page='+page,
@@ -35,6 +39,17 @@ if ($tahun=='') $tahun=date("Y");
                 $('#result').html(data);
             }
         });
+    }
+    
+    function reload_data() {
+        reset_form();
+        search_data_nomberkala(1);
+    }
+
+    function reset_form() {
+        $('input[type=text], input[type=hidden], select, textarea').val('');
+        $('a .select2-chosen').html('&nbsp;');
+        $('#tahun').val('<?= date("Y") ?>');
     }
     
     function paging(page, tab, search) {
@@ -68,8 +83,8 @@ if ($tahun=='') $tahun=date("Y");
                         <form name="nominatif1" id="nomberkala" action="?sid=<?=$sid?>&do=berkala" method="post" role="form" class="form-horizontal">
                           <table width="100%">
                             <tr> 
-                              <td width="15%" align="left">Bulan:</td>
-                              <td width="610" align="left"><select name="bln" id="bln" class="form-control-static">
+                              <td width="25%" align="left">Bulan:</td>
+                              <td align="left"><select name="bln" id="bln" class="form-control-static">
                                             <option value="1" <?= $bln=='1' ? "selected" : ""?>>Januari</option>
                                             <option value="2" <?= $bln=='2' ? "selected" : ""?>>Pebruari</option>
                                             <option value="3" <?= $bln=='3' ? "selected" : ""?>>Maret</option>
@@ -82,7 +97,7 @@ if ($tahun=='') $tahun=date("Y");
                                             <option value="10" <?= $bln=='10' ? "selected" : ""?>>Oktober</option>
                                             <option value="11" <?= $bln=='11' ? "selected" : ""?>>Nopember</option>
                                             <option value="12" <?= $bln=='12' ? "selected" : ""?>>Desember</option>
-                                            </select> <input type="text" name="tahun" value="<?=$tahun?>" class="form-control-static"></td>
+                                            </select> <input type="text" name="tahun" id="tahun" value="<?=$tahun?>" class="form-control-static"></td>
                             </tr>
                             <tr>
                               <td>Sub Unit Kerja</td>
@@ -93,18 +108,11 @@ if ($tahun=='') $tahun=date("Y");
                             $rupt=listUnitKerja();
                             foreach ($rupt as $key=>$value) {
                             ?>
-                                <option value="<?=$value[0]?>" <?= $value[0]==$uk ? "selected" : ""?>><?=$value[1]?></option>
+                                <option value="<?=$value[0]?>" <?= $value[0]==$uk ? "selected" : ""?>><?=  ucwords(strtolower($value[1]))?></option>
                             <? } ?>
                                 </select>
                               </td>
                             </tr>
-                            <tr >
-                            <td height="10" valign="top">&nbsp;</td>
-                            <td height="10" valign="top">
-                                <button type="button" class="btn btn-primary" onclick="search_data_nomberkala(1); return false;"><i class="fa fa-search"></i> Tampilkan</button>
-                                <button type="button" class="btn btn-primary" id="cetak"><i class="fa fa-print"></i> Cetak</button>
-                            </td>
-                          </tr>
                           </table>
                     </form>
                         </div>
@@ -113,7 +121,7 @@ if ($tahun=='') $tahun=date("Y");
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-refresh"></i> Batal</button>
-            <button type="button" class="btn btn-primary" onclick="search_data_kpreg(1);"><i class="fa fa-eye"></i> Tampilkan</button>
+            <button type="button" class="btn btn-primary" onclick="search_data_nomberkala(1);"><i class="fa fa-eye"></i> Tampilkan</button>
         </div>
     </div>
     </div>

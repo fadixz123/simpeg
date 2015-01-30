@@ -95,7 +95,7 @@ else {echo "SEMUA UNIT KERJA";}?><br><?= $subuk!='' && $subuk!='all' ? ( $hasupt
 	$query.="order by F_03 DESC,F_TMT ASC, I_06,F_04 DESC, H_4A ASC, H_1A DESC, H_02 ASC, B_05 ASC ";
 	$no=0;
         //echo $query;
-	$r=mysql_query($query) or die (mysql_error());
+	$r=mysql_query($query.'  limit '.$offset.', '.$limit) or die (mysql_error());
         $total_data = mysql_num_rows(mysql_query($query));
         while ($row=mysql_fetch_array($r)) {
                 $no++;

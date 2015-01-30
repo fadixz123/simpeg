@@ -65,9 +65,9 @@ $NIP = $_GET['nip'];
     $q="select B_06 from MASTFIP08 where B_02='$NIP'";
     $r=mysql_query($q);
     $o=mysql_fetch_array($r);
-    $jk=$o["B_06"];
-    if ($jk=='1') { $ini="DATA ISTRI"; } elseif ($jk=='2') { $ini=='DATA SUAMI'; } else { $ini="DATA ISTRI/SUAMI"; }
+    $jk=$o['B_06'];
     
+    if ($jk=='1') { $ini="DATA ISTRI"; } elseif ($jk=='2') { $ini='DATA SUAMI'; } else { $ini="DATA ISTRI/SUAMI"; }
     if ($ini === 'DATA ISTRI') {
         $q="select m.*, f.B_03 from MASTKEL1 m left join mastfip08 f on (f.B_02B=m.`NIP_COUPLE`) where m.KF_01='$NIP' and m.KF_02='1' AND m.KF_03='1'";
     } else {
@@ -83,7 +83,7 @@ $NIP = $_GET['nip'];
           <tr class="sectiontableheader">
             <input type="hidden" name="ini" id="ini" value="<? echo $ini; ?>">
             <td width="3%"> 
-              <div align="center"><b>V</b></div>
+              <div align="center"><b>V </b></div>
             </td>
             <td colspan="3"><b><? echo $ini; ?>
               </b></td>
@@ -146,7 +146,7 @@ $NIP = $_GET['nip'];
             <td width="20%">&nbsp;</td>
             <td width="9">&nbsp;</td>
             <td width="77%">
-                <button class="btn btn-primary" onclick="save_data_keluarga(); return false;"><i class="fa fa-save"></i> Simpan</button>
+                <button class="btn btn-primary" onclick="save_data_keluarga(); return false;"><i class="fa fa-save"></i> Simpan Data Istri</button>
             </td>
           </tr>
           <tr bgcolor="<? echo $warnarow1; ?>" valign="top"> 
@@ -155,5 +155,5 @@ $NIP = $_GET['nip'];
     </table>
 </form>
 <script type="text/javascript">
-    $('#s2id_nomorinduk a .select2-chosen').html('<?= $o['NIP_COUPLE'].' | '.$o['B_03'] ?>');
+    $('#s2id_nomorinduk a .select2-chosen').html('<?= $o['NIP_COUPLE'].' '.(($o['B_03'] !== '')?'|':'').' '.$o['B_03'] ?>');
 </script>
