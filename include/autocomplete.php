@@ -334,7 +334,7 @@ if (isset($_GET['search'])) {
             $total = 0;
 
             foreach ($jekel as $key => $row) {
-                $db = "select J_01,B_06 as nama,count(*) as jml from MASTFIP08 where A_01='$uk' and `J_01` = '$row' and (J_01>=1 and J_01<=3) group by J_01,B_06 order by J_01";
+                $db = "select J_01,B_06 as nama,count(*) as jml from MASTFIP08 where A_01='$uk' and `J_01` = '$row' and (J_01>=1 and J_01<=3) group by J_01 order by J_01";
                 $query = mysql_fetch_object(mysql_query($db));
 
                 $data[] = array(status_kawin($row), (int)$query->jml);
