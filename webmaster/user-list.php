@@ -47,7 +47,7 @@ mysql_select_db($db);
                 <td width="67">********</td>
                 <td width="67">
                     <button type="button" onclick="edit_user('<?= $detail ?>')" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Edit</button> 
-                    <button type="button" class="btn btn-default btn-xs" onclick="delete_user(<?= $data['id'] ?>);"><i class="fa fa-trash-o"></i> Delete</button>
+                    <button type="button" class="btn btn-default btn-xs" onclick="delete_user('<?= $data['id'] ?>','<?= $page ?>');"><i class="fa fa-trash-o"></i> Delete</button>
                 </td>
         </tr>
         <? } ?>

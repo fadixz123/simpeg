@@ -139,12 +139,11 @@ if ($username!='') {
               className: "btn-primary",
               callback: function() {
                 $.ajax({
-                    type : 'DELETE',
-                    url: '',
+                    url: 'biodata/save-data.php?save=delete_user',
+                    data: 'id='+id,
                     cache: false,
-                    dataType : 'json',
                     success: function(data) {
-                        get_list_pemesanan(p);
+                        load_data_usersystem(p);
                         message_delete_success();
                     },
                     error: function(e){

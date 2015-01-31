@@ -77,6 +77,9 @@ if ($dik!='all') {
 if ($jur!='') {
         $query.="and H_1B='$jur' ";
 }
+if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
+    $query.=" and A_01 = '".$_SESSION['skpd']."'";
+}
 $limit = 10;
 $page  = $_GET['page'];
 if ($_GET['page'] === '') {

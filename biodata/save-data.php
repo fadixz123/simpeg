@@ -55,6 +55,11 @@ if ($opsi === 'pegawai') {
     die(json_encode($result));
 }
 
+else if ($opsi === 'delete_user') {
+    $id = $_GET['id'];
+    mysql_query("delete from `user` where id = '$id'");
+}
+
 else if ($opsi === 'cpns') {
     $NIP    = $_POST['nip'];
     $D_02   = $_POST['D_02'];
