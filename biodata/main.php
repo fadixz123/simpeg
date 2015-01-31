@@ -47,7 +47,10 @@ if ($j > 0 ) {
             search_data_pns(1);
             $('#searching').click(function() {
                 $('#datamodal_search').modal('show');
-                //reset_form();
+            });
+            $('#tambah').click(function() {
+                $('#datamodal_search_detail').modal('show');
+                load_detail('include/main-tabs.php?sid=<?=$sid?>&do=cari&nip=&cari=NIP');
             });
             $('#nip').select2({
                 ajax: {
@@ -119,6 +122,10 @@ if ($j > 0 ) {
             });*/
         });
         
+        function cetak(id) {
+            window.open('CETAKFIP/index.php?nip='+id+'&sid=<?= $sid ?>');
+        }
+        
         function search_data_pns(page) {
             $.ajax({
                 type: 'GET',
@@ -135,9 +142,10 @@ if ($j > 0 ) {
             });
         }
         
-        function load_detail(url) {
+        function load_detail(url, id) {
             $('#detail-pegawai').empty();
             $('#datamodal_search_detail').modal('show');
+            $('#cetak').attr('onclick','cetak(\''+id+'\')');
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -216,7 +224,8 @@ if ($j > 0 ) {
 <h4 class="title">EDIT PROFILE PEGAWAI</h4>
 <div class="form-toolbar">
     <div class="toolbar-left">
-        <button id="searching" class="btn btn-primary" data-target=".bs-modal-lg"><i class="fa fa-search"></i> Search</button>
+        <button id="tambah" class="btn btn-primary" data-target=".bs-modal-lg"><i class="fa fa-plus-circle"></i> Tambah Pegawai</button>
+        <button id="searching" class="btn" data-target=".bs-modal-lg"><i class="fa fa-search"></i> Search</button>
         <button class="btn" data-target=".bs-modal-lg" onclick="reload_data();"><i class="fa fa-refresh"></i> Reload Data</button>
     </div>
 </div> 
@@ -464,6 +473,7 @@ else if (strlen($NIP)!=0) {
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-refresh"></i> Close</button>
+            <button type="button" class="btn btn-primary" id="cetak"><i class="fa fa-print"></i> Print</button>
         </div>
     </div>
     </div>

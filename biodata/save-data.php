@@ -29,7 +29,15 @@ if ($opsi === 'pegawai') {
     $B_NOTELP   = $_POST['B_NOTELP'];
     $B_NOARSIP  = $_POST['B_NOARSIP'];
     $nik    = $_POST['nik'];
-    $q="update MASTFIP08 set A_01='".substr($loker,0,2)."', A_02='".substr($loker,2,2)."',A_03='".substr($loker,4,2)."', A_04='".substr($loker,6,2)."',A_05='".substr($loker,8,2)."' where B_02='".$_POST['nip']."'";
+    $check = mysql_num_rows(mysql_query("select B_02B from mastfip08 where B_02B = '$B_02B'"));
+    $result['act'] = 'edit';
+    if ($check === 0) {
+        $insert = "insert into mastfip08 set B_02 = '$B_02B', B_02B = '$B_02B'";
+        mysql_query($insert);
+        $result['act'] = 'add';
+    }
+    $q="update MASTFIP08 set A_01='".substr($loker,0,2)."', A_02='".substr($loker,2,2)."',A_03='".substr($loker,4,2)."', A_04='".substr($loker,6,2)."',A_05='".substr($loker,8,2)."' where B_02='".$B_02B."'";
+    
     mysql_query($q) or die (mysql_error());
     if (mysql_affected_rows() > 0) { lethistory($sid,"UPDATE LOKASI KE ".subLokasiKerjaB($loker),$NIP); }
     
@@ -44,7 +52,7 @@ if ($opsi === 'pegawai') {
     if (mysql_affected_rows() > 0) { 
         lethistory($sid,"UPDATE IDENTITAS",$NIP); 
     }
-    die(json_encode(array('status' => TRUE)));
+    die(json_encode($result));
 }
 
 else if ($opsi === 'cpns') {

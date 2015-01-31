@@ -4,16 +4,16 @@ include('../include/fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
 
-if (empty($buker)) {
-	$q="select * from MASTFIP08 where B_02='".$_GET['nip']."' LIMIT 1";
-        //echo $q;
-	$row=mysql_fetch_array(mysql_query($q));
-	if ($row[A_01] !='') $buker=$row[A_01];
-	if ($row[A_03] !='' && $row[A_04] !='' && $row[A_02] !='' ) {
-		$lker=$row[A_01].$row[A_02].$row[A_03];
-		$loker=$row[A_01].$row[A_02].$row[A_03].$row[A_04].$row[A_05];
-	}
+
+$q="select * from MASTFIP08 where B_02='".$_GET['nip']."' LIMIT 1";
+//echo $q;
+$rows=mysql_fetch_array(mysql_query($q));
+if ($rows[A_01] !='') $buker=$rows[A_01];
+if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
+        $lker=$rows[A_01].$rows[A_02].$rows[A_03];
+        $loker=$rows[A_01].$rows[A_02].$rows[A_03].$rows[A_04].$rows[A_05];
 }
+
 ?>
 <script type="text/javascript">
     $(function() {
@@ -35,8 +35,10 @@ if (empty($buker)) {
             },
             success: function(data) {
                 hide_ajax_indicator();
-                if (data.status === true) {
+                if (data.act === 'edit') {
                     message_edit_success();
+                } else {
+                    message_add_success();
                 }
             }
         });

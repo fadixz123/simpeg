@@ -5,10 +5,12 @@ $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
 $sid = $_GET['sid'];
 $nip = $_GET['nip'];
+$B_03= $_GET['nama'];
 if (isset($_GET['cari'])) {
 	
 	if (strlen($B_03) > 0 && isset($uk)) {
 		$q="select A_01,A_02,A_03,A_04,B_02,B_03A,B_03,B_03B,I_05,I_06,F_03 from MASTFIP08 where B_03 LIKE '%$B_03%' ";
+                
 		if ($uk != 'all') {
 			$q.="and A_01='$uk' ";
 		}
@@ -19,6 +21,7 @@ if (isset($_GET['cari'])) {
 	
 	if (isset($nip) && (strlen($nip)==9 || strlen($nip)==18)) {
 		$q="select A_01,A_02,A_03,A_04,B_02,B_03A,B_03,B_03B,I_05,I_06,F_03 from MASTFIP08 where B_02='$nip' or B_02B='$nip' LIMIT 1";
+                
 		$r=mysql_query($q) or die (mysql_error());
 		if (mysql_num_rows($r) == 1) {
 			$status=1;

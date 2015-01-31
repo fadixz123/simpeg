@@ -229,12 +229,14 @@ function dikStru($tk) {
 }
 
 function jurusan($didik,$jur)
-{
+{   
+    if ($didik !== '-') {
 	$q1="select * from TABDIK".$didik." where kod='$jur'";
 	$r=mysql_query($q1);
-	$o1=mysql_fetch_array($r);
-	$hasil=$o1["ket"];
-	return $hasil;
+        $o1=mysql_fetch_array($r);
+        $hasil=$o1["ket"];
+        return $hasil;
+    }
 }
 
 function agama1($kode)

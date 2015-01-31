@@ -1,6 +1,7 @@
 <?php
 $sid = $_GET['sid'];
 $nip = $_GET['nip'];
+$nama= $_GET['nama'];
 ?>
 <script type="text/javascript" src="Scripts/library.js"></script>
 <script type="text/javascript">
@@ -13,7 +14,7 @@ $nip = $_GET['nip'];
                         switch(tab_id){
                             case 'pegawai':
                                 if ($('#tab1').html() === '') {
-                                    my_ajax('include/main-detail.php?sid=<?=$sid?>&do=cari&nip=<?=$nip?>&cari=NIP','#tab1');
+                                    my_ajax('include/main-detail.php?sid=<?=$sid?>&do=cari&nama=<?=$nama?>&nip=<?=$nip?>&cari=NIP','#tab1');
                                 }
                             break;
                             case 'lokid':

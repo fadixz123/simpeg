@@ -3,6 +3,7 @@ include('include/config.inc');
 include('include/fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
+$sid = $_GET['sid'];
 if ($cari) {
 	
 	if (strlen($B_03) > 0 && isset($uk)) {
@@ -34,6 +35,10 @@ if ($cari) {
                     return false;
             }
 	}
+        
+        function cetak(id) {
+            window.open('CETAKFIP/index.php?nip='+id+'&sid=<?= $sid ?>');
+        }
         
         function reload_data() {
             reset_form();
@@ -137,9 +142,10 @@ if ($cari) {
             });
         }
         
-        function load_detail(url) {
+        function load_detail(url, id) {
             $('#detail-pegawai').empty();
             $('#datamodal_search_detail').modal('show');
+            $('#cetak').attr('onclick','cetak(\''+id+'\')');
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -246,6 +252,7 @@ if ($cari) {
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-refresh"></i> Close</button>
+            <button type="button" class="btn btn-primary" id="cetak"><i class="fa fa-print"></i> Print</button>
         </div>
     </div>
     </div>

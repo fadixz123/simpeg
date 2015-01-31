@@ -2,7 +2,9 @@
 include ("../include/config.inc");
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
+$sid = $_GET['sid'];
 $j=mysql_num_rows(mysql_query("select user from LOGUSER where sid='$sid' LIMIT 1"));
+$NIP = $_GET['nip'];
 if (1)
 {
 include ("fungsi.inc");
@@ -27,18 +29,31 @@ $ojb=mysql_fetch_array($rjb);
 ?>
 <html>
 <head>
-<link rel="stylesheet" href="../css/printing-A4.css" media="print" />
+
+<title>::. CETAK BIODATA .::</title>
+<style>
+<!--
+td           { font-family: Tahoma,Arial; font-size: 8pt}
+td.garis           { font-family: Arial; font-size: 8pt; border-color: #FFFFFF #FFFFFF black; border-style: solid; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 1px; border-left-width: 0px}
+@media print
+{
+span.break {page-break-after: always}
+}
+@page {
+    size: legal;
+}
+
+-->
+</style>
 <script type="text/javascript">
     function cetak() {
         setTimeout(function(){ window.close();},300);
         window.print();    
     }
 </script>
-<title>CETAK BIODATA</title>
-
 </head>
 
-<body onload="cetak();">
+<body leftmargin="0" topmargin="0" onload="cetak();">
 <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" width="700" id="AutoNumber1">
   <tr>
       <td>

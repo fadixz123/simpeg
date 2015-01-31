@@ -4,6 +4,7 @@ include('config.inc');
 include('fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
+$sid = $_GET['sid'];
 ?>
 <script type="text/javascript">
     $(function() {
@@ -25,6 +26,7 @@ mysql_select_db($db);
     <tbody>
         <?php
         $uk    = $_GET['uk'];
+        $B_03 = ($_GET['B_03'] !== '')?$_GET['B_03']:'-';
         $limit = 10;
         $page  = $_GET['page'];
         if ($_GET['page'] === '') {
@@ -34,7 +36,7 @@ mysql_select_db($db);
             $offset = ($page-1)*$limit;
         }
         $no=0;
-        $q="select *, CONCAT(`A_01`,`A_02`, `A_03`, `A_04`, `A_05`) as kode_sub_lokasi from MASTFIP08 where B_03 LIKE '%$B_03%' 
+        $q="select *, CONCAT(`A_01`,`A_02`, `A_03`, `A_04`, `A_05`) as kode_sub_lokasi from MASTFIP08 where B_02 is not NULL 
                 ";
         //echo $q;
         if ($_GET['uk'] !== 'all') {
@@ -70,8 +72,7 @@ mysql_select_db($db);
                 <td class="nowrap"><small><?=ucwords(strtolower(getNaJab($row[B_02])))?></small></td>
                 <td><button type="button" class="btn btn-default btn-xs mypopover" data-container="body" data-toggle="popover" data-placement="top" data-title="Detail Unit Kerja" data-content="<?= $detail ?>">Show</button></td>
                 <td class="nowrap">
-                    <button type="button" onclick="load_detail('include/main-tabs.php?sid=<?=$sid?>&do=cari&nip=<?=$row[B_02]?>&cari=NIP');" class="btn btn-default btn-xs"><i class="fa fa-eye"></i></button> 
-                    <button type="button" onclick="print_data('<?= $sid ?>','<?=$row[B_02]?>');" class="btn btn-default btn-xs"><i class="fa fa-print"></i> </button>
+                    <button type="button" onclick="load_detail('include/main-tabs.php?sid=<?=$sid?>&do=cari&nip=<?=$row['B_02']?>&nama=<?=$row['B_03']?>&cari=NIP','<?= $row['B_02'] ?>');" class="btn btn-default btn-xs"><i class="fa fa-eye"></i></button>
                 </td>
               </tr>
                 <?
