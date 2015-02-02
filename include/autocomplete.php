@@ -231,7 +231,7 @@ if (isset($_GET['search'])) {
             die(json_encode($result));
         }
         if ($jenis === '2') {
-            $sql = "select H_4A as nama,count(*) as jml from MASTFIP08 where (H_4A<>'' and H_4A<>'0' and H_4A is not null) $q group by H_4A order by H_4A";
+            $sql = "select H_4A as nama,count(*) as jml from MASTFIP08 where (H_4A<>'' and H_4A<>'0' and H_4A is not null) and A_01<>'99' $q group by H_4A order by H_4A";
             $result['title'] = "Laporan Pegawai Berdasarkan Pendidikan Struktural";
             $query = mysql_query($sql);
             while ($value = mysql_fetch_array($query)) {
@@ -241,7 +241,7 @@ if (isset($_GET['search'])) {
             die(json_encode($result));
         }
         if ($jenis === '3') {
-            $sql = "select H_1A as nama,count(*) as jml from MASTFIP08 where (H_1A<>'' or H_1A is not null) $q group by H_1A order by H_1A";
+            $sql = "select H_1A as nama,count(*) as jml from MASTFIP08 where (H_1A<>'' or H_1A is not null) and A_01<>'99' $q group by H_1A order by H_1A";
             $result['title'] = "Laporan Pegawai Berdasarkan Pendidikan Struktural";
             $query = mysql_query($sql);
             while ($value = mysql_fetch_array($query)) {
@@ -273,7 +273,7 @@ if (isset($_GET['search'])) {
             $total = 0;
 
             foreach ($agama as $key => $row) {
-                $db = "select B_07 as nama,count(*) as jml from MASTFIP08 where `B_07` = '$row' $q and (B_07<>'' or B_07 is not null)";
+                $db = "select B_07 as nama,count(*) as jml from MASTFIP08 where `B_07` = '$row' and A_01<>'99' $q and (B_07<>'' or B_07 is not null)";
                 //echo $db;
                 $query = mysql_fetch_object(mysql_query($db));
 
@@ -293,7 +293,7 @@ if (isset($_GET['search'])) {
             $total = 0;
 
             foreach ($jekel as $key => $row) {
-                $db = "select B_06 as nama,count(*) as jml from MASTFIP08 where `B_06` = '$row' $q and (B_06<>'' and B_06 is not null) ";
+                $db = "select B_06 as nama,count(*) as jml from MASTFIP08 where `B_06` = '$row' and A_01<>'99' $q and (B_06<>'' and B_06 is not null) ";
                 //echo $db;
                 $query = mysql_fetch_object(mysql_query($db));
 
@@ -305,24 +305,33 @@ if (isset($_GET['search'])) {
             die(json_encode(array('data' => $data, 'total' => $total, 'title' => $title)));
         }
         if ($jenis === '7') {
-            //$aUmur=array(16,21,26,31,36,41,46,51,56,60);
-            $jekel = array(
-                'Laki-laki' => '1',
-                'Perempuan' => '2'
-            );
+            $aUmur=array(16,21,26,31,36,41,46,51,56,60);
+            //$jml=count($aUmur);
             $data = array();
             $total = 0;
 
-            foreach ($jekel as $key => $row) {
-                $db = "select B_06 as nama,count(*) as jml from MASTFIP08 where `B_06` = '$row' $q and (B_06<>'' and B_06 is not null) ";
+            foreach ($aUmur as $i => $row) {
+                $thskr=date("Y");
+		$blskr=date("m");
+		$tgskr=date("d");
+		$r=$i+1;
+		
+		$u1=intval($thskr)-$aUmur[$r];
+		$u2=intval($thskr)-$aUmur[$i];
+		$tu1=$u1."-".$blskr."-".$tgskr;
+		$tu2=$u2."-".$blskr."-".$tgskr;
+	   	//$q="select count(*) from MASTFIP08 where ";
+	   	//if ($uk!='all') $q.="A_01='$uk' and ";
+                
+                $db = "select B_06 as nama,count(*) as jml from MASTFIP08 where A_01<>'99' and B_05>='$tu1' and B_05<'$tu2' $q ";
                 //echo $db;
                 $query = mysql_fetch_object(mysql_query($db));
 
-                $data[] = array(jenisKelamin($row), (int)$query->jml);
+                $data[] = array($row.' - '.$aUmur[$r].' Tahun', (int)$query->jml);
                 $total += (int)$query->jml;
             }
             //return array('data' => $data, 'total' => $total);
-            $title = "Laporan Pegawai Berdasarkan Jenis Kelamin";
+            $title = "Laporan Pegawai Berdasarkan Usia";
             die(json_encode(array('data' => $data, 'total' => $total, 'title' => $title)));
         }
         if ($jenis === '8') {
@@ -337,7 +346,7 @@ if (isset($_GET['search'])) {
             $total = 0;
 
             foreach ($jekel as $key => $row) {
-                $db = "select J_01,B_06 as nama,count(*) as jml from MASTFIP08 where `J_01` = '$row' $q and (J_01>=1 and J_01<=3) group by J_01 order by J_01";
+                $db = "select J_01,B_06 as nama,count(*) as jml from MASTFIP08 where `J_01` = '$row' and A_01<>'99' $q and (J_01>=1 and J_01<=3) group by J_01 order by J_01";
                 $query = mysql_fetch_object(mysql_query($db));
 
                 $data[] = array(status_kawin($row), (int)$query->jml);

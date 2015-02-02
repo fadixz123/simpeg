@@ -16,7 +16,7 @@ if (!$uk) $uk='all';
                 dataType: 'json',
                 success: function(data) {
                     var jenis = $('#what').val();
-                    if (jenis === '5' || jenis === '6' || jenis === '8') {
+                    if (jenis === '5' || jenis === '6' || jenis === '7' || jenis === '8') {
                         draw_pie_chart('#result', data);
                     } else {
                         draw_bar_chart('#result', data);
