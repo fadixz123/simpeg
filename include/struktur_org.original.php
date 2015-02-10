@@ -4,23 +4,25 @@
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
 <title>Struktur Organisasi</title>
 <style>
-<!--
-td	     { font-family: Tahoma; font-size: 10px; color: #000000; }
+
+td	     { font-family: "Trebuchet MS",lucida grande,tahoma,verdana,arial,sans-serif; font-size: 10px; color: #000000; }
 a:active     { font-family: Tahoma; font-size: 9px }
 a:link       { font-family: Tahoma; font-size: 9px }
 a:visited    { font-family: Tahoma; font-size: 9px }
 a            { font-family: Tahoma; font-size: 9px ;text-decoration : none; color:#000000;}
 A:hover       {font-family: Tahoma; font-size: 9px; text-decoration: underline; color: #FFFFFF
--->
+
+.backfoto { background: #000; }
 </style>
 </head>
 </body>
 <?php
 include('config.inc');
-
+$uk = $_GET['uk'];
+$upt= $_GET['upt'];
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
-
+$esel15 = '';
 if ($uk=='02') {
 	$esel1='21';
 	$esel15='22';
@@ -53,7 +55,7 @@ if ($uk=='02') {
 	$esel2='31';
 	$esel21='32';
 }
-
+//echo $esel1.'-'.$esel2.'-'.$esel21.'<br/>';
 include("fungsi.inc");
 
 
@@ -80,13 +82,11 @@ while ($row=mysql_fetch_array($r)) {
 	$KOJABB[$i] = $row[KOLOK];
 	$NAJABB[$i] = $row[NAJAB];
 }
-
 $jmlKolom = sizeOf($KOJABB)+1;
 $posisiBos1 = ceil($jmlKolom/2);
-
 // start draw table
 ?>
-<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="<?=$jmlKolom * 190?>">
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#333" width="<?=$jmlKolom * 190?>">
 <?
 //---------------- sub kedua
 
@@ -96,9 +96,10 @@ for ($i=1;$i<$jmlKolom;$i++) {
     } else {
             $q="select KOLOK,NAJAB from TABLOKB08 where KOLOK like '".substr($KOJABB[$i],0,5)."%' and KOLOK>='$KOJABB[$i]' and A_02='$upt' and ESEL<>'99'";
     }
-    if ($issetda) $q.=" and ESEL<='22' ";
-    if ($KOJABB[$i+1]!='') $q.=" and KOLOK<'".$KOJABB[$i+1]."'";
+    if ($issetda) { $q.=" and ESEL<='22' "; }
+    if ($KOJABB[$i+1]!='') { $q.=" and KOLOK<'".$KOJABB[$i+1]."'"; }
     $q.="and ESEL>='$esel2' order by KOLOK";
+    //echo $q."<br/>";
     $r=mysql_query($q);
     $y=0;
     $jmlX[$i]=mysql_num_rows($r);
@@ -110,8 +111,8 @@ for ($i=1;$i<$jmlKolom;$i++) {
 }
 
 // sort
-//rsort($jmlX);
-//reset($jmlX);
+rsort($jmlX);
+reset($jmlX);
 
 ?>
 <tr>
@@ -125,22 +126,24 @@ for ($i=1;$i<=$jmlKolom;$i++) {
 		<td width="165" valign="top">
 		<?
 		$q="select B_02,B_02B,B_03A,B_03B,B_03,F_03,I_05 from MASTFIP08 where ";
-		if ($isbiro) $q.="A_01='".substr($uk,0,2)."' and A_02='".substr($uk,2,2)."' and A_03='".substr($uk,4,2)."' and A_04='".substr($uk,6,2)."' and ";
-		else $q.="A_01 = '$uk' and ";
+                if ($isbiro) { $q.="A_01='".substr($uk,0,2)."' and A_02='".substr($uk,2,2)."' and A_03='".substr($uk,4,2)."' and A_04='".substr($uk,6,2)."' and "; }
+                else { $q.="A_01 = '$uk' and "; }
 		$q.="I_05='".$KOJABA[0]."' LIMIT 1";
+                //echo $q;
 		$r=mysql_query($q);
 		$row=mysql_fetch_array($r);
 		?>
-			<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="165">
-			<tr>
-				<td width="165" align="center"><img src="../showfoto.php?nip=<?=$row[B_02]?>" width="100" height="130"></td>
-			</tr>
-			<tr bgColor="#93C3FC" height="50">
+			<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse;" bordercolor="#333" width="165">
+                        <tr bgColor="#93C3FC" height="50" >
 				<td width="165" align="center"><b><?=jabatan($KOJABA[0])?></b></td>
 			</tr>
+			<tr>
+				<td width="165" align="center" class="backfoto"><img src="../showfoto.php?nip=<?=$row[B_02]?>" width="100" height="130"></td>
+			</tr>
+			
 			<tr height="30">
 				<td width="165" align="center">
-				<b><a href="../?&sid=<?=$sid?>&do=cari&cari=1&nip=<?=$row[B_02]?>"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></a></b><br>
+				<b><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></b><br>
 				<?=namapkt($row[F_03])?> (<?=pktH($row[F_03])?>)<br>
 				NIP. <?=$row[B_02]?> /<br><?=format_nip_baru($row[B_02B])?>
 				</td>
@@ -153,11 +156,11 @@ for ($i=1;$i<=$jmlKolom;$i++) {
 			$kalinya = $posisiBos1 - 1;
 			$lebarnya = 190 * $kalinya;
 			$colspannya = 3 * $kalinya;
-			if ($upt=='00') $lokasinya=lokasiKerjaB($uk);
-			else $lokasinya=subLokasiKerjaB($uk,$upt);
+                        if ($upt=='00') { $lokasinya=lokasiKerjaB($uk); }
+                        else { $lokasinya=subLokasiKerjaB($uk,$upt); }
 			?>
 			<td colspan="<?=$colspannya?>" width="<?=$lebarnya?>" valign="top">
-				<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">	
+				<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#333" width="100%">	
 				<tr>
 					<td width="5">&nbsp;</td>
 					<td>
@@ -188,13 +191,13 @@ for ($i=1;$i<=$jmlKolom;$i++) {
 			$kolspan=1;
 		}
 	} else if ($i==$jmlKolom && $kolspan==0) {
-		if ($upt=='00') $lokasinya=lokasiKerjaB($uk);
-		else $lokasinya=subLokasiKerjaB($uk,$upt);
+                if ($upt=='00') { $lokasinya=lokasiKerjaB($uk); }
+                else { $lokasinya=subLokasiKerjaB($uk,$upt); }
 		?>
 		<td width="5">&nbsp;</td>
 		<td width="20">&nbsp;</td>
 		<td width="165" valign="top">
-			<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">	
+			<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#333" width="100%">	
 				<tr>
 					<td width="5">&nbsp;</td>
 					<td>
@@ -232,7 +235,8 @@ for ($i=1;$i<=$jmlKolom;$i++) {
 }
 ?>
 </tr>
-<?if ($KOJABA[1]!='') {?>
+<?php
+if (!empty($KOJABA[1])) { ?>
 <tr>
 <?
 $kolspan=0;
@@ -240,26 +244,28 @@ for ($i=1;$i<=$jmlKolom;$i++) {
 	if ($i==$posisiBos1) {
 		?>
 		<td width="5">&nbsp;</td>
-		<td width="20">&nbsp;</td>
+		<td width="20">&nbsp; </td>
 		<td width="165" valign="top">
 		<?
 		$q="select B_02,B_02B,B_03A,B_03B,B_03,F_03,I_05 from MASTFIP08 where ";
-                if ($isbiro) $q.="A_01='".substr($uk,0,2)."' and A_02='".substr($uk,2,2)."' and A_03='".substr($uk,4,2)."' and A_04='".substr($uk,6,2)."' and ";
-                else $q.="A_01 = '$uk' and ";
+                if ($isbiro) { $q.="A_01='".substr($uk,0,2)."' and A_02='".substr($uk,2,2)."' and A_03='".substr($uk,4,2)."' and A_04='".substr($uk,6,2)."' and "; }
+                else { $q.="A_01 = '$uk' and "; }
 		$q.="I_05='".$KOJABA[1]."' LIMIT 1";
+                //echo $q;
 		$r=mysql_query($q);
 		$row=mysql_fetch_array($r);
 		?>
-			<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="165">
-			<tr>
-				<td width="165" align="center"><img src="../showfoto.php?nip=<?=$row[B_02]?>" width="100" height="130"></td>
-			</tr>
+			<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#333" width="165">
 			<tr bgColor="#93C3FC" height="50">
 				<td width="165" align="center"><b><?=jabatan($KOJABA[1])?></b></td>
 			</tr>
+                        <tr>
+				<td width="165" align="center"><img src="../showfoto.php?nip=<?=$row[B_02]?>" width="100" height="130"></td>
+			</tr>
+			
 			<tr height="30">
 				<td width="165" align="center">
-				<b><a href="../?&sid=<?=$sid?>&do=cari&cari=1&nip=<?=$row[B_02]?>"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></a></b><br>
+				<b><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></b><br>
 				<?=namapkt($row[F_03])?> (<?=pktH($row[F_03])?>)<br>
 				NIP. <?=$row[B_02]?> /<br><?=format_nip_baru($row[B_02B])?>
 				</td>
@@ -281,6 +287,7 @@ for ($i=1;$i<=$jmlKolom;$i++) {
 <tr>
 <?
 for ($i=1;$i<=$jmlKolom;$i++) {
+        //echo $i.'-'.$posisiBos1.'<br/>';
 	if ($i==$posisiBos1) {
 		?>
 		<td width="5">&nbsp;</td>
@@ -293,7 +300,7 @@ for ($i=1;$i<=$jmlKolom;$i++) {
 		<td width="20"><img src="gambar/paro20piksel.gif" width="20" height="40" border="0"></td>
 		<td width="165" valign="top"><img src="gambar/paro165piksel.gif" width="165" height="40" border="0"></td>
 		<?
-	} else if ($i == $jmlKolom) {
+	} else if ($i === $jmlKolom) {
 		?>
 		<td width="5"><img src="gambar/paro5piksel.gif" width="5" height="40" border="0"></td>
 		<td width="20"><img src="gambar/paro20piksel.gif" width="20" height="40" border="0"></td>
@@ -311,12 +318,13 @@ for ($i=1;$i<=$jmlKolom;$i++) {
 </tr>
 <?
 //----------------------------- cabang wadir(di bawah kepala)-------------------------------------
-
-if ($esel15!='') {
+//echo $esel15;
+if ($esel15 !== '') {
 ?>
 <tr>
 <?
 	$query="select KOLOK,NAJAB from TABLOKB08 where substring(KOLOK,1,2)='$uk' and ESEL='$esel15' order by KOLOK";
+        //echo $query;
 	$r=mysql_query($query);
 	$i=0;
 	while ($row=mysql_fetch_array($r)) {
@@ -394,20 +402,22 @@ if ($esel15!='') {
 			$foto='';
 			if ($KOLOKW[$j] != '') {
 			$q="select B_02,B_02B,B_03A,B_03B,B_03,F_03,I_05 from MASTFIP08 where A_01 = '$uk' and I_05='".$KOLOKW[$j]."' LIMIT 1";
+                        
 			$r=mysql_query($q);
 			$row=mysql_fetch_array($r);
 			$kodJab = $KOLOKW[$j];
 			?>
-				<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="165">
-				<tr>
-					<td width="165" align="center"><img src="../showfoto.php?nip=<?=$row[B_02]?>" width="100" height="130"></td>
-				</tr>
+				<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#333" width="165">
 				<tr bgColor="#93C3FC" height="50">
 					<td width="165" align="center"><b><?=jabatan($kodJab)?></b></td>
 				</tr>
+                                <tr>
+					<td width="165" align="center"><img src="../showfoto.php?nip=<?=$row[B_02]?>" width="100" height="130"></td>
+				</tr>
+				
 				<tr height="30">
 				<td width="165" align="center">
-				<b><a href="../?&sid=<?=$sid?>&do=cari&cari=1&nip=<?=$row[B_02]?>"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></a></b><br>
+				<b><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></b><br>
 				<?=namapkt($row[F_03])?> (<?=pktH($row[F_03])?>)<br>
 				NIP. <?=$row[B_02]?> /<br><?=format_nip_baru($row[B_02B])?>
 				</td>
@@ -462,7 +472,7 @@ if ($esel15!='') {
 <?
 }
 
-if ($esel15!='') {
+if ($esel15!=='') {
 ?>
 <tr>
 <?
@@ -593,9 +603,9 @@ for ($y=1;$y<=$jmlX[0];$y++) {
 			$gambar='';
 			
 			if ($KOJABX[$i][$y] != '') {
-				if ($KOJABX[$i][$y+1] == '' && !$iskantor) $gambar= "<img src=\"gambar/sampingbawah.gif\" border=\"0\" width=\"20\" height=\"250\">";
-				else if ($y==1) $gambar='';
-				else $gambar= "<img src=\"gambar/sampingtengah.gif\" border=\"0\" width=\"20\" height=\"250\">";
+                                if ($KOJABX[$i][$y+1] == '' && !$iskantor) { $gambar= "<img src=\"gambar/sampingbawah.gif\" border=\"0\" width=\"20\" height=\"250\">"; }
+                                else if ($y==1) { $gambar=''; }
+                                else { $gambar= "<img src=\"gambar/sampingtengah.gif\" border=\"0\" width=\"20\" height=\"250\">"; }
 			}
 			
 			?>
@@ -606,23 +616,23 @@ for ($y=1;$y<=$jmlX[0];$y++) {
 			$foto='';
 			if ($KOJABX[$i][$y] != '') {
 			$q="select B_02,B_02B,B_03A,B_03B,B_03,F_03,I_05 from MASTFIP08 where ";
-        	        if ($isbiro) $q.="A_01='".substr($KOJABX[$i][$y],0,2)."' and A_02='".substr($KOJABX[$i][$y],2,2)."' and A_03='".substr($KOJABX[$i][$y],4,2)."' and A_04='".substr($KOJABX[$i][$y],6,2)."' and ";
-	                else $q.="A_01 = '$uk' and ";
+                        if ($isbiro) { $q.="A_01='".substr($KOJABX[$i][$y],0,2)."' and A_02='".substr($KOJABX[$i][$y],2,2)."' and A_03='".substr($KOJABX[$i][$y],4,2)."' and A_04='".substr($KOJABX[$i][$y],6,2)."' and "; }
+                        else { $q.="A_01 = '$uk' and "; }
 			$q.="I_05='".$KOJABX[$i][$y]."' LIMIT 1";
 			$r=mysql_query($q);
 			$row=mysql_fetch_array($r);
 			$kodJab = $KOJABX[$i][$y];
 			?>
-				<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="165">
-				<tr>
-					<td width="165" align="center"><img src="../showfoto.php?nip=<?=$row[B_02]?>" width="100" height="130"></td>
-				</tr>
+				<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#333" width="165">
 				<tr bgColor="#93C3FC" height="50">
 					<td width="165" align="center"><b><?=jabatan($kodJab)?></b></td>
 				</tr>
+                                <tr>
+					<td width="165" align="center"><img src="../showfoto.php?nip=<?=$row[B_02]?>" width="100" height="130"></td>
+				</tr>
 				<tr height="50">
 					<td width="165" align="center">
-					<b><a href="../?&sid=<?=$sid?>&do=cari&cari=1&nip=<?=$row[B_02]?>"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></a></b><br>
+					<b><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></b><br>
 					<?=namapkt($row[F_03])?> (<?=pktH($row[F_03])?>)<br>
 					NIP. <?=$row[B_02]?> /<br><?=format_nip_baru($row[B_02B])?>
 					</td>
@@ -639,7 +649,7 @@ for ($y=1;$y<=$jmlX[0];$y++) {
 				<td width="5">&nbsp;</td>
 				<td width="20">&nbsp;</td>
 				<td width="165" valign="top" align="center">
-					<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="63%">
+					<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#333" width="63%">
 					      <tr>
 					        <td width="100%" height="42" colspan="3" bgcolor="#FFFFCC" align="center">
 					        <b>KELOMPOK JABATAN FUNGSIONAL</b></td>

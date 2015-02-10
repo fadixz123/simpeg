@@ -14,15 +14,43 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
         $('.showhide').hide();
         $('#tampilkan').click(function() {
             var uk  = $('#uk').val();
-            var upt = $('#upt').val();
+            var upt = ($('#upt').val() !== null)?$('#upt').val():'00';
+//            var wWidth = $(window).width();
+//            var dWidth = wWidth * 1;
+//            var wHeight= $(window).height();
+//            var dHeight= wHeight * 1;
+//            var x = screen.width/2 - dWidth/2;
+//            var y = screen.height/2 - dHeight/2;
+            //window.open('include/struktur_org.original.php?sid=<?=$_GET['sid']?>&uk='+uk+'&upt='+upt+'','pop','width='+dWidth+', height='+dHeight+', left='+x+',top='+y);
+            //window.open('include/struktur_org_new.php?sid=<?=$_GET['sid']?>&uk='+uk+'&upt='+upt+'','pop','width='+dWidth+', height='+dHeight+', left='+x+',top='+y);
+            $.ajax({
+                url: 'include/struktur_org.php',
+                data: 'sid=<?=$_GET['sid']?>&uk='+uk+'&upt='+upt,
+                beforeSend: function() {
+                    show_ajax_indicator();
+                },
+                success: function(data) {
+                    $('#show-structure').html(data);
+                    hide_ajax_indicator();
+                },
+                complete: function() {
+                    hide_ajax_indicator();
+                }
+            });
+        });
+        
+        $('#cetak').click(function() {
+            var uk  = $('#uk').val();
+            var upt = ($('#upt').val() !== null)?$('#upt').val():'00';
             var wWidth = $(window).width();
             var dWidth = wWidth * 1;
             var wHeight= $(window).height();
             var dHeight= wHeight * 1;
             var x = screen.width/2 - dWidth/2;
             var y = screen.height/2 - dHeight/2;
-            //window.open('include/struktur_org.original.php?sid=<?=$_GET['sid']?>&uk='+uk+'&upt='+upt+'','pop','width='+dWidth+', height='+dHeight+', left='+x+',top='+y);
-            window.open('include/struktur_org_new.php?sid=<?=$_GET['sid']?>&uk='+uk+'&upt='+upt+'','pop','width='+dWidth+', height='+dHeight+', left='+x+',top='+y);
+            window.open('include/struktur_org.original.php?sid=<?=$_GET['sid']?>&uk='+uk+'&upt='+upt+'','pop','width='+dWidth+', height='+dHeight+', left='+x+',top='+y);
+            //window.open('include/struktur_org_new.php?sid=<?=$_GET['sid']?>&uk='+uk+'&upt='+upt+'','pop','width='+dWidth+', height='+dHeight+', left='+x+',top='+y);
+            
         });
     });
     
@@ -84,6 +112,7 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
   <td width="76">&nbsp;</td>
   <td width="339">
       <button type="button" class="btn btn-primary" id="tampilkan"><i class="fa fa-eye"></i> Tampilkan</button>
+      <button type="button" class="btn btn-primary" id="cetak"><i class="fa fa-print"></i> Cetak</button>
   </td>
   </tr>
   <tr>
@@ -91,3 +120,4 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
   </tr>
   </table>
 </form>
+<div id="show-structure"></div><br/><br/><br/>
