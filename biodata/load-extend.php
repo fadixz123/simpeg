@@ -115,4 +115,11 @@ if ($_GET['extend'] === 'jurusan_pendidikan') {
       </select>
         <?php
 }
+
+if ($_GET['geteselon'] === 'yes') {
+    $NIP = $_GET['nip'];
+    $q="select * from MASTFIP08 where B_02='$NIP' LIMIT 1";
+    $row=mysql_fetch_array(mysql_query($q));
+    die(json_encode($row));
+}
 ?>

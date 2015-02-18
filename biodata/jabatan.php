@@ -61,6 +61,19 @@ $I_06=$row[I_06];
                 $('#load-extend-child').html(data);
             }
         });
+        
+        //if ($('#pilihjab').val() === '1') {
+            $.ajax({
+                type: 'GET',
+                url: 'biodata/load-extend.php',
+                data: 'geteselon=yes&nip=<?= $NIP ?>',
+                dataType: 'json',
+                success: function(data) {
+                    //alert(data.I_06);
+                    $('#inolnam').val(data.I_06);
+                }
+            });
+        //}
     }
     
     function load_jab_fungsional_khusus() {
@@ -119,18 +132,18 @@ $I_06=$row[I_06];
 		$I_06=$oess[esel];
 		}
 	?>
-              <select name="I_06" class="form-control-static">
-                <option value="99" <? if ($I_06=='99') echo "selected"; ?>>-</option>
-                <option value="11" <? if ($I_06=='11') echo "selected"; ?>>I.a</option>
-                <option value="12" <? if ($I_06=='12') echo "selected"; ?>>I.b</option>
-                <option value="21" <? if ($I_06=='21') echo "selected"; ?>>II.a</option>
-                <option value="22" <? if ($I_06=='22') echo "selected"; ?>>II.b</option>
-                <option value="31" <? if ($I_06=='31') echo "selected"; ?>>III.a</option>
-                <option value="32" <? if ($I_06=='32') echo "selected"; ?>>III.b</option>
-                <option value="41" <? if ($I_06=='41') echo "selected"; ?>>IV.a</option>
-                <option value="42" <? if ($I_06=='42') echo "selected"; ?>>IV.b</option>
-                <option value="51" <? if ($I_06=='51') echo "selected"; ?>>V.a</option>
-                <option value="52" <? if ($I_06=='52') echo "selected"; ?>>V.b</option>
+              <select name="I_06" id="inolnam" class="form-control-static">
+                <option value="99">-</option>
+                <option value="11">I.a</option>
+                <option value="12">I.b</option>
+                <option value="21">II.a</option>
+                <option value="22">II.b</option>
+                <option value="31">III.a</option>
+                <option value="32">III.b</option>
+                <option value="41">IV.a</option>
+                <option value="42">IV.b</option>
+                <option value="51">V.a</option>
+                <option value="52">V.b</option>
              </select> 
               	
               </td>
