@@ -26,9 +26,12 @@ if ($_GET['pilihjab'] === '3') { ?>
         <button type="button" class="btn btn-default btn-xs" onclick="refresh_submit();"><i class="fa fa-minus-circle"></i> Batal</button>
         <?
 }
-if ($_GET['$pilihjab'] === '1') {
-
+if ($_GET['pilihjab'] === '1') {
+        $NIP = $_GET['nip'];
+        $q="select * from MASTFIP08 where B_02='$NIP' LIMIT 1";
+        $row=mysql_fetch_array(mysql_query($q));
         $uq="select A_01,KOLOK,NALOK,NAJAB,ESEL from TABLOKB08 where KOLOK='".$row[A_01].$row[A_02].$row[A_03].$row[A_04].$row[A_05]."'";
+        
         $ro=mysql_query($uq) or die (mysql_error());
         $xo=mysql_fetch_array($ro);
                                 $I_06=$xo[ESEL];
@@ -39,7 +42,6 @@ if ($_GET['$pilihjab'] === '1') {
         <input type="hidden" name="I_05" value="<?=$xo[KOLOK]?>">
         <input type="hidden" name="I_5A" value="1">
         <input type="hidden" name="pilihjab" value="0">
-        <a href="javascript:refresh_submit()">Batal</a>
         <?
 }
 if ($_GET['pilihjab'] === '2') {

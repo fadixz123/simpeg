@@ -56,7 +56,7 @@ $I_06=$row[I_06];
         $.ajax({
             type: 'GET',
             url: 'biodata/load-extend.php',
-            data: 'pilihjab='+$('#pilihjab').val(),
+            data: 'pilihjab='+$('#pilihjab').val()+'&nip=<?= $NIP ?>',
             success: function(data) {
                 $('#load-extend-child').html(data);
             }

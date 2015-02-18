@@ -8,12 +8,11 @@ mysql_select_db($db);
 $q="select * from MASTFIP08 where B_02='".$_GET['nip']."' LIMIT 1";
 //echo $q;
 $rows=mysql_fetch_array(mysql_query($q));
-if ($rows[A_01] !='') $buker=$rows[A_01];
+if ($rows[A_01] !='') { $buker=$rows[A_01]; }
 if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
         $lker=$rows[A_01].$rows[A_02].$rows[A_03];
         $loker=$rows[A_01].$rows[A_02].$rows[A_03].$rows[A_04].$rows[A_05];
 }
-
 ?>
 <script type="text/javascript">
     $(function() {
