@@ -1,4 +1,5 @@
 <?
+session_start();
 function oursid($sid)
 {
         $q="select user from LOGUSER where sid='$sid'";
@@ -10,7 +11,7 @@ function oursid($sid)
         $q="select * from USER where username='$iduser'";
         $r=mysql_query($q) or die (mysql_error());
         $o=mysql_fetch_array($r);
-        $namauser=$o['username'];
+        $namauser=$o['id'];
 
         $time=date("H:i:s");
         $date=date("Y:m:d");
@@ -36,7 +37,8 @@ function header_excel($namaFile) {
 function lethistory($sid,$what,$NIP)
 {
         list($username,$time,$date)=oursid($sid);
-        $q="insert into HISTORY set tanggal='$date', jam='$time', user='$username', app='BIODATA', nipedit='$NIP', subapp='edit', what='$what'";
+        $q="insert into HISTORY set tanggal='$date', jam='$time', id_user='".$_SESSION['id_user']."', app='BIODATA', nipedit='$NIP', subapp='edit', what='$what'";
+        //echo $q;
         mysql_query($q) or die(mysql_error());
 }
 

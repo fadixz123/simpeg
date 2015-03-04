@@ -84,11 +84,15 @@ if (isset($_GET['cari'])) {
 	               	$q="select * from MASTFIP08 where B_02='$nip' or B_02B='$nip' LIMIT 1";
 					$r=mysql_query($q) or die (mysql_error());
 					$row=mysql_fetch_array($r);
+                        $url = 'showfoto.php?nip='.$row['B_02'];
+                        if ($row['foto'] !== '') {
+                            $url = 'Foto/'.$row['foto'];
+                        }
                   ?>
                   <tr>
                     <td height="200" colspan="3" valign="top">
       <!--<a href="?sid=<?=$sid?>&do=biodata&page=awal&NIP=<?=$row[B_02]?>">Edit Biodata PNS ini</a>-->
-                        <div style="position: absolute; right: 0;"><img src="showfoto.php?nip=<?=$row['B_02']?>" width="120"> </div>
+                        <div style="position: absolute; right: 0;"><img src="<?= $url ?>" width="120"> </div>
                         <table width="100%" class="table table-condensed table-bordered table-hover no-margin">
                          <tr> 
                            <td colspan="3" class="sectiontableheader">IDENTITAS</td>

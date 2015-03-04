@@ -10,10 +10,11 @@ mysql_select_db($db);
     <thead>
 	<tr>
             <th width="5%">No</th>
-            <th width="40%" class="left">Username</th>
-            <th width="20%">Jml PNS yg Diedit</th>
-            <th width="20%">Jml Aktivitas Edit</th>
-            <th width="10%"></th>
+            <th width="10%" class="left">Username</th>
+            <th width="40%" class="left">Nama Pegawai</th>
+            <th width="15%">Jml PNS yg Diedit</th>
+            <th width="15%">Jml Aktivitas Edit</th>
+            <th width="5%"></th>
 	</tr>
     </thead>
     <tbody>
@@ -28,7 +29,7 @@ mysql_select_db($db);
         }
         $tgldari    = date2mysql($_GET['tg_tgldari']);
         $tglsampai  = date2mysql($_GET['tg_tglsampai']);
-        $q="select u.username, u.id, count(distinct nipedit) as jml,count(*) as jmlt from history h join user u on (h.id_user = u.id) where ";
+        $q="select u.username, CONCAT_WS(' ', m.B_03A, m.B_03, m.B_03B) as nama, u.id, count(distinct nipedit) as jml,count(*) as jmlt from history h join user u on (h.id_user = u.id) join mastfip08 m on (u.B_02 = m.B_02) where ";
         $q.="h.tanggal BETWEEN '$tgldari' and '$tglsampai' group by h.id_user";
         //echo $q;
         $r=mysql_query($q);
@@ -39,9 +40,10 @@ mysql_select_db($db);
 	<tr>
 		<td align="center"><?=$i?></td>
 		<td><?=$ro[username]?></td>
+                <td><?=$ro['nama']?></td>
 		<td align="center"><?=$ro[jml]?></td>
 		<td align="center"><?=$ro[jmlt]?></td>
-		<td align="center"><button type="button" onclick="load_detail_history('<?= $ro['id'] ?>','<?= $tgldari ?>','<?= $tglsampai ?>');" class="btn btn-default btn-xs"><i class="fa fa-eye"></i></button>
+		<td align="right"><button type="button" onclick="load_detail_history('<?= $ro['id'] ?>','<?= $tgldari ?>','<?= $tglsampai ?>');" class="btn btn-default btn-xs"><i class="fa fa-eye"></i></button>
 	</tr>
 	<? } ?>
     </tbody>

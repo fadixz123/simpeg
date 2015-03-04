@@ -14,6 +14,7 @@ if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
         $loker=$rows[A_01].$rows[A_02].$rows[A_03].$rows[A_04].$rows[A_05];
 }
 ?>
+<script type="text/javascript" src="Scripts/jquery.form.js"></script>
 <script type="text/javascript">
     $(function() {
         $('#tgllahir').datepicker({
@@ -24,10 +25,10 @@ if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
     });
     
     function save_data_pegawai() {
-        $.ajax({
+        /*$.ajax({
             type: 'POST',
             url: 'biodata/save-data.php?save=pegawai',
-            data: $('#form-pegawai').serialize(),
+            data: $('#formpegawai').serialize(),
             dataType: 'json',
             beforeSend: function() {
                 show_ajax_indicator();
@@ -39,6 +40,29 @@ if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
                 } else {
                     message_add_success();
                 }
+            },
+            error: function() {
+                hide_ajax_indicator();
+            }
+        });*/
+        $('#formpegawai').ajaxSubmit({
+            target: '#output',
+            dataType: 'json',
+            data: $('#formpegawai').serialize(),
+            beforeSend: function() {
+                show_ajax_indicator();
+            },
+            success: function(data) {
+                hide_ajax_indicator();
+                if (data.act === 'edit') {
+                    message_edit_success();
+                } else {
+                    message_add_success();
+                }
+            },
+            error: function() {
+                hide_ajax_indicator();
+                dinamic_alert('File yang di upload harus bertipe PDF!');
             }
         });
     }
@@ -95,7 +119,7 @@ if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
     
 </script>
 <br/>
-<form name="lokasi" id="form-pegawai" action="index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=lokid&NIP=<?=$NIP?>" method="post">
+<form  id="formpegawai" enctype="multipart/form-data" action="biodata/save-data.php?save=pegawai" method="POST">
     <input type="hidden" name="sid" id="sid" value="<?= $_GET['sid'] ?>" />
     <table width="100%" class="table table-condensed table-bordered table-hover no-margin">
           <tr class="sectiontableheader"> 
@@ -175,19 +199,25 @@ $row=mysql_fetch_array(mysql_query($q));
             </td>
             <td colspan="3" height="22" class="sectiontableheader"><b>IDENTITAS PEGAWAI</b></td>
           </tr>
-          <tr valign="top" height="25"> 
+          <tr height="25"> 
             <td width="3%">01</td>
             <td width="20%">NIP Pegawai</td>
 			<td>:</td>
             <td width="77%"><b><?=$NIP?> / <?=format_nip_baru($row[B_02B])?></b></td>
           </tr>
-          <tr valign="top" height="20"> 
+          <tr height="20"> 
             <td width="3%"> 02</td>
             <td width="20%">NIP Baru</td>
 			<td>:</td>
             <td width="77%"><input type="text" name="B_02B" class="form-control-static" value="<?=$row[B_02B]?>" maxlength="18"></td>
-		  </tr>
-          <tr valign="top"> 
+        </tr>
+        <tr>
+            <td>03</td>
+            <td>Foto</td>
+            <td>:</td>
+            <td><input type="file" name="mFile" id="mFile" /> <span id="output"></span></td>
+        </tr>
+          <tr> 
             <td width="3%"> 03</td>
             <td width="20%">Nama Pegawai</td>
             <td>:</td>
@@ -197,20 +227,20 @@ $row=mysql_fetch_array(mysql_query($q));
               <input type="text" name="B_03B" class="form-control-static" value="<?=$row[B_03B]?>" size="6" style="width: 100px;" />
             </td>
           </tr>
-          <tr valign="top"> 
+          <tr> 
             <td width="3%"> 04</td>
             <td width="20%">Tempat Lahir</td>
             <td>:</td>
             <td width="77%"><input type="text" class="form-control-static" name="B_04" size="30" value="<?=$row[B_04]?>"></td>
           </tr>
-          <tr valign="top">
+          <tr>
             <td width="3%"> 05</td>
             <td width="20%">Tanggal Lahir</td>
             <td>:</td>
             <td width="77%"><input name="TGLAHIR" id="tgllahir" class="form-control-static" value="<?=datefmysql($row['B_05'])?>" size="30">
             </td>
           </tr>
-          <tr valign="top"> 
+          <tr> 
             <td width="3%"> 06</td>
             <td width="20%">Jenis Kelamin</td>
             <td>:</td>
@@ -236,7 +266,7 @@ $row=mysql_fetch_array(mysql_query($q));
               </select>
             </td>
           </tr>
-          <tr valign="top"> 
+          <tr> 
             <td width="3%"> 08</td>
             <td width="20%">A g a m a</td>
             <td>:</td>
@@ -254,7 +284,7 @@ $row=mysql_fetch_array(mysql_query($q));
               </select>
             </td>
           </tr>
-          <tr valign="top"> 
+          <tr> 
             <td width="3%"> 09</td>
             <td width="20%">Status Pegawai</td>
             <td>:</td>
@@ -267,7 +297,7 @@ $row=mysql_fetch_array(mysql_query($q));
               </select>
             </td>
           </tr>
-          <tr valign="top" height="20"> 
+          <tr height="20"> 
             <td width="3%"> 10</td>
             <td width="20%">Jenis Kepegawaian</td>
             <td>:</td>
@@ -286,7 +316,7 @@ $row=mysql_fetch_array(mysql_query($q));
               </select>
             </td>
           </tr>
-          <tr valign="top"> 
+          <tr> 
             <td width="3%"> 12</td>
             <td width="20%">Kedudukan Pegawai</td>
             <td>:</td>
@@ -304,13 +334,13 @@ $row=mysql_fetch_array(mysql_query($q));
               </select>
             </td>
           </tr>
-          <tr valign="top"> 
+          <tr> 
             <td width="3%"> 13</td>
             <td width="20%">Alamat Rumah</td>
             <td>:</td>
             <td width="77%"><textarea class="form-control-static" name="B_12" rows="3" cols="40"><?php echo $row["B_12"]; ?></textarea></td>
           </tr>
-          <tr valign="top"> 
+          <tr> 
             <td width="3%"> 14</td>
             <td width="20%">No. Telepon</td>
             <td>:</td>
@@ -318,7 +348,7 @@ $row=mysql_fetch_array(mysql_query($q));
               <input type="text" name="B_NOTELP" class="form-control-static" value="<?php echo $row[B_NOTELP]; ?>">
             </td>
           </tr>
-          <tr valign="top"> 
+          <tr> 
             <td width="3%"> 15</td>
             <td width="20%">Nomor Karpeg</td>
             <td>:</td>
@@ -326,7 +356,7 @@ $row=mysql_fetch_array(mysql_query($q));
               <input type="text" name="B_08" class="form-control-static" value="<?php echo $row[B_08];?>">
             </td>
           </tr>
-          <tr valign="top"> 
+          <tr> 
             <td width="3%"> 16</td>
             <td width="20%">Nomor Kartu ASKES</td>
             <td>:</td>
@@ -334,7 +364,7 @@ $row=mysql_fetch_array(mysql_query($q));
               <input type="text" name="L_1A" class="form-control-static" value="<?php echo $row[L_1A]; ?>">
             </td>
           </tr>
-          <tr valign="top"> 
+          <tr> 
             <td width="3%"> 17</td>
             <td width="20%">No. Kartu Taspen</td>
             <td>:</td>
@@ -342,7 +372,7 @@ $row=mysql_fetch_array(mysql_query($q));
                 <input type="text" class="form-control-static" name="L_02" value="<?php echo $row[L_02]; ?>">
             </td>
           </tr>
-          <tr valign="top"> 
+          <tr> 
             <td width="3%"> 18</td>
             <td width="20%">Nomor Karis / Karsu</td>
             <td>:</td>
@@ -350,7 +380,7 @@ $row=mysql_fetch_array(mysql_query($q));
               <input type="text" name="L_04" class="form-control-static" value="<?php echo $row[L_04]; ?>">
             </td>
           </tr>
-          <tr valign="top"> 
+          <tr> 
             <td width="3%"> 19</td>
             <td width="20%">N P W P</td>
             <td>:</td>
@@ -358,7 +388,7 @@ $row=mysql_fetch_array(mysql_query($q));
               <input type="text" name="L_03" class="form-control-static" value="<?php echo $row[L_03]; ?>">
             </td>
           </tr>
-		  <tr valign="top"> 
+		  <tr> 
             <td width="3%"> 20</td>
             <td width="20%">N I K</td>
             <td>:</td>
@@ -366,7 +396,7 @@ $row=mysql_fetch_array(mysql_query($q));
               <input type="text" name="nik" class="form-control-static" size=20 maxlength=21 value="<?php echo $row[nik]; ?>" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" />
             </td>
           </tr>
-          <tr valign="top"> 
+          <tr> 
             <td width="3%"> 21</td>
             <td width="20%">No. Arsip</td>
             <td>:</td>

@@ -37,7 +37,26 @@
     }
     
     function load_detail_history(id_user, awal, akhir) {
-        
+        $('#datamodal_detail').modal('show');
+        $.ajax({
+            url: 'include/autocomplete.php?search=history',
+            data: 'id_user='+id_user+'&awal='+awal+'&akhir='+akhir,
+            dataType: 'json',
+            success: function(data) {
+                $('#table_data_detail tbdoy').empty();
+                $.each(data, function(i, v) {
+                    var str = '<tr class="'+((i%2===1)?'odd':'even')+'">'+
+                            '<td align="center">'+(i+1)+'</td>'+
+                            '<td align="center">'+datefmysql(v.tanggal)+' '+v.jam+'</td>'+
+                            '<td>'+v.app+'</td>'+
+                            '<td>'+v.nipedit+'</td>'+
+                            '<td>'+v.subapp+'</td>'+
+                            '<td>'+v.what+'</td>'+
+                            '</tr>';
+                    $('#table_data_detail tbody').append(str);
+                });
+            }
+        });
     }
 </script>
 <div id="datamodal_search" class="modal fade">
@@ -60,7 +79,7 @@
                             <tr>
                                 <td>Dari Tanggal: &nbsp;</td>
                                 <td> 
-                                    <input type="text" name="tg_tgldari" id="awal" value="<?=date("d/m/Y")?>" class="form-control" style="width: 145px;" />
+                                    <input type="text" name="tg_tgldari" id="awal" value="<?=date("01/m/Y")?>" class="form-control" style="width: 145px;" />
                                 </td>
                                 <td align="center">&nbsp; s.d&nbsp; </td>
                                 <td> 
@@ -86,5 +105,40 @@
         <button class="btn" data-target=".bs-modal-lg" onclick="reload_data();"><i class="fa fa-refresh"></i> Reload Data</button>
     </div>
 </div> 
-
+<div id="datamodal_detail" class="modal fade">
+    <div class="modal-dialog" style="width: 1024px; height: 100%;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <div class="widget-header">
+                <div class="title">
+                    <h4> Detail History</h4>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <table class="table table-bordered table-stripped table-hover" id="table_data_detail" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th width="5%">No</th>
+                        <th width="15%">Waktu</th>
+                        <th width="15%" class="left">App</th>
+                        <th width="15%">NIP</th>
+                        <th width="10%" class="left">Sub App</th>
+                        <th width="40%" class="left">Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-minus-circle"></i> Batal</button>
+        </div>
+    </div>
+    </div>
+</div>
 <div id="result"></div>

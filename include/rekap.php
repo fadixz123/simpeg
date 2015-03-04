@@ -1,5 +1,5 @@
 <script src="Scripts/highchart/highcharts.js"></script>
-<script src="Scripts/highchart/themes/grid.js"></script>
+<!--<script src="Scripts/highchart/themes/grid.js"></script>-->
 <?php
 include('include/config.inc');
 include('include/fungsi.inc');

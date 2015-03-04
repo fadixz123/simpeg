@@ -31,10 +31,54 @@ if ($opsi === 'pegawai') {
     $nik    = $_POST['nik'];
     $check = mysql_num_rows(mysql_query("select B_02B from mastfip08 where B_02B = '$B_02B'"));
     $result['act'] = 'edit';
+    $UploadDirectory	= '../Foto/'; //Upload Directory, ends with slash & make sure folder exist
+    $NewFileName= "";
     if ($check === 0) {
         $insert = "insert into mastfip08 set B_02 = '$B_02B', B_02B = '$B_02B'";
         mysql_query($insert);
         $result['act'] = 'add';
+    }
+    if(isset($_FILES['mFile']['name'])) {
+
+            $foto               = $_POST['mFile'];
+            $FileName           = strtolower($_FILES['mFile']['name']); //uploaded file name
+            $FileTitle		= $B_02B;
+            $ImageExt		= substr($FileName, strrpos($FileName, '.')); //file extension
+            $FileType		= $_FILES['mFile']['type']; //file type
+            //$FileSize		= $_FILES['mFile']["size"]; //file size
+            $RandNumber   		= rand(0, 99999); //Random number to make each filename unique.
+            //$uploaded_date		= date("Y-m-d H:i:s");
+            if ($foto !== '') {
+                @unlink('../Foto/'.$foto);
+            }
+            switch(strtolower($FileType))
+            {
+                    //allowed file types
+                    case 'image/png': //png file
+//                        case 'image/gif': //gif file 
+                    case 'image/jpeg': //jpeg file
+//                        case 'application/pdf': //PDF file
+//                        case 'application/msword': //ms word file
+//                        case 'application/vnd.ms-excel': //ms excel file
+//                        case 'application/x-zip-compressed': //zip file
+//                        case 'text/plain': //text file
+//                        case 'text/html': //html file
+                            break;
+                    default:
+                            die('Unsupported File!'); //output error
+            }
+
+
+            //File Title will be used as new File name
+            $NewFileName = preg_replace(array('/\s/', '/\.[\.]+/', '/[^\w_\.\-]/'), array('_', '.', ''), strtolower($FileTitle));
+            $NewFileName = $NewFileName.'_'.$RandNumber.$ImageExt;
+       //Rename and save uploded file to destination folder.
+       if(move_uploaded_file($_FILES['mFile']["tmp_name"], $UploadDirectory . $NewFileName ))
+       {
+           mysql_query("update mastfip08 set foto = '$NewFileName' where B_02B = '".$_POST['nip']."'");
+       } else {
+            die('error uploading File!');
+       }
     }
     $q="update MASTFIP08 set A_01='".substr($loker,0,2)."', A_02='".substr($loker,2,2)."',A_03='".substr($loker,4,2)."', A_04='".substr($loker,6,2)."',A_05='".substr($loker,8,2)."' where B_02='".$B_02B."'";
     

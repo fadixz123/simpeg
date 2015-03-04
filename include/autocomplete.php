@@ -108,6 +108,7 @@ if (isset($_GET['search'])) {
 		
 		if ($j > 0) {
 			$ro=mysql_fetch_array($r);
+                        $_SESSION['id_user'] = $ro['id'];
                         $_SESSION['username'] = $ro['username'];
                         $_SESSION['group_user'] = $ro['id_group_user'];
                         $_SESSION['nama_group'] = $ro['nama_group'];
@@ -116,7 +117,7 @@ if (isset($_GET['search'])) {
 			mysql_query("delete from LOGUSER where TANGGAL='0000-00-00'") or die (mysql_error());
 			$xtgl=date("Y-m-d",mktime(0,0,0,date("m")  ,date("d")-1,date("Y")));
 			mysql_query("delete from LOGUSER where TANGGAL <= '$xtgl'") or die (mysql_error());		
-			mysql_query("insert into LOGUSER set sub_app='".$ro[level]."', user='$username', sid='$sid',TANGGAL='".date("Y-m-d")."'") or die (mysql_error());
+			mysql_query("insert into LOGUSER set sub_app='".$ro[level]."', user='".$ro['username']."', sid='$sid',TANGGAL='".date("Y-m-d")."'") or die (mysql_error());
 		}
 	}
 	$qj="select user,sub_app from LOGUSER where sid='$sid' LIMIT 1";
@@ -356,6 +357,18 @@ if (isset($_GET['search'])) {
             $title = "Laporan Pegawai Berdasarkan Status Perkawinan";
             die(json_encode(array('data' => $data, 'total' => $total, 'title' => $title)));
         }
+    }
+    
+    if ($cari === 'history') {
+        $id_user    = $_GET['id_user'];
+        $awal       = $_GET['awal'];
+        $akhir      = $_GET['akhir'];
+        $data = array();
+        $sql = mysql_query("select * from history where id_user = '$id_user' and tanggal between '".$awal."' and '".$akhir."'");
+        while ($row = mysql_fetch_object($sql)) {
+            $data[] = $row;
+        }
+        die(json_encode($data));
     }
 }
 ?>

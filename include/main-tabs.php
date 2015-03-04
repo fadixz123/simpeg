@@ -13,9 +13,9 @@ $nama= $_GET['nama'];
                         var tab_id = $(this).attr('id');
                         switch(tab_id){
                             case 'pegawai':
-                                if ($('#tab1').html() === '') {
+                                //if ($('#tab1').html() === '') {
                                     my_ajax('include/main-detail.php?sid=<?=$sid?>&do=cari&nama=<?=$nama?>&nip=<?=$nip?>&cari=NIP','#tab1');
-                                }
+                                //}
                             break;
                             case 'lokid':
                                 if ($('#tab2').html() === '') {
