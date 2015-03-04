@@ -3,29 +3,29 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/simpeg/showfoto.php</file>
-            <file>file:/C:/wamp/www/simpeg/biodata/load-extend.php</file>
-            <file>file:/C:/wamp/www/simpeg/index.php</file>
-            <file>file:/C:/wamp/www/simpeg/include/arsip-list.php</file>
-            <file>file:/C:/wamp/www/simpeg/include/arsip.php</file>
-            <file>file:/C:/wamp/www/simpeg/css/template_css.css</file>
-            <file>file:/C:/wamp/www/simpeg/biodata/lokid.php</file>
-            <file>file:/C:/wamp/www/simpeg/include/main-tabs.php</file>
-            <file>file:/C:/wamp/www/simpeg/login.php</file>
-            <file>file:/C:/wamp/www/simpeg/biodata/jabatan.php</file>
-            <file>file:/C:/wamp/www/simpeg/include/struktur_org.original.php</file>
-            <file>file:/C:/wamp/www/simpeg/include/struktur_org_new.php</file>
-            <file>file:/C:/wamp/www/simpeg/include/autocomplete.php</file>
-            <file>file:/C:/wamp/www/simpeg/webmaster/aktivitas.php</file>
-            <file>file:/C:/wamp/www/simpeg/webmaster/aktivitas-list.php</file>
-            <file>file:/C:/wamp/www/simpeg/include/rekap.php</file>
-            <file>file:/C:/wamp/www/simpeg/include/fungsi.inc</file>
-            <file>file:/C:/wamp/www/simpeg/include/arsip-input.php</file>
-            <file>file:/C:/wamp/www/simpeg/include/main-detail.php</file>
             <file>file:/C:/wamp/www/simpeg/include/config.inc</file>
             <file>file:/C:/wamp/www/simpeg/include/struktur_org.php</file>
+            <file>file:/C:/wamp/www/simpeg/include/struktur_org_new.php</file>
+            <file>file:/C:/wamp/www/simpeg/include/struktur_org.original.php</file>
             <file>file:/C:/wamp/www/simpeg/include/struktur.php</file>
+            <file>file:/C:/wamp/www/simpeg/include/fungsi.inc</file>
+            <file>file:/C:/wamp/www/simpeg/css/template_css.css</file>
+            <file>file:/C:/wamp/www/simpeg/showfoto.php</file>
+            <file>file:/C:/wamp/www/simpeg/biodata/load-extend.php</file>
+            <file>file:/C:/wamp/www/simpeg/biodata/lokid.php</file>
+            <file>file:/C:/wamp/www/simpeg/biodata/jabatan.php</file>
+            <file>file:/C:/wamp/www/simpeg/index.php</file>
+            <file>file:/C:/wamp/www/simpeg/webmaster/aktivitas.php</file>
+            <file>file:/C:/wamp/www/simpeg/webmaster/aktivitas-list.php</file>
             <file>file:/C:/wamp/www/simpeg/biodata/save-data.php</file>
+            <file>file:/C:/wamp/www/simpeg/login.php</file>
+            <file>file:/C:/wamp/www/simpeg/include/autocomplete.php</file>
+            <file>file:/C:/wamp/www/simpeg/include/arsip.php</file>
+            <file>file:/C:/wamp/www/simpeg/include/arsip-list.php</file>
+            <file>file:/C:/wamp/www/simpeg/include/arsip-input.php</file>
+            <file>file:/C:/wamp/www/simpeg/include/rekap.php</file>
+            <file>file:/C:/wamp/www/simpeg/include/main-tabs.php</file>
+            <file>file:/C:/wamp/www/simpeg/include/main-detail.php</file>
         </group>
     </open-files>
 </project-private>
