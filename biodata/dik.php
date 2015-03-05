@@ -11,7 +11,7 @@ if ($H_1A=='') { $H_1A=$row['H_1A']; }
 <script type="text/javascript">
     
     $(function() {
-        get_jurusan(<?= $row['H_1B'] ?>);
+        get_jurusan('<?= $row['H_1B'] ?>');
         $('#tglijasah, #tgdikstru').datepicker({
             format: 'dd/mm/yyyy'
         }).on('changeDate', function(){
