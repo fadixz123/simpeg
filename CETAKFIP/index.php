@@ -344,12 +344,12 @@ span.break {page-break-after: always}
         </tr>
         <?
         	$pjb="select * from TABPJB where KODE='".$row['F_01']."'";
-              	$res=mysql_db_query("kabpkl",$pjb);
+              	$res=mysql_query($pjb);
                 $ro=mysql_fetch_array($res);
                 
                
           $rr="select * from MASTPKT1 where PF_01='$NIP' and PF_03='".$row['F_03']."'";
-          $rr2=dbquery("kabpkl",$rr);
+          $rr2=mysql_query($rr);
           $oo2=mysql_fetch_array($rr2);
          
                 ?>

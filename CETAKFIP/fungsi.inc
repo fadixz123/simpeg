@@ -45,7 +45,7 @@ $warnarow3="#DDDDDD";
 function gaji($gol1,$thmasker1)
 {
 	$gaji="select GJ_BR from TABGAJI where PKT='$gol1' and MSK='$thmasker1'";
-	$rgaji=mysql_db_query("kabpkl",$gaji);
+	$rgaji=mysql_query($gaji);
 	$ogaji=mysql_fetch_array($rgaji);
 	$gaji=$ogaji["GJ_BR"];
 	return $gaji;
@@ -177,7 +177,7 @@ function cetakJudul($B_03A,$B_03,$B_03B,$hal,$with)
       <table width="100%" border="0" cellspacing="1" cellpadding="1">
           <tr>
           
-          <TD width="70%" ><B>BIODATA</B> <B><?=print_nama($B_03A,$B_03,$B_03B);?></B></TD>
+          <TD width="70%" ><B>BIODATA</B>ï¿½<B><?=print_nama($B_03A,$B_03,$B_03B);?></B></TD>
           <TD width="30%" ALIGN="RIGHT">Halaman <?=$hal?></TD>
           </TR> 
           <?
