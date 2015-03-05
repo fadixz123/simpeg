@@ -37,6 +37,7 @@ if ($opsi === 'pegawai') {
         $insert = "insert into mastfip08 set B_02 = '$B_02B', B_02B = '$B_02B'";
         mysql_query($insert);
         $result['act'] = 'add';
+        $result['nip'] = $B_02B;
     }
     if(isset($_FILES['mFile']['name'])) {
 
@@ -46,7 +47,7 @@ if ($opsi === 'pegawai') {
             $ImageExt		= substr($FileName, strrpos($FileName, '.')); //file extension
             $FileType		= $_FILES['mFile']['type']; //file type
             //$FileSize		= $_FILES['mFile']["size"]; //file size
-            $RandNumber   		= rand(0, 99999); //Random number to make each filename unique.
+            $RandNumber   		= rand(0, 999); //Random number to make each filename unique.
             //$uploaded_date		= date("Y-m-d H:i:s");
             if ($foto !== '') {
                 @unlink('../Foto/'.$foto);
@@ -75,7 +76,8 @@ if ($opsi === 'pegawai') {
        //Rename and save uploded file to destination folder.
        if(move_uploaded_file($_FILES['mFile']["tmp_name"], $UploadDirectory . $NewFileName ))
        {
-           mysql_query("update mastfip08 set foto = '$NewFileName' where B_02B = '".$_POST['nip']."'");
+           mysql_query("update mastfip08 set foto = '$NewFileName' where B_02B = '".$B_02B."'");
+           if (mysql_affected_rows() > 0) { lethistory($sid,"UPDATE FOTO ",$B_02B); }
        } else {
             die('error uploading File!');
        }
@@ -90,7 +92,7 @@ if ($opsi === 'pegawai') {
     $qupdate=$qupdate." B_04='$B_04', B_05='".date2mysql($TGLAHIR)."', ";
     $qupdate=$qupdate." B_06='$B_06',gd='$gd', B_07='$B_07', B_08='$B_08', B_09='$B_09', B_11='$B_11', B_12='$B_12', ";
     $qupdate=$qupdate." J_01='$J_01', L_1A='$L_1A', L_02='$L_02', L_03='$L_03', L_04='$L_04',B_NOTELP='$B_NOTELP',B_NOARSIP='$B_NOARSIP',nik='$nik' ";
-    $qupdate=$qupdate." where B_02='".$_POST['nip']."'";
+    $qupdate=$qupdate." where B_02='".$B_02B."'";
     //echo $qupdate;
     mysql_query($qupdate) or die(mysql_error());
     if (mysql_affected_rows() > 0) { 

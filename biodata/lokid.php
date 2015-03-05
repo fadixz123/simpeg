@@ -58,6 +58,8 @@ if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
                     message_edit_success();
                 } else {
                     message_add_success();
+                    $('#datamodal_search_detail').modal('hide');
+                    my_ajax('include/main-list.php?page=1&sid=<?= $_GET['sid']?>&uk=all&suk=&nip='+data.nip, '#result');
                 }
             },
             error: function() {
