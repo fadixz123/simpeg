@@ -70,7 +70,7 @@ $I_06=$row[I_06];
                 dataType: 'json',
                 success: function(data) {
                     //alert(data.I_06);
-                    $('#inolnam').val(data.I_06);
+                    $('#inolnam').val(data.F_03);
                 }
             });
         //}
