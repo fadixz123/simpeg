@@ -51,9 +51,12 @@ $sid = $_GET['sid'];
         if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
             $q.=" and A_01 = '".$_SESSION['skpd']."'";
         }
+        if ($_SESSION['nama_group'] === 'Staffs') {
+            $q.=" and B_02 = '".$_SESSION['nip']."'";
+        }
         
-        $q .="order by I_06 ASC, F_03 DESC";
-        
+        $q .=" order by I_06 ASC, F_03 DESC";
+        //echo $q;
         $r=mysql_query($q.'  limit '.$offset.', '.$limit) or die (mysql_error());
         $total_data = mysql_num_rows(mysql_query($q));
         while($row=mysql_fetch_array($r)) {

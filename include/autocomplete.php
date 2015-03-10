@@ -102,13 +102,14 @@ if (isset($_GET['search'])) {
                     join mastfip08 m on (u.B_02 = m.B_02)
                     join group_users g on (u.id_group_user = g.id)
                     where u.username='".$_POST['username']."' and password='".md5($_POST['password'])."'";
-                //echo $q;
+                //echo $q; die;
 		$r=mysql_query($q) or die(mysql_error());
 		$j=mysql_num_rows($r);
 		
 		if ($j > 0) {
 			$ro=mysql_fetch_array($r);
                         $_SESSION['id_user'] = $ro['id'];
+                        $_SESSION['nip'] = $ro['B_02'];
                         $_SESSION['username'] = $ro['username'];
                         $_SESSION['group_user'] = $ro['id_group_user'];
                         $_SESSION['nama_group'] = $ro['nama_group'];
