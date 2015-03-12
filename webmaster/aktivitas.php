@@ -43,7 +43,7 @@
             data: 'id_user='+id_user+'&awal='+awal+'&akhir='+akhir,
             dataType: 'json',
             success: function(data) {
-                $('#table_data_detail tbdoy').empty();
+                $('#table_data_detail tbody').empty();
                 $.each(data, function(i, v) {
                     var str = '<tr class="'+((i%2===1)?'odd':'even')+'">'+
                             '<td align="center">'+(i+1)+'</td>'+

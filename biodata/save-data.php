@@ -732,31 +732,33 @@ else if ($opsi === 'rjabatan') {
     $A_02   = $_POST['A_02'];
     $A_03   = $_POST['A_03'];
     $A_04   = $_POST['A_04'];
-    
+    mysql_query("delete from mastjab1 where `JF_01` = '$NIP'");
+    if (is_array($no)) {
     foreach ($no as $key => $data) {
     $I_JB=ereg_replace('\'','\"',$JF_03[$key]);
             //$j=mysql_num_rows(mysql_query("select * from MASTJAB1 where JF_01='$NIP' and JF_07='$xtgjf07' LIMIT 1"));
-            if ($ID[$key] === '') {
+            //if ($ID[$key] === '') {
                 $q  ="insert into MASTJAB1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
                 $q .="JF_02='$data',JF_01='$NIP',JF_03='$I_JB',JF_04='".$JF_04[$key]."', ";
                 $q .="JF_05='".$JF_05[$key]."',JF_06='".date2mysql($xtgjf06[$key])."', JF_07='".date2mysql($xtgjf07[$key])."'";
                 mysql_query($q) or die (mysql_error());
-                $result['act'] = 'add';
-            }
-            else {
-                $q  ="update MASTJAB1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
-                $q .="JF_02='$JF_02ORG[$i]',JF_03='$I_JB',JF_04='$JF_04[$i]', ";
-                $q .="JF_05='$JF_05[$i]',JF_06='$xtgjf06', JF_07='$xtgjf07' where JF_01='$NIP' and ";
-                $q .="ID='$IDORG[$i]'";// and ";
-/*			$q .="JF_03='$JF_03ORG[$i]' and ";
-                $q .="JF_04='$JF_04ORG[$i]' and ";
-                $q .="JF_05='$JF_05ORG[$i]' and ";
-                $q .="JF_06='$JF_06ORG[$i]' and ";
-                $q .="JF_07='$JF_07ORG[$i]' ";*/
-                mysql_query($q) or die (mysql_error());
                 $result['act'] = 'edit';
-            }
+            //}
+//            else {
+//                $q  ="update MASTJAB1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', ";
+//                $q .="JF_02='$JF_02ORG[$i]',JF_03='$I_JB',JF_04='$JF_04[$i]', ";
+//                $q .="JF_05='$JF_05[$i]',JF_06='$xtgjf06', JF_07='$xtgjf07' where JF_01='$NIP' and ";
+//                $q .="ID='$IDORG[$i]'";// and ";
+///*			$q .="JF_03='$JF_03ORG[$i]' and ";
+//                $q .="JF_04='$JF_04ORG[$i]' and ";
+//                $q .="JF_05='$JF_05ORG[$i]' and ";
+//                $q .="JF_06='$JF_06ORG[$i]' and ";
+//                $q .="JF_07='$JF_07ORG[$i]' ";*/
+//                mysql_query($q) or die (mysql_error());
+//                $result['act'] = 'edit';
+//            }
             if (mysql_affected_rows() > 0) $u++;			
+    }
     }
     if ($u > 0) lethistory($sid,"UPDATE RIWAYAT JABATAN",$NIP);
     die(json_encode($result));

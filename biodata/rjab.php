@@ -65,7 +65,7 @@ $x=mysql_fetch_array(mysql_query("select A_01,A_02,A_03,A_04 from MASTFIP08 wher
         });
     });
     
-    function removeMe(el) {
+    function removeMex(el) {
         var parent = el.parentNode.parentNode;
         parent.parentNode.removeChild(parent);
         var jumlah = $('.tr_rows').length;
@@ -97,7 +97,7 @@ $x=mysql_fetch_array(mysql_query("select A_01,A_02,A_03,A_04 from MASTFIP08 wher
                   '<td><input type="text" name="JF_05[]" id="nosk'+(jml+i)+'" value=""></td>'+
                   '<td><input type="text" name="TGJF_06[]" id="tgsk'+(jml+i)+'" class="dpicker"></td>'+
                   '<td><input type="text" name="TGJF_07[]" id="tgtmt'+(jml+i)+'" class="dpicker"></td>'+
-                  '<td><button type="button" class="btn btn-default btn-xs" onclick="removeMe(this);"><i class="fa fa-trash-o"></i></button></td>'+
+                  '<td><button type="button" class="btn btn-default btn-xs" onclick="removeMex(this);"><i class="fa fa-trash-o"></i></button></td>'+
                 '</tr>';
             $('#rjabatan tbody').append(str);
             $('.dpicker').datepicker({
@@ -111,10 +111,10 @@ $x=mysql_fetch_array(mysql_query("select A_01,A_02,A_03,A_04 from MASTFIP08 wher
     function save_data_rjabatan() {
         var jml = $('.tr_rows').length;
         var stop = false;
-        if (jml === 0) {
-            dc_validation('#tambah','Pilih jumlah jabatan !');
-            stop = true;
-        }
+//        if (jml === 0) {
+//            dc_validation('#tambah','Pilih jumlah jabatan !');
+//            stop = true;
+//        }
         for (i = 1; i <= jml; i++) {
             
         }
@@ -180,16 +180,15 @@ $x=mysql_fetch_array(mysql_query("select A_01,A_02,A_03,A_04 from MASTFIP08 wher
   	
   	?>
   <tr valign="top" bgcolor="<?=$warnarow?>"> 
-    <input type="hidden" name="upd[<?=$no?>]" value="0">
-    <input type="hidden" name="IDORG[<?=$no?>]" value="<?=$row[ID]?>">
-    <input type="hidden" name="JF_03ORG[<?=$no?>]" value="<?=$row[JF_03]?>">
-    <input type="hidden" name="JF_04ORG[<?=$no?>]" value="<?=$row[JF_04]?>">
-    <input type="hidden" name="JF_05ORG[<?=$no?>]" value="<?=$row[JF_05]?>">
-    <input type="hidden" name="JF_06ORG[<?=$no?>]" value="<?=$row[JF_06]?>">
-    <input type="hidden" name="JF_07ORG[<?=$no?>]" value="<?=$row[JF_07]?>">
+    <input type="hidden" name="upd[]" value="0">
+    <input type="hidden" name="IDORG[]" value="<?=$row[ID]?>">
+    <input type="hidden" name="JF_03ORG[]" value="<?=$row[JF_03]?>">
+    <input type="hidden" name="JF_04ORG[]" value="<?=$row[JF_04]?>">
+    <input type="hidden" name="JF_05ORG[]" value="<?=$row[JF_05]?>">
+    <input type="hidden" name="JF_06ORG[]" value="<?=$row[JF_06]?>">
+    <input type="hidden" name="JF_07ORG[]" value="<?=$row[JF_07]?>">
     <td align="right">
-    <p align="left">
-    <input type="text" name="JF_02ORG[<?=$no?>]" size="1" value="<?=$row[JF_02]?>" class="inputkecil"></td>
+    <input type="text" name="JF_02ORG[]" size="1" value="<?=$row[JF_02]?>" class="inputkecil"></td>
     <td >
     <?php $I_JB=ereg_replace('"','\'',$row[JF_03]); ?>
     <input type="text" name="JF_03[]" size="30" value="<?=$I_JB?>" class="inputkecil"> 
@@ -221,7 +220,7 @@ $x=mysql_fetch_array(mysql_query("select A_01,A_02,A_03,A_04 from MASTFIP08 wher
         <input type="text" name="TGJF_07[]" value="<?=  datefmysql($row[JF_07])?>" class="dpicker">
     </td>
     <td>
-        <button type="button" class="btn btn-default btn-xs" onclick=""><i class="fa fa-trash-o"></i></button>
+        <button type="button" class="btn btn-default btn-xs" onclick="removeMex(this);"><i class="fa fa-trash-o"></i></button>
     </td>
   </tr>
   </tbody>
