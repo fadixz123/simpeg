@@ -10,6 +10,7 @@ $I_06=$row[I_06];
 ?>
 <script type="text/javascript">
     $(function() {
+        $('#inolnam').val('<?= $row['E_05'] ?>');
         $('.autohide').show();
         $('.autoshow').hide();
         $('#tgtmtjab, #tgskjab').datepicker({

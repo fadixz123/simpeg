@@ -301,7 +301,7 @@ else if ($opsi === 'jabatan') {
             $q  ="insert into MASTJAB1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', "; 	
             $q .="JF_01='$NIP',JF_02='$jmlr',JF_03='$I_JB',JF_04='$I_06',JF_05='$I_02',JF_06='$xskj', JF_07='$xtmt'";
             //echo $q;
-            //mysql_query($q) or die (mysql_error());
+            mysql_query($q) or die (mysql_error());
     }
     else
     {
