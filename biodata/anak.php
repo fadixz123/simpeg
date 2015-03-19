@@ -1,44 +1,112 @@
 <?php
-if ($simpan)
-{
-	for ($i=1;$i<=$totanak;$i++)
-	{
-		
-		if ($upd[$i]=='1')
-		{
-		$q="insert into MASTKEL1 (KF_01,KF_02,KF_03,KF_04,KF_05,KF_07,KF_08,KF_09,KF_10) ";
-		$q=$q."values ('$NIP','2','$KF_03[$i]','".addslashes(strtoupper($KF_04[$i]))."','".$THKF_05[$i]."-".$BLKF_05[$i]."-".$TGKF_05[$i]."','$KF_07[$i]','$KF_08[$i]','".addslashes(strtoupper($KF_09[$i]))."', '$KF_10[$i]' )";
-		}
-		else
-		$q="update MASTKEL1 set KF_02=2,KF_03=$KF_03[$i], KF_04='".addslashes(strtoupper($KF_04[$i]))."', KF_05='".$THKF_05[$i]."-".$BLKF_05[$i]."-".$TGKF_05[$i]."', KF_07='$KF_07[$i]', KF_08='$KF_08[$i]', KF_09='".addslashes(strtoupper($KF_09[$i]))."', KF_10='$KF_10[$i]' where KF_01='$NIP' and KF_02='2' and ID='$ID[$i]' ";
-		
-			
-		mysql_query($q) or die (mysql_error());
-		if (mysql_affected_rows() > 0) lethistory($sid,"UPDATE DATA ANAK ".addslashes(strtoupper($KF_04[$i])),$NIP);		
-	}
-}
+include('../include/config.inc');
+include('../include/fungsi.inc');
+$link=mysql_connect($server,$user,$pass);
+mysql_select_db($db);
 
+$NIP = $_GET['nip'];
 if ($action=='delete')
 {
-	mysql_query("delete from MASTKEL1 where KF_01='$NIP' and ID='$ID' LIMIT 1");
+	//mysql_query("delete from MASTKEL1 where KF_01='$NIP' and ID='$ID' LIMIT 1");
 }
 ?>
-<table width="100%" border="0" cellspacing="1" cellpadding="1" align="center">
-<form name="formanak" method="post" action="index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=anak&NIP=<?=$NIP?>">
-  <tr bgcolor="<?=$warnarow2?>"> 
-    <td width="5%" align="center"><strong>W</strong></td>
-    <td colspan="4"><strong>DATA ANAK</strong></td>
-  </tr>
-  <tr bgcolor="<?=$warnarow?>"> 
-    <td align="center"><strong>NO</strong></td>
-    <td width="55%" align="center"><strong>NAMA ANAK<br>
-      TMP/TGL LAHIR</strong></td>
-    <td width="10%" align="center"><strong>JK</strong></td>
-    <td width="20%" align="center"><strong>TUNJ<br>
-      STATUS </strong></td>
-    <td width="10%" align="center">&nbsp;</td>
-  </tr>
-
+<script type="text/javascript">
+    $('#janak').change(function() {
+        var x = $(this).val();
+        for (i = 1; i <= x; i++) {
+            add_dinamic_data_anak();
+        }
+    });
+    
+    function removeMey(el) {
+        var parent = el.parentNode.parentNode;
+        parent.parentNode.removeChild(parent);
+        var jumlah = $('.rows_anak').length;
+        var col = 0;
+        for (i = 1; i <= jumlah; i++) {
+            $('.tr_rows:eq('+col+')').children('td:eq(0)').children('.nomor').val(i);
+            col++;
+        }
+    }
+    
+    function add_dinamic_data_anak() {
+        var str = '<tr class="rows_anak">'+
+            '<input type="hidden" name="upd[]" value="1">'+
+              '<td valign="top"><input type="text" name="KF_03[]" size="2" value=""></td>'+
+              '<td valign="top">'+
+              '<input type="text" name="KF_04[]" size="50"></td>'+
+              '<td>'+
+              '<input type="text" name="KF_09[]" size="10">'+
+              '</td>'+
+              '<td><input type="text" name="TGKF_05[]" class="dpicker"></td>'+
+              '<td valign="top">'+
+              '<select name="KF_10[]" >'+
+                '<option value="">-</option>'+
+                '<option value="L">L</option>'+
+                '<option value="P">P</option>'+
+                '</select>'+
+              '</td>'+
+              '<td valign="top" style="white-space: nowrap;">'+
+              '<select name="KF_07[]" style="width: 100px;">'+
+                '<option value="">-</option>'+
+                '<option value="D">DAPAT</option>'+
+                '<option value="T">TIDAK</option>'+
+                '</select>&nbsp;'+
+                '<select name="KF_08[]" style="width: 100px;">'+
+                  '<option value="-">-</option>'+
+                  '<option value="K">KANDUNG</option>'+
+                  '<option value="T">TIRI</option>'+
+                  '<option value="A">ANGKAT</option>'+
+                '</select>'+
+              '</td>'+
+              '<td valign="top"><button type="button" class="btn btn-default btn-xs" onclick="removeMey(this);"><i class="fa fa-trash-o"></i></button></td>'+
+            '</tr>';
+        $('#table_anak tbody').append(str);
+        $('.dpicker').datepicker({
+            format: 'dd/mm/yyyy'
+        }).on('changeDate', function(){
+            $(this).datepicker('hide');
+        });
+    }
+    
+    function save_data_anak() {
+        $.ajax({
+            type: 'POST',
+            url: 'biodata/save-data.php?save=anak',
+            data: $('#formanak').serialize(),
+            dataType: 'json',
+            beforeSend: function() {
+                show_ajax_indicator();
+            },
+            success: function(data) {
+                hide_ajax_indicator();
+                //if (data.act === 'edit') {
+                    message_edit_success();
+//                } else {
+//                    message_add_success();
+//                }
+            },
+            error: function() {
+                hide_ajax_indicator();
+            }
+        });
+    }
+</script>
+<form name="formanak" method="post" id="formanak">
+    <input type="hidden" name="nip" value="<?= $NIP ?>" />
+<table width="100%" class="table table-condensed table-bordered table-hover no-margin" id="table_anak">
+    <thead>
+    <tr> 
+        <th width="5%" align="center">NO</th>
+        <th width="30%" align="center">NAMA ANAK</th>
+        <th width="20%"> TEMPAT</th>
+        <th width="10%"> TGL LAHIR</th>
+        <th width="10%" align="center">JK</th>
+        <th width="20%" align="center">TUNJ STATUS </th>
+        <th width="10%" align="center">&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
 <?
 $i=0;
 $qa="select ID,KF_01,KF_02,KF_03,KF_04,KF_05,KF_06,KF_07,KF_08,KF_09,KF_10 from MASTKEL1 where KF_01='$NIP' and KF_02='2' order by KF_03";
@@ -47,101 +115,49 @@ while ($oa=mysql_fetch_array($ra))
 {
 	$i++;
 	?>
-  <tr bgcolor="<?=$warnarow?>"> 
-  <input type="hidden" name="upd[<?=$i?>]" value="0">
-  <input type="hidden" name="ID[<?=$i?>]" value="<?=$oa[ID]?>">
-    <td valign="top"><input type="text" name="KF_03[<?=$i?>]" size="2" value="<?=$oa[KF_03]?>"></td>
+  <tr class="rows_anak"> 
+  <input type="hidden" name="upd[]" value="0">
+  <input type="hidden" name="ID[]" value="<?=$oa[ID]?>">
+    <td valign="top"><input type="text" name="KF_03[]" size="2" value="<?=$oa[KF_03]?>"></td>
     <td valign="top">
-    <input type="text" name="KF_04[<?=$i?>]" size="50" value="<?=$oa[KF_04]?>"><br>
-    <input type="text" name="KF_09[<?=$i?>]" size="10" value="<?=$oa[KF_09]?>">/
-    <input type="text" name="TGKF_05[<?=$i?>]" size="1" maxlength="2" value="<?=substr($oa[KF_05],8,2); ?>">
-    - 
-    <input type="text" name="BLKF_05[<?=$i?>]" size="1" maxlength="2" value="<?=substr($oa[KF_05],5,2); ?>">
-              - 
-    <input type="text" name="THKF_05[<?=$i?>]" size="2" maxlength="4" value="<?=substr($oa[KF_05],0,4); ?>">
+        <input type="text" name="KF_04[]" size="50" value="<?=$oa[KF_04]?>"></td>
+    <td valign="top">
+    <input type="text" name="KF_09[]" size="10" value="<?=$oa[KF_09]?>">
     </td>
+    <td valign="top"><input type="text" name="TGKF_05[]" size="1" maxlength="2" value="<?=datefmysql($oa[KF_05]); ?>"></td>
     <td valign="top">
-    <select name="KF_10[<?=$i?>]" >
+    <select name="KF_10[]" >
       <option value="">-</option>
       <option value="L" <? if ($oa[KF_10]=='L' || $oa[KF_10]=="LAKI-LAKI") echo "selected"?>>L</option>
       <option value="P" <? if ($oa[KF_10]=='P' || $oa[KF_10]=="PEREMPUAN") echo "selected"?>>P</option>
     
       </select>
     </td>
-    <td valign="top">
-    <select name="KF_07[<?=$i?>]" >
+    <td valign="top" style="white-space: nowrap;">
+    <select name="KF_07[]"  style="width: 100px;">
       <option value="">-</option>
       <option value="D" <? if ($oa[KF_07]=='D') echo "selected"?>>DAPAT</option>
       <option value="T" <? if ($oa[KF_07]=='T') echo "selected"?>>TIDAK</option>
-      </select><br>
-      <select name="KF_08[<?=$i?>]" >
+      </select>&nbsp;
+      <select name="KF_08[]"  style="width: 100px;">
         <option value="-" <? if ($oa["KF_08"]=='') echo "selected"; ?>>-</option>
         <option value="K" <? if ($oa["KF_08"]=='K') echo "selected"; ?>>KANDUNG</option>
         <option value="T" <? if ($oa["KF_08"]=='T') echo "selected"; ?>>TIRI</option>
         <option value="A" <? if ($oa["KF_08"]=='A') echo "selected"; ?>>ANGKAT</option>
       </select>
     </td>
-    <td valign="top"><a href="index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=anak&NIP=<?=$NIP?>&action=delete&ID=<?=$oa[ID]?>">DEL</a></td>
+    <td valign="top"><button type="button" class="btn btn-default btn-xs" onclick="removeMey(this);"><i class="fa fa-trash-o"></i></button></td>
   </tr>
 	<?
 }
 ?>
-
-
-<?
-if ($janak > 0)
-{
-	for ($x=1;$x<=$janak;$x++)
-	{
-		$i++;
-		
-		?>
-  <tr bgcolor="<?=$warnarow?>"> 
-  <input type="hidden" name="upd[<?=$i?>]" value="1">
-    <td valign="top"><input type="text" name="KF_03[<?=$i?>]" size="2" value="<?=$i?>"></td>
-    <td valign="top">
-    <input type="text" name="KF_04[<?=$i?>]" size="50"><br>
-    <input type="text" name="KF_09[<?=$i?>]" size="10">/
-    <input type="text" name="TGKF_05[<?=$i?>]" size="1" maxlength="2"">
-    - 
-    <input type="text" name="BLKF_05[<?=$i?>]" size="1" maxlength="2">
-              - 
-    <input type="text" name="THKF_05[<?=$i?>]" size="2" maxlength="4">
-    </td>
-    <td valign="top">
-    <select name="KF_10[<?=$i?>]" >
-      <option value="">-</option>
-      <option value="L">L</option>
-      <option value="P">P</option>
-    
-      </select>
-    </td>
-    <td valign="top">
-    <select name="KF_07[<?=$i?>]" >
-      <option value="">-</option>
-      <option value="D">DAPAT</option>
-      <option value="T">TIDAK</option>
-      </select><br>
-      <select name="KF_08[<?=$i?>]" >
-        <option value="-">-</option>
-        <option value="K">KANDUNG</option>
-        <option value="T">TIRI</option>
-        <option value="A">ANGKAT</option>
-      </select>
-    </td>
-    <td valign="top">&nbsp;</td>
-  </tr>
-  		<?
-  	}
-}
-?>
+  </tbody>
 
 <!------------------------------ tambahan anak --------------------------->
-  <tr bgcolor="<?=$warnarow2?>"> 
-    <td colspan="5" height="25"><b>Jumlah Anak yang akan ditambah : </b>
-      �
-      <select name="janak" id="janak" 
-      onChange="window.location='index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=anak&NIP=<?=$NIP?>&action=tambah&janak='+this.value+''">
+<tfoot>
+  <tr> 
+    <td colspan="6" height="25"><b>Jumlah Anak yang akan ditambah : </b>
+      <select name="janak" id="janak" style="width: 100px;">
       <option value="">-</option>
       <option value="1">1</option>
       <option value="2">2</option>
@@ -150,11 +166,9 @@ if ($janak > 0)
       <option value="5">5</option>
       <option value="6">6</option>
       </select>
-      ��� 
-      <input class="tombol2" name="simpan" type="submit" id="simpan" value="SIMPAN">
-      <input class="tombol2" name="batal" type="submit" id="batal" value="BATALKAN PENAMBAHAN">
-      <input type="hidden" name="totanak" value="<?=$i?>">
+        <button type="button" class="btn btn-primary" onclick="save_data_anak(); return false;"><i class="fa fa-save"></i> Simpan</button>
       </td>
   </tr>
-</form>
+</tfoot>
 </table>
+</form>

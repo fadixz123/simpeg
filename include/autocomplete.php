@@ -32,7 +32,7 @@ if (isset($_GET['search'])) {
         while ($rows = mysql_fetch_object($sql)) {
             $data[] = $rows;
         }
-        $pilih[] = array('id'=>'', 'list' => '<i>Semua pegawai ...</i>');
+        $pilih[] = array('id'=>'', 'list' => '<i>Pilih pegawai ...</i>');
         $total = mysql_num_rows(mysql_query($query));
         die(json_encode(array('data' => array_merge($pilih, $data), 'total' => $total)));
     }

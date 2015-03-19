@@ -74,7 +74,7 @@ if ($H_1A=='') { $H_1A=$row['H_1A']; }
     <input type="hidden" name="nip" value="<?=$_GET['nip']?>">
     <table width="100%" class="table table-condensed table-bordered table-hover no-margin">
         <tr class="sectiontableheader"> 
-            <td></td>
+            <td>G</td>
             <td colspan="3"><b>PENDIDIKAN UMUM TERAKHIR</b></td>
         </tr>
           <tr> 
@@ -160,7 +160,7 @@ if ($H_1A=='') { $H_1A=$row['H_1A']; }
     <input type="hidden" name="nip" value="<?=$_GET['nip']?>">
     <table width="100%" class="table table-condensed table-bordered table-hover no-margin">
           <tr class="sectiontableheader"> 
-            <td width="3%"></td>
+            <td width="3%">H</td>
             <td colspan="3" width="767" height="22"><b> 
               DIKLAT STRUKTURAL TERAKHIR</b></td>
           </tr>

@@ -156,16 +156,16 @@ $x=mysql_fetch_array(mysql_query("select A_01,A_02,A_03,A_04 from MASTFIP08 wher
     <td colspan="6" bgcolor="DDDDDD">&nbsp;<strong>RIWAYAT JABATAN</strong></td>
   </tr>-->
     <thead>
-  <tr> 
-    <th>No</th>
-    <th>Nama Jabatan</th>
-    <th>Esel</th>
-    <th>No. SK JAB</th>
-    <th>TMT SK</th>
-    <th>TMT JAB</th>
-    <th>&nbsp; </th>
-  </tr>
-  </thead>
+        <tr> 
+            <th>No</th>
+            <th>Nama Jabatan</th>
+            <th>Esel</th>
+            <th>No. SK JAB</th>
+            <th>TMT SK</th>
+            <th>TMT JAB</th>
+            <th>&nbsp; </th>
+        </tr>
+    </thead>
   <tbody>
   <?php
   $no=0;

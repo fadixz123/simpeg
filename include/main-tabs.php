@@ -52,9 +52,14 @@ $nama= $_GET['nama'];
                                     my_ajax('biodata/smistri.php?sid=<?=$sid?>&do=cari&nip=<?=$nip?>&cari=NIP','#tab8');
                                 }
                             break;
-                            case 'riwayat':
+                            case 'anak':
                                 if ($('#tab9').html() === '') {
-                                    my_ajax('biodata/riwayat.php?sid=<?=$sid?>&do=cari&nip=<?=$nip?>&cari=NIP','#tab9');
+                                    my_ajax('biodata/anak.php?sid=<?=$sid?>&do=cari&nip=<?=$nip?>&cari=NIP','#tab9');
+                                }
+                            break;
+                            case 'riwayat':
+                                if ($('#tab10').html() === '') {
+                                    my_ajax('biodata/riwayat.php?sid=<?=$sid?>&do=cari&nip=<?=$nip?>&cari=NIP','#tab10');
                                 }
                             break;
                             
@@ -74,8 +79,9 @@ $nama= $_GET['nama'];
   <li class="link_tab" id="jabakhir"><a href="#tab5" data-toggle="tab">Jabatan Terakhir</a></li>
   <li class="link_tab" id="pddakhir"><a href="#tab6" data-toggle="tab">Pendidikan Akhir</a></li>
   <li class="link_tab" id="ortu"><a href="#tab7" data-toggle="tab">Ortu</a></li>
-  <li class="link_tab" id="keluarga"><a href="#tab8" data-toggle="tab">Suami / Istri / Anak</a></li>
-  <li class="link_tab" id="riwayat"><a href="#tab9" data-toggle="tab">Riwayat</a></li>
+  <li class="link_tab" id="keluarga"><a href="#tab8" data-toggle="tab">Suami / Istri</a></li>
+  <li class="link_tab" id="anak"><a href="#tab9" data-toggle="tab">Anak</a></li>
+  <li class="link_tab" id="riwayat"><a href="#tab10" data-toggle="tab">Riwayat</a></li>
 </ul>
                   
 <div class="tab-content">
@@ -88,6 +94,7 @@ $nama= $_GET['nama'];
   <div class="tab-pane" id="tab7"></div>
   <div class="tab-pane" id="tab8"></div>
   <div class="tab-pane" id="tab9"></div>
+  <div class="tab-pane" id="tab10"></div>
 </div>
 
              

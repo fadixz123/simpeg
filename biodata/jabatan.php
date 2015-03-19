@@ -98,7 +98,7 @@ $I_06=$row[I_06];
     <input type="hidden" name="nip" value="<?=$_GET['nip']?>">
     <table width="100%" class="table table-condensed table-bordered table-hover no-margin">
         <tr class="sectiontableheader"> 
-            <td width="3%"><b>G</b></td>
+            <td width="3%"><b>F</b></td>
             <td colspan="4" height="22"><b>JABATAN STRUKTURAL / FUNGSIONAL / FUNGSIONAL UMUM (JFU)</b></td>
         </tr>
         <tr>

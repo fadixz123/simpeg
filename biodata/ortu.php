@@ -41,7 +41,7 @@ $row=mysql_fetch_array(mysql_query($q));
     <table width="100%" class="table table-condensed table-bordered table-hover no-margin">
           <tr class="sectiontableheader">
             <td width="3%"> 
-              <div><b>U</b></div>
+              <div><b>I</b></div>
             </td>
             <td colspan="3"><b> DATA ORANG TUA KANDUNG</b></td>
           </tr>

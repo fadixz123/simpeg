@@ -436,17 +436,18 @@ else if ($opsi === 'keluarga') {
     $o=mysql_fetch_array($r);
     if ($ini=='DATA SUAMI') { $KF_10='LAKI-LAKI'; } else { $KF_10='PEREMPUAN'; }
     
-    $nip_couple = $_POST['KF_04'];
+    $nip_couple = ($_POST['KF_04'] !== '')?$_POST['KF_04']:"NULL";
     $TGKF_05    = $_POST['TGKF_05'];
     $TGKF_06    = $_POST['TGKF_06'];
     $an         = $_POST['an'];
     $KF_07      = $_POST['KF_07'];
     $KF_09      = $_POST['KF_09'];
+    $pasangan   = $_POST['pasangan_nonpns'];
     if ($o['count(*)']>'0')
     {
             //------------- UPDATE SUAMI/ISTRI---------------
 
-            $q  ="update MASTKEL1 set KF_02='1',KF_03='1', `NIP_COUPLE` = '$nip_couple', ";
+            $q  ="update MASTKEL1 set KF_02='1',KF_03='1', KF_04 = '$pasangan', `NIP_COUPLE` = '$nip_couple',";
             $q .="KF_05='".date2mysql($TGKF_05)."',an='$an',KF_06='".date2mysql($TGKF_06)."', ";
             $q .="KF_07='$KF_07',KF_08='', ";
             $q .="KF_09='$KF_09',KF_10='$KF_10' WHERE KF_01='$NIP' AND KF_02='1' AND KF_03='1'";
@@ -456,11 +457,37 @@ else if ($opsi === 'keluarga') {
     {
             //------------- INSERT SUAMI/ISTRI-----------------
             $q  ="insert into MASTKEL1 (KF_01,KF_02,KF_03,KF_04,KF_05,an,KF_06,KF_07,KF_08,KF_09,KF_10,NIP_COUPLE) VALUES ";
-            $q .="('$NIP','1','1',NULL,'".date2mysql($TGKF_05)."','$an','".date2mysql($TGKF_06)."', ";
+            $q .="('$NIP','1','1','$pasangan','".date2mysql($TGKF_05)."','$an','".date2mysql($TGKF_06)."', ";
             $q .="'$KF_07','','$KF_09','$KF_10','$nip_couple') ";
             $r=mysql_query($q); 
     }
     if (mysql_affected_rows() > 0) lethistory($sid,"UPDATE DATA SUAMI/ISTRI",$NIP);
+    die(json_encode(array('status' => TRUE)));
+}
+
+else if ($opsi === 'anak') {
+    $NIP   = $_POST['nip'];
+    $KF_03 = $_POST['KF_03'];
+    $KF_04 = $_POST['KF_04'];
+    $KF_07 = $_POST['KF_07'];
+    $KF_08 = $_POST['KF_08'];
+    $KF_09 = $_POST['KF_09'];
+    $KF_10 = $_POST['KF_10'];
+    $upd   = $_POST['upd'];
+    $KF_05 = $_POST['TGKF_05'];
+    $ID    = $_POST['ID'];
+    mysql_query("delete from MASTKEL1 where KF_01 = '$NIP' and KF_02 = '2'");
+    foreach ($KF_03 as $i => $data) {
+        
+        $q="insert into MASTKEL1 (KF_01,KF_02,KF_03,KF_04,KF_05,KF_07,KF_08,KF_09,KF_10) ";
+        $q=$q."values ('$NIP','2','$KF_03[$i]','".addslashes(strtoupper($KF_04[$i]))."','".date2mysql($KF_05[$i])."','$KF_07[$i]','$KF_08[$i]','".addslashes(strtoupper($KF_09[$i]))."', '$KF_10[$i]' )";
+        
+//        else {
+//            $q="update MASTKEL1 set KF_02=2,KF_03=$KF_03[$i], KF_04='".addslashes(strtoupper($KF_04[$i]))."', KF_05='".date2mysql($KF_05[$i])."', KF_07='$KF_07[$i]', KF_08='$KF_08[$i]', KF_09='".addslashes(strtoupper($KF_09[$i]))."', KF_10='$KF_10[$i]' where KF_01='$NIP' and KF_02='2' and ID='$ID[$i]' ";
+//        }
+        mysql_query($q) or die (mysql_error());
+        if (mysql_affected_rows() > 0) { lethistory($sid,"UPDATE DATA ANAK ".addslashes(strtoupper($KF_04[$i])),$NIP); }
+    }
     die(json_encode(array('status' => TRUE)));
 }
 

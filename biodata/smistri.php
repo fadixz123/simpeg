@@ -67,7 +67,7 @@ $NIP = $_GET['nip'];
     $o=mysql_fetch_array($r);
     $jk=$o['B_06'];
     
-    if ($jk=='1') { $ini="DATA ISTRI"; } elseif ($jk=='2') { $ini='DATA SUAMI'; } else { $ini="DATA ISTRI/SUAMI"; }
+    if ($jk=='1') { $ini="DATA ISTRI"; $pasangan = "istri"; } elseif ($jk=='2') { $ini='DATA SUAMI'; $pasangan = "suami"; } else { $ini="DATA ISTRI/SUAMI"; $pasangan = ''; }
     if ($ini === 'DATA ISTRI') {
         $q="select m.*, f.B_03 from MASTKEL1 m left join mastfip08 f on (f.B_02B=m.`NIP_COUPLE`) where m.KF_01='$NIP' and m.KF_02='1' AND m.KF_03='1'";
     } else {
@@ -83,21 +83,29 @@ $NIP = $_GET['nip'];
           <tr class="sectiontableheader">
             <input type="hidden" name="ini" id="ini" value="<? echo $ini; ?>">
             <td width="3%"> 
-              <div align="center"><b>V </b></div>
+              <div align="center"><b>J </b></div>
             </td>
             <td colspan="3"><b><? echo $ini; ?>
               </b></td>
           </tr>
           <tr> 
             <td width="3%"> 01</td>
-            <td width="20%">Nama </td>
+            <td width="20%">Nama <small><i>Jika <?= $pasangan ?> PNS</i></small></td>
             <td>:</td>
             <td width="77%"> 
                 <input type="text" name="KF_04" class="select2-input" id="nomorinduk" value="<?= $o['NIP_COUPLE'] ?>">
             </td>
           </tr>
-          <tr> 
+        <tr> 
             <td width="3%"> 02</td>
+            <td width="20%">Nama  <small><i>Jika <?= $pasangan ?> bukan PNS</i></small></td>
+            <td>:</td>
+            <td width="77%"> 
+              <input type="text" name="pasangan_nonpns" size="40" class="form-control-static" value="<? echo $o["KF_04"]; ?>">
+            </td>
+        </tr>
+          <tr> 
+            <td width="3%"> 03</td>
             <td width="20%">Tempat/Tgl Lahir</td>
             <td>:</td>
             <td width="77%"> 
@@ -106,16 +114,16 @@ $NIP = $_GET['nip'];
               <input type="text" name="TGKF_05" id="tgkf_05" class="form-control-static" value="<? echo datefmysql($o["KF_05"]); ?>" style="width: 10%;" />
             </td>
           </tr>
-		  <tr> 
-            <td width="3%"> 03</td>
+        <tr> 
+            <td width="3%"> 04</td>
             <td width="20%">Nomer Akta Nikah </td>
             <td>:</td>
             <td width="77%"> 
               <input type="text" name="an" size="40" class="form-control-static" value="<? echo $o["an"]; ?>">
             </td>
-          </tr>
+        </tr>
           <tr> 
-            <td width="3%"> 04</td>
+            <td width="3%"> 05</td>
             
       <td width="20%">Tanggal Menikah </td>
             <td> 
@@ -128,7 +136,7 @@ $NIP = $_GET['nip'];
             </td>
           </tr>
           <tr> 
-            <td width="3%"> 05</td>
+            <td width="3%"> 06</td>
             
       <td width="20%">Tunjangan </td>
             <td> 
@@ -146,7 +154,7 @@ $NIP = $_GET['nip'];
             <td width="20%">&nbsp;</td>
             <td width="9">&nbsp;</td>
             <td width="77%">
-                <button class="btn btn-primary" onclick="save_data_keluarga(); return false;"><i class="fa fa-save"></i> Simpan Data Istri</button>
+                <button class="btn btn-primary" onclick="save_data_keluarga(); return false;"><i class="fa fa-save"></i> Simpan Data <?= $pasangan ?></button>
             </td>
           </tr>
           <tr bgcolor="<? echo $warnarow1; ?>" valign="top"> 
