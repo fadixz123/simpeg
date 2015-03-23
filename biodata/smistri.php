@@ -37,6 +37,8 @@ $NIP = $_GET['nip'];
                 return markup;
             }, 
             formatSelection: function(data){
+                $('#tempatlahir').val(data.B_04);
+                $('#tgkf_05').val(datefmysql(data.B_05));
                 return data.list;
             }
         });
@@ -56,6 +58,9 @@ $NIP = $_GET['nip'];
                 if (data.status === true) {
                     message_edit_success();
                 }
+            },
+            error: function() {
+                hide_ajax_indicator();
             }
         });
     }
@@ -69,9 +74,9 @@ $NIP = $_GET['nip'];
     
     if ($jk=='1') { $ini="DATA ISTRI"; $pasangan = "istri"; } elseif ($jk=='2') { $ini='DATA SUAMI'; $pasangan = "suami"; } else { $ini="DATA ISTRI/SUAMI"; $pasangan = ''; }
     if ($ini === 'DATA ISTRI') {
-        $q="select m.*, f.B_03 from MASTKEL1 m left join mastfip08 f on (f.B_02B=m.`NIP_COUPLE`) where m.KF_01='$NIP' and m.KF_02='1' AND m.KF_03='1'";
+        $q="select m.*, f.B_03 from MASTKEL1 m left join mastfip08 f on (f.B_02=m.`NIP_COUPLE`) where m.KF_01='$NIP' and m.KF_02='1' AND m.KF_03='1'";
     } else {
-        $q="select m.*, f.B_03 from MASTKEL1 m left join mastfip08 f on (f.B_02B=m.`NIP_COUPLE`) where m.KF_01='$NIP' and m.KF_02='1' AND m.KF_03='1'";
+        $q="select m.*, f.B_03 from MASTKEL1 m left join mastfip08 f on (f.B_02=m.`NIP_COUPLE`) where m.KF_01='$NIP' and m.KF_02='1' AND m.KF_03='1'";
     }
     //echo $q;
     $r=mysql_query($q);
@@ -109,7 +114,7 @@ $NIP = $_GET['nip'];
             <td width="20%">Tempat/Tgl Lahir</td>
             <td>:</td>
             <td width="77%"> 
-                <input type="text" name="KF_09" size="40" class="form-control-static" value="<? echo $o["KF_09"]; ?>" style="width: 30%;">
+                <input type="text" name="KF_09" size="40" class="form-control-static" value="<? echo $o["KF_09"]; ?>" id="tempatlahir" style="width: 30%;">
               <span class="form-control-label">/ </span>
               <input type="text" name="TGKF_05" id="tgkf_05" class="form-control-static" value="<? echo datefmysql($o["KF_05"]); ?>" style="width: 10%;" />
             </td>

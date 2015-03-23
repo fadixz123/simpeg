@@ -443,11 +443,15 @@ else if ($opsi === 'keluarga') {
     $KF_07      = $_POST['KF_07'];
     $KF_09      = $_POST['KF_09'];
     $pasangan   = $_POST['pasangan_nonpns'];
+    if ($nip_couple !== 'NULL') {
+        $nip = mysql_fetch_array(mysql_query("select B_02 from mastfip08 where B_02B = '$nip_couple'"));
+        $nip_couple = $nip['B_02'];
+    }
     if ($o['count(*)']>'0')
     {
             //------------- UPDATE SUAMI/ISTRI---------------
 
-            $q  ="update MASTKEL1 set KF_02='1',KF_03='1', KF_04 = '$pasangan', `NIP_COUPLE` = '$nip_couple',";
+            $q  ="update MASTKEL1 set KF_02='1',KF_03='1', KF_04 = '$pasangan', `NIP_COUPLE` = ".(($nip_couple !== 'NULL')?"'$nip_couple'":'NULL').",";
             $q .="KF_05='".date2mysql($TGKF_05)."',an='$an',KF_06='".date2mysql($TGKF_06)."', ";
             $q .="KF_07='$KF_07',KF_08='', ";
             $q .="KF_09='$KF_09',KF_10='$KF_10' WHERE KF_01='$NIP' AND KF_02='1' AND KF_03='1'";
@@ -458,9 +462,10 @@ else if ($opsi === 'keluarga') {
             //------------- INSERT SUAMI/ISTRI-----------------
             $q  ="insert into MASTKEL1 (KF_01,KF_02,KF_03,KF_04,KF_05,an,KF_06,KF_07,KF_08,KF_09,KF_10,NIP_COUPLE) VALUES ";
             $q .="('$NIP','1','1','$pasangan','".date2mysql($TGKF_05)."','$an','".date2mysql($TGKF_06)."', ";
-            $q .="'$KF_07','','$KF_09','$KF_10','$nip_couple') ";
+            $q .="'$KF_07','','$KF_09','$KF_10',".(($nip_couple !== 'NULL')?"'$nip_couple'":'NULL').") ";
             $r=mysql_query($q); 
     }
+    //echo $q; die;
     if (mysql_affected_rows() > 0) lethistory($sid,"UPDATE DATA SUAMI/ISTRI",$NIP);
     die(json_encode(array('status' => TRUE)));
 }
