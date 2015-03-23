@@ -159,6 +159,39 @@ if ($j > 0 ) {
             });
             return false;
         }
+		
+		function delete_pegawai(url, page) {
+			bootbox.dialog({
+          message: "Anda yakin akan menghapus data ini?",
+          title: "Konfirmasi",
+          buttons: {
+            batal: {
+                label: '<i class="fa fa-refresh"></i> Tidak',
+                className: "btn-default",
+                callback: function() {
+
+                }
+            },
+            save: {
+                label: '<i class="fa fa-check-circle"></i>  Ya',
+                className: "btn-primary",
+                callback: function() {
+                    $.ajax({
+						type: 'GET',
+						url: url,
+						beforeSend: function() {
+							show_ajax_indicator();
+						},
+						success: function(data) {
+							hide_ajax_indicator();
+							search_data_pns(page);
+						}
+					});
+                }
+            }
+            }
+        });
+		}
         
         function paging(page, tab, search) {
             search_data_pns(page);

@@ -76,6 +76,7 @@ $sid = $_GET['sid'];
                 <td><button type="button" class="btn btn-default btn-xs mypopover" data-container="body" data-toggle="popover" data-placement="top" data-title="Detail Unit Kerja" data-content="<?= $detail ?>">Show</button></td>
                 <td class="nowrap">
                     <button type="button" onclick="load_detail('include/main-tabs.php?sid=<?=$sid?>&do=cari&nip=<?=$row['B_02']?>&nama=<?=$row['B_03']?>&cari=NIP','<?= $row['B_02'] ?>');" class="btn btn-default btn-xs"><i class="fa fa-eye"></i></button>
+					<button type="button" onclick="delete_pegawai('biodata/save-data.php?save=delete_pegawai&nip=<?=$row['B_02']?>','<?= $page ?>');" class="btn btn-default btn-xs"><i class="fa fa-trash-o"></i></button>
                 </td>
               </tr>
                 <?

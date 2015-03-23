@@ -116,7 +116,7 @@ $NIP = $_GET['nip'];
             <td width="77%"> 
                 <input type="text" name="KF_09" size="40" class="form-control-static" value="<? echo $o["KF_09"]; ?>" id="tempatlahir" style="width: 30%;">
               <span class="form-control-label">/ </span>
-              <input type="text" name="TGKF_05" id="tgkf_05" class="form-control-static" value="<? echo datefmysql($o["KF_05"]); ?>" style="width: 10%;" />
+              <input type="text" name="TGKF_05" id="tgkf_05" class="form-control-static" value="<? echo (($o["KF_05"] !== '0000-00-00')?datefmysql($o["KF_05"]):''); ?>" style="width: 10%;" />
             </td>
           </tr>
         <tr> 

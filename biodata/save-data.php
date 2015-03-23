@@ -106,6 +106,11 @@ else if ($opsi === 'delete_user') {
     mysql_query("delete from `user` where id = '$id'");
 }
 
+else if ($opsi === 'delete_pegawai') {
+	$nip = $_GET['nip'];
+	mysql_query("delete from mastfip08 where B_02 = '$nip'");
+}
+
 else if ($opsi === 'cpns') {
     $NIP    = $_POST['nip'];
     $D_02   = $_POST['D_02'];
