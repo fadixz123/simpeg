@@ -382,20 +382,14 @@ if (isset($_GET['search'])) {
 //            join inf_lokasi kb on (kc.lokasi_kabupatenkota = kb.lokasi_kabupatenkota)
 //            join inf_lokasi pv on (kb.lokasi_propinsi = pv.lokasi_propinsi)
 //            where kl.lokasi_nama like ('".$q."%')";
-        $query = "select kl.lokasi_ID as id, CONCAT_WS(' ',kl.lokasi_nama, '<br/>', kc.lokasi_nama) as lokasi_nama 
-            from inf_lokasi kl
-            join inf_lokasi kc 
-                on (
-                    kl.lokasi_kecamatan = kc.lokasi_kecamatan 
-                    and kl.lokasi_kabupatenkota = kc.lokasi_kabupatenkota
-                    and kl.lokasi_propinsi = kc.lokasi_propinsi
-                    )
+        $query = "select lokasi_ID as id, lokasi_nama 
+            from inf_lokasi
             where 
-            kl.lokasi_kelurahan != '0000' 
-            and kl.lokasi_kecamatan != '00' 
-            and kl.lokasi_kabupatenkota != '00' 
-            and kl.lokasi_propinsi != '00' 
-            and kl.lokasi_nama like ('".$q."%')";
+            lokasi_kelurahan != '0000' 
+            and lokasi_kecamatan != '00' 
+            and lokasi_kabupatenkota != '00' 
+            and lokasi_propinsi != '00' 
+            and lokasi_nama like ('".$q."%')";
         $sql = mysql_query($query.' limit '.$start.', '.$limit);
         while ($rows = mysql_fetch_object($sql)) {
             $data[] = $rows;
