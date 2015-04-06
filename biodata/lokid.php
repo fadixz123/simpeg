@@ -244,7 +244,7 @@ if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
 </form>
 <?php // ----------------------- identitas ------------------------------------ ?>
 <?php
-$q="select * from MASTFIP08 where B_02='".$_GET['nip']."' LIMIT 1";
+$q="select m.*, i.lokasi_nama from MASTFIP08 m left join inf_lokasi i on (m.id_lokasi = i.lokasi_ID) where m.B_02='".$_GET['nip']."' LIMIT 1";
 $row=mysql_fetch_array(mysql_query($q));
 ?>      
 <form  id="formpegawai" enctype="multipart/form-data" action="biodata/save-data.php?save=pegawai" method="POST">
@@ -401,7 +401,7 @@ $row=mysql_fetch_array(mysql_query($q));
             <td width="3%"> 14</td>
             <td width="20%">Kelurahan</td>
             <td>:</td>
-            <td width="77%"><input type="text" name="kelurahan" id="kelurahan" class="select2-input" /></td>
+            <td width="77%"><input type="text" name="kelurahan" id="kelurahan" class="select2-input" value="<?= $row['id_lokasi'] ?>" /></td>
           </tr>
           <tr> 
             <td width="3%"> 15</td>
@@ -473,3 +473,6 @@ $row=mysql_fetch_array(mysql_query($q));
           </tr>
       </table>
     </form>
+<script type="text/javascript">
+    $('#s2id_kelurahan a .select2-chosen').html('<?= $row['lokasi_nama'] ?>');
+</script>

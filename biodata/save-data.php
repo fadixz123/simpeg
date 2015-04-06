@@ -37,6 +37,7 @@ if ($opsi === 'pegawai') {
     $B_NOTELP   = $_POST['B_NOTELP'];
     $B_NOARSIP  = $_POST['B_NOARSIP'];
     $nik    = $_POST['nik'];
+    $kelrhn = ($_POST['kelurahan'] !== '')?$_POST['kelurahan']:"NULL";
     $check = mysql_num_rows(mysql_query("select B_02B from mastfip08 where B_02B = '$B_02B'"));
     $result['act'] = 'edit';
     $UploadDirectory	= '../Foto/'; //Upload Directory, ends with slash & make sure folder exist
@@ -95,7 +96,7 @@ if ($opsi === 'pegawai') {
     $qupdate="update MASTFIP08 set B_02B='$B_02B',B_03A='$B_03A', B_03='$B_03', B_03B='$B_03B', ";
     $qupdate=$qupdate." B_04='$B_04', B_05='".date2mysql($TGLAHIR)."', ";
     $qupdate=$qupdate." B_06='$B_06',gd='$gd', B_07='$B_07', B_08='$B_08', B_09='$B_09', B_11='$B_11', B_12='$B_12', ";
-    $qupdate=$qupdate." J_01='$J_01', L_1A='$L_1A', L_02='$L_02', L_03='$L_03', L_04='$L_04',B_NOTELP='$B_NOTELP',B_NOARSIP='$B_NOARSIP',nik='$nik' ";
+    $qupdate=$qupdate." J_01='$J_01', L_1A='$L_1A', L_02='$L_02', L_03='$L_03', L_04='$L_04',B_NOTELP='$B_NOTELP',B_NOARSIP='$B_NOARSIP',nik='$nik', id_lokasi = $kelrhn ";
     $qupdate=$qupdate." where B_02='".$B_02B."'";
     //echo $qupdate;
     mysql_query($qupdate) or die(mysql_error());

@@ -34,7 +34,7 @@ mysql_select_db($db);
             $offset = ($page-1)*$limit;
         }
         $no=0;
-        $q="select *, CONCAT(`A_01`,`A_02`, `A_03`, `A_04`, `A_05`) as kode_sub_lokasi from MASTFIP08 where B_03 LIKE '%$B_03%' and A_01 != '99'
+        $q="select *, CONCAT(`A_01`,`A_02`, `A_03`, `A_04`, `A_05`) as kode_sub_lokasi from MASTFIP08 where B_03 LIKE '%$B_03%'
                 ";
         //echo $q;
         if ($_GET['uk'] !== 'all') {
