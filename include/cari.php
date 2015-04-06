@@ -229,7 +229,7 @@ if ($cari) {
     </div>
 </div>
 <div id="datamodal_search_detail" class="modal fade">
-    <div class="modal-dialog" style="width: 700px; height: 100%;">
+    <div class="modal-dialog" style="width: 800px; height: 100%;">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

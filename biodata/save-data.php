@@ -5,9 +5,17 @@ $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
 $opsi = $_GET['save'];
 
+if ($opsi === 'lokasi_pegawai') {
+    $loker  = $_POST['loker'];
+    $B_02B  = $_POST['nip'];
+    $q="update MASTFIP08 set A_01='".substr($loker,0,2)."', A_02='".substr($loker,2,2)."',A_03='".substr($loker,4,2)."', A_04='".substr($loker,6,2)."',A_05='".substr($loker,8,2)."' where B_02='".$B_02B."'";
+    
+    mysql_query($q) or die (mysql_error());
+    if (mysql_affected_rows() > 0) { lethistory($sid,"UPDATE LOKASI KE ".subLokasiKerjaB($loker),$NIP); }
+    die(json_encode(array('act' => 'edit')));
+}
 if ($opsi === 'pegawai') {
     $NIP    = $_POST['nip'];
-    $loker  = $_POST['loker'];
     $B_02B  = $_POST['B_02B'];
     $B_03A  = $_POST['B_03A'];
     $sid    = $_POST['sid'];
@@ -82,10 +90,6 @@ if ($opsi === 'pegawai') {
             die('error uploading File!');
        }
     }
-    $q="update MASTFIP08 set A_01='".substr($loker,0,2)."', A_02='".substr($loker,2,2)."',A_03='".substr($loker,4,2)."', A_04='".substr($loker,6,2)."',A_05='".substr($loker,8,2)."' where B_02='".$B_02B."'";
-    
-    mysql_query($q) or die (mysql_error());
-    if (mysql_affected_rows() > 0) { lethistory($sid,"UPDATE LOKASI KE ".subLokasiKerjaB($loker),$NIP); }
     
     $B_03=addslashes($_POST['B_03']);
     $qupdate="update MASTFIP08 set B_02B='$B_02B',B_03A='$B_03A', B_03='$B_03', B_03B='$B_03B', ";

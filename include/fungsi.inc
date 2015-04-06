@@ -383,15 +383,9 @@ function namaLokasiKerja($kd) {
 	return $namauk;
 }
 
-function page_summary($total_data, $total_datapage,$limit, $page){
-    $start = (($page -1) * $limit)+1;
-  
-    $finish = ($start -1) + $total_datapage;
-    if ($finish < 1) {
-        $start = 0;
-    };
-    $str = '<div class="dataTables_info">Showing '+$start+' to '+$finish+' of '+$total_data+' entries</div>';
-    return $str;
+function page_summary($total_data, $halaman, $dataperpage) {
+    $total_page = ceil($total_data/$dataperpage);
+    return '<div class="page_summary">Page '.$halaman.' of '.$total_page.' Total '.$total_data.' Data(s)</div>';
 }
 
 function paging_ajax($jmldata, $dataPerPage, $klik, $tab = NULL, $search) {

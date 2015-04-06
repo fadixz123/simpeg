@@ -22,7 +22,58 @@ if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
         }).on('changeDate', function(){
             $(this).datepicker('hide');
         });
+        
+        $('#kelurahan').select2({
+            ajax: {
+                url: 'include/autocomplete.php?search=kelurahan',
+                dataType: 'json',
+                quietMillis: 100,
+                data: function (term, page) { // page is the one-based page number tracked by Select2
+                    return {
+                        q: term, //search term
+                        page: page, // page number
+                    };
+                },
+                results: function (data, page) {
+                    var more = (page * 20) < data.total; // whether or not there are more results available
+
+                    // notice we return the value of more so Select2 knows if more results can be loaded
+                    return {results: data.data, more: more};
+                }
+            },
+            formatResult: function(data){
+                var markup = data.lokasi_nama;
+                return markup;
+            }, 
+            formatSelection: function(data){
+                $('#s2id_kelurahan a .select2-chosen').html(data.lokasi_nama);
+                return data.list;
+            }
+        });
     });
+    
+    function save_lokasi() {
+        $.ajax({
+            type: 'POST',
+            url: 'biodata/save-data.php?save=lokasi_pegawai',
+            data: $('#form_lokasi').serialize(),
+            dataType: 'json',
+            beforeSend: function() {
+                show_ajax_indicator();
+            },
+            success: function(data) {
+                hide_ajax_indicator();
+                if (data.act === 'edit') {
+                    message_edit_success();
+                } else {
+                    message_add_success();
+                }
+            },
+            error: function() {
+                hide_ajax_indicator();
+            }
+        });
+    }
     
     function save_data_pegawai() {
         /*$.ajax({
@@ -121,8 +172,9 @@ if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
     
 </script>
 <br/>
-<form  id="formpegawai" enctype="multipart/form-data" action="biodata/save-data.php?save=pegawai" method="POST">
+<form  id="form_lokasi" enctype="multipart/form-data" action="biodata/save-data.php?save=pegawai" method="POST">
     <input type="hidden" name="sid" id="sid" value="<?= $_GET['sid'] ?>" />
+    <input type="hidden" name="nip" value="<?= $_GET['nip'] ?>" />
     <table width="100%" class="table table-condensed table-bordered table-hover no-margin">
           <tr class="sectiontableheader"> 
             <td class="sectiontableheader">LOKASI KERJA</td>
@@ -180,19 +232,22 @@ if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
 			</div>
 			</td>
           </tr>
-<!--          <tr>
+          <tr>
             <td>&nbsp; </td>
 			<td width="34">:</td>
             <td>
-              <input name="updlokid" type="submit" class="tombol2" tabindex='1' value="SIMPAN LOKASI">
+              <!--<input name="updlokid" type="submit" class="tombol2" tabindex='1' value="SIMPAN LOKASI">-->
+                <button class="btn btn-primary" onclick="save_lokasi(); return false;"><i class="fa fa-save"></i> Simpan Lokasi</button>
             </td>
-          </tr>-->
+          </tr>
       </table>
+</form>
 <?php // ----------------------- identitas ------------------------------------ ?>
 <?php
 $q="select * from MASTFIP08 where B_02='".$_GET['nip']."' LIMIT 1";
 $row=mysql_fetch_array(mysql_query($q));
 ?>      
+<form  id="formpegawai" enctype="multipart/form-data" action="biodata/save-data.php?save=pegawai" method="POST">
     <input type="hidden" name="nip" value="<?= $_GET['nip'] ?>" />
 	<table width="100%" class="table table-condensed table-bordered table-hover no-margin">
           <tr class="sectiontableheader"> 
@@ -340,10 +395,16 @@ $row=mysql_fetch_array(mysql_query($q));
             <td width="3%"> 13</td>
             <td width="20%">Alamat Rumah</td>
             <td>:</td>
-            <td width="77%"><textarea class="form-control-static" name="B_12" rows="3" cols="40"><?php echo $row["B_12"]; ?></textarea></td>
+            <td width="77%"><textarea class="form-control" name="B_12" rows="3" cols="40"><?php echo $row["B_12"]; ?></textarea></td>
           </tr>
           <tr> 
             <td width="3%"> 14</td>
+            <td width="20%">Kelurahan</td>
+            <td>:</td>
+            <td width="77%"><input type="text" name="kelurahan" id="kelurahan" class="select2-input" /></td>
+          </tr>
+          <tr> 
+            <td width="3%"> 15</td>
             <td width="20%">No. Telepon</td>
             <td>:</td>
             <td width="77%"> 
@@ -351,7 +412,7 @@ $row=mysql_fetch_array(mysql_query($q));
             </td>
           </tr>
           <tr> 
-            <td width="3%"> 15</td>
+            <td width="3%"> 16</td>
             <td width="20%">Nomor Karpeg</td>
             <td>:</td>
             <td width="77%"> 
@@ -359,7 +420,7 @@ $row=mysql_fetch_array(mysql_query($q));
             </td>
           </tr>
           <tr> 
-            <td width="3%"> 16</td>
+            <td width="3%"> 17</td>
             <td width="20%">Nomor Kartu ASKES</td>
             <td>:</td>
             <td width="77%"> 
@@ -367,7 +428,7 @@ $row=mysql_fetch_array(mysql_query($q));
             </td>
           </tr>
           <tr> 
-            <td width="3%"> 17</td>
+            <td width="3%"> 18</td>
             <td width="20%">No. Kartu Taspen</td>
             <td>:</td>
             <td width="77%"> 
@@ -375,7 +436,7 @@ $row=mysql_fetch_array(mysql_query($q));
             </td>
           </tr>
           <tr> 
-            <td width="3%"> 18</td>
+            <td width="3%"> 19</td>
             <td width="20%">Nomor Karis / Karsu</td>
             <td>:</td>
             <td width="77%"> 
@@ -383,7 +444,7 @@ $row=mysql_fetch_array(mysql_query($q));
             </td>
           </tr>
           <tr> 
-            <td width="3%"> 19</td>
+            <td width="3%"> 20</td>
             <td width="20%">N P W P</td>
             <td>:</td>
             <td width="77%"> 
@@ -391,7 +452,7 @@ $row=mysql_fetch_array(mysql_query($q));
             </td>
           </tr>
 		  <tr> 
-            <td width="3%"> 20</td>
+            <td width="3%"> 21</td>
             <td width="20%">N I K</td>
             <td>:</td>
             <td width="77%"> 
@@ -399,20 +460,16 @@ $row=mysql_fetch_array(mysql_query($q));
             </td>
           </tr>
           <tr> 
-            <td width="3%"> 21</td>
+            <td width="3%"> 22</td>
             <td width="20%">No. Arsip</td>
             <td>:</td>
             <td width="77%"> 
               <input type="text" name="B_NOARSIP" class="form-control-static" value="<?php echo $row[B_NOARSIP]; ?>">
             </td>
           </tr>
+          <tr>
+              <td colspan="3"></td>
+              <td><button class="btn btn-primary" onclick="save_data_pegawai(); return false;"><i class="fa fa-save"></i> Simpan Identitas</button></td>
+          </tr>
       </table>
     </form>
-    <table width="100%">
-        <tr> 
-            <td width="3%">&nbsp;</td>
-            <td width="20%">&nbsp;</td>
-            <td>&nbsp;</td>
-            <td width="77%"><button class="btn btn-primary" onclick="save_data_pegawai();"><i class="fa fa-save"></i> Simpan Identitas</button></td>
-        </tr>
-    </table>
