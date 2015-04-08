@@ -105,19 +105,19 @@ $row6=mysql_fetch_array(mysql_query($query6));
   <tr>
     <td width="17" style="font-family: Verdana; font-size: 8pt">&nbsp;</td>
     <td width="349" style="font-family: Verdana; font-size: 8pt"><font face="Verdana" size="1"><b>JUMLAH</b></td>
-    <td width="26"><?=$row4[0][jml]?></td>
-    <td width="26"><?=$row4[1][jml]?></td>
-    <td width="26"><?=$row4[2][jml]?></td>
-    <td width="26"><?=$row4[3][jml]?></td>
-    <td width="26"><?=$row4[4][jml]?></td>
-    <td width="26"><?=$row4[5][jml]?></td>
-    <td width="26"><?=$row4[6][jml]?></td>
-    <td width="26"><?=$row4[7][jml]?></td>
-    <td width="26"><?=$row4[8][jml]?></td>
-    <td width="26"><?=$row4[9][jml]?></td>
-    <td width="26"><?=$row4[10][jml]?></td>
-    <td width="26"><?=$row4[11][jml]?></td>
-    <td width="26"><?=$row5[jml]?></td>
+    <td width="26" align="center"><?=$row4[0][jml]?></td>
+    <td width="26" align="center"><?=$row4[1][jml]?></td>
+    <td width="26" align="center"><?=$row4[2][jml]?></td>
+    <td width="26" align="center"><?=$row4[3][jml]?></td>
+    <td width="26" align="center"><?=$row4[4][jml]?></td>
+    <td width="26" align="center"><?=$row4[5][jml]?></td>
+    <td width="26" align="center"><?=$row4[6][jml]?></td>
+    <td width="26" align="center"><?=$row4[7][jml]?></td>
+    <td width="26" align="center"><?=$row4[8][jml]?></td>
+    <td width="26" align="center"><?=$row4[9][jml]?></td>
+    <td width="26" align="center"><?=$row4[10][jml]?></td>
+    <td width="26" align="center"><?=$row4[11][jml]?></td>
+    <td width="26" align="center"><?=$row5[jml]?></td>
   </tr>
   </tbody>
 </table>

@@ -36,7 +36,7 @@ $sid = $_GET['sid'];
             $offset = ($page-1)*$limit;
         }
         $no=0;
-        $q="select *, CONCAT(`A_01`,`A_02`, `A_03`, `A_04`, `A_05`) as kode_sub_lokasi from MASTFIP08 where B_02 is not NULL  and A_01 != '99'
+        $q="select *, CONCAT(`A_01`,`A_02`, `A_03`, `A_04`, `A_05`) as kode_sub_lokasi from MASTFIP08 where B_02 is not NULL
                 ";
         //echo $q;
         if ($_GET['uk'] !== 'all') {

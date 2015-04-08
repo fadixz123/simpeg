@@ -23,9 +23,9 @@ if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
             $(this).datepicker('hide');
         });
         
-        $('#kelurahan').select2({
+        $('#kecamatan').select2({
             ajax: {
-                url: 'include/autocomplete.php?search=kelurahan',
+                url: 'include/autocomplete.php?search=kecamatan',
                 dataType: 'json',
                 quietMillis: 100,
                 data: function (term, page) { // page is the one-based page number tracked by Select2
@@ -46,7 +46,7 @@ if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
                 return markup;
             }, 
             formatSelection: function(data){
-                $('#s2id_kelurahan a .select2-chosen').html(data.lokasi_nama);
+                $('#s2id_kecamatan a .select2-chosen').html(data.lokasi_nama);
                 return data.list;
             }
         });
@@ -399,9 +399,9 @@ $row=mysql_fetch_array(mysql_query($q));
           </tr>
           <tr> 
             <td width="3%"> 14</td>
-            <td width="20%">Kelurahan</td>
+            <td width="20%">Kecamatan</td>
             <td>:</td>
-            <td width="77%"><input type="text" name="kelurahan" id="kelurahan" class="select2-input" value="<?= $row['id_lokasi'] ?>" /></td>
+            <td width="77%"><input type="text" name="kecamatan" id="kecamatan" class="select2-input" value="<?= $row['id_lokasi'] ?>" /></td>
           </tr>
           <tr> 
             <td width="3%"> 15</td>
@@ -474,5 +474,7 @@ $row=mysql_fetch_array(mysql_query($q));
       </table>
     </form>
 <script type="text/javascript">
-    $('#s2id_kelurahan a .select2-chosen').html('<?= $row['lokasi_nama'] ?>');
+    <?php if ($row['lokasi_nama'] !== NULL) { ?>
+        $('#s2id_kecamatan a .select2-chosen').html('<?= $row['lokasi_nama'] ?>');
+    <?php } ?>
 </script>

@@ -30,13 +30,15 @@ $urut   = $_GET['urut'];
 
 
 if ($uk!='all') {
-	if (strlen($uk)==2) $query.="and A_01='".$uk."' ";
-	else $query.="and A_01='".substr($uk,0,2)."' and A_02='".substr($uk,2,2)."' and A_03='".substr($uk,4,2)."' ";
-} else $query.="and A_01<>'99' ";
+        if (strlen($uk)==2) { $query.="and A_01='".$uk."' "; }
+        else { $query.="and A_01='".substr($uk,0,2)."' and A_02='".substr($uk,2,2)."' and A_03='".substr($uk,4,2)."' "; }
+} else { 
+    //$query.="and A_01<>'99' ";  // di comment karena data pegawai pensiun tetep akan ditampilkan
+}
 
 if ($subuk!=='' && $subuk!=='all') {
-	if ($hasupt === 'true') $query.="and A_02='$subuk' ";
-	else $query.="and concat(A_01,A_02,A_03,A_04,A_05) like '".rtrim($subuk,'0')."%' ";
+        if ($hasupt === 'true') { $query.="and A_02='$subuk' "; }
+        else { $query.="and concat(A_01,A_02,A_03,A_04,A_05) like '".rtrim($subuk,'0')."%' "; }
 }
 
 if ($radio1=='') $radio1=1;

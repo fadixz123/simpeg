@@ -373,7 +373,7 @@ if (isset($_GET['search'])) {
         die(json_encode($data));
     }
     
-    if ($cari === 'kelurahan') {
+    if ($cari === 'kecamatan') {
         $q = $_GET['q'];
         $data = array();
 //        $query = "select CONCAT_WS(' ',kl.lokasi_nama, '<br/>', kc.lokasi_nama, kb.lokasi_nama, pv.lokasi_nama) as wilayah
@@ -385,16 +385,17 @@ if (isset($_GET['search'])) {
         $query = "select lokasi_ID as id, lokasi_nama 
             from inf_lokasi
             where 
-            lokasi_kelurahan != '0000' 
+            
+            lokasi_kelurahan = '0000' 
             and lokasi_kecamatan != '00' 
-            and lokasi_kabupatenkota != '00' 
-            and lokasi_propinsi != '00' 
+            and lokasi_kabupatenkota in ('26,75')
+            and lokasi_propinsi = '33' 
             and lokasi_nama like ('".$q."%')";
         $sql = mysql_query($query.' limit '.$start.', '.$limit);
         while ($rows = mysql_fetch_object($sql)) {
             $data[] = $rows;
         }
-        $pilih[] = array('id'=>'', 'lokasi_nama' => '<i>Pilih  ...</i>');
+        $pilih[] = array('id'=>'', 'lokasi_nama' => '<i>Lainnya  ...</i>');
         $total = mysql_num_rows(mysql_query($query));
         die(json_encode(array('data' => array_merge($pilih, $data), 'total' => $total)));
     }

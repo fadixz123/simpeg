@@ -89,16 +89,16 @@ $jumlah=$row2[0][jml]+$row2[1][jml]+$row2[2][jml]+$row2[3][jml]+$row2[4][jml]+$r
     <tr>
       <td width="28">&nbsp;</td>
       <td width="374"><b>JUMLAH</b></td>
-      <td width="58" align="right"><?=$row2[0][jml]?></td>
-      <td width="58" align="right"><?=$row2[1][jml]?></td>
-      <td width="58" align="right"><?=$row2[2][jml]?></td>
-      <td width="58" align="right"><?=$row2[3][jml]?></td>
-      <td width="58" align="right"><?=$row2[4][jml]?></td>
-      <td width="58" align="right"><?=$row2[5][jml]?></td>
-      <td width="58" align="right"><?=$row2[6][jml]?></td>
-      <td width="58" align="right"><?=$row2[7][jml]?></td>
-      <td width="58" align="right"><?=$row2[8][jml]?></td>
-      <td width="58" align="right"><?=$jmltot?></td>
+      <td width="58" align="center"><?=$row2[0][jml]?></td>
+      <td width="58" align="center"><?=$row2[1][jml]?></td>
+      <td width="58" align="center"><?=$row2[2][jml]?></td>
+      <td width="58" align="center"><?=$row2[3][jml]?></td>
+      <td width="58" align="center"><?=$row2[4][jml]?></td>
+      <td width="58" align="center"><?=$row2[5][jml]?></td>
+      <td width="58" align="center"><?=$row2[6][jml]?></td>
+      <td width="58" align="center"><?=$row2[7][jml]?></td>
+      <td width="58" align="center"><?=$row2[8][jml]?></td>
+      <td width="58" align="center"><?=$jmltot?></td>
     </tr>
   </table>
         </div>

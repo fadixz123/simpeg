@@ -80,6 +80,11 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
         $('a .select2-chosen').html('&nbsp;');
     }
     
+    function reload_data() {
+        reset_form();
+        get_list_nominatif(1);
+    }
+    
     function get_list_nominatif(page) {
         $.ajax({
             type: 'GET',

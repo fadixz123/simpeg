@@ -37,7 +37,7 @@ if ($opsi === 'pegawai') {
     $B_NOTELP   = $_POST['B_NOTELP'];
     $B_NOARSIP  = $_POST['B_NOARSIP'];
     $nik    = $_POST['nik'];
-    $kelrhn = ($_POST['kelurahan'] !== '')?$_POST['kelurahan']:"NULL";
+    $kelrhn = ($_POST['kecamatan'] !== '')?$_POST['kecamatan']:"NULL";
     $check = mysql_num_rows(mysql_query("select B_02B from mastfip08 where B_02B = '$B_02B'"));
     $result['act'] = 'edit';
     $UploadDirectory	= '../Foto/'; //Upload Directory, ends with slash & make sure folder exist

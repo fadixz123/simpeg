@@ -137,6 +137,57 @@ if (isset($_GET['cari'])) {
                            </td>
                          </tr>
                          <tr> 
+                            <td colspan="3" class="sectiontableheader" ><b>PENGANGKATAN SEBAGAI CPNS</b></td>
+                          </tr>
+                          <tr> 
+                            <td>NOMOR SK</td>
+                            <td align="center">:</td>
+                            <td><? echo $row["D_02"]; ?></td>
+                          </tr>
+                          <tr> 
+                            <td>TANGGAL SK</td>
+                            <td align="center">:</td>
+                            <td><? echo format_tanggal($row['D_03']); ?></td>
+                          </tr>
+                          <tr> 
+                            <td>TMT CPNS</td>
+                            <td align="center">:</td>
+                            <td><? echo format_tanggal($row['D_04']); ?></td>
+                          </tr>
+                          <tr> 
+                            <td colspan="3" class="sectiontableheader" >PENGANGKATAN SEBAGAI PNS</td>
+                          </tr>
+                          <tr>
+                            <td>NOMOR SK</td>
+                            <td align="center">:</td>
+                            <td><? echo $row["E_02"]; ?></td>
+                          </tr>
+                          <tr>
+                            <td>TANGGAL SK</td>
+                            <td align="center">:</td>
+                            <td><? echo format_tanggal($row['E_03']); ?></td>
+                          </tr>
+                          <tr> 
+                            <td>TMT PNS</td>
+                            <td align="center">:</td>
+                            <td><? echo format_tanggal($row['E_04']); ?></td>
+                          </tr>
+                          <tr> 
+                            <td>PANGKAT/GOLONGAN</td>
+                            <td align="center">:</td>
+                            <td><?=namapkt($row[E_05])." (".pktH($row['E_05']).")"?></td>
+                          </tr>
+                          <tr> 
+                            <td>SUMPAH JANJI</td>
+                            <td align="center">:</td>
+                            <td><? if ($row['E_06']=='1') echo "SUDAH"; else echo "BELUM"; ?></td>
+                          </tr>
+                          <tr> 
+                            <td>PANGKAT/GOLONGAN</td>
+                            <td align="center">:</td>
+                            <td><?=namapkt($row[D_05])." (".pktH($row['D_05']).")" ?></td>
+                          </tr>
+                         <tr> 
                            <td colspan="3" class="sectiontableheader"  >PANGKAT/GOLONGAN TERAKHIR</td>
                          </tr>
                          <tr> 
@@ -231,6 +282,85 @@ if (isset($_GET['cari'])) {
                            <td width="4" class="garisbawah">:</td>
                            <td width="335"><? echo format_tanggal($row[H_4B]); ?></td>
                          </tr>
+                         <tr> 
+                            <td colspan="3" class="sectiontableheader"><b>KENAIKAN GAJI BERKALA TERAKHIR</b></td>
+                          </tr>
+                          <tr> 
+                            <td>TMT GAJI BERKALA</td>
+                            <td align="center">:</td>
+                            <td><? echo format_tanggal($row["G_01"]); ?></td>
+                          </tr>
+                          <tr> 
+                            <td>MASA KERJA GAJI</td>
+                            <td align="center">:</td>
+                            <td><? echo substr($row["G_02"],0,2) ; ?> TAHUN <? echo substr($row["G_02"],2,2) ; ?> BULAN</td>
+                          </tr>
+                          <tr> 
+                            <td>GAJI POKOK</td>
+                            <td align="center">:</td>
+                            <td><? echo gaji($row["F_03"],substr($row["F_04"],0,2)); ?></td>
+                          </tr>
+                         <tr> 
+                            <td colspan="3" class="sectiontableheader">JABATAN STRUKTURAL/FUNGSIONAL/FUNGSIONAL UMUM</td>
+                          </tr>
+                          <tr> 
+                            <td>JABATAN SAAT INI</td>
+                            <td align="center">:</td>
+                            <td>
+                            <?
+                              switch($p[I_00])
+                              {
+                                  case "1"	: echo "Struktural";break;                                      
+                                  case "2"	: echo "Fungsional tertentu";break;                             
+                                  case "3"	: echo "Struktural dan Fungsional Tertentu (rangkap)";break;    
+                                  case "4"	: echo "Fungsional Umum/Staf.";break;                           
+
+                              }
+                              ?>  
+                            </td>
+                          </tr>
+                          <tr> 
+                            <td>JAB. FUNG TERTENTU</td>
+                            <td align="center">:</td>
+                            <td>
+                            <?if ($row[I_06]=='99' and $row[I_05] !='999') echo $row[I_JB]."&nbsp; TMT : ".format_tanggal($row[I_04])?> 
+                            </td>
+                          </tr>
+                          <?
+                          $pjb="select * from TABPJB where KODE='".$row['I_01']."'";
+                                $res=mysql_db_query($db,$pjb);
+                                $ro2=mysql_fetch_array($res)
+                                ?>
+                          <tr> 
+                            <td>DITETAPKAN OLEH</td>
+                            <td align="center">:</td>
+                            <td><? echo $ro2['NAMA']; ?></td>
+                          </tr>
+                          <tr>
+                            <td>NOMOR SK</td>
+                            <td align="center">:</td>
+                            <td><? echo $row["I_02"]; ?></td>
+                          </tr>
+                          <tr>
+                            <td>TANGGAL SK</td>
+                            <td align="center">:</td>
+                            <td><? echo format_tanggal($row["I_03"]); ?></td>
+                          </tr>
+                          <tr>
+                            <td>NAMA JABATAN</td>
+                            <td align="center">:</td>
+                            <td><? echo $row["I_JB"]; ?></td>
+                          </tr>
+                          <tr>
+                            <td>TMT JABATAN</td>
+                            <td align="center">:</td>
+                            <td><? echo format_tanggal_1($row["I_04"]); ?></td>
+                          </tr>
+                          <tr>
+                            <td>ESELON</td>
+                            <td align="center">:</td>
+                            <td><? echo eselon($row['I_06']); ?></td>
+                          </tr>
                        </table>
                     </td>
                   </tr>
