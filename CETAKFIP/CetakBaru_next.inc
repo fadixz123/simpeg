@@ -4,6 +4,7 @@ $totalItem=64;
 $thisNo=0;
 $kosong=0;
 $hal=1;
+$NIP = $_GET['nip'];
             //  1      2      3        4        5        6         7         8         9        10           11          12        13     14     15       16      17        18 
 $h=array( 1=> 'pktt','jabb','ttjasa','tugas','bahasa','dikumum','dikstru','dikfung','diktek','tatarnya','seminarnya','kursusnya','ayah','ibu','smistri','anak');
 $t=array( 1=> 'MASTPKT1','MASTJAB1','MSTJASA1','MSTTGAS1','MSTBHSA1','MSTPEND1','MSTSTRU1','MSTFUNG1','MSTTEKN1','MSTPTAR1','MSTSEMI1','MSTKURS1','MSTORTU1','MSTORTU1','MASTKEL1','MASTKEL1');

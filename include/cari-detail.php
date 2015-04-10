@@ -368,3 +368,6 @@ if (isset($_GET['cari'])) {
                   }
                   ?>
   </table>
+<?php 
+
+include '../CETAKFIP/CetakBaru_next.inc'; ?>
