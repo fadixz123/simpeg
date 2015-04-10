@@ -42,6 +42,11 @@
             <file>file:/C:/wamp/www/simpeg/include/cari.php</file>
             <file>file:/C:/wamp/www/simpeg/include/cari-list.php</file>
             <file>file:/C:/wamp/www/simpeg/include/cari-detail.php</file>
+            <file>file:/C:/wamp/www/simpeg/include/nominatif.php</file>
+            <file>file:/C:/wamp/www/simpeg/include/nominatif-list.php</file>
+            <file>file:/C:/wamp/www/simpeg/laporan/rekapeselon.php</file>
+            <file>file:/C:/wamp/www/simpeg/laporan/rekappddk.php</file>
+            <file>file:/C:/wamp/www/simpeg/CETAKFIP/CetakBaru_next.inc</file>
         </group>
     </open-files>
 </project-private>

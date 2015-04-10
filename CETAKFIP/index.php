@@ -352,7 +352,7 @@ span.break {page-break-after: always}
                 $ro=mysql_fetch_array($res);
                 
                
-          $rr="select * from MASTPKT1 where PF_01='$NIP' and PF_03='".$row['F_03']."'";
+          $rr="select * from mastpkt1 where PF_01='$NIP' and PF_03='".$row['F_03']."'";
           $rr2=mysql_query($rr);
           $oo2=mysql_fetch_array($rr2);
          
