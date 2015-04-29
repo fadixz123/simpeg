@@ -18,7 +18,7 @@ mysql_select_db($db);
             var dHeight= wHeight * 1;
             var x = screen.width/2 - dWidth/2;
             var y = screen.height/2 - dHeight/2;
-            window.open('include/cetak_pensiun.php?'+$('#pensiun').serialize(),'pop','width='+dWidth+', height='+dHeight+', left='+x+',top='+y)
+            location.href='include/cetak_pensiun.php?'+$('#pensiun').serialize();
         });
     });
     function reload_data() {

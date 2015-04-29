@@ -69,7 +69,7 @@ $r=listUnitKerjaNoBiro();
     <td width="27" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">S3</font></td>
     <td width="27" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">JML</font></td>
   </tr>
-<?
+<?php
 $ii=0;
 foreach ($r as $key=>$row) {
 	$ii++;

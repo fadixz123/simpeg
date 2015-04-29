@@ -62,28 +62,28 @@ $r=listUnitKerjaNoBiro();
     <th width="40" align="center">Jumlah</th>
   </tr>
     </thead>
-<?
+<?php
 foreach ($r as $key=>$value) {
 	for ($i=0;$i<=16;$i++) {
 		$query="select count(*) as jml from MASTFIP08 where F_03='$golongan[$i]' ";
-		if (strlen($value[0])==2) $query.="and A_01='".$value[0]."' ";
-		else $query.="and A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' ";
+                if (strlen($value[0])==2) { $query.="and A_01='".$value[0]."' "; }
+                else { $query.="and A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
 		$query.="and A_01<>'99'";
 		$row1[$i]=mysql_fetch_array(mysql_query($query));
 		$row4[$i][jml]=$row4[$i][jml]+$row1[$i][jml];
 	}
 	for ($i=0;$i<=3;$i++) {
 	$query2="select count(*) as jml from MASTFIP08 where substring(F_03,1,1)='$golbesar[$i]' ";
-	if (strlen($value[0])==2) $query2.="and A_01='".$value[0]."' ";
-	else $query2.="and A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' ";
+        if (strlen($value[0])==2) { $query2.="and A_01='".$value[0]."' "; }
+        else { $query2.="and A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
 	$query2.="and A_01<>'99'";
 	//echo $query2."</br>";
 	$row2[$i]=mysql_fetch_array(mysql_query($query2));
 	$row5[$i][jml]=$row5[$i][jml]+$row2[$i][jml];
 }
 	$query3="select count(*) as jml from MASTFIP08 where ";
-	if (strlen($value[0])==2) $query3.="A_01='".$value[0]."' ";
-	else $query3.="A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' ";
+        if (strlen($value[0])==2) { $query3.="A_01='".$value[0]."' "; }
+        else { $query3.="A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
 	$query3.="and A_01<>'99' and F_03<>'' and F_03 is not null";
 	$row3=mysql_fetch_array(mysql_query($query3));
 	$row6[jml]=$row6[jml]+$row3[jml];

@@ -10,7 +10,7 @@ $thskr1=$tahun-60;
 $tglok=$thskr."-".date("m");//."-".date("d");
 $tglok1=$thskr1."-".date("m");//."-".date("d");
 
-$query="select * from MASTFIP08 where 1 ";
+$query="select * from MASTFIP08 where `A_01` != '99' ";
 $uk     = $_GET['uk'];
 $subuk  = $_GET['subuk'];
 $hasupt = $_GET['hasupt'];
@@ -41,7 +41,7 @@ if ($subuk!=='' && $subuk!=='all') {
         else { $query.="and concat(A_01,A_02,A_03,A_04,A_05) like '".rtrim($subuk,'0')."%' "; }
 }
 
-if ($radio1=='') $radio1=1;
+if ($radio1=='') { $radio1=1; }
 switch($radio1) {
 	case 1: $query.="and F_03 >= '" . $gol1. "' ";break;
 	case 2: $query.="and F_03 <= '" . $gol1. "' ";break;
@@ -59,7 +59,7 @@ if ($jabfung!=='') {
 	$query.="and (I_5A='2' or I_5A='4') and I_05='$jabfung' ";
 }
 if ($eselon!=='all' && $eselon!=='str') {
-	if (strlen($eselon)==1) $query.="and I_06 like '".$eselon."%' ";else $query.="and I_06='$eselon' ";
+        if (strlen($eselon)==1) { $query.="and I_06 like '".$eselon."%' "; } else { $query.="and I_06='$eselon' "; }
 }
 if ($eselon=='str') {
 	$query.="and I_06<>'99' and I_06 is not null and I_5A='1' ";
@@ -90,8 +90,8 @@ if ($_GET['page'] === '') {
 } else {
     $offset = ($page-1)*$limit;
 }
-if ($urut=='str') $query.="order by I_05 ";
-else $query.="order by F_03 DESC,F_TMT ASC,I_06,F_04 DESC, H_4A ASC, H_1A DESC, H_02 ASC, B_05 ASC ";
+if ($urut=='str') { $query.="order by I_05 "; }
+else { $query.="order by F_03 DESC,F_TMT ASC,I_06,F_04 DESC, H_4A ASC, H_1A DESC, H_02 ASC, B_05 ASC "; }
 //echo $query.'  limit '.$offset.', '.$limit;
 $result=mysql_query($query.'  limit '.$offset.', '.$limit) or die (mysql_error());
 $total_data=mysql_num_rows(mysql_query($query));
@@ -138,4 +138,5 @@ $detail = "<table>
     </tr>
 <? } ?>
 </table>
+<?= page_summary($total_data, $page, $limit) ?>
 <?= paging_ajax($total_data, $limit, $page, '1', $_GET['search']) ?>

@@ -1,6 +1,7 @@
-<?
+<?php
 include('config.inc');
 include('fungsi.inc');
+header_excel('cetak_pensiun.xls');
 ?>
 <html>
 <head>
@@ -8,28 +9,38 @@ include('fungsi.inc');
 Nominatif PNS yang Akan Pensiun
 </title>
 <LINK REL="STYLESHEET" TYPE="TEXT/CSS" href="newEPS.css">
+<script type="text/javascript">
+    function cetak() {
+        setTimeout(function(){ window.close();},300);
+        window.print();    
+    }
+</script>
 </head>
 <body>
-<?
+<?php
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
-if ($uk != '')
-	{
+$pensiun = $_GET['pensiun'];
+$jabatan = $_GET['jabatan'];
+$eselon  = $_GET['eselon'];
+$kelamin = $_GET['kelamin'];
+$uk      = $_GET['uk'];
+if ($uk != '') {
 		?>
 <div align="center">
 <h3>NOMINATIF PNS YANG AKAN PENSIUN <?if ($pensiun=='0') {echo "TAHUN INI";} else {echo $pensiun." TAHUN LAGI";}?></h3>
 </div>
 		<table width="100%" border="1" style="border-collapse: collapse" bordercolor="#000000">
 		<tr bgcolor="CCCCCC">
-		<td width="4" >No</td>
-		<td><a href="cetak_pensiun.php?pensiun=<?=$pensiun?>&jabatan=<?=$jabatan?>&eselon=<?=$eselon?>&uk=<?=$uk?>&sort=B_02">NIP</a></td>
-		<td>NIP BARU</td>
-		<td><a href="cetak_pensiun.php?pensiun=<?=$pensiun?>&jabatan=<?=$jabatan?>&eselon=<?=$eselon?>&uk=<?=$uk?>&sort=B_03">NAMA PNS</a></td>
-		<td>JABATAN</td>
-		<td><a href="cetak_pensiun.php?pensiun=<?=$pensiun?>&jabatan=<?=$jabatan?>&eselon=<?=$eselon?>&uk=<?=$uk?>&sort=F_03">G/R</a></td>
-		<td>TGL LAHIR</td>
-		<td>UNIT KERJA</td>
-		<td><a href="cetak_pensiun.php?pensiun=<?=$pensiun?>&jabatan=<?=$jabatan?>&eselon=<?=$eselon?>&uk=<?=$uk?>&sort=B_05">TMT PENSIUN</a></td>
+                    <th width="4" >No</th>
+                    <th>NIP</th>
+                    <th>NIP BARU</th>
+                    <th>NAMA PNS</th>
+                    <th>JABATAN</th>
+                    <th>G/R</th>
+                    <th>TGL LAHIR</th>
+                    <th>UNIT KERJA</th>
+                    <th>TMT PENSIUN</th>
 		</tr>
 		<?
 		$thini=intval(date("Y"));

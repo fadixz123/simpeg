@@ -3,8 +3,8 @@ include('config.inc');
 include('fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
-header_excel('rekap-nominatif.xls');
 ?>
+<link rel="stylesheet" href="../css/printing-A4-landscape.css" media="all" />
 <body>
 <?php
 $unitkerja  = $_GET['uk'];
@@ -126,7 +126,7 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
 ?>
 </td></tr>
 </table>
-<table width="100%" border="1">
+<table class="tabel-laporan">
   <tr>
     <th>NO</th>
     <th>NIP LAMA</th>

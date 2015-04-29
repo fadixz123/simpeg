@@ -1,14 +1,14 @@
-<?
+<?php
 include('include/config.inc');
 include('include/fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
 
-if (!$urut) $urut='pkt';
+if (!$urut) { $urut='pkt'; }
 
 $qcu="select distinct A_02 from TABLOKB08 where A_01='$uk'";
 $rcu=mysql_query($qcu) or die(mysql_error());
-if (mysql_num_rows($rcu)>1) $hasupt=true;
+if (mysql_num_rows($rcu)>1) { $hasupt=true; }
 ?>
 <script type="text/javascript">
     $(function() {
@@ -16,6 +16,14 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
         $('#cetak').click(function() {
             window.location='include/i_nominatif.php?'+$('#nominatif1').serialize();
         });
+        
+        $('#cetak_nominatif').click(function() {
+            var wWidth = $(window).width();
+            var dWidth = wWidth * 1;
+            var x = screen.width/2 - dWidth/2;
+            window.open('include/cetak-nominatif.php?'+$('#nominatif1').serialize(),'Cetak Golongan','width='+dWidth+', left='+x);
+        });
+        
         $('#jabfung-autoshow').hide();
         $('#searching').click(function() {
             $('#datamodal_search').modal('show');
@@ -124,23 +132,23 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
                           <td width="25%" align="left" height="12">Golongan:</td>
                           <td width="610" align="left">
                             <select name="gol1" id="gol1" class="form-control-static" >
-                              <option value="11" <? if ($gol1=='11') echo "selected"; ?>>I/a</option>
-                              <option value="12" <? if ($gol1=='12') echo "selected"; ?>>I/b</option>
-                              <option value="13" <? if ($gol1=='13') echo "selected"; ?>>I/c</option>
-                              <option value="14" <? if ($gol1=='14') echo "selected"; ?>>I/d</option>
-                              <option value="21" <? if ($gol1=='21') echo "selected"; ?>>II/a</option>
-                              <option value="22" <? if ($gol1=='22') echo "selected"; ?>>II/b</option>
-                              <option value="23" <? if ($gol1=='23') echo "selected"; ?>>II/c</option>
-                              <option value="24" <? if ($gol1=='24') echo "selected"; ?>>II/d</option>
-                              <option value="31" <? if ($gol1=='31') echo "selected"; ?>>III/a</option>
-                              <option value="32" <? if ($gol1=='32') echo "selected"; ?>>III/b</option>
-                              <option value="33" <? if ($gol1=='33') echo "selected"; ?>>III/c</option>
-                              <option value="34" <? if ($gol1=='34') echo "selected"; ?>>III/d</option>
-                              <option value="41" <? if ($gol1=='41') echo "selected"; ?>>IV/a</option>
-                              <option value="42" <? if ($gol1=='42') echo "selected"; ?>>IV/b</option>
-                              <option value="43" <? if ($gol1=='43') echo "selected"; ?>>IV/c</option>
-                              <option value="44" <? if ($gol1=='44') echo "selected"; ?>>IV/d</option>
-                              <option value="45" <? if ($gol1=='45') echo "selected"; ?>>IV/e</option>
+                              <option value="11" <?php if ($gol1=='11') { echo "selected"; } ?>>I/a</option>
+                              <option value="12" <?php if ($gol1=='12') { echo "selected"; } ?>>I/b</option>
+                              <option value="13" <?php if ($gol1=='13') { echo "selected"; } ?>>I/c</option>
+                              <option value="14" <?php if ($gol1=='14') { echo "selected"; } ?>>I/d</option>
+                              <option value="21" <?php if ($gol1=='21') { echo "selected"; } ?>>II/a</option>
+                              <option value="22" <?php if ($gol1=='22') { echo "selected"; } ?>>II/b</option>
+                              <option value="23" <?php if ($gol1=='23') { echo "selected"; } ?>>II/c</option>
+                              <option value="24" <?php if ($gol1=='24') { echo "selected"; } ?>>II/d</option>
+                              <option value="31" <?php if ($gol1=='31') { echo "selected"; } ?>>III/a</option>
+                              <option value="32" <?php if ($gol1=='32') { echo "selected"; } ?>>III/b</option>
+                              <option value="33" <?php if ($gol1=='33') { echo "selected"; } ?>>III/c</option>
+                              <option value="34" <?php if ($gol1=='34') { echo "selected"; } ?>>III/d</option>
+                              <option value="41" <?php if ($gol1=='41') { echo "selected"; } ?>>IV/a</option>
+                              <option value="42" <?php if ($gol1=='42') { echo "selected"; } ?>>IV/b</option>
+                              <option value="43" <?php if ($gol1=='43') { echo "selected"; } ?>>IV/c</option>
+                              <option value="44" <?php if ($gol1=='44') { echo "selected"; } ?>>IV/d</option>
+                              <option value="45" <?php if ($gol1=='45') { echo "selected"; } ?>>IV/e</option>
                             </select>
                               <span class="form-control-label">s . d</span>
                 <select name="gol2" id="gol2" class="form-control-static">
@@ -352,8 +360,9 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-minus-circle"></i> Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="get_list_nominatif(1);"><i class="fa fa-search"></i> Tampilkan</button>
+                <button type="button" class="btn" data-dismiss="modal"><i class="fa fa-refresh"></i> Cancel</button>
+                <button class="btn" data-target=".bs-modal-lg" id="cetak_nominatif"><i class="fa fa-print"></i> Cetak</button>
+                <button type="button" class="btn btn-primary" onclick="get_list_nominatif(1);"><i class="fa fa-eye"></i> Tampilkan</button>
             </div>
         </div>
     </div>
@@ -363,7 +372,7 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
     <div class="toolbar-left">
         <button id="searching" class="btn btn-primary" data-target=".bs-modal-lg"><i class="fa fa-search"></i> Search</button>
         <button class="btn" data-target=".bs-modal-lg" onclick="reload_data();"><i class="fa fa-refresh"></i> Reload Data</button>
-        <button class="btn" data-target=".bs-modal-lg" id="cetak"><i class="fa fa-print"></i> Export Excel</button>
+        <button class="btn" data-target=".bs-modal-lg" id="cetak"><i class="fa fa-file"></i> Export Excel</button>
     </div>
 </div> 
 <div id="result">

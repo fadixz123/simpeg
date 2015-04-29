@@ -1,4 +1,4 @@
-<?
+<?php
 include ("../include/config.inc");
 include ("../include/fungsi.inc");
 $conn=mysql_connect($server,$user,$pass);
@@ -21,7 +21,7 @@ mysql_select_db($db,$conn);
 
 <body>
     <div class="page">
-<?
+<?php
 $tahun=date("Y");
 $thskr=$tahun-56;
 $thskr1=$tahun-61;
@@ -59,7 +59,7 @@ $r=mysql_query($q);
   </tr>
   </thead>
   <tbody>
-<?
+<?php
 $ii=0;
 while ($row=mysql_fetch_array($r)) {
 	$ii++;

@@ -20,7 +20,7 @@ mysql_select_db($db,$conn);
 </head>
 
 <body>
-<?
+<?php
 $tahun=date("Y");
 $thskr=$tahun-56;
 $thskr1=$tahun-61;
@@ -58,28 +58,28 @@ $r=listUnitKerjaNoBiro();
                 $u1=intval($thskr)-$tglbawah;
 		$u2=intval($thskr)-$umur[$i];
                 $query="select count(*) as jml from MASTFIP08 where B_05<='".$u1."-".$blskr."-".$tgskr."' and B_05>'".$u2."-".$blskr."-".$tgskr."' ";
-				if (strlen($value[0])==2) $query.="and A_01='".$value[0]."' ";
-				else $query.="and A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' ";
+                                if (strlen($value[0])==2) { $query.="and A_01='".$value[0]."' "; }
+                                else { $query.="and A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
                 $row1[$i]=mysql_fetch_array(mysql_query($query));
                 $tglbawah=$umur[$i];
         }
    $jmlumur=$row1[0][jml]+$row1[1][jml]+$row1[2][jml]+$row1[3][jml]+$row1[4][jml]+$row1[5][jml]+$row1[6][jml]+$row1[7][jml]+$row1[8][jml];
 ?>
     <tr>
-      <td width="28" align="right"><?=$ii?>&nbsp;</td>
-      <td width="374"><?=$value[1]?>&nbsp;</td>
-      <td width="58" align="right"><?=$row1[0][jml]?></td>
-      <td width="58" align="right"><?=$row1[1][jml]?></td>
-      <td width="58" align="right"><?=$row1[2][jml]?></td>
-      <td width="58" align="right"><?=$row1[3][jml]?></td>
-      <td width="58" align="right"><?=$row1[4][jml]?></td>
-      <td width="58" align="right"><?=$row1[5][jml]?></td>
-      <td width="58" align="right"><?=$row1[6][jml]?></td>
-      <td width="58" align="right"><?=$row1[7][jml]?></td>
-      <td width="58" align="right"><?=$row1[8][jml]?></td>
-      <td width="58" align="right"><?=$jmlumur?></td>
+        <td width="28" align="right"><?=$ii?>&nbsp;</td>
+        <td width="374"><?=$value[1]?>&nbsp;</td>
+        <td width="58" align="right"><?=$row1[0][jml]?></td>
+        <td width="58" align="right"><?=$row1[1][jml]?></td>
+        <td width="58" align="right"><?=$row1[2][jml]?></td>
+        <td width="58" align="right"><?=$row1[3][jml]?></td>
+        <td width="58" align="right"><?=$row1[4][jml]?></td>
+        <td width="58" align="right"><?=$row1[5][jml]?></td>
+        <td width="58" align="right"><?=$row1[6][jml]?></td>
+        <td width="58" align="right"><?=$row1[7][jml]?></td>
+        <td width="58" align="right"><?=$row1[8][jml]?></td>
+        <td width="58" align="right"><?=$jmlumur?></td>
     </tr>
-<?}
+<?php }
 $tglbawah=0;
 for ($i=0;$i < count($umur);$i++) {
         $u1=intval($thskr)-$tglbawah;

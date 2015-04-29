@@ -3,23 +3,36 @@ include('config.inc');
 include('fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
-	
+
+$pensiun = $_GET['pensiun'];
+$jabatan = $_GET['jabatan'];
+$eselon  = $_GET['eselon'];
+$kelamin = $_GET['kelamin'];
+$uk      = $_GET['uk'];
 ?>
 <table class="table table-bordered table-stripped table-hover" id="table_data_no">
     <thead>
 <tr>
-<th width="4" >No</th>
-<th>NIP</th>
-<th>NIP BARU</th>
-<th>NAMA PNS</th>
-<th>JABATAN</th>
-<th>G/R</th>
-<th>TGL LAHIR</th>
-<th>TMT PENSIUN</td>
+    <th width="4%" >No</th>
+    <th width="10%" class="left">NIP</th>
+    <th width="10%" class="left">NIP BARU</th>
+    <th width="25%" class="left">NAMA PNS</th>
+    <th width="20%" class="left">JABATAN</th>
+    <th width="10%" class="left">G/R</th>
+    <th width="7%" class="left">TGL LAHIR</th>
+    <th width="7%" class="left">TMT PENSIUN</td>
 </tr>
 </thead>
 <tbody>
-		<?
+		<?php
+                $limit = 10;
+                $page  = $_GET['page'];
+                if ($_GET['page'] === '') {
+                    $page = 1;
+                    $offset = 0;
+                } else {
+                    $offset = ($page-1)*$limit;
+                }
 		$thini=intval(date("Y"));
 		$next=$thini+intval($pensiun);
 		//$batas=
@@ -55,10 +68,10 @@ while ($ropf65=mysql_fetch_array($rpf65)) {
 $qflb65=implode(" or ",$kfunglb65);
 
 $q="select * from MASTFIP08 where 1 ";
-if (substr($pensiun,0,1)!="-") $q.="and A_01<>'99' ";
+if (substr($pensiun,0,1)!="-") { $q.="and A_01<>'99' "; }
 if ($uk!='all') {
-	if (strlen($uk)==2) $q.="and A_01='".$uk."' ";
-	else $q.="and A_01='".substr($uk,0,2)."' and A_02='".substr($uk,2,2)."' and A_03='".substr($uk,4,2)."' ";
+        if (strlen($uk)==2) { $q.="and A_01='".$uk."' "; }
+        else { $q.="and A_01='".substr($uk,0,2)."' and A_02='".substr($uk,2,2)."' and A_03='".substr($uk,4,2)."' "; }
 }
 if ($jabatan!='all') {
 	if ($jabatan=='1') {
@@ -124,7 +137,8 @@ if ($kelamin!='all') {
 			) ";
 		$q.=" order by B_05,F_03 desc";
 		//echo "<pre>".$q."</pre>";
-		$r=mysql_query($q);
+		$r=mysql_query($q.'  limit '.$offset.', '.$limit);
+                $total_data = mysql_num_rows(mysql_query($q));
 		$no=0;
 		while ($row=mysql_fetch_array($r))
 		{
@@ -137,18 +151,20 @@ if ($kelamin!='all') {
 			}
 			$no++;
 			?>
-			<tr>
-			<td width="4"><? echo $no; ?>&nbsp;</td>
-			<td><a href="index.htm?sid=<?=$sid?>&do=cari&cari=1&nip=<?=$row['B_02']?>"><? echo $row['B_02']; ?></a>&nbsp;</td>
+			<tr class="<?= ($no%2===0)?'even':'odd' ?>">
+			<td align="center" width="4"><? echo $no+$offset; ?></td>
+			<td><? echo $row['B_02']; ?></td>
 			<td><? echo $row['B_02B']; ?></td>
-			<td><? echo namaPNS($row['B_03A'],$row['B_03'],$row['B_03B']); ?>&nbsp;</td>
-			<td><? echo getNaJab($row[B_02]); ?>&nbsp;</td>
-			<td><? echo pktH($row['F_03']); ?>&nbsp;</td>
-			<td><? echo tanggalnya($row['B_05'],0); ?>&nbsp;</TD>
-			<td><? echo "1-".$bltmt."-".$thtmt; ?>&nbsp;</td>
+			<td><? echo namaPNS($row['B_03A'],$row['B_03'],$row['B_03B']); ?></td>
+			<td><? echo getNaJab($row[B_02]); ?></td>
+			<td><? echo pktH($row['F_03']); ?></td>
+                        <td><? echo datefmysql($row['B_05']); ?></TD>
+			<td><? echo "1-".$bltmt."-".$thtmt; ?></td>
 			</tr>
 			<?
 		}
 		?>
     </tbody>
 </table>
+<?= page_summary($total_data, $page, $limit) ?>
+<?= paging_ajax($total_data, $limit, $page, '1', $_GET['search']) ?>
