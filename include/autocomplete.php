@@ -14,19 +14,20 @@ if (isset($_GET['search'])) {
     if ($cari === 'pegawai') {
         $param = "";
         if ($_GET['uk'] !== 'all') {
-            $param.= " and A_01 = '".$_GET['uk']."'";
+            $param.= " and m.A_01 = '".$_GET['uk']."'";
         }
         if (isset($_GET['skpd'])) {
-            $param.=" and A_01 = '".$_GET['skpd']."'";
+            $param.=" and m.A_01 = '".$_GET['skpd']."'";
         }
         if ($_GET['suk'] !== '') {
             $param.=" having kode_sub_lokasi like ('".$_GET['suk']."')";
         }
         $data= array();
-        $query = "select CONCAT(`A_01`,`A_02`, `A_03`, `A_04`, `A_05`) as kode_sub_lokasi, `B_02` as id, `B_02B` as nip_baru, 
-                CONCAT_WS(' ',`B_02`, ' | ', `B_02B`, '<br/>', `B_03`,`B_03B`) as list, CONCAT_WS(' ',`B_03`,`B_03B`) as nama_pegawai 
-                from mastfip08 
-                where `B_02` like ('%".$q."%') or `B_02B` like ('%".$q."%') or `B_03` like ('%".$q."%') $param";
+        $query = "select CONCAT(m.A_01,m.A_02, m.A_03, m.A_04, m.A_05) as kode_sub_lokasi, m.B_02 as id, m.B_02B as nip_baru, 
+                CONCAT_WS(' ',m.B_02B, ' | ',m.B_03,m.B_03B , '<br/>', t.nm) as list, CONCAT_WS(' ',B_03,B_03B) as nama_pegawai 
+                from mastfip08 m
+                join tablok08 t on (m.A_01 = t.kd)
+                where (m.B_02 like ('%".$q."%') or m.B_02B like ('%".$q."%') or m.B_03 like ('%".$q."%')) $param";
         //echo $query.' limit '.$start.', '.$limit;
         $sql = mysql_query($query.' limit '.$start.', '.$limit);
         while ($rows = mysql_fetch_object($sql)) {
