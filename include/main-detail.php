@@ -243,3 +243,8 @@ if (isset($_GET['cari'])) {
                   }
                   ?>
   </table>
+<script>
+    $(function() {
+        $('#nip_nama').html('<?= format_nip_baru($row[B_02B]) ?> | <?= namaPNS($row[B_03A],$row[B_03],$row[B_03B]) ?>');
+    });
+</script>

@@ -235,7 +235,7 @@ if ($cari) {
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <div class="widget-header">
                 <div class="title">
-                    <h4>Detail Data Pegawai</h4>
+                    <h4>Detail Data Pegawai </h4>
                 </div>
             </div>
         </div>

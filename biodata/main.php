@@ -435,7 +435,7 @@ else if (strlen($NIP)!=0) {
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <div class="widget-header">
                 <div class="title">
-                    <h4> Parameter Pencarian</h4>
+                    <h4> Parameter Pencarian </h4>
                 </div>
             </div>
         </div>
@@ -492,7 +492,7 @@ else if (strlen($NIP)!=0) {
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <div class="widget-header">
                 <div class="title">
-                    <h4>Detail Data Pegawai</h4>
+                    <h4>Detail Data Pegawai - <span id="nip_nama"></span></h4>
                 </div>
             </div>
         </div>
