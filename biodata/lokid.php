@@ -4,14 +4,18 @@ include('../include/fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
 
-
+$buker = '';
+$lker  = '';
+$loker = '';
+if ($_GET['nip'] !== '') {
 $q="select * from MASTFIP08 where B_02='".$_GET['nip']."' LIMIT 1";
-//echo $q;
-$rows=mysql_fetch_array(mysql_query($q));
-if ($rows[A_01] !='') { $buker=$rows[A_01]; }
-if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
-        $lker=$rows[A_01].$rows[A_02].$rows[A_03];
-        $loker=$rows[A_01].$rows[A_02].$rows[A_03].$rows[A_04].$rows[A_05];
+    //echo $q;
+    $rows=mysql_fetch_array(mysql_query($q));
+    if ($rows[A_01] !='') { $buker=$rows[A_01]; }
+    if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
+            $lker=$rows[A_01].$rows[A_02].$rows[A_03];
+            $loker=$rows[A_01].$rows[A_02].$rows[A_03].$rows[A_04].$rows[A_05];
+    }
 }
 ?>
 <script type="text/javascript" src="Scripts/jquery.form.js"></script>
@@ -192,7 +196,7 @@ if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
               <select name="buker" class="pilihan2 form-control" onChange="getSubUK(this.value)">
                 <option value="">-</option>
                 <?php while($ouker=mysql_fetch_array($ruker)) { ?>
-				<option value="<?= substr($ouker[kd],0,2) ?>" <?= (substr($ouker[kd],0,2)==$buker) ? "selected" : ""?>><?= $ouker["nm"]; ?></option>
+                            <option value="<?= substr($ouker['kd'],0,2) ?>" <?= ((substr($ouker['kd'],0,2)===$buker) ? "selected" : "")?>><?= $ouker["nm"]; ?></option>
                 <?php } ?>
               </select> </td>
           </tr>
@@ -208,7 +212,7 @@ if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
               <select name="lker" class="form-control" onChange="getSubSubUK(this.value)">
                 <option value="">-</option>
                 <? while($olker=mysql_fetch_array($rlker)) { ?>
-                <option value="<?=$olker[KODELOK]?>" <?=$olker[KODELOK]==$lker ? "selected" : ""?>><?= $olker[NALOK]?></option>
+                <option value="<?=$olker[KODELOK]?>" <?=(($olker[KODELOK]==$lker) ? "selected" : "")?>><?= $olker[NALOK]?></option>
                 <? } ?>
               </select>
 			</div>
@@ -226,7 +230,7 @@ if ($rows[A_03] !='' && $rows[A_04] !='' && $rows[A_02] !='' ) {
               <select name="loker" id="loker" class="form-control">
                 <option value="">-</option>
                 <?php while($oloker=mysql_fetch_array($rloker)) { ?>
-                <option value="<?=$oloker[KOLOK]?>" <?=$oloker[KOLOK]==$loker ? "selected" : ""?>><?= $oloker[NALOK]?></option>
+                <option value="<?=$oloker[KOLOK]?>" <?=(($oloker[KOLOK]==$loker) ? "selected" : "")?>><?= $oloker[NALOK]?></option>
                 <?php } ?>
               </select>
 			</div>
