@@ -161,11 +161,16 @@ if (isset($_GET['cari'])) {
                          <tr> 
                            <td colspan="3" class="sectiontableheader" >JABATAN TERAKHIR</td>
                          </tr>
+                         <?php 
+                        $qjenjang="select * from TABJENJANG where KJENJANG = '".$row['I_07']."'";
+                        $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
+
+                        ?>
                          <tr> 
                            <td width="170" class="garisbawah">Nama Jabatan</td>
                            <td width="4" class="garisbawah">:</td>
                            <td width="335"> 
-                             <? echo getNaJab($row[B_02]); ?>
+                             <? echo getNaJab($row[B_02]); ?> <?= isset($nama_jenjang['JENJANG'])?$nama_jenjang['JENJANG']:NULL ?>
                            </td>
                          </tr>
                          <tr> 
