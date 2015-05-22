@@ -89,6 +89,12 @@ $I_06=$row[I_06];
     }
 </script>
 <br/>
+<?php 
+$qjenjang="select * from TABJENJANG where KJENJANG = '".$row['I_07']."'";
+$nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
+
+?>
+
 <form name="jabatan" id="jabatan" action="index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=jab&NIP=<?=$NIP?>" method="post">
     <input type="hidden" name="jabnya" value="<?=$jabnya?>">
     <input type="hidden" name="A_01" value="<?=$row[A_01]?>">
@@ -105,7 +111,7 @@ $I_06=$row[I_06];
             <td width="3%"> 01</td>
             <td width="20%">Jabatan Terakhir</td>
             <td>:</td>
-            <td width="77%"><b class="autohide"><?=$jabnya=getNaJab($NIP)?></b> <a class="autohide" href="#" onclick="gantijab();">Ganti Jab</a>
+            <td width="77%"><b class="autohide"><?=$jabnya=getNaJab($NIP)?> <?= isset($nama_jenjang['JENJANG'])?$nama_jenjang['JENJANG']:NULL ?></b> <a class="autohide" href="#" onclick="gantijab();">Ganti Jab</a>
             </td>
           </tr>
           <tr class="autoshow">
