@@ -26,6 +26,7 @@ if (isset($_GET['cari'])) {
 		} else $status=4;
 	}
 }
+
 ?>
 <table width="100%">
 <?php if ($status==2) { ?>
@@ -204,6 +205,10 @@ if (isset($_GET['cari'])) {
                              <? echo format_tanggal($row["F_TMT"]); ?>
                            </td>
                          </tr>
+                         <?php
+                         $qjenjang="select * from TABJENJANG where KJENJANG = '".$row['I_07']."'";
+                            $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
+                         ?>
                          <tr> 
                            <td colspan="3" class="sectiontableheader" >JABATAN TERAKHIR</td>
                          </tr>
@@ -211,7 +216,7 @@ if (isset($_GET['cari'])) {
                            <td width="170" class="garisbawah">Nama Jabatan</td>
                            <td width="4" class="garisbawah">:</td>
                            <td width="335"> 
-                             <? echo getNaJab($row[B_02]); ?>
+                             <? echo getNaJab($row[B_02]).' '.$nama_jenjang['JENJANG']; ?>
                            </td>
                          </tr>
                          <tr> 
@@ -349,7 +354,7 @@ if (isset($_GET['cari'])) {
                           <tr>
                             <td>NAMA JABATAN</td>
                             <td align="center">:</td>
-                            <td><? echo $row["I_JB"]; ?></td>
+                            <td><? echo $row["I_JB"].' '.$nama_jenjang['JENJANG']; ?></td>
                           </tr>
                           <tr>
                             <td>TMT JABATAN</td>

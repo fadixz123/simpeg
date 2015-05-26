@@ -483,11 +483,15 @@ span.break {page-break-after: always}
           <td width="49%"><? echo format_tanggal($row["I_03"]); ?></td>
           <td width="18%">&nbsp;</td>
         </tr>
+        <?php
+        $qjenjang="select * from TABJENJANG where KJENJANG = '".$row['I_07']."'";
+        $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
+        ?>
         <tr> 
           <td width="2%" align="right">05.</td>
           <td width="27%">NAMA JABATAN</td>
           <td width="4%" align="center">:</td>
-          <td width="49%"><? echo $row["I_JB"]; ?></td>
+          <td width="49%"><? echo $row["I_JB"]; ?> <?= $nama_jenjang['JENJANG'] ?></td>
           <td width="18%">&nbsp;</td>
         </tr>
         <tr> 
