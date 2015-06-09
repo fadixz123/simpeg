@@ -132,17 +132,11 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
     <th>NIP LAMA</th>
     <th>NIP BARU</th>
     <th >NAMA</th>
-    <?php if ($showalamat=="true") { ?>
     <th>ALAMAT</th>
-    <?php } ?>
-	<th>TEMPAT LAHIR</th>
-        <th>TGL LAHIR</th>
-    <?php if ($showcpns=="true") { ?>
+    <th>TEMPAT LAHIR</th>
+    <th>TGL LAHIR</th>
     <th>TMT CPNS</th>
-    <?php } ?>
-    <?php if ($showjk=="true") { ?>
     <th>JENIS KELAMIN</th>
-    <?php } ?>
     <th>JABATAN</th>
     <th>UNIT KERJA</th>
     <th>ESEL</th>
@@ -150,10 +144,8 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
     <th>TMT</th>
     <th>ALAMAT</th>
     <th>PENDIDIKAN</th>
-<th>JURUSAN</th>
-<th>LULUS</th>
-    <?php if ($showpdd=="true") { ?>
-    <?php } ?>
+    <th>JURUSAN</th>
+    <th>LULUS</th>
   </tr>
   <?php
 		$z=0;
@@ -162,68 +154,24 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
 			$z++;
 		?>
   <tr>
-    <td valign="top" class="isinya" align="center">
-      <?=$no?>
-    </td>
-    <td valign="top" class="isinya" align="center">
-      <?=$row[B_02]?>
-    </td>
-    <td valign="top" class="isinya">
-      <?=$row[B_02B] =='' ? $row[B_02] : format_nip_baru($row[B_02B])?>
-    </td>
-	
-    <td valign="top" class="isinya">
-      <?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?>
-    </td>
-	<td align="center" valign="top" class="isinya" width="7%"><?=$row[B_04]?>
-    </td>
-    <?php if ($showalamat=="true") { ?>
-    <td valign="top" class="isinya" width="30%">
-      <?=$row[B_12]?>
-    </td>
-	
-     <?php } ?>
-    <td align="center" valign="top" class="isinya" width="7%"><?= datefmysql($row[B_05])?>
-    </td>
-    <?php if ($showcpns=="true") { ?>
-    <td valign="top" class="isinya" width="7%">
-      <?=datefmysql($row[D_04])?>
-    </td>
-    <?php } ?>
-    <?php if ($showjk=="true") { ?>
-    <td valign="top" class="isinya" width="5%">
-      <?= jenisKelamin($row[B_06])?>
-    </td>
-    <?php } ?>
-    <td valign="top" class="isinya">
-      <?= getNaJab($row[B_02])?>
-    </td>
-    <td valign="top" class="isinya">
-      <?=subLokasiKerjaB($row[A_01].$row[A_02].$row[A_03].$row[A_04])?>
-    </td>
-    <td valign="top" class="isinya">
-      <?=subLokasiKerjaB($row[A_01].$row[A_02].$row[A_03])?>
-    </td>
-    <td valign="top" class="isinya">
-      <?=lokasiKerjaB($row[A_01])?>
-    </td>
-    <td valign="top" class="isinya" align="center">
-      <?=eselon($row[I_06])?>
-    </td>
-    <td valign="top" class="isinya" align="center">
-      <?=pktH($row[F_03])?>
-    </td>
-    <td valign="top" class="isinya" align="center">
-      <?=  datefmysql($row[F_TMT])?>
-    </td>
-    <td valign="top" class="isinya" width="5%">
-      <?=$row[B_12]?>
-    </td>
-	<td valign="top" class="isinya" width="5%"><?= tktdidik($row[H_1A])?></td>
-<td valign="top" class="isinya" width="5%"><?= jurusan($row[H_1A],$row[H_1B])?></td>
-<td valign="top" class="isinya" width="5%"><?=($row[H_02])?></td>
-    <?php if ($showpdd=="true") { ?>
-    <?php } ?>
+    <td align="center"><?=$no?></td>
+    <td align="center"><?=$row[B_02]?></td>
+    <td><?=$row[B_02B] =='' ? $row[B_02] : format_nip_baru($row[B_02B])?></td>
+    <td><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></td>
+    <td><?=$row[B_04]?></td>
+    <td><?=$row[B_12]?></td>
+    <td align="center"><?= datefmysql($row[B_05])?></td>
+    <td><?=datefmysql($row[D_04])?></td>
+    <td><?= jenisKelamin($row[B_06])?></td>
+    <td><?= getNaJab($row[B_02])?></td>
+    <td><?=subLokasiKerjaB($row[A_01].$row[A_02].$row[A_03].$row[A_04])?></td>
+    <td align="center"><?=eselon($row[I_06])?></td>
+    <td align="center"><?=pktH($row[F_03])?></td>
+    <td align="center"><?=  datefmysql($row[F_TMT])?></td>
+    <td><?=$row[B_12]?></td>
+    <td><?= tktdidik($row[H_1A])?></td>
+    <td><?= jurusan($row[H_1A],$row[H_1B])?></td>
+    <td><?=($row[H_02])?></td>
   </tr>
   <?php } ?>
 </table>

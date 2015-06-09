@@ -9,6 +9,9 @@ mysql_select_db($db);
 
 $oq="select NALOKP from TABLOKB08 where KOLOK='".$uk."00000000' LIMIT 1";
 $or=mysql_query($oq);
+if ($or === FALSE) {
+    die(mysql_error());
+}
 $orow=mysql_fetch_row($or);
 $nama_unit_kerja=$orow[0];
 

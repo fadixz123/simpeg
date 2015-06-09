@@ -375,19 +375,6 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
         <button class="btn" data-target=".bs-modal-lg" id="cetak"><i class="fa fa-file"></i> Export Excel</button>
     </div>
 </div> 
-<div id="result">
-    <table class="table table-bordered table-stripped table-hover" id="table_data_no">
-        <thead>      
-        <tr>
-            <th width="4%">No</th>
-            <th width="13%" class="left">NIP</th>
-            <th width="17%" class="left">NAMA</th>
-            <th width="6%">TGL LHR</th>
-            <th width="10%" class="left">JABATAN</th>
-            <th width="40%" colspan="3">UNIT KERJA</th>
-            <th width="5%">Esl</th>
-            <th width="5%">GOL/RNG</th>
-        </tr>
-        </thead>
-    </table>
+<div id="result" style="overflow-x: auto; width: 100%;">
+    
 </div>

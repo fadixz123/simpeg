@@ -101,7 +101,7 @@ $total_data=mysql_num_rows(mysql_query($query));
         $('.mypopover').popover({html: true, trigger:'hover'}); 
     });
 </script>
-<table width="100%" class="table table-bordered table-stripped table-hover" id="table_data_no">
+<table width="100%" class="table table-bordered table-stripped table-hover" id="table_data_no" width="100%">
     <thead>      
     <tr>
         <th width="4%">No</th>
