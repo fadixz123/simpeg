@@ -10,7 +10,7 @@ $I_06=$row[I_06];
 ?>
 <script type="text/javascript">
     $(function() {
-        $('#inolnam').val('<?= $row['E_05'] ?>');
+        $('#inolnam').val('<?= $row['I_06'] ?>');
         $('.autohide').show();
         $('.autoshow').hide();
         $('#tgtmtjab, #tgskjab').datepicker({
@@ -71,7 +71,7 @@ $I_06=$row[I_06];
                 dataType: 'json',
                 success: function(data) {
                     //alert(data.I_06);
-                    $('#inolnam').val(data.E_05);
+                    $('#inolnam').val(data.I_06);
                 }
             });
         //}
@@ -155,7 +155,7 @@ $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
               	
               </td>
           </tr>
-          <? if ($I_01=='') $I_01=$row[I_01];?>
+          <?php if ($I_01=='') { $I_01=$row[I_01]; }?>
           <tr> 
             <td width="3%"> 03</td>
             <td width="20%">Ditetapkan oleh</td>

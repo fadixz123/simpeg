@@ -276,7 +276,7 @@ else if ($opsi === 'jabatan') {
     $I_06   = $_POST['I_06'];
     $I_01   = $_POST['I_01'];
     $I_02   = $_POST['I_02'];
-    $I_JB   = $_POST['I_JB'];
+    $I_JB   = isset($_POST['I_JB'])?$_POST['I_JB']:'';
     $I_07   = isset($_POST['I_07'])?$_POST['I_07']:'';
     $TGSKJAB= $_POST['TGSKJAB'];
     $TGTMTJAB = $_POST['TGTMTJAB'];
@@ -290,7 +290,10 @@ else if ($opsi === 'jabatan') {
 
     $q  ="update MASTFIP08 set I_01='$I_01', I_02='$I_02', I_03='".date2mysql($TGSKJAB)."', ";
     $q .="I_04='".date2mysql($TGTMTJAB)."', I_05='$I_05', ";
-    $q .="I_JB='$I_JB', I_5A='$I_5A', I_07 = '$I_07', ";
+    if ($I_JB !== '') {
+        //echo "FUCKER";
+        $q .="I_JB='$I_JB', I_5A='$I_5A', I_07 = '$I_07', ";
+    }
     $q .="I_06='$I_06' where B_02='$NIP'";
     //echo $q;
 

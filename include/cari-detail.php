@@ -237,7 +237,7 @@ if (isset($_GET['cari'])) {
                            <td width="170" class="garisbawah">Eselon</td>
                            <td width="4" class="garisbawah">:</td>
                            <td width="335"> 
-                             <? if ($row[I_06] != '99') echo eselon($row[I_06]);?>
+                             <? if ($row[I_06] != '99') { echo eselon($row[I_06]); }?>
                            </td>
                          </tr>
                          <tr> 

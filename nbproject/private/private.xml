@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/var/www/html/simpeg/include/nominatif.php</file>
             <file>file:/var/www/html/simpeg/index.php</file>
+            <file>file:/var/www/html/simpeg/include/nominatif.php</file>
             <file>file:/var/www/html/simpeg/include/i_nominatif.php</file>
             <file>file:/var/www/html/simpeg/include/fungsi.inc</file>
+            <file>file:/var/www/html/simpeg/include/nominatif-list.php</file>
+            <file>file:/var/www/html/simpeg/login.php</file>
+            <file>file:/var/www/html/simpeg/css/login.css</file>
         </group>
     </open-files>
 </project-private>
