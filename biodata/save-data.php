@@ -290,10 +290,8 @@ else if ($opsi === 'jabatan') {
 
     $q  ="update MASTFIP08 set I_01='$I_01', I_02='$I_02', I_03='".date2mysql($TGSKJAB)."', ";
     $q .="I_04='".date2mysql($TGTMTJAB)."', I_05='$I_05', ";
-    if ($I_JB !== '') {
-        //echo "FUCKER";
-        $q .="I_JB='$I_JB', I_5A='$I_5A', I_07 = '$I_07', ";
-    }
+    $q .="I_JB='$I_JB', I_5A='$I_5A', I_07 = '$I_07', ";
+    
     $q .="I_06='$I_06' where B_02='$NIP'";
     //echo $q;
 

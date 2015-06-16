@@ -10,6 +10,10 @@
             <file>file:/var/www/html/simpeg/include/nominatif-list.php</file>
             <file>file:/var/www/html/simpeg/login.php</file>
             <file>file:/var/www/html/simpeg/css/login.css</file>
+            <file>file:/var/www/html/simpeg/biodata/jabatan.php</file>
+            <file>file:/var/www/html/simpeg/include/cari-detail.php</file>
+            <file>file:/var/www/html/simpeg/biodata/save-data.php</file>
+            <file>file:/var/www/html/simpeg/biodata/load-extend.php</file>
         </group>
     </open-files>
 </project-private>
