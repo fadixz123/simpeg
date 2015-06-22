@@ -146,6 +146,7 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
     <th>PENDIDIKAN</th>
     <th>JURUSAN</th>
     <th>LULUS</th>
+    <th>NAMA SEKOLAH</th>
     <th>TMT JABATAN</th>
     <th>NO. SK JABATAN</th>
   </tr>
@@ -174,6 +175,7 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
     <td><?= tktdidik($row[H_1A])?></td>
     <td><?= jurusan($row[H_1A],$row[H_1B])?></td>
     <td><?=($row[H_02])?></td>
+    <td><?= $row['H_SEKOLAH'] ?></td>
     <td><?=datefmysql($row['I_04']); ?></td>
     <td><?=($row['I_02'])?></td>
   </tr>

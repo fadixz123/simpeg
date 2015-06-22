@@ -131,7 +131,7 @@ $detail = "<table>
         <td class="nowrap"><?= $row[B_02B]=='' ? $row[B_02] : format_nip_baru($row[B_02B])?></td>
         <td class="nowrap"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B]) ?></td>
         <td class="nowrap"><?=datefmysql($row[B_05]); ?></td>
-        <td class="nowrap"><small><?= getNaJab($row[B_02])?></small></td>
+        <td><small><?= getNaJab($row[B_02])?></small></td>
         <td class="nowrap"><button type="button" class="btn btn-default btn-xs mypopover" data-container="body" data-toggle="popover" data-placement="top" data-title="Detail Unit Kerja" data-content="<?= $detail ?>">Show</button></td>
         <td class="nowrap" align="center"><?= $row[I_06]=='99' ? "-" : eselon($row[I_06])?></td>
         <td class="nowrap" align="center"><?=pktH($row[F_03])?></td>
