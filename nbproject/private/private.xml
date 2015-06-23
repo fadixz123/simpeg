@@ -14,6 +14,7 @@
             <file>file:/var/www/html/simpeg/include/cari-detail.php</file>
             <file>file:/var/www/html/simpeg/biodata/save-data.php</file>
             <file>file:/var/www/html/simpeg/biodata/load-extend.php</file>
+            <file>file:/var/www/html/simpeg/include/cetak-nominatif.php</file>
         </group>
     </open-files>
 </project-private>

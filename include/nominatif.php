@@ -77,6 +77,33 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                 }
             });
         });
+        $('#kecamatan').select2({
+            ajax: {
+                url: 'include/autocomplete.php?search=kecamatan',
+                dataType: 'json',
+                quietMillis: 100,
+                data: function (term, page) { // page is the one-based page number tracked by Select2
+                    return {
+                        q: term, //search term
+                        page: page, // page number
+                    };
+                },
+                results: function (data, page) {
+                    var more = (page * 20) < data.total; // whether or not there are more results available
+
+                    // notice we return the value of more so Select2 knows if more results can be loaded
+                    return {results: data.data, more: more};
+                }
+            },
+            formatResult: function(data){
+                var markup = data.lokasi_nama;
+                return markup;
+            }, 
+            formatSelection: function(data){
+                $('#s2id_kecamatan a .select2-chosen').html(data.lokasi_nama);
+                return data.list;
+            }
+        });
     });
     
     function paging(page, tab, search) {
@@ -320,7 +347,46 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                             </select>
                           </td>
                         </tr>
+                        <tr> 
+                          <td width="175" align="left">Alamat Kecamatan:</td>
+                          <td width="610" align="left">
+                            <select name="kecamatan" id="kecamatan" class="form-control">
+                                <option value="">Semua ...</option>
+                                <?php 
+                                $query = mysql_query("select lokasi_ID as id, lokasi_nama 
+                                        from inf_lokasi
+                                        where 
+
+                                        lokasi_kelurahan = '0000' 
+                                        and lokasi_kecamatan != '00' 
+                                        and lokasi_kabupatenkota in ('26,75')
+                                        and lokasi_propinsi = '33' order by lokasi_nama"); 
+                                while ($data = mysql_fetch_object($query)) { ?>
+                                <option value="<?= $data->id ?>"><?= $data->lokasi_nama ?></option>
+                                <?php }
+                                ?>
+                                
+                            </select>
+                          </td>
+                        </tr>
                         
+                        <tr> 
+                          <td width="175" align="left">Nama Sekolah:</td>
+                          <td width="610" align="left">
+                              <input type="text" name="nama_sekolah" id="nama_sekolah" class="form-control" />
+                          </td>
+                        </tr>
+                        <tr> 
+                          <td width="175" align="left">Status Perkawinan:</td>
+                          <td width="610" align="left">
+                                <select name="J_01" class="form-control">
+                                <option value="">-</option>
+                                <option value="1">KAWIN</option>
+                                <option value="2">BELUM KAWIN</option>
+                                <option value="3">JANDA/DUDA</option>
+                                </select>
+                          </td>
+                        </tr>
                         <tr>
                           <td>Unit Kerja:</td>
                           <td>

@@ -28,6 +28,9 @@ $diklat = $_GET['diklat'];
 $dik    = $_GET['dik'];
 $jur    = $_GET['jur'];
 //$urut   = $_GET['urut'];
+$kecamatan = $_GET['kecamatan'];
+$nama_sekolah = $_GET['nama_sekolah'];
+$kawin  = $_GET['J_01'];
 if ($unitkerja !='') {
 	$tahun=date("Y");
 	$thskr=$tahun-56;
@@ -99,6 +102,16 @@ if ($unitkerja !='') {
 	if ($jur!='') {
 		$query.="and H_1B='$jur' ";
 	}
+        
+        if ($kecamatan !== '') {
+            $query.=" and id_lokasi = '$kecamatan'";
+        }
+        if ($nama_sekolah !== '') {
+            $query.=" and H_SEKOLAH like ('%".$nama_sekolah."%')";
+        }
+        if ($kawin !== '') {
+            $query.=" and J_01 = '".$kawin."'";
+        }
 	$query.="order by F_03 DESC,F_TMT ASC, I_06,F_04 DESC, H_4A ASC, H_1A DESC, H_02 ASC, B_05 ASC ";
 	$no=0;
         //echo $query;
@@ -161,8 +174,8 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
     <td align="center"><?=$row[B_02]?></td>
     <td><?=$row[B_02B] =='' ? $row[B_02] : format_nip_baru($row[B_02B])?></td>
     <td><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></td>
-    <td><?=$row[B_04]?></td>
     <td><?=$row[B_12]?></td>
+    <td><?=$row[B_04]?></td>
     <td align="center"><?= datefmysql($row[B_05])?></td>
     <td><?=datefmysql($row[D_04])?></td>
     <td><?= jenisKelamin($row[B_06])?></td>
