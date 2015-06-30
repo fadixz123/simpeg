@@ -71,8 +71,10 @@ $r=listUnitKerjaNoBiro();
   </tr>
 <?php
 $ii=0;
+
 foreach ($r as $key=>$row) {
 	$ii++;
+        $sumL[$key] = 0;
         $query3="select count(*) as jml from MASTFIP08 where H_1A<>'' and (F_03 is not null or F_03<>'') and H_1A is not null and A_01='".substr($row[0],0,2)."' and A_01<>'99'";// and ((substring(B_05,1,7) >= '$tglok' and I_5A<>2) or (B_05 >= '$tglok1' and I_5A=2))";
         $row3=mysql_fetch_array(mysql_query($query3));
 ?>
@@ -115,7 +117,9 @@ foreach ($r as $key=>$row) {
         $jmll = $jmll + $rowsl['jml'];
         ?>
         <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$rowsl['jml']?></td>
-    <?php } ?>
+    <?php 
+        
+    } ?>
         <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$jmll?></td>
     <?php
     $jmlp = 0;
@@ -133,10 +137,12 @@ foreach ($r as $key=>$row) {
 }
 for ($i=1;$i<=2;$i++) {
         for ($j=0;$j<=9;$j++) {
-                $query4="select count(*) as jml from MASTFIP08 where B_06='$i' and (F_03 is not null or F_03<>'') and A_01<>'99' and H_1A like '$j%'";// and ((substring(B_05,1,7) >= '$tglok' and I_5A<>2) or (B_05 >= '$tglok1' and I_5A=2))";
+                $query4="select sum(jml) as jml from (select count(*) as jml from MASTFIP08 where B_06='$i' and (F_03 is not null or F_03<>'') and A_01<>'99' and H_1A = '".$pendidikan[$j]."') as jml";// and ((substring(B_05,1,7) >= '$tglok' and I_5A<>2) or (B_05 >= '$tglok1' and I_5A=2))";
+                
                 $row4[$i][$j]=mysql_fetch_array(mysql_query($query4));
         }
         $query5="select count(*) as jml from MASTFIP08 where B_06='$i' and (F_03 is not null or F_03<>'') and A_01<>'99' and H_1A<>'' and H_1A is not null";// and ((substring(B_05,1,7) >= '$tglok' and I_5A<>2) or (B_05 >= '$tglok1' and I_5A=2))";
+        //echo $query."</br>";
         $row5[$i]=mysql_fetch_array(mysql_query($query5));
 }
 $query6="select count(*) as jml from MASTFIP08 where H_1A<>'' and (F_03 is not null or F_03<>'') and A_01<>'99' and H_1A is not null";// and ((substring(B_05,1,7) >= '$tglok' and I_5A<>2) or (B_05 >= '$tglok1' and I_5A=2))";
