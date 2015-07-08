@@ -45,9 +45,9 @@ mysql_select_db($db);
                 <td width="186"><?=$data['nama_pegawai']?></td>
                 <td><?=$data['level']?></td>
                 <td width="67">********</td>
-                <td width="67">
-                    <button type="button" onclick="edit_user('<?= $detail ?>')" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Edit</button> 
-                    <button type="button" class="btn btn-default btn-xs" onclick="delete_user('<?= $data['id'] ?>','<?= $page ?>');"><i class="fa fa-trash-o"></i> Delete</button>
+                <td width="67" align="right">
+                    <button type="button" onclick="edit_user('<?= $detail ?>')" class="btn btn-default btn-xs"><i class="fa fa-edit"></i></button> 
+                    <button type="button" class="btn btn-default btn-xs" onclick="delete_user('<?= $data['id'] ?>','<?= $page ?>');"><i class="fa fa-trash-o"></i></button>
                 </td>
         </tr>
         <? } ?>

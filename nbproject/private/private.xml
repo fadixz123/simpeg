@@ -18,6 +18,9 @@
             <file>file:/var/www/html/simpeg/biodata/lokid.php</file>
             <file>file:/var/www/html/simpeg/include/autocomplete.php</file>
             <file>file:/var/www/html/simpeg/laporan/rekapdidik.php</file>
+            <file>file:/var/www/html/simpeg/laporan/rekappddk.php</file>
+            <file>file:/var/www/html/simpeg/laporan/rekapagama.php</file>
+            <file>file:/var/www/html/simpeg/laporan/rekapumur.php</file>
         </group>
     </open-files>
 </project-private>

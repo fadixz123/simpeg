@@ -509,25 +509,24 @@ else if ($opsi === 'anak') {
 }
 
 else if ($opsi === 'usersystem') {
-    $password_baru = md5($_POST['password_baru']);
-    $password_baru1= md5($_POST['password_baru1']);
+    $password_baru = $_POST['password_baru'];
+    $password_baru1= $_POST['password_baru1'];
     $id_user       = $_POST['id'];
     $nip           = $_POST['nama'];
     
     $username      = $_POST['username'];
     $id_group      = $_POST['group_user'];
+    
     if ($password_baru!=='') {
-        if ($password_baru!=$password_baru1) {
-                $msg="Password tidak sama.";
+        
+        if ($id_user !== '') {
+                $qi="update USER set B_02 = '$nip', username='$username',password='".md5($password_baru)."',id_group_user='$id_group' where id = '$id_user'";
         } else {
-                if ($id_user !== '') {
-                        $qi="update USER set B_02 = '$nip', username='$username',password='$password_baru',id_group_user='$id_group' where id = '$id_user'";
-                } else {
-                        $qi="insert into USER set B_02 = '$nip', username='$username',password='$password_baru',id_group_user='$id_group'";
-                }
-                $ri=mysql_query($qi) or die(mysql_error());
-                if (mysql_affected_rows() > 0) $msg="Data berhasil dimasukkan";
+                $qi="insert into USER set B_02 = '$nip', username='$username',password='".md5($password_baru)."',id_group_user='$id_group'";
         }
+        $ri=mysql_query($qi) or die(mysql_error());
+        if (mysql_affected_rows() > 0) $msg="Data berhasil dimasukkan";
+        
     } else {
         if ($id_user !== '') {
                 $qi="update USER set B_02 = '$nip', username='$username',id_group_user='$id_group' where id = '$id_user'";

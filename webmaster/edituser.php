@@ -79,6 +79,10 @@ if ($username!='') {
         if (($('#password').val() === '') && ($('#password-confirm').val() !== '')) {
             dc_validation('#password','Password tidak boleh kosong!'); return false;
         }
+        if ($('#password').val() !== $('#password-confirm').val()) {
+            dc_validation('#password-confirm','Password konfirmasi tidak sama!'); return false;
+        }
+        dc_validation_remove('#password-confirm');
         dc_validation_remove('#password');
         if ($('#group-user').val() === '') {
             dc_validation('#group-user','User group tidak boleh kosong!'); return false;
@@ -165,6 +169,7 @@ if ($username!='') {
         $('#username').val(data[2]);
         $('#group-user').val(data[3]);
         $('#s2id_nip a .select2-chosen').html(data[1]+' | '+data[4]);
+        $('.title h4').html('Edit Usersystem');
     }
     
     $(function() {
@@ -172,6 +177,7 @@ if ($username!='') {
         $('#tambah').click(function() {
             $('#datamodal_add').modal('show');
             reset_form();
+            $('.title h4').html('Tambah Usersystem');
         });
         $('#nip').select2({
             ajax: {
@@ -236,14 +242,14 @@ if ($username!='') {
                         </tr>
                         
                         <tr>
-                            <td width="20%">Password*</td>
+                            <td width="20%">Password</td>
                             <td>:</td>
-                            <td><input type="password" name="password_baru" id="password" class="form-control" size="20"></td>
+                            <td><input type="password" name="password_baru" id="password" placeholder="Kosongkan jika tidak ada perubahan" class="form-control" size="20"></td>
                         </tr>
                         <tr>
-                            <td width="20%">Ulangi Password*</td>
+                            <td width="20%">Ulangi Password</td>
                             <td>:</td>
-                            <td><input type="password" name="password_baru1" id="password-confirm" class="form-control" size="20"></td>
+                            <td><input type="password" name="password_baru1" id="password-confirm" placeholder="Kosongkan jika tidak ada perubahan" class="form-control" size="20"></td>
                         </tr>
                         <tr>
                             <td width="20%">Level</td>
