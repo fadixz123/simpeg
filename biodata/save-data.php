@@ -97,7 +97,7 @@ if ($opsi === 'pegawai') {
     $qupdate=$qupdate." B_04='$B_04', B_05='".date2mysql($TGLAHIR)."', ";
     $qupdate=$qupdate." B_06='$B_06',gd='$gd', B_07='$B_07', B_08='$B_08', B_09='$B_09', B_11='$B_11', B_12='$B_12', ";
     $qupdate=$qupdate." J_01='$J_01', L_1A='$L_1A', L_02='$L_02', L_03='$L_03', L_04='$L_04',B_NOTELP='$B_NOTELP',B_NOARSIP='$B_NOARSIP',nik='$nik', id_lokasi = $kelrhn ";
-    $qupdate=$qupdate." where B_02='".$B_02B."'";
+    $qupdate=$qupdate." where B_02B='".$B_02B."'";
     //echo $qupdate;
     mysql_query($qupdate) or die(mysql_error());
     if (mysql_affected_rows() > 0) { 

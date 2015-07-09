@@ -21,6 +21,8 @@
             <file>file:/var/www/html/simpeg/laporan/rekappddk.php</file>
             <file>file:/var/www/html/simpeg/laporan/rekapagama.php</file>
             <file>file:/var/www/html/simpeg/laporan/rekapumur.php</file>
+            <file>file:/var/www/html/simpeg/webmaster/edituser.php</file>
+            <file>file:/var/www/html/simpeg/webmaster/user-list.php</file>
         </group>
     </open-files>
 </project-private>
