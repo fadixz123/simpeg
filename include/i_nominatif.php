@@ -31,6 +31,7 @@ $jur    = $_GET['jur'];
 $kecamatan = $_GET['kecamatan'];
 $nama_sekolah = $_GET['nama_sekolah'];
 $kawin  = $_GET['J_01'];
+$nullinclude = isset($_GET['nullinclude'])?$_GET['nullinclude']:'Tidak';
 if ($unitkerja !='') {
 	$tahun=date("Y");
 	$thskr=$tahun-56;
@@ -64,12 +65,19 @@ if ($unitkerja !='') {
                 else { $query.="and concat(A_01,A_02,A_03,A_04,A_05) like '".rtrim($subuk,'0')."%' "; }
 	}
 	
-        if ($radio1=='') { $radio1=1; }
-	switch($radio1) {
-		case 1: $query.="and F_03 >= '" . $gol1. "' ";break;
-		case 2: $query.="and F_03 <= '" . $gol1. "' ";break;
-		case 3: $query.="and F_03 >= '" . $gol1. "' and F_03 <= '" . $gol2 ."' ";break;
-	}
+        //if ($radio1=='') { $radio1=1; }
+        //switch($radio1) {
+        //	case 1: $query.="and F_03 >= '" . $gol1. "' ";break;
+        //	case 2: $query.="and F_03 <= '" . $gol1. "' ";break;
+        //	case 3: 
+        if ($gol1 !== '' or $gol2 !== '') {
+            $query.="and (F_03 between '" . $gol1. "' and '" . $gol2 ."') ";
+        }
+
+        //}
+        if ($nullinclude === 'Ya') {
+            $query.=" or F_03 is NULL ";
+        }
 
 	if ($status!='all') {
 		$query.="and B_09='$status' ";
@@ -167,6 +175,12 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
 		while ($row=mysql_fetch_array($r)) {
 		  	$no++;
 			$z++;
+                        $detail = "<table>
+                        <tr><td style='border: none; border-bottom: 1px solid #000;'>".ucwords(strtolower(subLokasiKerjaB($row[A_01].$row[A_02].$row[A_03].$row[A_04])))."</td></tr>
+                        <tr><td style='border: none; border-bottom: 1px solid #000;'>".ucwords(strtolower(subLokasiKerjaB($row[A_01].$row[A_02].$row[A_03])))."</td></tr>
+                        <tr><td style='border: none;'>".ucwords(strtolower(lokasiKerjaB($row[A_01])))."</td></tr>
+                        </table>
+                        ";
 		?>
   <tr>
     <td align="center"><?=$no?></td>
@@ -179,7 +193,7 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
     <td><?=datefmysql($row[D_04])?></td>
     <td><?= jenisKelamin($row[B_06])?></td>
     <td><?= getNaJab($row[B_02])?></td>
-    <td><?=subLokasiKerjaB($row[A_01].$row[A_02].$row[A_03].$row[A_04])?></td>
+    <td><?=$detail?></td>
     <td align="center"><?=eselon($row[I_06])?></td>
     <td align="center"><?=pktH($row[F_03])?></td>
     <td align="center"><?=  datefmysql($row[F_TMT])?></td>

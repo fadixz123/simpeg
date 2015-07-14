@@ -30,6 +30,7 @@ $urut   = $_GET['urut'];
 $kecamatan = $_GET['kecamatan'];
 $nama_sekolah = $_GET['nama_sekolah'];
 $kawin  = $_GET['J_01'];
+$nullinclude = isset($_GET['nullinclude'])?$_GET['nullinclude']:'Tidak';
 
 
 if ($uk!='all') {
@@ -44,11 +45,18 @@ if ($subuk!=='' && $subuk!=='all') {
         else { $query.="and concat(A_01,A_02,A_03,A_04,A_05) like '".rtrim($subuk,'0')."%' "; }
 }
 
-if ($radio1=='') { $radio1=1; }
-switch($radio1) {
-	case 1: $query.="and F_03 >= '" . $gol1. "' ";break;
-	case 2: $query.="and F_03 <= '" . $gol1. "' ";break;
-	case 3: $query.="and F_03 >= '" . $gol1. "' and F_03 <= '" . $gol2 ."' ";break;
+//if ($radio1=='') { $radio1=1; }
+//switch($radio1) {
+//	case 1: $query.="and F_03 >= '" . $gol1. "' ";break;
+//	case 2: $query.="and F_03 <= '" . $gol1. "' ";break;
+//	case 3: 
+if ($gol1 !== '' or $gol2 !== '') {
+    $query.="and (F_03 between '" . $gol1. "' and '" . $gol2 ."') ";
+}
+
+//}
+if ($nullinclude === 'Ya') {
+    $query.=" or F_03 is NULL ";
 }
 
 if ($status!=='all') {

@@ -77,33 +77,33 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                 }
             });
         });
-        $('#kecamatan').select2({
-            ajax: {
-                url: 'include/autocomplete.php?search=kecamatan',
-                dataType: 'json',
-                quietMillis: 100,
-                data: function (term, page) { // page is the one-based page number tracked by Select2
-                    return {
-                        q: term, //search term
-                        page: page, // page number
-                    };
-                },
-                results: function (data, page) {
-                    var more = (page * 20) < data.total; // whether or not there are more results available
-
-                    // notice we return the value of more so Select2 knows if more results can be loaded
-                    return {results: data.data, more: more};
-                }
-            },
-            formatResult: function(data){
-                var markup = data.lokasi_nama;
-                return markup;
-            }, 
-            formatSelection: function(data){
-                $('#s2id_kecamatan a .select2-chosen').html(data.lokasi_nama);
-                return data.list;
-            }
-        });
+//        $('#kecamatan').select2({
+//            ajax: {
+//                url: 'include/autocomplete.php?search=kecamatan',
+//                dataType: 'json',
+//                quietMillis: 100,
+//                data: function (term, page) { // page is the one-based page number tracked by Select2
+//                    return {
+//                        q: term, //search term
+//                        page: page, // page number
+//                    };
+//                },
+//                results: function (data, page) {
+//                    var more = (page * 20) < data.total; // whether or not there are more results available
+//
+//                    // notice we return the value of more so Select2 knows if more results can be loaded
+//                    return {results: data.data, more: more};
+//                }
+//            },
+//            formatResult: function(data){
+//                var markup = data.lokasi_nama;
+//                return markup;
+//            }, 
+//            formatSelection: function(data){
+//                $('#s2id_kecamatan a .select2-chosen').html(data.lokasi_nama);
+//                return data.list;
+//            }
+//        });
     });
     
     function paging(page, tab, search) {
@@ -159,52 +159,51 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                           <td width="25%" align="left" height="12">Golongan:</td>
                           <td width="610" align="left">
                             <select name="gol1" id="gol1" class="form-control-static" >
-                              <option value="11" <?php if ($gol1=='11') { echo "selected"; } ?>>I/a</option>
-                              <option value="12" <?php if ($gol1=='12') { echo "selected"; } ?>>I/b</option>
-                              <option value="13" <?php if ($gol1=='13') { echo "selected"; } ?>>I/c</option>
-                              <option value="14" <?php if ($gol1=='14') { echo "selected"; } ?>>I/d</option>
-                              <option value="21" <?php if ($gol1=='21') { echo "selected"; } ?>>II/a</option>
-                              <option value="22" <?php if ($gol1=='22') { echo "selected"; } ?>>II/b</option>
-                              <option value="23" <?php if ($gol1=='23') { echo "selected"; } ?>>II/c</option>
-                              <option value="24" <?php if ($gol1=='24') { echo "selected"; } ?>>II/d</option>
-                              <option value="31" <?php if ($gol1=='31') { echo "selected"; } ?>>III/a</option>
-                              <option value="32" <?php if ($gol1=='32') { echo "selected"; } ?>>III/b</option>
-                              <option value="33" <?php if ($gol1=='33') { echo "selected"; } ?>>III/c</option>
-                              <option value="34" <?php if ($gol1=='34') { echo "selected"; } ?>>III/d</option>
-                              <option value="41" <?php if ($gol1=='41') { echo "selected"; } ?>>IV/a</option>
-                              <option value="42" <?php if ($gol1=='42') { echo "selected"; } ?>>IV/b</option>
-                              <option value="43" <?php if ($gol1=='43') { echo "selected"; } ?>>IV/c</option>
-                              <option value="44" <?php if ($gol1=='44') { echo "selected"; } ?>>IV/d</option>
-                              <option value="45" <?php if ($gol1=='45') { echo "selected"; } ?>>IV/e</option>
+                                <option value="">Pilih ...</option>
+                                <option value="11" selected="selected">I/a</option>
+                                <option value="12">I/b</option>
+                                <option value="13">I/c</option>
+                                <option value="14">I/d</option>
+                                <option value="21">II/a</option>
+                                <option value="22">II/b</option>
+                                <option value="23">II/c</option>
+                                <option value="24">II/d</option>
+                                <option value="31">III/a</option>
+                                <option value="32">III/b</option>
+                                <option value="33">III/c</option>
+                                <option value="34">III/d</option>
+                                <option value="41">IV/a</option>
+                                <option value="42">IV/b</option>
+                                <option value="43">IV/c</option>
+                                <option value="44">IV/d</option>
+                                <option value="45">IV/e</option>
                             </select>
                               <span class="form-control-label">s . d</span>
-                <select name="gol2" id="gol2" class="form-control-static">
-                  <option value="11" <? if ($gol2=='11') echo "selected"; ?>>I/a</option>
-                  <option value="12" <? if ($gol2=='12') echo "selected"; ?>>I/b</option>
-                  <option value="13" <? if ($gol2=='13') echo "selected"; ?>>I/c</option>
-                  <option value="14" <? if ($gol2=='14') echo "selected"; ?>>I/d</option>
-                  <option value="21" <? if ($gol2=='21') echo "selected"; ?>>II/a</option>
-                  <option value="22" <? if ($gol2=='22') echo "selected"; ?>>II/b</option>
-                  <option value="23" <? if ($gol2=='23') echo "selected"; ?>>II/c</option>
-                  <option value="24" <? if ($gol2=='24') echo "selected"; ?>>II/d</option>
-                  <option value="31" <? if ($gol2=='31') echo "selected"; ?>>III/a</option>
-                  <option value="32" <? if ($gol2=='32') echo "selected"; ?>>III/b</option>
-                  <option value="33" <? if ($gol2=='33') echo "selected"; ?>>III/c</option>
-                  <option value="34" <? if ($gol2=='34') echo "selected"; ?>>III/d</option>
-                  <option value="41" <? if ($gol2=='41') echo "selected"; ?>>IV/a</option>
-                  <option value="42" <? if ($gol2=='42') echo "selected"; ?>>IV/b</option>
-                  <option value="43" <? if ($gol2=='43') echo "selected"; ?>>IV/c</option>
-                  <option value="44" <? if ($gol2=='44') echo "selected"; ?>>IV/d</option>
-                  <option value="45" <? if ($gol2=='45') echo "selected"; ?>>IV/e</option>
-                </select>
-                &nbsp;
-
-                <input type="radio" name="radio1" name="radio" value="1" class="radio1" <? if ($radio1==1) echo "checked"; ?>>
-                keatas&nbsp;
-                <input type="radio" name="radio1" name="radio" value="2" class="radio1" <? if ($radio1==2) echo "checked"; ?>>
-                kebawah
-                <input type="radio" name="radio1" name="radio" value="3" class="radio1" <? if ($radio1==3) echo "checked"; ?>>
-                antara </td>
+                            <select name="gol2" id="gol2" class="form-control-static">
+                                <option value="">Pilih ...</option>
+                                <option value="11">I/a</option>
+                                <option value="12">I/b</option>
+                                <option value="13">I/c</option>
+                                <option value="14">I/d</option>
+                                <option value="21">II/a</option>
+                                <option value="22">II/b</option>
+                                <option value="23">II/c</option>
+                                <option value="24">II/d</option>
+                                <option value="31">III/a</option>
+                                <option value="32">III/b</option>
+                                <option value="33">III/c</option>
+                                <option value="34">III/d</option>
+                                <option value="41">IV/a</option>
+                                <option value="42">IV/b</option>
+                                <option value="43">IV/c</option>
+                                <option value="44">IV/d</option>
+                                <option value="45" selected="selected">IV/e</option>
+                            </select>
+                </td>
+                        </tr>
+                        <tr> 
+                          <td width="175" align="left"></td>
+                          <td width="610" align="left"><input type="checkbox" name="nullinclude" value="Ya" /> <i>Termasuk yang golongannya kosong</i></td>
                           </tr>
                         <tr> 
                           <td width="175" align="left">Eselon:</td>
