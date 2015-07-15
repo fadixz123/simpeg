@@ -75,9 +75,6 @@ if ($unitkerja !='') {
         }
 
         //}
-        if ($nullinclude === 'Ya') {
-            $query.=" or F_03 is NULL ";
-        }
 
 	if ($status!='all') {
 		$query.="and B_09='$status' ";
@@ -118,6 +115,9 @@ if ($unitkerja !='') {
         }
         if ($kawin !== '') {
             $query.=" and J_01 = '".$kawin."'";
+        }
+        if ($nullinclude === 'Ya') {
+            $query.=" or F_03 is NULL ";
         }
 	$query.="order by F_03 DESC,F_TMT ASC, I_06,F_04 DESC, H_4A ASC, H_1A DESC, H_02 ASC, B_05 ASC ";
 	$no=0;

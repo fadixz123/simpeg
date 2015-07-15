@@ -55,9 +55,6 @@ if ($gol1 !== '' or $gol2 !== '') {
 }
 
 //}
-if ($nullinclude === 'Ya') {
-    $query.=" or F_03 is NULL ";
-}
 
 if ($status!=='all') {
 	$query.="and B_09='$status' ";
@@ -101,6 +98,9 @@ if ($kawin !== '') {
 }
 if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
     $query.=" and A_01 = '".$_SESSION['skpd']."'";
+}
+if ($nullinclude === 'Ya') {
+    $query.=" or F_03 is NULL ";
 }
 $limit = 10;
 $page  = $_GET['page'];
