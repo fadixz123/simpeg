@@ -159,6 +159,8 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
     <th>JENIS KELAMIN</th>
     <th>JABATAN</th>
     <th>UNIT KERJA</th>
+    <th>SUB UNIT KERJA</th>
+    <th>SUB SUB UNIT KERJA</th>
     <th>ESEL</th>
     <th>G/R</th>
     <th>TMT</th>
@@ -193,7 +195,9 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
     <td><?=datefmysql($row[D_04])?></td>
     <td><?= jenisKelamin($row[B_06])?></td>
     <td><?= getNaJab($row[B_02])?></td>
-    <td><?=$detail?></td>
+    <td><?=ucwords(strtolower(subLokasiKerjaB($row[A_01].$row[A_02].$row[A_03].$row[A_04])))?></td>
+    <td><?=ucwords(strtolower(subLokasiKerjaB($row[A_01].$row[A_02].$row[A_03]))) ?></td>
+    <td><?=ucwords(strtolower(lokasiKerjaB($row[A_01])))?></td>
     <td align="center"><?=eselon($row[I_06])?></td>
     <td align="center"><?=pktH($row[F_03])?></td>
     <td align="center"><?=  datefmysql($row[F_TMT])?></td>
