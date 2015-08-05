@@ -170,7 +170,7 @@ if ($username!='') {
         $('#username').val(data[2]);
         $('#group-user').val(data[3]);
         $('#s2id_nip a .select2-chosen').html(data[1]+' | '+data[4]);
-        $('.title h4').html('Edit Usersystem');
+        $('#datamodal_add .title h4').html('Edit Usersystem');
     }
     
     $(function() {
@@ -181,7 +181,7 @@ if ($username!='') {
         $('#tambah').click(function() {
             $('#datamodal_add').modal('show');
             reset_form();
-            $('.title h4').html('Tambah Usersystem');
+            $('#datamodal_add .title h4').html('Tambah Usersystem');
         });
         $('#nip').select2({
             ajax: {
