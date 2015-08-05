@@ -48,6 +48,7 @@ if ($username!='') {
 
 <script type="text/javascript">
     function load_data_usersystem(page) {
+        $('#datamodal_search').modal('hide');
         $.ajax({
             type: 'GET',
             url: 'webmaster/user-list.php?page='+page+'&sid=<?= $_GET['sid'] ?>',
@@ -174,6 +175,9 @@ if ($username!='') {
     
     $(function() {
         load_data_usersystem(1);
+        $('#form-open-search').click(function() {
+            $('#datamodal_search').modal('show');
+        });
         $('#tambah').click(function() {
             $('#datamodal_add').modal('show');
             reset_form();
@@ -278,9 +282,64 @@ if ($username!='') {
     </div>
     </div>
 </div>
+<div id="datamodal_search" class="modal fade">
+    <div class="modal-dialog" style="width: 600px; height: 100%;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <div class="widget-header">
+                <div class="title">
+                    <h4>Cari Data Usersystem</h4>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget-body">
+		<form id="form-search" action="?sid=<?=$sid?>&do=edituser">
+                    <table width="100%">
+                        <tr>
+                            <td width="20%">Nama</td>
+                            <td>:</td>
+                            <td><input type="text" name="nama" size="20" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td width="20%">Username*</td>
+                            <td>:</td>
+                            <td width="80%"><input type="text" name="username" class="form-control" size="20"></td>
+                        </tr>
+                        <tr>
+                            <td width="20%">Level</td>
+                            <td>:</td>
+                            <td>
+                                <select name="group_user" class="form-control" id="group"><option value="">Semua ...</option>
+                                <?php 
+                                $sql = mysql_query("select * from group_users order by nama");
+                                while ($data = mysql_fetch_array($sql)) { ?>
+                                    <option value="<?= $data['id'] ?>"><?= $data['nama'] ?></option>
+                                <?php } ?>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+		</form>
+                        </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-minus-circle"></i> Batal</button>
+            <button type="button" class="btn btn-primary" onclick="load_data_usersystem(1); "><i class="fa fa-eye"></i> Cari User</button>
+        </div>
+    </div>
+    </div>
+</div>
 <div class="form-toolbar">
     <div class="toolbar-left">
         <button id="tambah" class="btn btn-primary" data-target=".bs-modal-lg"><i class="fa fa-plus-circle"></i> Tambah Data</button>
+        <button class="btn" data-target=".bs-modal-lg"  id="form-open-search"><i class="fa fa-search"></i> Cari Data</button>
         <button class="btn" data-target=".bs-modal-lg" onclick="reload_data();"><i class="fa fa-refresh"></i> Reload Data</button>
     </div>
 </div> 

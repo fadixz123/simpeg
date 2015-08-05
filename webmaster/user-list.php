@@ -27,10 +27,20 @@ mysql_select_db($db);
             $offset = ($page-1)*$limit;
         }
         $i=0;
+        if ($_GET['username'] !== '') {
+            $q.=" and u.username like ('%".$_GET['username']."%')";
+        }
+        if ($_GET['nama'] !== '') {
+            $q.=" and m.B_03 like ('%".$_GET['nama']."%')";
+        }
+        if ($_GET['group_user'] !== '') {
+            $q.=" and u.id_group_user = '".$_GET['group_user']."'";
+        }
         $qu="select u.*, CONCAT_WS(' ',m.`B_03A`,`B_03`,`B_03B`) as nama_pegawai, g.nama as level 
             from USER u 
             left join mastfip08 m on (u.B_02 = m.`B_02`)
             left join group_users g on (u.id_group_user = g.id)
+            where u.id is not NULL $q
             ";
         $ru=mysql_query($qu.' order by username asc limit '.$offset.', '.$limit) or die(mysql_error());
         $total_data = mysql_num_rows(mysql_query($qu));
