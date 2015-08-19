@@ -54,11 +54,14 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
             }); 
         });
         
-        $('#uk').change(function() {
+        $('#uk').blur(function() {
             $.ajax({
                 url: 'include/autocomplete.php?search=suk_upt',
                 dataType: 'json',
                 data: 'uk='+$(this).val(),
+                beforeSend: function() {
+                    show_ajax_indicator();
+                },
                 success: function(data) {
                     $('#subuk').empty();
                     if (data.label === 'Induk/UPT') {
@@ -74,6 +77,40 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                         str = '<option value="'+v.code+'">'+v.NALOK+'</option>';
                         $('#subuk').append(str);
                     });
+                }, complete: function() {
+                    hide_ajax_indicator();
+                }, error: function() {
+                    hide_ajax_indicator();
+                }
+            });
+        });
+        $('#subuk').focus(function() {
+            $.ajax({
+                url: 'include/autocomplete.php?search=suk_upt',
+                dataType: 'json',
+                data: 'uk='+$('#uk').val(),
+                beforeSend: function() {
+                    show_ajax_indicator();
+                },
+                success: function(data) {
+                    $('#subuk').empty();
+                    if (data.label === 'Induk/UPT') {
+                        stri = '<option value="all">Semua ...</option>'+
+                                '<option value="00">INDUK</option>';
+                    } else {
+                        stri = '<option value="">Semua ...</option>';
+                    }
+                    $('#label-uk').html(data.label);
+                    $('#hasupt').val(data.hasupt);
+                    $('#subuk').append(stri);
+                    $.each(data.data, function(i, v) {
+                        str = '<option value="'+v.code+'">'+v.NALOK+'</option>';
+                        $('#subuk').append(str);
+                    });
+                }, complete: function() {
+                    hide_ajax_indicator();
+                }, error: function() {
+                    hide_ajax_indicator();
                 }
             });
         });
@@ -390,13 +427,24 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                           <td>Unit Kerja:</td>
                           <td>
                                 <select name="uk" id="uk" class="form-control">
+                                <?php 
+                                if ($_SESSION['nama_group'] === 'Administrator') { ?>
                                 <option value="all">Semua ...</option>
-                                <?
-                                $quk="select * from tablok08 order by kd";
+                                <?php } ?>
+                                <?php
+                                $q = NULL;
+                                if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
+                                    $q.=" where kd = '".$_SESSION['skpd']."'";
+                                }
+                                $quk="select * from tablok08 $q order by kd";
                                 $ruk=mysql_query($quk) or die(mysql_error());
                                 while ($rouk=mysql_fetch_array($ruk)) {
+                                    $selected = '';
+                                    if ($rouk['kd'] === $_SESSION['skpd'] and $_SESSION['nama_group'] !== 'Administrator') {
+                                        $selected = 'selected';
+                                    }
                                             ?>
-                                            <option value="<?=$rouk[kd]?>" <?= $rouk[kd]==$uk ? "selected" : ""?>><?=$rouk[nm]?></option>
+                                            <option value="<?=$rouk[kd]?>" <?= $selected ?>><?=$rouk[nm]?></option>
                                             <? } ?>
                                 </select>
                               <input type="hidden" id="hasupt" name="hasupt" />
