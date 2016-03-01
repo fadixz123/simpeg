@@ -90,7 +90,11 @@ $I_06=$row[I_06];
 </script>
 <br/>
 <?php 
-$qjenjang="select * from TABJENJANG where KJENJANG = '".$row['I_07']."'";
+if ($row['I_05'] !== '00018') {
+  $qjenjang="select * from TABJENJANG where KJENJANG = '".$row['I_07']."'";
+} else {
+  $qjenjang="select * from TABJENJANG_GURU where KJENJANG = '".$row['I_07']."'";
+}
 $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
 
 ?>

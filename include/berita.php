@@ -32,7 +32,7 @@ $sql = mysql_query($query); ?>
                         <img src="./images/cpanel/home/<?= $data2['icon'] ?>" />
                     </div>
                     <div class="wrapp-keterangan">
-                        <b><?= $data2['menu'] ?></b><br/><br/><p><?= $data['keterangan'] ?> <?= $data2['menu'] ?></p>
+                        <b><?= $data2['menu'] ?></b><br/><p><?= $data['keterangan'] ?> <?= $data2['menu'] ?></p>
                     </div>
                 </div>
             <?php } ?>
