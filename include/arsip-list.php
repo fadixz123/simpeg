@@ -61,13 +61,19 @@ mysql_select_db($db);
                 </table>
                 ";
                 $no++;
+                if ($row['I_05'] === '00018') {
+                    $qjenjang="select * from TABJENJANG_GURU where KJENJANG = '".$row['I_07']."'";
+                } else {
+                    $qjenjang="select * from TABJENJANG where KJENJANG = '".$row['I_07']."'";
+                }
+                $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
                 ?>
               <tr class="<?= ($no%2===0)?'even':'odd' ?>">
                 <td class="nowrap" align="center"><?=$no+$offset?></td>
                 <td class="nowrap"><?=$row[B_02]?></td>
                 <td class="nowrap"><?=format_nip_baru($row[B_02B])?></td>
                 <td class="nowrap"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></td>
-                <td class="nowrap"><small><?=  ucwords(strtolower(getNaJab($row[B_02])))?></small></td>
+                <td class="nowrap"><small><?=  ucwords(strtolower(getNaJab($row[B_02])))?> <?= $nama_jenjang['JENJANG'] ?></small></td>
                 <td><button type="button" class="btn btn-default btn-xs mypopover" data-container="body" data-toggle="popover" data-placement="top" data-title="Detail Unit Kerja" data-content="<?= $detail ?>">Show</button></td>
                 <td><button type="button" onclick="load_detail('include/arsip-tabs.php?sid=<?=$sid?>&do=cari&nip=<?=$row[B_02]?>&cari=NIP');" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Input</button> </td>
               </tr>

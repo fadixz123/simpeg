@@ -162,7 +162,11 @@ if (isset($_GET['cari'])) {
                            <td colspan="3" class="sectiontableheader" >JABATAN TERAKHIR</td>
                          </tr>
                          <?php 
-                        $qjenjang="select * from TABJENJANG where KJENJANG = '".$row['I_07']."'";
+                         if ($row['I_05'] === '00018') {
+                              $qjenjang="select * from TABJENJANG_GURU where KJENJANG = '".$row['I_07']."'";
+                          } else {
+                              $qjenjang="select * from TABJENJANG where KJENJANG = '".$row['I_07']."'";
+                          }
                         $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
 
                         ?>

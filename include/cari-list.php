@@ -55,14 +55,18 @@ mysql_select_db($db);
         $r=mysql_query($q.'  limit '.$offset.', '.$limit) or die (mysql_error());
         $total_data = mysql_num_rows(mysql_query($q));
         while($row=mysql_fetch_array($r)) {
+            if ($row['I_05'] === '00018') {
+                $qjenjang="select * from TABJENJANG_GURU where KJENJANG = '".$row['I_07']."'";
+            } else {
+                $qjenjang="select * from TABJENJANG where KJENJANG = '".$row['I_07']."'";
+            }
+            $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
             $detail = "<table>
                 <tr><td class=nowrap>".  ucwords(strtolower(subLokasiKerjaB($row[A_01],$row[A_02],$row[A_03],$row[A_04],$row[A_05])))."</td></tr>
                 <tr><td class=nowrap>".ucwords(strtolower(lokasiKerjaB($row[A_01])))."</td></tr>
                 </table>
                 ";
                 $no++;
-                $qjenjang="select * from TABJENJANG where KJENJANG = '".$row['I_07']."'";
-                $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
                 ?>
               <tr class="<?= ($no%2===0)?'even':'odd' ?>">
                 <td class="nowrap" align="center"><?=$no+$offset?></td>

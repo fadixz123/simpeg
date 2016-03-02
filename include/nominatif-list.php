@@ -145,13 +145,19 @@ $detail = "<table>
         <tr><td>".ucwords(strtolower(lokasiKerjaB($row[A_01])))."</td></tr>
         </table>
         ";
+        if ($row['I_05'] === '00018') {
+            $qjenjang="select * from TABJENJANG_GURU where KJENJANG = '".$row['I_07']."'";
+        } else {
+            $qjenjang="select * from TABJENJANG where KJENJANG = '".$row['I_07']."'";
+        }
+        $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
 ?>
     <tr class="<?= ($no%2===0)?'even':'odd' ?>">
         <td align="center"><?=$no+$offset; ?></td>
         <td class="nowrap"><?= $row[B_02B]=='' ? $row[B_02] : format_nip_baru($row[B_02B])?></td>
         <td class="nowrap"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B]) ?></td>
         <td class="nowrap"><?=datefmysql($row[B_05]); ?></td>
-        <td><small><?= getNaJab($row[B_02])?></small></td>
+        <td><small><?= getNaJab($row[B_02])?> <?= $nama_jenjang['JENJANG'] ?></small></td>
         <td class="nowrap"><button type="button" class="btn btn-default btn-xs mypopover" data-container="body" data-toggle="popover" data-placement="top" data-title="Detail Unit Kerja" data-content="<?= $detail ?>">Show</button></td>
         <td class="nowrap" align="center"><?= $row[I_06]=='99' ? "-" : eselon($row[I_06])?></td>
         <td class="nowrap" align="center"><?=pktH($row[F_03])?></td>
