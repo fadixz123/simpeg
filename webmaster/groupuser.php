@@ -274,7 +274,7 @@ session_start();
         <tr>
             <th width="5%">No</th>
             <th width="75%" class="left">Nama</th>
-            <th width="10%">&nbsp;</th>
+            <th width="20%">&nbsp;</th>
         </tr>
         </thead>
     </table>

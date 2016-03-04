@@ -8,8 +8,8 @@ mysql_select_db($db);
     <thead>
         <tr>
             <th width="5%">No</th>
-            <th width="75%" class="left">Nama</th>
-            <th width="20%">&nbsp;</th>
+            <th width="70%" class="left">Nama</th>
+            <th width="25%">&nbsp;</th>
         </tr>
     </thead>
     <tbody>

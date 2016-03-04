@@ -194,7 +194,11 @@ if ($cari) {
                                 <select name="uk" class="form-control" id="uk" style="width: 300px;">
                                       <option value="all">Semua unit kerja...</option>
                                       <?
-                                      $lsuk=listUnitKerja();
+                                      $id_skpd = NULL;
+                                      if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
+                                        $id_skpd = $_SESSION['skpd'];
+                                      }
+                                      $lsuk=listUnitKerja($id_skpd);
                                       foreach($lsuk as $key=>$value) {
                                       ?>
                                       <option value="<?=$value[0]?>"><?= ucfirst(strtolower($value[1]))?></option>

@@ -47,7 +47,7 @@ mysql_select_db($db);
             $q.=" having kode_sub_lokasi like ('%".$_GET['suk']."%')";
         }
         if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
-            $q.=" and A_01 = '".$_SESSION['skpd']."'";
+            $q.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."'";
         }
         
         $q .="order by I_06 ASC, F_03 DESC";

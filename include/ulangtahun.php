@@ -95,7 +95,11 @@ if (!isset($ultah) || $ultah=='') $ultah=0;
                                     <select name="uk" id="uk" class="form-control-static" style="width: 300px;">
                                     <option value="all">Semua</option>
                                     <?
-                                    $lsuk=listUnitKerja();
+                                    $id_skpd = NULL;
+                                  if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
+                                    $id_skpd = $_SESSION['skpd'];
+                                  }
+                                    $lsuk=listUnitKerja($id_skpd);
                                     foreach($lsuk as $key=>$value) {
                                                 ?>
                                     <option value="<?=$value[0]?>" <?= $value[0]==$uk ? "selected" : ""?>><?=  ucwords(strtolower($value[1]))?></option>

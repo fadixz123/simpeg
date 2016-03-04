@@ -295,8 +295,12 @@ function format_tanggal_1($tanggal)
         return $tanggal1;
 }
 
-function listUnitKerja() {
-	$q1="select kd,nm from TABLOK08 where kd<>'99' order by kd";
+function listUnitKerja($kd = NULL) {
+    $q = NULL;
+    if ($kd !== NULL) {
+        $q = "and kd = '".$kd."'";
+    }
+	$q1="select kd,nm from TABLOK08 where kd<>'99' $q order by kd";
 	$r1=mysql_query($q1);
 //	$q2="select KOLOK,NALOK from TABLOKB08 where KOLOK like '02%' and ESEL like '22' order by KOLOK";
 //	$r2=mysql_query($q2);
