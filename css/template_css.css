@@ -850,3 +850,27 @@ span.utama { font-size: 16px; }
 }
 
 .content-width { overflow-x: auto; width: 95%; }
+.isi_message {
+    border: 1px solid #ccc;
+    width: 50%;
+    height: 400px;
+    overflow-y: auto;
+    padding: 5px;
+}
+.isi_message img {
+    margin-right: 5px;
+}
+.isi_message small {
+    color: blue;
+}
+tr.spaceunder > td
+{
+  padding-bottom: 0.5em;
+}
+.wrapper-message {
+    border: 1px solid #ccc;
+    height: 140px;
+    width: 50%;
+    border-radius: 2px;
+    margin-top: 10px; 
+}

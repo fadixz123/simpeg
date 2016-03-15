@@ -189,6 +189,7 @@ else if ($opsi === 'pns') {
 }
 
 else if ($opsi === 'pangkat_gaji') {
+    /*ALTER TABLE `mastfip08`  ADD `ipg_nomor` VARCHAR(100) NOT NULL,  ADD `ipg_tgl_surat` DATE NOT NULL,  ADD `ipg_tmt` DATE NOT NULL,  ADD `ib_nomor` VARCHAR(100) NOT NULL,  ADD `ib_tgl_surat` DATE NOT NULL,  ADD `ib_tmt` INT NOT NULL,  ADD `pi_nomor` VARCHAR(100) NOT NULL,  ADD `pi_tgl_surat` DATE NOT NULL,  ADD `pi_tmt` DATE NOT NULL;*/
     // update MASTFIP08
     $NIP = $_POST['nip'];
     $F_04A  = $_POST['F_04A'];
@@ -205,6 +206,20 @@ else if ($opsi === 'pangkat_gaji') {
     $A_02   = $_POST['A_02'];
     $A_03   = $_POST['A_03'];
     $A_04   = $_POST['A_04'];
+    
+    /*TAMBAHAN BARU*/
+    $ipg_no_surat  = $_POST['nomor_surat'];
+    $ipg_tgl_surat = date2mysql($_POST['tglsurat']);
+    $ipg_tmt       = date2mysql($_POST['tmt_ijin_penggunaan_gelar']);
+    
+    $ib_nomor      = $_POST['nomorsurat_ijin_belajar'];
+    $ib_tgl_surat  = date2mysql($_POST['tglsurat_ijin_belajar']);
+    $ib_tmt        = date2mysql($_POST['tmt_ijin_belajar']);
+    
+    $pi_nomor      = $_POST['nomorsurat_penyesuaian_ijasah'];
+    $pi_tgl_surat  = date2mysql($_POST['tglsurat_penyesuaian_ijasah']);
+    $pi_tmt        = date2mysql($_POST['tmt_penyesuaian_ijasah']);
+    
     if (strlen($F_04A) >= 0 && strlen($F_04A) < 2) $F_04A='0'.$F_04A;
     if (strlen($F_04B) >= 0 && strlen($F_04B) < 2) $F_04B='0'.$F_04B;
     if (strlen($G_02A) >= 0 && strlen($G_02A) < 2) $G_02A='0'.$G_02A;
@@ -233,6 +248,9 @@ else if ($opsi === 'pangkat_gaji') {
 
     $q  ="update MASTFIP08 set F_01='$F_01', F_02='".date2mysql($TGGOL)."', ";
     $q .="F_SK='$F_SK', F_03='$F_03', F_PK='".pktH($F_03)."',F_04='".$F_04A.$F_04B."', G_01='".date2mysql($TGGAJI)."', ";
+    $q .=" ipg_nomor = '$ipg_no_surat', ipg_tgl_surat = '$ipg_tgl_surat', ipg_tmt = '$ipg_tmt', ";
+    $q .=" ib_nomor = '$ib_nomor', ib_tgl_surat = '$ib_tgl_surat', ib_tmt = '$ib_tmt', ";
+    $q .=" pi_nomor = '$pi_nomor', pi_tgl_surat = '$pi_tgl_surat', pi_tmt = '$pi_tmt', ";
     $q .= "F_TMT = '".date2mysql($TGPKT)."',G_02='".$G_02A.$G_02B."', G_03='$G_03' where B_02='$NIP'";
     //echo $q;
     mysql_query($q) or die (mysql_error());
@@ -1185,6 +1203,57 @@ else if ($opsi === 'rkursus') {
     }
     
     lethistory($sid,"UPDATE RIWAYAT KURSUS DLM NEGERI / LUAR NEGERI",$NIP);
+    $result['act'] = 'edit';
+    die(json_encode($result));
+}
+
+else if ($opsi === 'rhukuman') {
+    $nip    = $_POST['NIP'];
+    $bobot  = $_POST['bobot']; // array
+    $id_jenis_hukuman = $_POST['jns_hukuman']; // array
+    $tanggal_sk  = $_POST['tgl_sk']; // array
+    $tanggal_tmt = $_POST['tmt_sk']; // array
+    $masa_berlaku= $_POST['masa_berlaku']; // array
+    
+    mysql_query("delete from tb_riwayat_hukuman where nip = '".$nip."'");
+    foreach ($id_jenis_hukuman as $key => $data) {
+        $sql = "insert into tb_riwayat_hukuman
+            set nip = '".$nip."',
+                bobot = '".$bobot[$key]."',
+                id_jenis_hukuman = '".$data."',
+                tanggal_sk = '".  date2mysql($tanggal_sk[$key])."',
+                tmt_sk = '".  date2mysql($tanggal_tmt[$key])."',
+                masa_berlaku = '".$masa_berlaku[$key]."'
+            ";
+        mysql_query($sql) or die (mysql_error());
+    }
+    lethistory($sid,"UPDATE RIWAYAT HUKUMAN ",$NIP);
+    $result['act'] = 'edit';
+    die(json_encode($result));
+}
+
+else if ($opsi === 'rpekerjaan') {
+    $nip    = $_POST['NIP'];
+    $perusahaan = $_POST['perusahaan'];
+    $jabatan    = $_POST['jabatan'];
+    $tgl_bekerja = $_POST['tgl_bekerja'];
+    $tgl_berhenti = $_POST['tgl_berhenti'];
+    $alasan_berhenti = $_POST['alasan_berhenti'];
+    mysql_query("delete from tb_riwayat_pekerjaan where nip = '".$nip."'");
+    foreach ($perusahaan as $key => $data) {
+        $sql = "insert into tb_riwayat_pekerjaan
+            set nip = '".$nip."',
+                perusahaan = '".$perusahaan[$key]."',
+                jabatan = '".$jabatan[$key]."',
+                mulai_bekerja = '".  date2mysql($tgl_bekerja[$key])."',
+                berhenti_bekerja = '".  date2mysql($tgl_berhenti[$key])."',
+                alasan_berhenti = '".$alasan_berhenti[$key]."'
+            ";
+    
+        mysql_query($sql) or die (mysql_error());
+    }
+    
+    lethistory($sid,"UPDATE RIWAYAT PEKERJAAN ",$NIP);
     $result['act'] = 'edit';
     die(json_encode($result));
 }

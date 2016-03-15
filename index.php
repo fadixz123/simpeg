@@ -18,6 +18,7 @@ $nama_unit_kerja=$orow[0];
 if (isset($_GET['logout'])) {
 	mysql_query("delete from LOGUSER where sid='$sid' LIMIT 1") or die (mysql_error());
         session_destroy();
+        mysql_query("update user set status_online = '0' where id = '".$_SESSION['id_user']."'");
         header("location: index.php?sid=".$sid);
 }
 
@@ -117,10 +118,20 @@ if (isset($_SESSION['username'])) {
             &nbsp; | &nbsp; <a href="index.php?sid=<?= $_GET['sid'] ?>&logout=true"> <?= $_SESSION['username'] ?> (Logout)</a>
         <?php } ?>
     </div>
+    <?php
+    echo $_SESSION['nip_baru'];
+    $sql = mysql_query("select count(*) as jumlah from (select m.id
+        from tb_message m
+        join tb_message_detail md on (md.id_message = m.id)
+        where m.nip2 = '".$_SESSION['nip_baru']."' and md.status_baca = 'Belum'
+            group by m.id) as sq
+        ");
+    $rowx = mysql_fetch_array($sql);
+    ?>
     <div class="link2">
         Anda Login Sebagai:
         <?php if (isset($_SESSION['username'])) { ?>
-        <i><?= $_SESSION['nama'] ?></i>
+        <b><?= $_SESSION['nama'] ?></b> | <span class="fa fa-envelope"></span> <?= ($rowx['jumlah'] === '0')?'Tidak ada pesan baru':'Ada '.$rowx['jumlah'].' pesan baru' ?> 
         <?php } else { ?>
             Tamu
         <?php } ?>
@@ -193,7 +204,37 @@ if (isset($_SESSION['username'])) {
                         </div></div></div>
                     </div>
                     <?php } ?>
-        </div>
+                <?php if($_SESSION['nama_group'] === 'Administrator') { ?>
+                    <div class="module">
+                        <div>
+                            <div>
+                                <div>
+                                    <h3>User Online</h3>
+                                    <?php
+                                    $sql = mysql_query("select count(*) as jumlah from user where status_online = '1'");
+                                    $row = mysql_fetch_array($sql);
+                                    
+                                    ?>
+                                    <i>(<?= $row['jumlah'] ?>) User sedang online</i><br/><br/>
+                                    <table width="100%">
+                                    <?php
+                                    $sql1 = mysql_query("select u.id, CONCAT_WS(' ',m.B_03,m.B_03B) as nama, m.B_02B from user u join mastfip08 m on (u.B_02 = m.B_02) where u.status_online = '1'");
+                                    while ($row1 = mysql_fetch_array($sql1)) { 
+                                        if ($row1['id'] !== $_SESSION['id_user']) { ?>
+                                        <tr valign="top"><td width="5%"><img src="images/icons/user.png" align="left" width="10px" /></td><td width="95%"> <a href="index.php?do=message&id=<?= $row1['B_02B'] ?>&sid=<?= $_GET['sid'] ?>"> <?= $row1['nama'] ?></a></td></tr>
+                                        <?php } else { ?>
+                                        <tr valign="top"><td width="5%"><img src="images/icons/user.png" align="left" width="10px" /></td><td width="95%"> <?= $row1['nama'] ?></td></tr>
+                                        <?php } ?>
+                                    <?php }
+                                    ?>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+                </div>
+                
         <div id="maincol-wide-1024">
                 <div class="clr"></div>
 			<div class="content">
@@ -230,6 +271,7 @@ if (isset($_SESSION['username'])) {
                 case 'baperjakat': include("include/baperjakat.php"); break;
                 case 'arsip': include("include/arsip.php"); break;
                 case 'arsip_kategori': include("include/arsip-kategori.php"); break;
+                case 'message': include("include/message.php"); break;
 		default : include("include/berita.php");
 	}
 	?>

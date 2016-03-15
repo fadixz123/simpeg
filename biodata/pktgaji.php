@@ -27,7 +27,7 @@ $row=mysql_fetch_array(mysql_query($q));
     }
     
     $(function() {
-        $('#tggol, #tgpkt, #tggaji').datepicker({
+        $('#tggol, #tgpkt, #tggaji, #tglsurat, #tmt_ijin_penggunaan_gelar, #tglsurat_ijin_belajar, #tmt_ijin_belajar, #tglsurat_penyesuaian_ijasah, #tmt_penyesuaian_ijasah').datepicker({
             format: 'dd/mm/yyyy'
         }).on('changeDate', function(){
             $(this).datepicker('hide');
@@ -158,6 +158,90 @@ $row=mysql_fetch_array(mysql_query($q));
             <td> :</td>
             <td width="77%"> <input type="text" name="G_03" class="form-control-static" onkeyup="FormNum(this);" value="<? echo $row['G_03']; ?>" style="width: 20%;">
               <- gaji tidak perlu diisi </td>
+        </tr>
+        <tr class="sectiontableheader"> 
+            <td width="3%" bgcolor="<? echo $warnarow2; ?>"> <div><b>E</b></div></td>
+            <td colspan="3" bgcolor="<? echo $warnarow2; ?>" height="22"><b>IJIN PENGGUNAAN GELAR</b></td>
+        </tr>
+        <tr> 
+            <td width="3%"> 01</td>
+            <td width="20%">Nomor Surat</td>
+            <td> :</td>
+            <td width="77%"> 
+                <input type="text" name="nomorsurat" class="form-control-static" id="nomorsurat" value="<?= $row['ipg_nomor'] ?>" /> 
+            </td>
+        </tr>
+        <tr> 
+            <td width="3%"> 02</td>
+            <td width="20%">Tanggal Surat</td>
+            <td> :</td>
+            <td width="77%"> 
+                <input type="text" name="tglsurat" class="form-control-static" id="tglsurat" value="<?= datefmysql($row['ipg_tgl_surat']) ?>" /> 
+            </td>
+        </tr>
+        <tr> 
+            <td width="3%"> 03</td>
+            <td width="20%">TMT</td>
+            <td> :</td>
+            <td width="77%"> 
+                <input type="text" name="tmt_ijin_penggunaan_gelar" class="form-control-static" id="tmt_ijin_penggunaan_gelar" value="<?= datefmysql($row['ipg_tmt']) ?>" /> 
+            </td>
+        </tr>
+        <tr class="sectiontableheader"> 
+            <td width="3%" bgcolor="<? echo $warnarow2; ?>"> <div><b>E</b></div></td>
+            <td colspan="3" bgcolor="<? echo $warnarow2; ?>" height="22"><b>IJIN BELAJAR</b></td>
+        </tr>
+        <tr> 
+            <td width="3%"> 01</td>
+            <td width="20%">Nomor Surat</td>
+            <td> :</td>
+            <td width="77%"> 
+                <input type="text" name="nomorsurat_ijin_belajar" class="form-control-static" id="nomorsurat_ijin_belajar" value="<?= $row['ib_nomor'] ?>" /> 
+            </td>
+        </tr>
+        <tr> 
+            <td width="3%"> 02</td>
+            <td width="20%">Tanggal Surat</td>
+            <td> :</td>
+            <td width="77%"> 
+                <input type="text" name="tglsurat_ijin_belajar" class="form-control-static" id="tglsurat_ijin_belajar" value="<?= datefmysql($row['ib_tgl_surat']) ?>" /> 
+            </td>
+        </tr>
+        <tr> 
+            <td width="3%"> 03</td>
+            <td width="20%">TMT</td>
+            <td> :</td>
+            <td width="77%"> 
+                <input type="text" name="tmt_ijin_belajar" class="form-control-static" id="tmt_ijin_belajar" value="<?= datefmysql($row['ib_tmt']) ?>" /> 
+            </td>
+        </tr>
+        <tr class="sectiontableheader"> 
+            <td width="3%" bgcolor="<? echo $warnarow2; ?>"> <div><b>E</b></div></td>
+            <td colspan="3" bgcolor="<? echo $warnarow2; ?>" height="22"><b>PENYESUAIAN IJASAH</b></td>
+        </tr>
+        <tr> 
+            <td width="3%"> 01</td>
+            <td width="20%">Nomor Surat</td>
+            <td> :</td>
+            <td width="77%"> 
+                <input type="text" name="nomorsurat_penyesuaian_ijasah" class="form-control-static" id="nomorsurat_penyesuaian_ijasah" value="<?= $row['pi_nomor'] ?>" /> 
+            </td>
+        </tr>
+        <tr> 
+            <td width="3%"> 02</td>
+            <td width="20%">Tanggal Surat</td>
+            <td> :</td>
+            <td width="77%"> 
+                <input type="text" name="tglsurat_penyesuaian_ijasah" class="form-control-static" id="tglsurat_penyesuaian_ijasah" value="<?= datefmysql($row['pi_tgl_surat']) ?>" /> 
+            </td>
+        </tr>
+        <tr> 
+            <td width="3%"> 03</td>
+            <td width="20%">TMT</td>
+            <td> :</td>
+            <td width="77%"> 
+                <input type="text" name="tmt_penyesuaian_ijasah" class="form-control-static" id="tmt_penyesuaian_ijasah" value="<?= datefmysql($row['pi_tmt']) ?>" /> 
+            </td>
         </tr>
         <tr> 
             <td width="3%">&nbsp;</td>

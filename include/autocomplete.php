@@ -100,7 +100,7 @@ if (isset($_GET['search'])) {
         $sid = NULL;
         $sid=md5(date("Y-m-d").date("H:i:s").$REMOTE_ADDR."ItsABeautifulDay");
         if (isset($_POST['username'])) {
-		$q="select u.*, m.`A_01`, m.`A_02`, m.`A_03`, m.`A_04`, m.`A_05`,m.`B_03` as nama, g.nama as nama_group from USER u
+		$q="select u.*, m.`A_01`, m.`A_02`, m.`A_03`, m.`A_04`, m.`A_05`,m.`B_03` as nama, `B_02B`, g.nama as nama_group from USER u
                     join mastfip08 m on (u.B_02 = m.B_02)
                     join group_users g on (u.id_group_user = g.id)
                     where u.username='".$_POST['username']."' and password='".md5($_POST['password'])."'";
@@ -112,6 +112,7 @@ if (isset($_GET['search'])) {
 			$ro=mysql_fetch_array($r);
                         $_SESSION['id_user'] = $ro['id'];
                         $_SESSION['nip'] = $ro['B_02'];
+                        $_SESSION['nip_baru'] = $ro['B_02B'];
                         $_SESSION['username'] = $ro['username'];
                         $_SESSION['group_user'] = $ro['id_group_user'];
                         $_SESSION['nama_group'] = $ro['nama_group'];
@@ -122,6 +123,7 @@ if (isset($_GET['search'])) {
 			$xtgl=date("Y-m-d",mktime(0,0,0,date("m")  ,date("d")-1,date("Y")));
 			mysql_query("delete from LOGUSER where TANGGAL <= '$xtgl'") or die (mysql_error());		
 			mysql_query("insert into LOGUSER set sub_app='".$ro[level]."', user='".$ro['username']."', sid='$sid',TANGGAL='".date("Y-m-d")."'") or die (mysql_error());
+                        mysql_query("update user set status_online = '1' where id = '".$ro['id']."'");
 		}
 	}
 	$qj="select user,sub_app from LOGUSER where sid='$sid' LIMIT 1";

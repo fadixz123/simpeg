@@ -238,6 +238,8 @@ if ($j > 0 ) {
             if (riwayat === 'rpt') { url = 'biodata/rtatar.php'; }
             if (riwayat === 'rsm') { url = 'biodata/rsemi.php'; }
             if (riwayat === 'rku') { url = 'biodata/rkursus.php'; }
+            if (riwayat === 'rhd') { url = 'biodata/rhukuman.php'; }
+            if (riwayat === 'rpkj') { url = 'biodata/rpekerjaan.php'; }
         
             if (riwayat !== '') {
                 $.ajax({

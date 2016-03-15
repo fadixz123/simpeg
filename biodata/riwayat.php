@@ -15,6 +15,8 @@
         <option value="rpt"  <?php if ($page=='rpt') echo "selected"?>>RIWAYAT PENATARAN</option>
         <option value="rsm"  <?php if ($page=='rsm') echo "selected"?>>RIWAYAT SEMI/LOKA/SIMP</option>
         <option value="rku"  <?php if ($page=='rku') echo "selected"?>>RIWAYAT KURSUS DI DLM & LUAR NEGERI</option>
+        <option value="rhd"  <?php if ($page=='rku') echo "selected"?>>RIWAYAT HUKUMAN DISIPLIN</option>
+        <option value="rpkj"  <?php if ($page=='rku') echo "selected"?>>RIWAYAT PEKERJAAN</option>
     </select>
     </td></tr>
 </table>
