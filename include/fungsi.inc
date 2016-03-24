@@ -360,7 +360,7 @@ function getNaJab($nip) {
 		case '2': $nama=getNaJFK($nip);break;
 		default: $nama=getNaJFU($nip);break;
 	}
-	if ($nama=='0') $nama="<i>Belum diseting</i>";
+	if ($nama=='0') $nama="<i>-</i>";
 	return $nama;
 }
 
@@ -415,7 +415,7 @@ function paging_ajax($jmldata, $dataPerPage, $klik, $tab = NULL, $search) {
     $jumPage = ceil($jumData / $dataPerPage);
     $get = $_GET;
     
-    if ($jumData > $dataPerPage) {
+    if ($jumData > $dataPerPage or $jumData === 0) {
         $onclick = null;
         if ($noPage > 1) {
             $get['page'] = ($noPage - 1);

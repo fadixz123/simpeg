@@ -61,7 +61,7 @@ if ($th=='') $th=date("Y");
     </div>
 </div>
 <div id="datamodal_search" class="modal fade">
-    <div class="modal-dialog" style="width: 500px; height: 100%;">
+    <div class="modal-dialog" style="width: 600px; height: 100%;">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -82,11 +82,11 @@ if ($th=='') $th=date("Y");
                                 </tr>
 
                                 <tr> 
-                                  <td width="15%" align="left">Bulan:</td>
+                                  <td width="25%" align="left">Bulan:</td>
                                   <td width="610" align="left"><select name="bln" id="bln" class="form-control-static">
                                                 <option value="4" <?= $bln=='4' ? "selected" : ""?>>April</option>
                                                 <option value="10" <?= $bln=='10' ? "selected" : ""?>>Oktober</option>
-                                                </select> <input type="text" name="th" class="form-control-static" value="<?=$th?>"></td>
+                                      </select> <input type="number" name="th" class="form-control-static" value="<?=$th?>"></td>
                                 </tr>
                                 <tr>
                                   <td>Unit Kerja:</td>

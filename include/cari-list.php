@@ -13,13 +13,12 @@ mysql_select_db($db);
 <table class="table table-bordered table-stripped table-hover" id="table_data_no">
     <thead>
     <tr>
-      <th width="5%">No</th>
+      <th width="3%">No</th>
       <th width="12%" class="left">NIP Lama</th>
       <th width="12%" class="left">NIP Baru</th>
       <th width="25%" class="left">Nama</th>
       <th width="35%" class="left">Jabatan</th>
-      <th width="10%" class="left">Unit Kerja</th>
-      <th width="1%"></th>
+      <th width="15%"></th>
     </tr>
     </thead>
     <tbody>
@@ -50,7 +49,7 @@ mysql_select_db($db);
             $q.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."'";
         }
         
-        $q .="order by I_06 ASC, F_03 DESC";
+        $q .=" order by I_06 ASC, F_03 DESC";
         //echo $q.'  limit '.$offset.', '.$limit;
         $r=mysql_query($q.'  limit '.$offset.', '.$limit) or die (mysql_error());
         $total_data = mysql_num_rows(mysql_query($q));
@@ -68,14 +67,16 @@ mysql_select_db($db);
                 ";
                 $no++;
                 ?>
-              <tr class="<?= ($no%2===0)?'even':'odd' ?>">
+              <tr valign="top" class="<?= ($no%2===0)?'even':'odd' ?>">
                 <td class="nowrap" align="center"><?=$no+$offset?></td>
                 <td class="nowrap"><?=$row[B_02]?></td>
                 <td class="nowrap"><?=format_nip_baru($row[B_02B])?></td>
-                <td class="nowrap"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></td>
-                <td class="nowrap"><?=ucwords(strtolower(getNaJab($row[B_02]).' '.$nama_jenjang['JENJANG']))?></td>
-                <td><button type="button" class="btn btn-default btn-xs mypopover" data-container="body" data-toggle="popover" data-placement="top" data-title="Detail Unit Kerja" data-content="<?= $detail ?>">Show</button></td>
-                <td><button type="button" onclick="load_detail('include/cari-detail.php?sid=<?=$_GET['sid']?>&B_03=<?= $row['B_03'] ?>&uk=<?= $_GET['uk'] ?>&do=cari&nip=<?=$row[B_02]?>&cari=NIP','<?= $row['B_02'] ?>');" class="btn btn-default btn-xs"><i class="fa fa-eye"></i> Detail</button></td>
+                <td><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></td>
+                <td><?=ucwords(strtolower(getNaJab($row[B_02]).' '.$nama_jenjang['JENJANG']))?></td>
+                <td class="nowrap">
+                    <button type="button" class="btn btn-default btn-xs mypopover" data-container="body" data-toggle="popover" data-placement="top" data-title="Detail Unit Kerja" data-content="<?= $detail ?>">Unit Kerja</button>
+                    <button type="button" onclick="load_detail('include/cari-detail.php?sid=<?=$_GET['sid']?>&B_03=<?= $row['B_03'] ?>&uk=<?= $_GET['uk'] ?>&do=cari&nip=<?=$row[B_02]?>&cari=NIP','<?= $row['B_02'] ?>');" class="btn btn-default btn-xs"><i class="fa fa-eye"></i> Detail</button>
+                </td>
               </tr>
                 <?
         }

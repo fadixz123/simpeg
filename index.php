@@ -71,7 +71,7 @@ if (isset($_SESSION['username'])) {
 <link rel="stylesheet" href="css/bootstrap-dialog.css" />
 <link rel="stylesheet" href="css/bootstrap-editable.css" />
 <link rel="stylesheet" href="css/datepicker3.css" />
-<link rel="stylesheet" href="include/font-awesome/css/font-awesome.min.css" />
+<link rel="stylesheet" href="include/font-awesome-4.4.0//css/font-awesome.min.css" />
 <link rel="stylesheet" href="Scripts/pnotify/jquery.pnotify.default.css" />
 <script type="text/javascript" src="Scripts/library.js"></script>
 <script type="text/javascript" src="Scripts/jquery.min.js"></script>
@@ -119,7 +119,7 @@ if (isset($_SESSION['username'])) {
         <?php } ?>
     </div>
     <?php
-    echo $_SESSION['nip_baru'];
+    
     $sql = mysql_query("select count(*) as jumlah from (select m.id
         from tb_message m
         join tb_message_detail md on (md.id_message = m.id)

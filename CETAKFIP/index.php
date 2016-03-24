@@ -72,7 +72,7 @@ span.break {page-break-after: always}
           <td colspan="4" bgcolor="#CCCCCC"><b>LOKASI KERJA </b></td>
           <td rowspan="15" align="center" valign="top"> 
               <?php if ($row['foto'] !== '') { ?>
-                <img src="../foto/<?=$row['foto']?>" border="1" width="120"> 
+                <img src="../Foto/<?=$row['foto']?>" border="1" width="120"> 
               <?php } else { ?>
             &nbsp;<img src="../showfoto.php?nip=<?=$row[B_02]?>" border="1" width="120"> 
               <?php } ?>

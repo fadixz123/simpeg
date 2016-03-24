@@ -82,4 +82,5 @@ mysql_select_db($db);
         ?>
     </tbody>
 </table>
+<?= page_summary($total_data, $page, $limit) ?>
 <?= paging_ajax($total_data, $limit, $page, '1', $_GET['search']) ?>

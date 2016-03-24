@@ -14,13 +14,12 @@ $sid = $_GET['sid'];
 <table class="table table-bordered table-stripped table-hover" id="table_data_no">
     <thead>
     <tr>
-      <th width="5%">No</th>
+      <th width="3%">No</th>
       <th width="12%" class="left">NIP Lama</th>
       <th width="12%" class="left">NIP Baru</th>
       <th width="25%" class="left">Nama</th>
       <th width="35%" class="left">Jabatan</th>
-      <th width="10%" class="left">Unit Kerja</th>
-      <th width="5%"></th>
+      <th width="15%"></th>
     </tr>
     </thead>
     <tbody>
@@ -73,14 +72,14 @@ $sid = $_GET['sid'];
                 }
                 $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
                 ?>
-              <tr class="<?= ($no%2===0)?'even':'odd' ?>">
+              <tr valign="top" class="<?= ($no%2===0)?'even':'odd' ?>">
                 <td class="nowrap" align="center"><?=$no+$offset?></td>
                 <td class="nowrap"><?=$row[B_02]?></td>
                 <td class="nowrap"><?=format_nip_baru($row[B_02B])?></td>
-                <td class="nowrap"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></td>
+                <td><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></td>
                 <td class="nowrap"><small><?=ucwords(strtolower(getNaJab($row[B_02]).' '.$nama_jenjang['JENJANG']))?></small></td>
-                <td><button type="button" class="btn btn-default btn-xs mypopover" data-container="body" data-toggle="popover" data-placement="top" data-title="Detail Unit Kerja" data-content="<?= $detail ?>">Show</button></td>
                 <td class="nowrap">
+                    <button type="button" class="btn btn-default btn-xs mypopover" data-container="body" data-toggle="popover" data-placement="top" data-title="Detail Unit Kerja" data-content="<?= $detail ?>">Unit Kerja</button>
                     <button onclick="load_detail('include/main-tabs.php?sid=<?=$sid?>&do=cari&nip=<?=$row['B_02']?>&nama=<?=$row['B_03']?>&cari=NIP','<?= $row['B_02'] ?>');" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></button>
                     <button onclick="delete_pegawai('biodata/save-data.php?save=delete_pegawai&nip=<?=$row['B_02']?>','<?= $page ?>');" class="btn btn-default btn-xs"><i class="fa fa-trash-o"></i></button>
                 </td>

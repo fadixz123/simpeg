@@ -175,7 +175,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
 </script>
 <h4 class="title">NOMINATIF</h4>
 <div id="datamodal_search" class="modal fade">
-    <div class="modal-dialog" style="width: 700px; height: 100%;">
+    <div class="modal-dialog" style="width: 600px; height: 100%;">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -245,7 +245,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                         <tr> 
                           <td width="175" align="left">Eselon:</td>
                           <td width="610" align="left">
-                            <select name="eselon" id="eselon" class="form-control">
+                            <select name="eselon" id="eselon" class="form-control" style="width: 300px;">
                               <option value="all" <? if ($eselon=='all') echo "selected" ; ?>>Semua ...</option>
                               <option value="str" <? if ($eselon=='str') echo "selected" ; ?>>Struktural</option>
                               <option value="11" <? if ($eselon=='11') echo "selected" ; ?>>1A</option>
@@ -267,7 +267,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                         <tr> 
                           <td width="175" align="left">Status Kepegawaian:</td>
                           <td width="610" align="left">
-                            <select name="status" id="status" class="form-control">
+                            <select name="status" id="status" class="form-control" style="width: 300px;">
                               <option value="all" <? if ($status=='all') echo "selected" ; ?>>Semua ...</option>
                               <option value="1" <? if ($status=='1') echo "selected" ; ?>>CPNS</option>
                               <option value="2" <? if ($status=='2') echo "selected" ; ?>>PNS</option>
@@ -277,7 +277,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                         <tr> 
                           <td width="175" align="left">Jabatan:</td>
                           <td width="610" align="left">
-                            <select name="jabatan" id="jabatan" class="form-control">
+                            <select name="jabatan" id="jabatan" class="form-control" style="width: 300px;">
                               <option value="all" <? if ($jabatan=='all') echo "selected" ; ?>>Semua ...</option>
                               <option value="0" <? if ($jabatan=='0') echo "selected" ; ?>>Staff</option>
                               <option value="1" <? if ($jabatan=='1') echo "selected" ; ?>>Struktural</option>
@@ -289,7 +289,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                         <tr id="jabfung-autoshow"> 
                           <td width="175" align="left">Jabatan Fungsional:</td>
                           <td width="610" align="left">
-                            <select name="jabfung" id="jabfung" class="form-control">
+                            <select name="jabfung" id="jabfung" class="form-control" style="width: 300px;">
                               <option value="">Semua ...</option>
                                 <?
                                 $qfung="select * from TABFNG1 order by NFUNG";
@@ -305,7 +305,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                         <tr>
                           <td width="175" align="left">Diklat:</td>
                           <td width="610" align="left">
-                            <select name="diklat" id="diklat" class="form-control">
+                            <select name="diklat" id="diklat" class="form-control" style="width: 300px;">
                               <option value="all" <? if ($diklat=='all') echo "selected" ; ?>>Semua ...</option>
                               <option value="1" <? if ($diklat=='1') echo "selected" ; ?>>LEMHANAS</option>
                               <option value="2" <? if ($diklat=='2') echo "selected" ; ?>>SESPA/SEPAMEN</option>
@@ -328,7 +328,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                         <tr> 
                           <td width="175" align="left">Jenis Kelamin:</td>
                           <td width="610" align="left">
-                            <select name="kelamin" id="kelamin" class="form-control">
+                            <select name="kelamin" id="kelamin" class="form-control" style="width: 300px;">
                               <option value="all" <? if ($kelamin=='all') echo "selected" ; ?>>Semua ...</option>
                               <option value="1" <? if ($kelamin=='1') echo "selected" ; ?>>Laki-laki</option>
                               <option value="2" <? if ($kelamin=='2') echo "selected" ; ?>>Perempuan</option>
@@ -338,7 +338,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                         <tr> 
                           <td width="175" align="left">Agama:</td>
                           <td width="610" align="left">
-                            <select name="agama" id="agama" class="form-control">
+                            <select name="agama" id="agama" class="form-control" style="width: 300px;">
                               <option value="all" <? if ($agama=='all') echo "selected" ; ?>>Semua ...</option>
                               <option value="1" <? if ($agama=='1') echo "selected" ; ?>>Islam</option>
                               <option value="2" <? if ($agama=='2') echo "selected" ; ?>>Kristen</option>
@@ -351,7 +351,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                         <tr> 
                           <td width="175" align="left">Pendidikan:</td>
                           <td width="610" align="left">
-                            <select name="dik" id="dik" class="form-control">
+                            <select name="dik" id="dik" class="form-control" style="width: 300px;">
                               <option value="all" <? if ($dik=='all') echo "selected" ; ?>>Semua ...</option>
                               <option value="10" <? if ($dik=='10') echo "selected" ; ?>>SD</option>
                               <option value="20" <? if ($dik=='20') echo "selected" ; ?>>SMP</option>
@@ -378,7 +378,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                         <tr> 
                           <td width="175" align="left">Jurusan:</td>
                           <td width="610" align="left">
-                            <select name="jur" id="jur" class="form-control">
+                            <select name="jur" id="jur" class="form-control" style="width: 300px;">
                                 <option value="">Semua ...</option>
                             </select>
                           </td>
@@ -386,7 +386,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                         <tr> 
                           <td width="175" align="left">Alamat Kecamatan:</td>
                           <td width="610" align="left">
-                            <select name="kecamatan" id="kecamatan" class="form-control">
+                            <select name="kecamatan" id="kecamatan" class="form-control" style="width: 300px;">
                                 <option value="">Semua ...</option>
                                 <?php 
                                 $query = mysql_query("select lokasi_ID as id, lokasi_nama 
@@ -409,13 +409,13 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                         <tr> 
                           <td width="175" align="left">Nama Sekolah:</td>
                           <td width="610" align="left">
-                              <input type="text" name="nama_sekolah" id="nama_sekolah" class="form-control" />
+                              <input type="text" name="nama_sekolah" id="nama_sekolah" class="form-control" style="width: 300px;" />
                           </td>
                         </tr>
                         <tr> 
                           <td width="175" align="left">Status Perkawinan:</td>
                           <td width="610" align="left">
-                                <select name="J_01" class="form-control">
+                                <select name="J_01" class="form-control" style="width: 300px;">
                                 <option value="">-</option>
                                 <option value="1">KAWIN</option>
                                 <option value="2">BELUM KAWIN</option>
@@ -426,26 +426,24 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                         <tr>
                           <td>Unit Kerja:</td>
                           <td>
-                                <select name="uk" id="uk" class="form-control">
-                                <?php 
-                                if ($_SESSION['nama_group'] === 'Administrator') { ?>
-                                <option value="all">Semua ...</option>
-                                <?php } ?>
-                                <?php
-                                $q = NULL;
-                                if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
-                                    $q.=" where kd = '".$_SESSION['skpd']."'";
-                                }
-                                $quk="select * from tablok08 $q order by kd";
-                                $ruk=mysql_query($quk) or die(mysql_error());
-                                while ($rouk=mysql_fetch_array($ruk)) {
-                                    $selected = '';
-                                    if ($rouk['kd'] === $_SESSION['skpd'] and $_SESSION['nama_group'] !== 'Administrator') {
-                                        $selected = 'selected';
-                                    }
-                                            ?>
-                                            <option value="<?=$rouk[kd]?>" <?= $selected ?>><?=$rouk[nm]?></option>
-                                            <? } ?>
+                                <select name="uk" class="form-control" id="uk" style="width: 300px;">
+                                      <?php
+                                      $id_skpd = NULL;
+                                      if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
+                                        $id_skpd = $_SESSION['skpd'];
+                                      }
+                                      if ($_SESSION['nama_group'] === 'Admin SKPD') {
+                                        $id_skpd = $_SESSION['skpd'];
+                                      }
+                                      if ($id_skpd === NULL) {
+                                          echo '<option value="all">Semua unit kerja...</option>';
+                                      }
+                                      //echo $id_skpd;
+                                      $lsuk=listUnitKerja($id_skpd);
+                                      foreach($lsuk as $key=>$value) {
+                                      ?>
+                                      <option value="<?=$value[0]?>"><?= ucfirst(strtolower($value[1]))?></option>
+                                      <? } ?>
                                 </select>
                               <input type="hidden" id="hasupt" name="hasupt" />
                           </td>
@@ -454,7 +452,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                         <tr>
                           <td id="label-uk"></td>
                           <td>
-                            <select name="subuk" id="subuk" class="form-control">
+                            <select name="subuk" id="subuk" class="form-control" style="width: 300px;">
                                 
                             </select>
                           </td>
@@ -485,7 +483,9 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
     <div class="toolbar-left">
         <button id="searching" class="btn btn-primary" data-target=".bs-modal-lg"><i class="fa fa-search"></i> Search</button>
         <button class="btn" data-target=".bs-modal-lg" onclick="reload_data();"><i class="fa fa-refresh"></i> Reload Data</button>
-        <button class="btn" data-target=".bs-modal-lg" id="cetak"><i class="fa fa-file"></i> Export Excel</button>
+    </div>
+    <div class="toolbar-right">
+        <button class="btn" data-target=".bs-modal-lg" id="cetak"><i class="fa fa-file-excel-o"></i> Export Excel</button>
     </div>
 </div> 
 <div id="result" style="overflow-x: auto; width: 100%;">

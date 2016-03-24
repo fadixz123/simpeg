@@ -172,7 +172,7 @@ if ($cari) {
     </div>
 </div>
 <div id="datamodal_search" class="modal fade">
-    <div class="modal-dialog" style="width: 500px; height: 100%;">
+    <div class="modal-dialog" style="width: 600px; height: 100%;">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -189,15 +189,21 @@ if ($cari) {
                     <div class="widget-body">
                     <table width="100%" id="autohide">
                         <tr>
-                            <td width="20%">Unit Kerja:</td>
+                            <td width="25%">Unit Kerja:</td>
                             <td>
                                 <select name="uk" class="form-control" id="uk" style="width: 300px;">
-                                      <option value="all">Semua unit kerja...</option>
-                                      <?
+                                      <?php
                                       $id_skpd = NULL;
                                       if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
                                         $id_skpd = $_SESSION['skpd'];
                                       }
+                                      if ($_SESSION['nama_group'] === 'Admin SKPD') {
+                                        $id_skpd = $_SESSION['skpd'];
+                                      }
+                                      if ($id_skpd === NULL) {
+                                          echo '<option value="all">Semua unit kerja...</option>';
+                                      }
+                                      //echo $id_skpd;
                                       $lsuk=listUnitKerja($id_skpd);
                                       foreach($lsuk as $key=>$value) {
                                       ?>
@@ -227,7 +233,7 @@ if ($cari) {
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-refresh"></i> Batal</button>
-            <button type="button" class="btn btn-primary" onclick="search_data_pns(1);"><i class="fa fa-save"></i> Tampilkan</button>
+            <button type="button" class="btn btn-primary" onclick="search_data_pns(1);"><i class="fa fa-eye"></i> Tampilkan</button>
         </div>
     </div>
     </div>

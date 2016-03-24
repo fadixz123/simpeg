@@ -84,7 +84,7 @@ if (isset($_GET['cari'])) {
       <!--<a href="?sid=<?=$sid?>&do=biodata&page=awal&NIP=<?=$row[B_02]?>">Edit Biodata PNS ini</a>-->
                         <div class="fotoshow">
                             <?php if ($row['foto'] !== '') { ?>
-                            <img src="foto/<?=$row['foto']?>" border="1" width="120" style="position: absolute; right: 0;"> 
+                            <img src="Foto/<?=$row['foto']?>" border="1" width="120" style="position: absolute; right: 0;"> 
                           <?php } else { ?>
                         &nbsp;<img src="showfoto.php?nip=<?=$row[B_02]?>" border="1" width="120" style="position: absolute; right: 0;"> 
                           <?php } ?>

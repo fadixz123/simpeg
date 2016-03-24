@@ -97,7 +97,7 @@ if ($kawin !== '') {
     $query.=" and J_01 = '".$kawin."'";
 }
 if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
-    $query.=" and A_01 = '".$_SESSION['skpd']."'";
+    $query.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."'";
 }
 if ($nullinclude === 'Ya') {
     $query.=" or F_03 is NULL ";

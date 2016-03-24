@@ -31,15 +31,15 @@ $query.="order by F_03 DESC,F_TMT ASC,I_06,F_04 DESC, H_4A ASC, H_1A DESC, H_02 
 <table width="100%" class="table table-bordered table-stripped table-hover" id="table_data_no">
     <thead>
         <tr>
-          <th width="5%">No</th>
+          <th width="3%">No</th>
           <th width="10%">NIP</th>
           <th width="10%">NIP BARU</th>
           <th width="20%" class="left">NAMA</th>
           <th width="30%" class="left">JABATAN</th>
           <th width="5%">Esl</th>
           <th width="7%">GOL/RNG</th>
-          <th width="10%">GAJI LAMA</th>
-          <th width="10%">GAJI BARU</th>
+          <th width="10%">GAJI&nbsp;LAMA</th>
+          <th width="10%">GAJI&nbsp;BARU</th>
         </tr>
     </thead>
     <tbody>
@@ -74,5 +74,6 @@ while ($row=mysql_fetch_array($result)) {
 <? } ?>
     </tbody>
 </table>
-</div><br/>
+</div>
+<?= page_summary($total_data, $page, $limit) ?>
 <?= paging_ajax($total_data, $limit, $page, '1', $_GET['search']) ?>

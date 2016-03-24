@@ -41,7 +41,7 @@ else {echo "SEMUA UNIT KERJA";}?><br><?= $subuk!='' && $subuk!='all' ? ( $hasupt
 <table class="table table-bordered table-stripped table-hover" id="table_data_no">
     <thead>
         <tr>
-            <th width="5%">NO</th>
+            <th width="3%">NO</th>
             <th width="10%">NIP</th>
             <th width="10%">NIP BARU</th>
             <th width="20%" class="left">NAMA</th>
@@ -107,8 +107,8 @@ else {echo "SEMUA UNIT KERJA";}?><br><?= $subuk!='' && $subuk!='all' ? ( $hasupt
             <td valign="top" class="isinya nowrap" align="center"><?=$no+$offset?></td>
             <td valign="top" class="isinya nowrap" align="center"><?=$row[B_02]?></td>
             <td valign="top" class="isinya nowrap" align="center"><?=format_nip_baru($row[B_02B])?></td>
-            <td valign="top" class="isinya nowrap"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></td>
-            <td valign="top" class="nowrap"><small><?= ucwords(strtolower(getNaJab($row[B_02])))?></small></td>
+            <td valign="top"><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></td>
+            <td valign="top"><small><?= ucwords(strtolower(getNaJab($row[B_02])))?></small></td>
             <td valign="top" class="isinya nowrap" align="center"><?=eselon($row[I_06])?></td>
             <td valign="top" align="center"><?=pktH($row[F_03])?></td>
             <td valign="top" align="center"><?=pktH($pangkat[$pkt_b])?></td>
@@ -116,5 +116,6 @@ else {echo "SEMUA UNIT KERJA";}?><br><?= $subuk!='' && $subuk!='all' ? ( $hasupt
         <? } ?>
     </tbody>
 </table>
+<?= page_summary($total_data, $page, $limit) ?>
 <?= paging_ajax($total_data, $limit, $page, '1', $_GET['search']) ?>
 <? } ?>

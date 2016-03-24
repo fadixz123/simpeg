@@ -349,9 +349,9 @@ else if (strlen($NIP)!=0) {
                     <div class="widget-body">
                     <table width="100%" id="autohide">
                         <tr>
-                            <td width="20%">Unit Kerja:</td>
+                            <td width="25%">Unit Kerja:</td>
                             <td>
-                                <select name="uk" class="form-control" id="uk">
+                                <select name="uk" style="width: 300px;" class="form-control" id="uk">
                                       <option value="all">Semua unit kerja...</option>
                                       <?
                                       $id_skpd = NULL;
@@ -387,7 +387,7 @@ else if (strlen($NIP)!=0) {
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-refresh"></i> Batal</button>
-            <button type="button" class="btn btn-primary" onclick="search_data_pns(1);"><i class="fa fa-save"></i> Tampilkan</button>
+            <button type="button" class="btn btn-primary" onclick="search_data_pns(1);"><i class="fa fa-eye"></i> Tampilkan</button>
         </div>
     </div>
     </div>
