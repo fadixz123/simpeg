@@ -12,9 +12,20 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
 ?>
 <script type="text/javascript">
     $(function() {
+        
         get_list_nominatif(1);
-        $('#cetak').click(function() {
-            window.location='include/i_nominatif.php?'+$('#nominatif1').serialize();
+        $('[data-toggle="popover"]').popover({
+            html: true
+        });
+
+        $('body').on('click', function (e) {
+            if ($(e.target).data('toggle') !== 'popover'
+                && $(e.target).parents('.popover.in').length === 0) { 
+                $('[data-toggle="popover"]').popover('hide');
+            }
+        });
+        $('#cetak_excel').click(function() {
+            window.location='include/i_nominatif.php?'+$('#nominatif1').serialize()+'&'+$('#dinamic_kolom').serialize();
         });
         
         $('#cetak_nominatif').click(function() {
@@ -142,6 +153,10 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
 //            }
 //        });
     });
+    
+    function export_excel() {
+        window.location='include/i_nominatif.php?'+$('#nominatif1').serialize()+'&'+$('#dinamic_kolom').serialize();
+    }
     
     function paging(page, tab, search) {
         get_list_nominatif(page);
@@ -483,11 +498,82 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
     <div class="toolbar-left">
         <button id="searching" class="btn btn-primary" data-target=".bs-modal-lg"><i class="fa fa-search"></i> Search</button>
         <button class="btn" data-target=".bs-modal-lg" onclick="reload_data();"><i class="fa fa-refresh"></i> Reload Data</button>
+        <?php
+        $detail = "<form id='dinamic_kolom'><table><tr valign=top><td>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='niplama' value=''>NIP Lama</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='nipbaru' value=''>NIP Baru</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='nama' value=''>Nama</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='alamat' value=''>Alamat</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='tempatlahir' value=''>Tempat Lahir</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='tmtcpns' value=''>TMT CPNS</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='jekel' value=''>Jenis Kelamin</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='jabatan' value=''>Jabatan</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='unitkerja' value=''>Unit Kerja</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='subunitkerja' value=''>Sub Unit Kerja</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='subsubunitkerja' value=''>Sub Sub Unit Kerja</label>
+            </div>
+            </td><td>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='eselon' value=''>Eselon</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='gr' value=''>G / R</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='tmt' value=''>TMT</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='pendidikan' value=''>Pendidikan</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='jurusan' value=''>Jurusan</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='lulus' value=''>Lulus</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='namasekolah' value=''>Nama Sekolah</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='tmtjabatan' value=''>TMT Jabatan</label>
+            </div>
+            <div class='checkbox'>
+                <label><input type='checkbox' name='nomorskjabatan' value=''>Nomor SK Jabatan</label>
+            </div>
+            </td></tr>
+            <tr><td></td></tr>
+            </table></form>
+            <button class='btn btn-xs btn-primary' onclick='export_excel();'><i class='fa fa-download'></i> Oke</button>
+            ";
+        ?>
+        <button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="bottom" data-title="Pilih Nama Kolom" data-content="<?= $detail ?>" id="cetak"><i class="fa fa-file-excel-o"></i> Export Excel</button>
     </div>
     <div class="toolbar-right">
-        <button class="btn" data-target=".bs-modal-lg" id="cetak"><i class="fa fa-file-excel-o"></i> Export Excel</button>
+        
     </div>
 </div> 
+
 <div id="result" style="overflow-x: auto; width: 100%;">
     
 </div>

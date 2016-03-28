@@ -149,28 +149,69 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
 <table width="100%" border="1">
   <tr>
     <th>NO</th>
+    <?php if (isset($_GET['niplama'])) { ?>
     <th>NIP LAMA</th>
+    <?php } ?>
+    <?php if (isset($_GET['nipbaru'])) { ?>
     <th>NIP BARU</th>
+    <?php } ?>
+    <?php if (isset($_GET['nama'])) { ?>
     <th >NAMA</th>
+    <?php } ?>
+    <?php if (isset($_GET['alamat'])) { ?>
     <th>ALAMAT</th>
+    <?php } ?>
+    <?php if (isset($_GET['tempatlahir'])) { ?>
     <th>TEMPAT LAHIR</th>
+    <?php } ?>
+    <?php if (isset($_GET['tgllahir'])) { ?>
     <th>TGL LAHIR</th>
+    <?php } ?>
+    <?php if (isset($_GET['tmtcpns'])) { ?>
     <th>TMT CPNS</th>
+    <?php } ?>
+    <?php if (isset($_GET['jekel'])) { ?>
     <th>JENIS KELAMIN</th>
+    <?php } ?>
+    <?php if (isset($_GET['jabatan'])) { ?>
     <th>JABATAN</th>
+    <?php } ?>
+    <?php if (isset($_GET['unitkerja'])) { ?>
     <th>UNIT KERJA</th>
+    <?php } ?>
+    <?php if (isset($_GET['subunitkerja'])) { ?>
     <th>SUB UNIT KERJA</th>
+    <?php } ?>
+    <?php if (isset($_GET['subsubunitkerja'])) { ?>
     <th>SUB SUB UNIT KERJA</th>
+    <?php } ?>
+    <?php if (isset($_GET['eselon'])) { ?>
     <th>ESEL</th>
+    <?php } ?>
+    <?php if (isset($_GET['gr'])) { ?>
     <th>G/R</th>
+    <?php } ?>
+    <?php if (isset($_GET['tmt'])) { ?>
     <th>TMT</th>
-    <th>ALAMAT</th>
+    <?php } ?>
+    <?php if (isset($_GET['pendidikan'])) { ?>
     <th>PENDIDIKAN</th>
+    <?php } ?>
+    <?php if (isset($_GET['jurusan'])) { ?>
     <th>JURUSAN</th>
+    <?php } ?>
+    <?php if (isset($_GET['lulus'])) { ?>
     <th>LULUS</th>
+    <?php } ?>
+    <?php if (isset($_GET['namasekolah'])) { ?>
     <th>NAMA SEKOLAH</th>
+    <?php } ?>
+    <?php if (isset($_GET['tmtjabatan'])) { ?>
     <th>TMT JABATAN</th>
+    <?php } ?>
+    <?php if (isset($_GET['noskjabatan'])) { ?>
     <th>NO. SK JABATAN</th>
+    <?php } ?>
   </tr>
   <?php
 		$z=0;
@@ -186,28 +227,70 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
 		?>
   <tr>
     <td align="center"><?=$no?></td>
+    <?php if (isset($_GET['niplama'])) { ?>
     <td align="center"><?=$row[B_02]?></td>
+    <?php } ?>
+    <?php if (isset($_GET['nipbaru'])) { ?>
     <td><?=$row[B_02B] =='' ? $row[B_02] : format_nip_baru($row[B_02B])?></td>
+    <?php } ?>
+    <?php if (isset($_GET['nama'])) { ?>
     <td><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></td>
+    <?php } ?>
+    <?php if (isset($_GET['alamat'])) { ?>
     <td><?=$row[B_12]?></td>
+    <?php } ?>
+    <?php if (isset($_GET['tempatlahir'])) { ?>
     <td><?=$row[B_04]?></td>
+    <?php } ?>
+    <?php if (isset($_GET['tmtcpns'])) { ?>
     <td align="center"><?= datefmysql($row[B_05])?></td>
+    <?php } ?>
+    <?php if (isset($_GET['tgllahir'])) { ?>
     <td><?=datefmysql($row[D_04])?></td>
+    <?php } ?>
+    <?php if (isset($_GET['jekel'])) { ?>
     <td><?= jenisKelamin($row[B_06])?></td>
+    <?php } ?>
+    <?php if (isset($_GET['jabatan'])) { ?>
     <td><?= getNaJab($row[B_02])?></td>
+    <?php } ?>
+    <?php if (isset($_GET['unitkerja'])) { ?>
     <td><?=ucwords(strtolower(subLokasiKerjaB($row[A_01].$row[A_02].$row[A_03].$row[A_04])))?></td>
+    <?php } ?>
+    <?php if (isset($_GET['subunitkerja'])) { ?>
     <td><?=ucwords(strtolower(subLokasiKerjaB($row[A_01].$row[A_02].$row[A_03]))) ?></td>
+    <?php } ?>
+    <?php if (isset($_GET['subsubunitkerja'])) { ?>
     <td><?=ucwords(strtolower(lokasiKerjaB($row[A_01])))?></td>
+    <?php } ?>
+    <?php if (isset($_GET['eselon'])) { ?>
     <td align="center"><?=eselon($row[I_06])?></td>
+    <?php } ?>
+    <?php if (isset($_GET['gr'])) { ?>
     <td align="center"><?=pktH($row[F_03])?></td>
+    <?php } ?>
+    <?php if (isset($_GET['tmt'])) { ?>
     <td align="center"><?=  datefmysql($row[F_TMT])?></td>
-    <td><?=$row[B_12]?></td>
+    <?php } ?>
+    <!--<td><?=$row[B_12]?></td>-->
+    <?php if (isset($_GET['pendidikan'])) { ?>
     <td><?= tktdidik($row[H_1A])?></td>
+    <?php } ?>
+    <?php if (isset($_GET['jurusan'])) { ?>
     <td><?= jurusan($row[H_1A],$row[H_1B])?></td>
+    <?php } ?>
+    <?php if (isset($_GET['lulus'])) { ?>
     <td><?=($row[H_02])?></td>
+    <?php } ?>
+    <?php if (isset($_GET['namasekolah'])) { ?>
     <td><?= $row['H_SEKOLAH'] ?></td>
+    <?php } ?>
+    <?php if (isset($_GET['tmtjabatan'])) { ?>
     <td><?=datefmysql($row['I_04']); ?></td>
+    <?php } ?>
+    <?php if (isset($_GET['nomorskjabatan'])) { ?>
     <td><?=($row['I_02'])?></td>
+    <?php } ?>
   </tr>
   <?php } ?>
 </table>

@@ -96,7 +96,7 @@ if (isset($_SESSION['username'])) {
                   '-moz-border-radius': '10px', 
                   opacity: 1, 
                   width: '120px',
-                  color: '#000' 
+                  color: '#000'
               } 
         }); 
     }
