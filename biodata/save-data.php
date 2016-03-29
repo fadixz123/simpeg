@@ -332,15 +332,36 @@ else if ($opsi === 'jabatan') {
             $q .="JF_01='$NIP',JF_02='$jmlr',JF_03='$I_JB',JF_04='$I_06',JF_05='$I_02',JF_06='$xskj', JF_07='$xtmt'";
             //echo $q;
             mysql_query($q) or die (mysql_error());
+            
+            if (isset($_POST['is_kepala_sekolah'])) {
+                $ks  ="insert into MASTJAB1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', "; 	
+                $ks .="JF_01='$NIP',JF_02='".($jmlr+1)."',JF_03='KEPALA SEKOLAH ".  subLokasiKerja($A_01, $A_02, $A_03, $A_04)."'";
+                //echo $ks;
+                mysql_query($ks) or die (mysql_error());
+            }
     }
     else
     {
             $aor=mysql_fetch_array(mysql_query("select ID from MASTJAB1 where JF_03='$I_JB' and JF_01='$NIP' and JF_06='$xskj' and JF_07='$xtmt' and JF_04='$I_06' LIMIT 1"));
             $nor=$aor[ID];
+            $jmlrr=mysql_fetch_array(mysql_query("select JF_02 from MASTJAB1 where JF_01='$NIP' order by JF_02 desc limit 1"));
+            $jmlr=$jmlrr[JF_02];
+            $jmlr++;
+            
             $q  ="update MASTJAB1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', "; 
             $q .="JF_05='$I_02',JF_06='$xskj', JF_07='$xtmt' where ID='$nor'";
             //echo $q;
             mysql_query($q) or die (mysql_error());
+            if (isset($_POST['is_kepala_sekolah'])) {
+                $ks  ="insert into MASTJAB1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', "; 	
+                $ks .="JF_01='$NIP',JF_02='".($jmlr)."',JF_03='KEPALA SEKOLAH'";
+                //echo $ks;
+                mysql_query($ks) or die (mysql_error());
+                
+                mysql_query("update mastfip08 set is_kepala_sekolah = 'Ya' where `B_02B` = '".$NIP."' or `B_02` = '".$NIP."'");
+            } else {
+                mysql_query("update mastfip08 set is_kepala_sekolah = 'Tidak' where `B_02B` = '".$NIP."' or `B_02` = '".$NIP."'");
+            }
     }
     if (mysql_affected_rows() > 0) lethistory($sid,"UPDATE RIWAYAT JABATAN".getNaJab($NIP),$NIP);
     die(json_encode(array('status' => TRUE)));

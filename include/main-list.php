@@ -77,7 +77,10 @@ $sid = $_GET['sid'];
                 <td class="nowrap"><?=$row[B_02]?></td>
                 <td class="nowrap"><?=format_nip_baru($row[B_02B])?></td>
                 <td><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></td>
-                <td class="nowrap"><small><?=ucwords(strtolower(getNaJab($row[B_02]).' '.$nama_jenjang['JENJANG']))?></small></td>
+                <td class="nowrap">
+                    <?=ucwords(strtolower(getNaJab($row[B_02]).' '.$nama_jenjang['JENJANG']))?>
+                    <?= ($row['is_kepala_sekolah'] === 'Ya')?'& Kepala Sekolah':'' ?>
+                </td>
                 <td class="nowrap">
                     <button type="button" class="btn btn-default btn-xs mypopover" data-container="body" data-toggle="popover" data-placement="top" data-title="Detail Unit Kerja" data-content="<?= $detail ?>">Unit Kerja</button>
                     <button onclick="load_detail('include/main-tabs.php?sid=<?=$sid?>&do=cari&nip=<?=$row['B_02']?>&nama=<?=$row['B_03']?>&cari=NIP','<?= $row['B_02'] ?>');" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></button>

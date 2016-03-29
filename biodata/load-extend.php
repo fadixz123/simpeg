@@ -70,18 +70,18 @@ if ($_GET['khusus'] === 'detail') {
         }
         $r1=mysql_query($qjenjang) or die (mysql_error());
         ?>
-        <select name="I_07" class="form-control-static" onChange="window.location='index.htm?&sid=<?=$sid?>&do=biodata&page=jab&NIP=<?=$NIP?>&I_01='+jabatan.I_01.value+'&I_02='+jabatan.I_02.value+'&TGSKJAB='+jabatan.TGSKJAB.value+'&BLSKJAB='+jabatan.BLSKJAB.value+'&THSKJAB='+jabatan.THSKJAB.value+'&TGTMTJAB='+jabatan.TGTMTJAB.value+'&BLTMTJAB='+jabatan.BLTMTJAB.value+'&THTMTJAB='+jabatan.THTMTJAB.value+'&I_06='+jabatan.I_06.value+'&pilihjab=2&I_05=<?=$I_05?>&I_07='+this.value+''" style="width: 300px;">
+        <select name="I_07" class="form-control-static" onChange="validate_jenjang(this.value);" style="width: 150px;">
         <option value=""><?= ucwords(strtolower('PILIH JENJANG')) ?></option>
         <?
         while ($x1=mysql_fetch_array($r1))
         {
         ?>
-        <option value="<?=$x1[KJENJANG]?>" <? if ($I_07==$x1[KJENJANG]) echo "selected";?>><?=ucwords(strtolower($x1['JENJANG']))?></option>
+        <option value="<?=$x1[KJENJANG]?>"><?=ucwords(strtolower($x1['JENJANG']))?></option>
         <?
         }
         ?>
         </select>
-        <a href="javascript:refresh_submit()">Batal</a>
+        <!--<a href="javascript:refresh_submit()">Batal</a>-->
         <?
         $I_06='99';
         if ($I_05!='00018') $tabeljenjang='TABJENJANG'; else $tabeljenjang='TABJENJANG_GURU';

@@ -484,14 +484,18 @@ span.break {page-break-after: always}
           <td width="18%">&nbsp;</td>
         </tr>
         <?php
-        $qjenjang="select * from TABJENJANG where KJENJANG = '".$row['I_07']."'";
+        if ($row['I_05'] !== '00018') {
+            $qjenjang="select * from TABJENJANG where KJENJANG = '".$row['I_07']."'";
+        } else {
+            $qjenjang="select * from TABJENJANG_GURU where KJENJANG = '".$row['I_07']."'";
+        }
         $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
         ?>
         <tr> 
           <td width="2%" align="right">05.</td>
           <td width="27%">NAMA JABATAN</td>
           <td width="4%" align="center">:</td>
-          <td width="49%"><? echo $row["I_JB"]; ?> <?= $nama_jenjang['JENJANG'] ?></td>
+          <td width="49%"><? echo $row["I_JB"]; ?> <?= $nama_jenjang['JENJANG'] ?> <?= ($row['I_05'] === '00018')?$ouk['nm'].', '.$olo['NALOK'].' '.  namaLokasiKerja($row['A_01'].$row['A_02'].$row['A_03'].$row['A_04'].$row['A_05']):'' ?></td>
           <td width="18%">&nbsp;</td>
         </tr>
         <tr> 

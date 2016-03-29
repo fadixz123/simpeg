@@ -23,14 +23,14 @@ $I_06=$row[I_06];
     function gantijab() {
         //$('.autohide').hide();
         $('.autoshow').show();
-        var str = '<select name="pilihjab" id="pilihjab" class="form-control-static autoshow" onchange="get_jabatan_group();" style="width: 20%;">'+
+        var str = '<select name="pilihjab" id="pilihjab" class="form-control-static autoshow" onchange="get_jabatan_group();" style="width: 300px;">'+
                         '<option value="">Pilih ...</option>'+
                         '<option value="1">STRUKTURAL</option>'+
                         '<option value="2">JFK</option>'+
                         '<option value="3">JFU</option>'+
                 '</select>'+
                 '<input type="hidden" name="pilihjab" value="0">'+
-                '<button type="button" class="btn btn-default btn-xs" onclick="batal_submit();"><i class="fa fa-minus-circle"></i> Batal</button>';
+                '<button type="button" class="btn btn-xs" onclick="batal_submit();"><i class="fa fa-times-circle"></i> Batal</button>';
         $('#load-extend').html(str);
     }
     
@@ -87,6 +87,16 @@ $I_06=$row[I_06];
             }
         });
     }
+    
+    function validate_jenjang(id) {
+        if (id === '04') {
+            var str = '<div class="checkbox"><label><input type="checkbox" name="is_kepala_sekolah" value="Ya" /> Kepala Sekolah</label></div>';
+            $('#load-extend-child3').html(str);
+        } else {
+            $('#load-extend-child3').html('&nbsp;');
+        }
+    }
+    
 </script>
 <br/>
 <?php 
@@ -115,20 +125,26 @@ $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
             <td width="3%"> 01</td>
             <td width="20%">Jabatan Terakhir</td>
             <td>:</td>
-            <td width="77%"><b class="autohide"><?=$jabnya=getNaJab($NIP)?> <?= isset($nama_jenjang['JENJANG'])?$nama_jenjang['JENJANG']:NULL ?></b> <a class="autohide" href="#" onclick="gantijab();">Ganti Jab</a>
+            <td width="77%"><b class="autohide"><?=$jabnya=getNaJab($NIP)?> <?= isset($nama_jenjang['JENJANG'])?$nama_jenjang['JENJANG']:NULL ?> <?= ($row['is_kepala_sekolah'] === 'Ya')?'& Kepala Sekolah':'' ?></b> <button type="button" class="btn btn-xs autohide" onclick="gantijab();"><i class="fa fa-pencil"></i> Ganti Jab</button>
             </td>
           </tr>
           <tr class="autoshow">
               <td></td>
               <td></td>
-              <td>:</td>
+              <td></td>
               <td id="load-extend"></td>
           </tr>
           <tr class="autoshow">
               <td></td>
               <td></td>
-              <td>:</td>
-              <td><span id="load-extend-child"></span> <span id="load-extend-child2"></span></td>
+              <td></td>
+              <td><span id="load-extend-child"></span> <span id="load-extend-child2"></span> </td>
+          </tr>
+          <tr class="autoshow">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td id="load-extend-child3"></td>
           </tr>
           <tr> 
             <td width="3%"> 02</td>

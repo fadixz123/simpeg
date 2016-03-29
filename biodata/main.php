@@ -446,9 +446,9 @@ else if (strlen($NIP)!=0) {
             <div class="row">
                 <div class="col-md-12">
                     <div class="widget-body">
-                    <table width="100%" id="autohide">
+                        <table width="100%" id="autohide" class="user-define">
                         <tr>
-                            <td width="20%">Unit Kerja:</td>
+                            <td width="25%">Unit Kerja:</td>
                             <td>
                                 <select name="uk" class="form-control" id="uk" style="width: 300px;">
                                       <?php
