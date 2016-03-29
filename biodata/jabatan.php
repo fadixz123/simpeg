@@ -43,6 +43,7 @@ $I_06=$row[I_06];
             success: function(data) {
                 if (data.status === true) {
                     message_edit_success();
+                    search_data_pns(1);
                 }
             }
         });
