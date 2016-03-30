@@ -85,6 +85,15 @@ if (isset($_SESSION['username'])) {
 
 <script src="Scripts/AC_RunActiveContent.js" type="text/javascript"></script>
 <script type="text/javascript">
+    $(function() {
+        $('.mypopover').popover({
+            trigger:'click',
+            animation: true,
+            placement: 'bottom',
+            html: true,
+            title: '<small>Recent(2), message request (1) </small>'
+        }).on("show.bs.popover", function () { $(this).data("bs.popover").tip().css("width", "400px"); }); 
+    });
     function show_ajax_indicator(){
         $('body').block({ 
               message: '<span><img src="images/loading-black.gif" /> Loading ...</span>', 
@@ -129,9 +138,36 @@ if (isset($_SESSION['username'])) {
     $rowx = mysql_fetch_array($sql);
     ?>
     <div class="link2">
-        Anda Login Sebagai:
-        <?php if (isset($_SESSION['username'])) { ?>
-        <b><?= $_SESSION['nama'] ?></b> | <span class="fa fa-envelope"></span> <?= ($rowx['jumlah'] === '0')?'Tidak ada pesan baru':'Ada '.$rowx['jumlah'].' pesan baru' ?> 
+        <?php if (isset($_SESSION['username'])) { 
+            $detail = "<table width='100%'>";
+                $sql_pesan = mysql_query("select m.id, IF(m.nip1=$_SESSION[nip_baru],nip2,nip1) as nip, mf.foto, mf.B_06, CONCAT_WS(' ',mf.`B_03`,mf.`B_03B`) as nama
+                    from tb_message m
+                    join tb_message_detail md on (md.id_message = m.id)
+                    join mastfip08 mf on (mf.`B_02B` = m.nip2)
+                    where m.nip2 = '".$_SESSION['nip_baru']."' 
+                        group by m.id");
+                $no = 1;
+                while($rowy = mysql_fetch_array($sql_pesan)) {
+                    $rowz = mysql_fetch_array(mysql_query("select message, waktu from tb_message_detail where id_message = '".$rowy['id']."' order by id desc limit 1"));
+                    $foto = $rowy['foto'];
+                    if ($rowy['foto'] === '' and $rowy['B_06'] === '1') {
+                        $foto = 'default-l.png';
+                    }
+                    if ($rowy['foto'] === '' and $rowy['B_06'] === '2') {
+                        $foto = 'default-p.png';
+                    }
+                    $detail.="<tr onclick=location.href='index.php?do=message&id=".$rowy['nip']."&sid=".$_GET['sid']."' class='".(($no%2===0)?'even':'odd')."' valign='top'><td><img style='background: #ccc; padding: 3px; margin-right: 10px;' src='Foto/".$foto."' width='50px' height='50px' /></td>
+                        <td>
+                            <b><small>".$rowy['nama']."</small></b>
+                            <p><small>".((strlen($rowz['message']) < 50)?$rowz['message']:substr($rowz['message'],0,50).' ...')."</small></p>
+                            <p>".$rowz['waktu']."</p>
+                        </td>
+                    </tr>";
+                    $no++;
+                }
+                $detail.="</table>";
+            ?>
+        <button class="btn btn-xs btn-primary mypopover" data-container="body" data-toggle="popover" data-placement="top" data-content="<?= $detail ?>"><i class="fa fa-envelope"></i> <?= ($rowx['jumlah'] === '0')?'Tidak ada pesan baru':'Ada '.$rowx['jumlah'].' pesan baru' ?> </button> | Anda Login Sebagai: <b><?= $_SESSION['nama'] ?></b>
         <?php } else { ?>
             Tamu
         <?php } ?>

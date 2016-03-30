@@ -800,7 +800,7 @@ padding: 0px;
     display: inline-block;
 }
 #Layer1 .link { right: 0; float: right; position: absolute; top: 5px; padding-right: 10px; }
-#Layer1 .link2 { right: 0; float: right; position: absolute; top: 35px; padding-right: 10px;}
+#Layer1 .link2 { right: 0; float: right; position: absolute; top: 30px; padding-right: 10px;}
 #Layer1 .logo {
     background: url(../images/logo.png) no-repeat left top;
     height: 50px;

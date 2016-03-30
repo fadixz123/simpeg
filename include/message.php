@@ -15,7 +15,14 @@
             success: function(data) {
                 $('.isi_message').empty();
                 $.each(data.data, function(i, v) {
-                    var str = '<tr valign=top class="spaceunder"><td width="10%"><img src="Foto/'+v.foto+'" width="50px" height="50px" /></td><td><small><b>'+v.nama+'</b></small><br/>'+v.message+'</td></tr>';
+                    var foto = v.foto;
+                    if (v.foto === '' && v.B_06 === '1') {
+                        foto = 'default-l.png';
+                    }
+                    if (v.foto === '' && v.B_06 === '2') {
+                        foto = 'default-p.png';
+                    }
+                    var str = '<tr valign=top class="spaceunder"><td width="10%"><img src="Foto/'+foto+'" width="50px" height="50px" /></td><td><small><b>'+v.nama+'</b></small><br/>'+v.message+'</td></tr>';
                     $('.isi_message').append(str);
                 });
             }
@@ -47,7 +54,7 @@
 </script>
 <div id="result">
     <?php 
-    mysql_query("update tb_message_detail set status_baca = 'Sudah' where id_message = (select id from tb_message where nip2 = '".$_SESSION['nip_baru']."')");
+    mysql_query("update tb_message_detail set status_baca = 'Sudah' where id_message = (select id from tb_message where nip2 = '".$_SESSION['nip_baru']."' and nip1 = '".$_GET['id']."')");
     $sql1 = mysql_query("select `B_02B` as nip1, CONCAT_WS(' ',B_03, B_03B) as nama from mastfip08 where B_02 = '".$_SESSION['nip']."'");
     $row1 = mysql_fetch_array($sql1);
     
