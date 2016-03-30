@@ -90,7 +90,8 @@ $I_06=$row[I_06];
     }
     
     function validate_jenjang(id) {
-        if (id === '04') {
+        var i_05 = $('#I_05').val();
+        if (i_05 === '00018') {
             var str = '<div class="checkbox"><label><input type="checkbox" name="is_kepala_sekolah" value="Ya" /> Kepala Sekolah</label></div>';
             $('#load-extend-child3').html(str);
         } else {
