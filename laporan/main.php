@@ -26,7 +26,7 @@
         <img src="./images/cpanel/army-icon.png" />
     </div>
     <div class="wrapp-keterangan">
-        <b>GOLONGAN</b><br/><br/><p>Rekapitulasi Berdasar Golongan PNS</p>
+        <b>GOLONGAN</b><p>Rekapitulasi Berdasar Golongan PNS</p>
     </div>
 </div>
 
@@ -35,7 +35,7 @@
         <img src="./images/cpanel/eselon.jpg" />
     </div>
     <div class="wrapp-keterangan">
-        <b>ESELON</b><br/><br/><p>Rekapitulasi Berdasar Eselon</p>
+        <b>ESELON</b><p>Rekapitulasi Berdasar Eselon</p>
     </div>
 </div>
 
@@ -44,7 +44,7 @@
         <img src="./images/cpanel/kexi.png" />
     </div>
     <div class="wrapp-keterangan">
-        <b>TINGKAT PENDIDIKAN</b><br/><br/><p>Rekapitulasi Berdasar Tingkat Pendidikan PNS</p>
+        <b>TKT PENDIDIKAN</b><p>Rekapitulasi Berdasar Tingkat Pendidikan PNS</p>
     </div>
 </div>
 
@@ -53,7 +53,7 @@
         <img src="./images/cpanel/kexi.png" />
     </div>
     <div class="wrapp-keterangan">
-        <b>JNS KELAMIN & TKT PEND.</b><br/><p>Rekapitulasi Berdasar Jenis Kelamin & Tingkat Pendidikan</p>
+        <b>JEKEL & TKT PEND.</b><br/><p>Rekapitulasi Berdasar Jenis Kelamin & Tingkat Pendidikan</p>
     </div>
 </div>
 
@@ -62,7 +62,7 @@
         <img src="./images/cpanel/kcmdf.png" />
     </div>
     <div class="wrapp-keterangan">
-        <b>AGAMA</b><br/><br/><p>Rekapitulasi Berdasar Agama</p>
+        <b>AGAMA</b><p>Rekapitulasi Berdasar Agama</p>
     </div>
 </div>
 
@@ -71,6 +71,6 @@
         <img src="./images/cpanel/grafik.png" />
     </div>
     <div class="wrapp-keterangan">
-        <b>USIA</b><br/><br/><p>Rekapitulasi Berdasar Usia</p>
+        <b>USIA</b><p>Rekapitulasi Berdasar Usia</p>
     </div>
 </div>

@@ -78,33 +78,6 @@ foreach ($r as $key=>$row) {
         $query3="select count(*) as jml from MASTFIP08 where H_1A<>'' and (F_03 is not null or F_03<>'') and H_1A is not null and A_01='".substr($row[0],0,2)."' and A_01<>'99'";// and ((substring(B_05,1,7) >= '$tglok' and I_5A<>2) or (B_05 >= '$tglok1' and I_5A=2))";
         $row3=mysql_fetch_array(mysql_query($query3));
 ?>
-<!--  <tr>
-    <td width="17" align="right" style="font-family: Verdana; font-size: 8pt"><?=$ii?></td>
-    <td width="349" style="font-family: Verdana; font-size: 8pt"><?=$row[1]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[1][0][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[1][1][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[1][2][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[1][3][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[1][4][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[1][5][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[1][6][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[1][7][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[1][8][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[1][9][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row2[1][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[2][0][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[2][1][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[2][2][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[2][3][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[2][4][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[2][5][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[2][6][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[2][7][jml]?></td>
-    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[2][8][jml]?></td>
-    <td width="27" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row1[2][9][jml]?></td>
-    <td width="27" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row2[2][jml]?></td>
-    <td width="42" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row3[jml]?></td>
-  </tr>-->
   <tr>
     <td width="17" align="right" style="font-family: Verdana; font-size: 8pt"><?=$ii?></td>
     <td width="349" style="font-family: Verdana; font-size: 8pt"><?=$row[1]?></td>

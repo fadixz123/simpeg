@@ -334,8 +334,9 @@ else if ($opsi === 'jabatan') {
             mysql_query($q) or die (mysql_error());
             
             if (isset($_POST['is_kepala_sekolah'])) {
+                $lokasi = isset(subLokasiKerja($A_01, $A_02, $A_03, $A_04))?subLokasiKerja($A_01, $A_02, $A_03, $A_04):NULL;
                 $ks  ="insert into MASTJAB1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', "; 	
-                $ks .="JF_01='$NIP',JF_02='".($jmlr+1)."',JF_03='KEPALA SEKOLAH ".  subLokasiKerja($A_01, $A_02, $A_03, $A_04)."'";
+                $ks .="JF_01='$NIP',JF_02='".($jmlr+1)."',JF_03='KEPALA SEKOLAH ".$lokasi."'";
                 //echo $ks;
                 mysql_query($ks) or die (mysql_error());
             }
