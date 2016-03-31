@@ -160,7 +160,7 @@ if (isset($_SESSION['username'])) {
                 $sql_pesan = mysql_query($query);
                 $no = 1;
                 while($rowy = mysql_fetch_array($sql_pesan)) {
-                    $mess = mysql_fetch_array(mysql_query("select message, waktu from tb_message_detail where status_baca = 'Belum' and nip_pengirim = '".$rowy['nip']."' and nip_penerima = '".$_SESSION['nip']."'"));
+                    $mess = mysql_fetch_array(mysql_query("select message, waktu from tb_message_detail where status_baca = 'Belum' or status_baca = 'Sudah' and nip_pengirim = '".$rowy['nip']."' and nip_penerima = '".$_SESSION['nip']."' order by id desc limit 1"));
                     $foto = $rowy['foto'];
                     if ($rowy['foto'] === '' and $rowy['B_06'] === '1') {
                         $foto = 'default-l.png';
