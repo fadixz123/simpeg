@@ -129,26 +129,38 @@ if (isset($_SESSION['username'])) {
     </div>
     <?php
     
-    $sql = mysql_query("select count(*) as jumlah from (select m.id
-        from tb_message m
-        join tb_message_detail md on (md.id_message = m.id)
-        where m.nip2 = '".$_SESSION['nip_baru']."' and md.status_baca = 'Belum'
-            group by m.id) as sq
+    $sql = mysql_query("select count(*) as jumlah from (select *
+        from tb_message_detail
+        where nip_penerima = '".$_SESSION['nip_baru']."' and status_baca = 'Belum'
+            group by status_baca) as sq
         ");
     $rowx = mysql_fetch_array($sql);
     ?>
     <div class="link2">
-        <?php if (isset($_SESSION['username'])) { 
+        <?php 
+        function datetimexfmysql($dt, $time = NULL) {
+            $var = explode(" ", $dt);
+            $var1 = explode("-", $var[0]);
+            $var2 = "$var1[2]/$var1[1]/$var1[0]";
+            if ($time != NULL) {
+                return $var2 . ' ' . $var[1];
+            } else {
+                return $var2;
+            }
+        }
+        if (isset($_SESSION['username'])) { 
             $detail = "<table width='100%'>";
-                $sql_pesan = mysql_query("select m.id, IF(m.nip1=$_SESSION[nip_baru],nip2,nip1) as nip, mf.foto, mf.B_06, CONCAT_WS(' ',mf.`B_03`,mf.`B_03B`) as nama
-                    from tb_message m
-                    join tb_message_detail md on (md.id_message = m.id)
-                    join mastfip08 mf on (mf.`B_02B` = m.nip2)
-                    where m.nip2 = '".$_SESSION['nip_baru']."' 
-                        group by m.id");
+                $query = "select mf2.foto, mf2.`B_02B` as nip, mf2.B_06, CONCAT_WS(' ',mf2.`B_03`,mf2.`B_03B`) as nama, md.message, md.waktu
+                    from tb_message_detail md
+                    join mastfip08 mf on (mf.`B_02B` = md.nip_penerima)
+                    join mastfip08 mf2 on (md.nip_pengirim = mf2.`B_02B`)
+                    where md.nip_penerima = '".$_SESSION['nip_baru']."' 
+                        group by md.nip_pengirim";
+                
+                $sql_pesan = mysql_query($query);
                 $no = 1;
                 while($rowy = mysql_fetch_array($sql_pesan)) {
-                    $rowz = mysql_fetch_array(mysql_query("select message, waktu from tb_message_detail where id_message = '".$rowy['id']."' order by id desc limit 1"));
+                    $mess = mysql_fetch_array(mysql_query("select message, waktu from tb_message_detail where status_baca = 'Belum' and nip_pengirim = '".$rowy['nip']."' and nip_penerima = '".$_SESSION['nip']."'"));
                     $foto = $rowy['foto'];
                     if ($rowy['foto'] === '' and $rowy['B_06'] === '1') {
                         $foto = 'default-l.png';
@@ -156,11 +168,11 @@ if (isset($_SESSION['username'])) {
                     if ($rowy['foto'] === '' and $rowy['B_06'] === '2') {
                         $foto = 'default-p.png';
                     }
-                    $detail.="<tr onclick=location.href='index.php?do=message&id=".$rowy['nip']."&sid=".$_GET['sid']."' class='".(($no%2===0)?'even':'odd')."' valign='top'><td><img style='background: #ccc; padding: 3px; margin-right: 10px;' src='Foto/".$foto."' width='50px' height='50px' /></td>
+                    $detail.="<tr onclick=location.href='index.php?do=message&id=".$rowy['nip']."&sid=".$_GET['sid']."' class='".(($no%2===0)?'even':'odd')."' valign='top'><td width='15%'><img style='background: #ccc; padding: 3px; margin-right: 10px;' src='Foto/".$foto."' width='50px' height='50px' /></td>
                         <td>
                             <b><small>".$rowy['nama']."</small></b>
-                            <p><small>".((strlen($rowz['message']) < 50)?$rowz['message']:substr($rowz['message'],0,50).' ...')."</small></p>
-                            <p>".$rowz['waktu']."</p>
+                            <p><small>".((strlen($mess['message']) < 50)?$mess['message']:substr($mess['message'],0,50).' ...')."</small></p>
+                            <p style='font-size: 10px; margin-top: 12px;'>".datetimexfmysql($mess['waktu'], true)."</p>
                         </td>
                     </tr>";
                     $no++;

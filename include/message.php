@@ -22,7 +22,7 @@
                     if (v.foto === '' && v.B_06 === '2') {
                         foto = 'default-p.png';
                     }
-                    var str = '<tr valign=top class="spaceunder"><td width="10%"><img src="Foto/'+foto+'" width="50px" height="50px" /></td><td><small><b>'+v.nama+'</b></small><br/>'+v.message+'</td></tr>';
+                    var str = '<tr valign=top class="spaceunder"><td width="10%"><img src="Foto/'+foto+'" width="50px" height="50px" /></td><td><small><b>'+v.nama+'</b></small><br/>'+v.message+' <p style="font-size: 10px; margin-top: 12px;"> '+datetimefmysql(v.waktu)+' </p></td></tr>';
                     $('.isi_message').append(str);
                 });
             }
@@ -54,14 +54,14 @@
 </script>
 <div id="result">
     <?php 
-    mysql_query("update tb_message_detail set status_baca = 'Sudah' where id_message = (select id from tb_message where nip2 = '".$_SESSION['nip_baru']."' and nip1 = '".$_GET['id']."')");
+    mysql_query("update tb_message_detail set status_baca = 'Sudah' where nip_pengirim = '".$_GET['id']."' and nip_penerima = '".$_SESSION['nip']."'");
     $sql1 = mysql_query("select `B_02B` as nip1, CONCAT_WS(' ',B_03, B_03B) as nama from mastfip08 where B_02 = '".$_SESSION['nip']."'");
     $row1 = mysql_fetch_array($sql1);
     
     $sql = mysql_query("select `B_02B` as nip2, CONCAT_WS(' ',B_03, B_03B) as nama from mastfip08 where B_02 = '".$_GET['id']."'");
     $row = mysql_fetch_array($sql);
     ?>
-    <p>to: <?= $row['nama'] ?></p>
+    <p>to: <button class="btn btn-danger btn-xs"><i class="fa fa-user"></i> <?= $row['nama'] ?></button></p>
     <div class="isi_message">
         <table width="100%">
             
