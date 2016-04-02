@@ -94,6 +94,17 @@ function subLokasiKerjaB($A_01,$A_02="",$A_03="",$A_04="",$A_05="") {
 	$orow=mysql_fetch_row($or);
 	return $orow[0];
 }
+
+function tampil_lokasi($A_01,$A_02,$A_03,$A_04) {
+    $oq="select CONCAT_WS(', ',tl.NALOK,tl.NALOKP, tl1.nm) as lokasi 
+        from TABLOKB08 tl
+        join tablok08 tl1 on (tl.`A_01` = tl1.kd)
+        where tl.KOLOK like '".$A_01.$A_02.$A_03.$A_04."%'";
+    
+    $or=mysql_query($oq) or die(mysql_error());
+    $orow=mysql_fetch_row($or);
+    return $orow[0];
+}
 	
 function eselon($eselon){
 	switch ($eselon){

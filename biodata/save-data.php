@@ -305,7 +305,7 @@ else if ($opsi === 'jabatan') {
     $A_04   = $_POST['A_04'];
     if ($I_5A=='1') { $I_JB=addslashes(jabatan($I_05)); }
     if ($I_5A=='1' && $I_06=='99') { $I_5A='4'; }
-
+    
     $q  ="update MASTFIP08 set I_01='$I_01', I_02='$I_02', I_03='".date2mysql($TGSKJAB)."', ";
     $q .="I_04='".date2mysql($TGTMTJAB)."', I_05='$I_05', ";
     $q .="I_JB='$I_JB', I_5A='$I_5A', I_07 = '$I_07', ";
@@ -318,8 +318,10 @@ else if ($opsi === 'jabatan') {
 
     $xtmt=date2mysql($TGTMTJAB);
     $xskj=date2mysql($TGSKJAB);
+    $get_lokasi = tampil_lokasi($A_01, $A_02, $A_03, $A_04);
+    $lokasi = ($get_lokasi !== '')?$get_lokasi:NULL;
     //----------update MASTJAB1------------
-    $q="select * from MASTJAB1 where JF_03='$I_JB' and JF_01='$NIP' and JF_06='$xskj' and JF_07='$xtmt' and JF_04='$I_06' LIMIT 1";
+    $q="select * from MASTJAB1 where JF_03='$I_JB ".$lokasi."' and JF_01='$NIP' and JF_06='$xskj' and JF_07='$xtmt' and JF_04='$I_06' LIMIT 1";
     //echo $q;
     $r=mysql_query($q) or die(mysql_error());
     $j=mysql_num_rows($r);
@@ -329,15 +331,21 @@ else if ($opsi === 'jabatan') {
             $jmlr=$jmlrr[JF_02];
             $jmlr++;
             $q  ="insert into MASTJAB1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', "; 	
-            $q .="JF_01='$NIP',JF_02='$jmlr',JF_03='$I_JB',JF_04='$I_06',JF_05='$I_02',JF_06='$xskj', JF_07='$xtmt'";
+            $q .="JF_01='$NIP',JF_02='$jmlr',JF_03='$I_JB ".$lokasi."',JF_04='$I_06',JF_05='$I_02',JF_06='$xskj', JF_07='$xtmt'";
             //echo $q;
             mysql_query($q) or die (mysql_error());
             
             if (isset($_POST['is_kepala_sekolah'])) {
-                $get_lokasi = subLokasiKerjaB($A_01, $A_02, $A_03, $A_04);
+                $I_06 = $_POST['I_06x'];
+                $I_02 = $_POST['I_02x'];
+                $xskj=date2mysql($_POST['TGSKJABx']);
+                $xtmt=date2mysql($_POST['TGTMTJABx']);
+                
+                $get_lokasi = tampil_lokasi($A_01, $A_02, $A_03, $A_04);
                 $lokasi = ($get_lokasi !== '')?$get_lokasi:NULL;
                 $ks  ="insert into MASTJAB1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', "; 	
-                $ks .="JF_01='$NIP',JF_02='".($jmlr+1)."',JF_03='KEPALA SEKOLAH ".$lokasi."'";
+                $ks .="JF_01='$NIP',JF_02='".($jmlr+1)."',JF_03='KEPALA SEKOLAH ".$lokasi."', ";
+                $ks .="JF_04='$I_06',JF_05='$I_02',JF_06='$xskj', JF_07='$xtmt'";
                 //echo $ks;
                 mysql_query($ks) or die (mysql_error());
                 
@@ -346,7 +354,7 @@ else if ($opsi === 'jabatan') {
     }
     else
     {
-            $aor=mysql_fetch_array(mysql_query("select ID from MASTJAB1 where JF_03='$I_JB' and JF_01='$NIP' and JF_06='$xskj' and JF_07='$xtmt' and JF_04='$I_06' LIMIT 1"));
+            $aor=mysql_fetch_array(mysql_query("select ID from MASTJAB1 where JF_03='$I_JB ".$lokasi."' and JF_01='$NIP' and JF_06='$xskj' and JF_07='$xtmt' and JF_04='$I_06' LIMIT 1"));
             $nor=$aor[ID];
             $jmlrr=mysql_fetch_array(mysql_query("select JF_02 from MASTJAB1 where JF_01='$NIP' order by JF_02 desc limit 1"));
             $jmlr=$jmlrr[JF_02];
@@ -357,8 +365,17 @@ else if ($opsi === 'jabatan') {
             //echo $q;
             mysql_query($q) or die (mysql_error());
             if (isset($_POST['is_kepala_sekolah'])) {
+                
+                $I_06 = $_POST['I_06x'];
+                $I_02 = $_POST['I_02x'];
+                $xskj=date2mysql($_POST['TGSKJABx']);
+                $xtmt=date2mysql($_POST['TGTMTJABx']);
+                
+                $get_lokasi = tampil_lokasi($A_01, $A_02, $A_03, $A_04);
+                $lokasi = ($get_lokasi !== '')?$get_lokasi:NULL;
                 $ks  ="insert into MASTJAB1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', "; 	
-                $ks .="JF_01='$NIP',JF_02='".($jmlr)."',JF_03='KEPALA SEKOLAH'";
+                $ks .="JF_01='$NIP',JF_02='".($jmlr)."',JF_03='KEPALA SEKOLAH ".$lokasi."',";
+                $ks .="JF_04='$I_06',JF_05='$I_02',JF_06='$xskj', JF_07='$xtmt'";
                 //echo $ks;
                 mysql_query($ks) or die (mysql_error());
                 
