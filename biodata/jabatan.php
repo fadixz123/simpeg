@@ -7,6 +7,7 @@ $NIP = $_GET['nip'];
 $q="select * from MASTFIP08 where B_02='$NIP' LIMIT 1";
 $row=mysql_fetch_array(mysql_query($q));
 $I_06=$row[I_06];
+$kpl_sekolah = $row['is_kepala_sekolah'];
 ?>
 <script type="text/javascript">
     $(function() {
@@ -18,6 +19,12 @@ $I_06=$row[I_06];
         }).on('changeDate', function(){
             $(this).datepicker('hide');
         });
+        
+        if ('<?= $kpl_sekolah ?>' === 'Ya') {
+            $('.if_kepsek').show();
+        } else {
+            $('.if_kepsek').hide();
+        }
     });
     
     function gantijab() {
@@ -91,12 +98,26 @@ $I_06=$row[I_06];
     
     function validate_jenjang(id) {
         var i_05 = $('#I_05').val();
+        var is_kepsek = $('#is_kepsek').val();
         if (i_05 === '00018') {
-            var str = '<div class="checkbox"><label><input type="checkbox" name="is_kepala_sekolah" value="Ya" /> Kepala Sekolah</label></div>';
+            var str = '<div class="checkbox"><label><input type="checkbox" name="is_kepala_sekolah" id="is_kepala_sekolah" value="Ya" /> Kepala Sekolah</label></div>';
             $('#load-extend-child3').html(str);
+            if (is_kepsek === 'Ya') {
+                $('#is_kepala_sekolah').attr('checked','checked');
+            } else {
+                $('#is_kepala_sekolah').removeAttr('checked');
+            }
         } else {
             $('#load-extend-child3').html('&nbsp;');
         }
+        $('#is_kepala_sekolah').click(function() {
+            var is_check = $(this).is(':checked');
+            if (is_check === true) {
+                $('.if_kepsek').fadeIn();
+            } else {
+                $('.if_kepsek').fadeOut();
+            }
+        });
     }
     
 </script>
@@ -110,7 +131,7 @@ if ($row['I_05'] !== '00018') {
 $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
 
 ?>
-
+<input type="hidden" id="is_kepsek" value="<?= $kpl_sekolah ?>" />
 <form name="jabatan" id="jabatan" action="index.htm?sid=<?=$sid?>&sid2=<?=$sid2?>&do=biodata&page=jab&NIP=<?=$NIP?>" method="post">
     <input type="hidden" name="jabnya" value="<?=$jabnya?>">
     <input type="hidden" name="A_01" value="<?=$row[A_01]?>">
@@ -140,13 +161,13 @@ $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
               <td></td>
               <td></td>
               <td></td>
-              <td><span id="load-extend-child"></span> <span id="load-extend-child2"></span> </td>
+              <td>&nbsp;<span id="load-extend-child"></span> <span id="load-extend-child2"></span> </td>
           </tr>
           <tr class="autoshow">
               <td></td>
               <td></td>
               <td></td>
-              <td id="load-extend-child3"></td>
+              <td id="load-extend-child3">&nbsp;</td>
           </tr>
           <tr> 
             <td width="3%"> 02</td>
@@ -220,6 +241,86 @@ $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
             <td> :</td>
             <td width="77%">
               <input name="TGTMTJAB" class="form-control-static" id="tgtmtjab" value="<?=datefmysql($row['I_04']); ?>">
+            </td>
+          </tr>
+          
+          <!-- JIKA KEPALA SEKOLAH MAKA OPSI INI MUNCUL -->
+          <tr class="sectiontableheader if_kepsek"> 
+                <td width="3%"><b></b></td>
+                <td colspan="4" height="22"><b>Kepala Sekolah</b></td>
+            </tr>
+          <tr class="if_kepsek"> 
+            <td width="3%"> 07</td>
+            <td width="20%">Eselon</td>
+            <td> :</td>
+            <td width="77%">
+	<?php
+		if ($subjab02!="") {
+		$ess="select * from TBJAB where KOJAB='$subjab02'";
+		$ress=mysql_query($ess);
+		$oess=mysql_fetch_array($ress);
+		$I_06=$oess[esel];
+		}
+	?>
+              <select name="I_06x" id="inolnamx" class="form-control-static">
+                <option value="99">-</option>
+                <option value="11">I.a</option>
+                <option value="12">I.b</option>
+                <option value="21">II.a</option>
+                <option value="22">II.b</option>
+                <option value="31">III.a</option>
+                <option value="32">III.b</option>
+                <option value="41">IV.a</option>
+                <option value="42">IV.b</option>
+                <option value="51">V.a</option>
+                <option value="52">V.b</option>
+             </select> 
+              	
+              </td>
+          </tr>
+          <?php if ($I_01=='') { $I_01=$row[I_01]; }?>
+          <tr class="if_kepsek"> 
+            <td width="3%"> 08</td>
+            <td width="20%">Ditetapkan oleh</td>
+            <td> :</td>
+            <td width="77%"> 
+            <select name="I_01x" class="form-control-static">
+                <option value="">-</option>
+                <?
+                	$pjb="select * from TABPJB";
+	              	$res=mysql_query($pjb);
+	              	while ($ro=mysql_fetch_array($res))
+	              	{
+	              		?>
+	                	<option value="<?=$ro[KODE]?>"><?=$ro[NAMA]?></option>
+	                	<?
+	              	}
+	    	?>
+              </select> </td>
+          </tr>
+          <? if ($I_02=='') $I_02=$row[I_02];?>
+          <tr class="if_kepsek"> 
+            <td width="3%"> 09</td>
+            <td width="20%">Nomor SK Jabatan</td>
+            <td> :</td>
+            <td width="77%">  
+            	<input type="text" class="form-control-static" name="I_02x" value="" size="50"> 
+            </td>
+          </tr>
+          <tr class="if_kepsek"> 
+            <td width="3%"> 10</td>
+            <td width="20%">Tanggal SK Jabatan</td>
+            <td> :</td>
+            <td width="77%"> 
+              <input name="TGSKJABx" class="form-control-static" id="tgskjabx" value="">
+            </td>
+          </tr>
+          <tr class="if_kepsek"> 
+            <td width="3%"> 11</td>
+            <td width="20%">TMT Jabatan</td>
+            <td> :</td>
+            <td width="77%">
+              <input name="TGTMTJABx" class="form-control-static" id="tgtmtjabx" value="">
             </td>
           </tr>
           
