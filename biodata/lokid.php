@@ -116,6 +116,8 @@ $q="select * from MASTFIP08 where B_02='".$_GET['nip']."' LIMIT 1";
                     $('#datamodal_search_detail').modal('hide');
                     my_ajax('include/main-list.php?page=1&sid=<?= $_GET['sid']?>&uk=all&suk=&nip='+data.nip, '#result');
                 }
+                $('#nip_nama').html(data.identitas);
+                search_data_pns(1);
             },
             error: function() {
                 hide_ajax_indicator();

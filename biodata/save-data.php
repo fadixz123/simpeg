@@ -103,6 +103,9 @@ if ($opsi === 'pegawai') {
     if (mysql_affected_rows() > 0) { 
         lethistory($sid,"UPDATE IDENTITAS",$NIP); 
     }
+    
+    $pegawai = mysql_fetch_array(mysql_query("select CONCAT_WS(' ',`B_02B`,' | ', `B_03`, `B_03B`) as identitas from mastfip08 where `B_02B` = '".$B_02B."' "));
+    $result['identitas'] = $pegawai['identitas'];
     die(json_encode($result));
 }
 
