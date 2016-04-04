@@ -64,12 +64,13 @@ if (isset($_GET['search'])) {
     
     if ($cari === 'suk') { // pencarian sub unit kerja (SUK)
         $data = array();
-        $uk   = $_GET['uk'];
+        $uk   = ($_GET['uk'] !== '' and $_GET['uk'] !== 'all')?$_GET['uk']:'';
         $param= NULL;
-        if ($uk !== '') {
+        if ($uk !== '' and $uk !== 'all') {
             $param = " and NALOK like ('%".$q."%')";
         }
         $query = "select `KOLOK` as id, `NALOK` as list from tablokb08 where `A_01` = '".$uk."' $param";
+        //echo $query;
         $sql = mysql_query($query);
         while ($rows = mysql_fetch_object($sql)) {
             $data[] = $rows;

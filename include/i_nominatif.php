@@ -176,14 +176,14 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
     <?php if (isset($_GET['jabatan'])) { ?>
     <th>JABATAN</th>
     <?php } ?>
-    <?php if (isset($_GET['unitkerja'])) { ?>
-    <th>UNIT KERJA</th>
+    <?php if (isset($_GET['subsubunitkerja'])) { ?>
+    <th>SUB SUB UNIT KERJA</th>
     <?php } ?>
     <?php if (isset($_GET['subunitkerja'])) { ?>
     <th>SUB UNIT KERJA</th>
     <?php } ?>
-    <?php if (isset($_GET['subsubunitkerja'])) { ?>
-    <th>SUB SUB UNIT KERJA</th>
+    <?php if (isset($_GET['unitkerja'])) { ?>
+    <th>UNIT KERJA</th>
     <?php } ?>
     <?php if (isset($_GET['eselon'])) { ?>
     <th>ESEL</th>

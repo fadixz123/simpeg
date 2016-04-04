@@ -12,12 +12,19 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
 ?>
 <script type="text/javascript">
     $(function() {
-        
         get_list_nominatif(1);
         $('[data-toggle="popover"]').popover({
             html: true
+        }).on("show.bs.popover", function () { $(this).data("bs.popover").tip().css("min-width", "500px"); });
+        
+        $(document).on('click', '#checkall', function() {
+            var checked = $('#checkall').is(':checked');
+            if (checked === true) {
+                $('input[type=checkbox]').attr('checked','checked');
+            } else {
+                $('input[type=checkbox]').removeAttr('checked');
+            }
         });
-
         $('body').on('click', function (e) {
             if ($(e.target).data('toggle') !== 'popover'
                 && $(e.target).parents('.popover.in').length === 0) { 
@@ -499,68 +506,121 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
         <button id="searching" class="btn btn-primary" data-target=".bs-modal-lg"><i class="fa fa-search"></i> Search</button>
         <button class="btn" data-target=".bs-modal-lg" onclick="reload_data();"><i class="fa fa-refresh"></i> Reload Data</button>
         <?php
-        $detail = "<form id='dinamic_kolom'><table><tr valign=top><td>
+        $detail = "<form id='dinamic_kolom'>
             <div class='checkbox'>
-                <label><input type='checkbox' name='niplama' value=''>NIP Lama</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='nipbaru' value=''>NIP Baru</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='nama' value=''>Nama</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='alamat' value=''>Alamat</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='tempatlahir' value=''>Tempat Lahir</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='tmtcpns' value=''>TMT CPNS</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='jekel' value=''>Jenis Kelamin</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='jabatan' value=''>Jabatan</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='unitkerja' value=''>Unit Kerja</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='subunitkerja' value=''>Sub Unit Kerja</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='subsubunitkerja' value=''>Sub Sub Unit Kerja</label>
-            </div>
+                <label><input type='checkbox' id='checkall'><b>Check all / Uncheck all</b></label>
+            </div><br/>
+            <table width='100%' cellpadding='0'>
+            <tbody><tr valign=top><td width='50%'>
+            <table width='100%' class='table table-striped table-hover'>
+            <tbody>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='niplama' value=''>NIP Lama</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='nipbaru' value=''>NIP Baru</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='nama' value=''>Nama</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='alamat' value=''>Alamat</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='tempatlahir' value=''>Tempat Lahir</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='tmtcpns' value=''>TMT CPNS</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='jekel' value=''>Jenis Kelamin</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='jabatan' value=''>Jabatan</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='unitkerja' value=''>Unit Kerja</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='subunitkerja' value=''>Sub Unit Kerja</label>
+                    </div>
+                </td></tr>
+            </tbody>
+            </table>
             </td><td>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='eselon' value=''>Eselon</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='gr' value=''>G / R</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='tmt' value=''>TMT</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='pendidikan' value=''>Pendidikan</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='jurusan' value=''>Jurusan</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='lulus' value=''>Lulus</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='namasekolah' value=''>Nama Sekolah</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='tmtjabatan' value=''>TMT Jabatan</label>
-            </div>
-            <div class='checkbox'>
-                <label><input type='checkbox' name='nomorskjabatan' value=''>Nomor SK Jabatan</label>
-            </div>
+            <table width='100%' class='table table-striped table-hover'>
+            <tbody>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='subsubunitkerja' value=''>Sub Sub Unit Kerja</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='eselon' value=''>Eselon</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='gr' value=''>G / R</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='tmt' value=''>TMT</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='pendidikan' value=''>Pendidikan</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='jurusan' value=''>Jurusan</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='lulus' value=''>Lulus</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='namasekolah' value=''>Nama Sekolah</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='tmtjabatan' value=''>TMT Jabatan</label>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <div class='checkbox'>
+                        <label><input type='checkbox' name='nomorskjabatan' value=''>Nomor SK Jabatan</label>
+                    </div>
+                </td></tr>
+            </tbody>
+            </table>
             </td></tr>
             <tr><td></td></tr>
             </table></form>

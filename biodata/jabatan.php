@@ -30,7 +30,7 @@ $kpl_sekolah = $row['is_kepala_sekolah'];
     function gantijab() {
         //$('.autohide').hide();
         $('.autoshow').show();
-        var str = '<select name="pilihjab" id="pilihjab" class="form-control-static autoshow" onchange="get_jabatan_group();" style="width: 300px;">'+
+        var str = '<select name="pilihjab" id="pilihjab" class="form-control-static autoshow" onchange="get_jabatan_group(this.value);" style="width: 300px;">'+
                         '<option value="">Pilih ...</option>'+
                         '<option value="1">STRUKTURAL</option>'+
                         '<option value="2">JFK</option>'+
@@ -60,8 +60,12 @@ $kpl_sekolah = $row['is_kepala_sekolah'];
         $('.autoshow').hide();
     }
     
-    function get_jabatan_group() {
+    function get_jabatan_group(value) {
         //var nilai = $('#pilihjab').val();
+        if (value === '1' || value === '3') {
+            $('#load-extend-child2, #load-extend-child3').html('');
+            $('.if_kepsek').fadeOut();
+        }
         $.ajax({
             type: 'GET',
             url: 'biodata/load-extend.php',

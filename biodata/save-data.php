@@ -297,7 +297,12 @@ else if ($opsi === 'jabatan') {
     $I_06   = $_POST['I_06'];
     $I_01   = $_POST['I_01'];
     $I_02   = $_POST['I_02'];
-    $I_JB   = isset($_POST['I_JB'])?$_POST['I_JB']:'';
+    
+    $q="select KOJFU,NAJFU from TABJFU where KOJFU='$I_05'";
+    $r=mysql_query($q) or die(mysql_error());
+    $xo=mysql_fetch_array($r);
+    
+    $I_JB   = $xo['NAJFU'];
     $I_07   = isset($_POST['I_07'])?$_POST['I_07']:'';
     $TGSKJAB= $_POST['TGSKJAB'];
     $TGTMTJAB = $_POST['TGTMTJAB'];
@@ -353,6 +358,8 @@ else if ($opsi === 'jabatan') {
                 mysql_query($ks) or die (mysql_error());
                 
                 mysql_query("update mastfip08 set is_kepala_sekolah = 'Ya' where `B_02B` = '".$NIP."' or `B_02` = '".$NIP."'");
+            } else {
+                mysql_query("update mastfip08 set is_kepala_sekolah = 'Tidak' where `B_02B` = '".$NIP."' or `B_02` = '".$NIP."'");
             }
     }
     else
