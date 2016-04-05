@@ -3,7 +3,7 @@ include('config.inc');
 include('fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
-//header_excel('rekap-nominatif.xls');
+header_excel('rekap-nominatif.xls');
 ?>
 <body>
 <?php
