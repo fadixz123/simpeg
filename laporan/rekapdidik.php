@@ -71,7 +71,7 @@ $r=listUnitKerjaNoBiro();
   </tr>
 <?php
 $ii=0;
-
+$total_atas_ke_bawah = 0;
 foreach ($r as $key=>$row) {
 	$ii++;
         $sumL[$key] = 0;
@@ -107,6 +107,7 @@ foreach ($r as $key=>$row) {
     <td width="42" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row3[jml]?></td>
   </tr>
 <?
+$total_atas_ke_bawah += $jml;
 }
 for ($i=1;$i<=2;$i++) {
         for ($j=0;$j<=9;$j++) {
@@ -148,7 +149,7 @@ $row6=mysql_fetch_array(mysql_query($query6));
     <td width="27" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row4[2][9][jml]?></td>
     <td width="27" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row4[2][10][jml]?></td>
     <td width="27" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row5[2][jml]?></td>
-    <td width="42" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row6[jml]?></td>
+    <td width="42" align="right" style="font-family: Verdana; font-size: 8pt"><?=$total_atas_ke_bawah ?></td>
   </tr>
 </table>
 <center><button onclick="cetak();">Cetak</button></center>

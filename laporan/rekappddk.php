@@ -61,12 +61,14 @@ $r=mysql_query($q);
   <tbody>
 <?php
 $ii=0;
+$total1 = 0; $total2 = 0; $total3 = 0; $total4 = 0; $total5 = 0; $total6 = 0; $total7 = 0; $total8 = 0; $total9 = 0; $total10 = 0; $total11 = 0; $total12 = 0;
+$total_atas_ke_bawah = 0;
 while ($row=mysql_fetch_array($r)) {
 	$ii++;
         $query3="select count(*) as jml from MASTFIP08 where H_1A<>'' and (F_03 is not null or F_03<>'') and H_1A is not null and A_01='".substr($row[kd],0,2)."' and A_01<>'99'";
         $row3=mysql_fetch_array(mysql_query($query3));
                 for ($j=0;$j<count($pendidikan);$j++) {
-                        $query="select count(*) as jml from MASTFIP08 where (F_03 is not null or F_03<>'') and H_1A like '$pendidikan[$j]' and H_1A<>'' and H_1A is not null and A_01='".substr($row[kd],0,2)."' and A_01<>'99'";
+                        $query="select count(*) as jml from MASTFIP08 where (F_03 is not null or F_03<>'') and H_1A = '$pendidikan[$j]' and H_1A<>'' and H_1A is not null and A_01='".substr($row[kd],0,2)."' and A_01<>'99'";
                         $row1[$j]=mysql_fetch_array(mysql_query($query));
                 }
                 $query2="select count(*) as jml from MASTFIP08 where (F_03 is not null or F_03<>'') and H_1A<>'' and H_1A is not null and A_01='".substr($row[kd],0,2)."' and A_01<>'99'";
@@ -90,10 +92,23 @@ while ($row=mysql_fetch_array($r)) {
     <td width="26" align="center"><?=$row2[jml]?></td>
   </tr>
 <?
+$total1 += $row1[0]['jml'];
+$total2 += $row1[1]['jml'];
+$total3 += $row1[2]['jml'];
+$total4 += $row1[3]['jml'];
+$total5 += $row1[4]['jml'];
+$total6 += $row1[5]['jml'];
+$total7 += $row1[6]['jml'];
+$total8 += $row1[7]['jml'];
+$total9 += $row1[8]['jml'];
+$total10 += $row1[9]['jml'];
+$total11 += $row1[10]['jml'];
+$total12 += $row1[11]['jml'];
+$total_atas_ke_bawah += $row2['jml'];
 }
 	$j=0;
         for ($j=0;$j<count($pendidikan);$j++) {
-                $query4="select count(*) as jml from MASTFIP08 where (F_03 is not null or F_03<>'') and A_01<>'99' and H_1A='$pendidikan[$j]'";
+                $query4="select count(*) as jml from MASTFIP08 where (F_03 is not null or F_03<>'') and H_1A = '$pendidikan[$j]' and H_1A<>'' and H_1A is not null and A_01<>'99'";
                 $row4[$j]=mysql_fetch_array(mysql_query($query4));
         }
         $query5="select count(*) as jml from MASTFIP08 where (F_03 is not null or F_03<>'') and A_01<>'99' and H_1A<>'' and H_1A is not null";
@@ -105,19 +120,19 @@ $row6=mysql_fetch_array(mysql_query($query6));
   <tr>
     <td width="17" style="font-family: Verdana; font-size: 8pt">&nbsp;</td>
     <td width="349" style="font-family: Verdana; font-size: 8pt"><font face="Verdana" size="1"><b>JUMLAH</b></td>
-    <td width="26" align="center"><?=$row4[0][jml]?></td>
-    <td width="26" align="center"><?=$row4[1][jml]?></td>
-    <td width="26" align="center"><?=$row4[2][jml]?></td>
-    <td width="26" align="center"><?=$row4[3][jml]?></td>
-    <td width="26" align="center"><?=$row4[4][jml]?></td>
-    <td width="26" align="center"><?=$row4[5][jml]?></td>
-    <td width="26" align="center"><?=$row4[6][jml]?></td>
-    <td width="26" align="center"><?=$row4[7][jml]?></td>
-    <td width="26" align="center"><?=$row4[8][jml]?></td>
-    <td width="26" align="center"><?=$row4[9][jml]?></td>
-    <td width="26" align="center"><?=$row4[10][jml]?></td>
-    <td width="26" align="center"><?=$row4[11][jml]?></td>
-    <td width="26" align="center"><?=$row5[jml]?></td>
+    <td width="26" align="center"><?=$total1?></td>
+    <td width="26" align="center"><?=$total2?></td>
+    <td width="26" align="center"><?=$total3?></td>
+    <td width="26" align="center"><?=$total4?></td>
+    <td width="26" align="center"><?=$total5?></td>
+    <td width="26" align="center"><?=$total6 ?></td>
+    <td width="26" align="center"><?=$total7?></td>
+    <td width="26" align="center"><?=$total8?></td>
+    <td width="26" align="center"><?=$total9?></td>
+    <td width="26" align="center"><?=$total10?></td>
+    <td width="26" align="center"><?=$total11?></td>
+    <td width="26" align="center"><?=$total12?></td>
+    <td width="26" align="center"><?=$total_atas_ke_bawah ?></td>
   </tr>
   </tbody>
 </table>
