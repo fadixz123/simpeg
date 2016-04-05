@@ -363,6 +363,7 @@ function getNaJabStru($nip) {
 
 function getNaJab($nip) {
         $q="select I_5A,I_JB from MASTFIP08 where B_02='$nip'";
+        
         $r=mysql_query($q) or die(mysql_error());
         $ro=mysql_fetch_row($r);
         switch ($ro[0]) {

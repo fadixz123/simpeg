@@ -3,7 +3,7 @@ include('config.inc');
 include('fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
-header_excel('rekap-nominatif.xls');
+//header_excel('rekap-nominatif.xls');
 ?>
 <body>
 <?php
@@ -79,11 +79,14 @@ if ($unitkerja !='') {
 	if ($status!='all') {
 		$query.="and B_09='$status' ";
 	}
-	if ($jabatan!='all') {
-                if ($jabatan==2) { $query.="and (I_5A='2' or I_5A='4') "; }
-                else { $query.="and I_5A='$jabatan' "; }
+	if ($jabatan!=='all') {
+            if ($jabatan=='2') { 
+                $query.="and (I_5A='2' or I_5A='4') "; 
+            } else { 
+                $query.="and I_5A='$jabatan' "; 
+            }
 	}
-	if ($jabfung!='') {
+	if ($jabfung!=='') {
 		$query.="and (I_5A='2' or I_5A='4') and I_05='$jabfung' ";
 	}
 	if ($eselon!='all' && $eselon!='str') {
@@ -121,7 +124,6 @@ if ($unitkerja !='') {
         }
 	$query.="order by F_03 DESC,F_TMT ASC, I_06,F_04 DESC, H_4A ASC, H_1A DESC, H_02 ASC, B_05 ASC ";
 	$no=0;
-        //echo $query;
 	$r=mysql_query($query) or die (mysql_error());
 ?>
 <table>
@@ -173,7 +175,7 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
     <?php if (isset($_GET['jekel'])) { ?>
     <th>JENIS KELAMIN</th>
     <?php } ?>
-    <?php if (isset($_GET['jabatan'])) { ?>
+    <?php if (isset($_GET['jabatan_check'])) { ?>
     <th>JABATAN</th>
     <?php } ?>
     <?php if (isset($_GET['subsubunitkerja'])) { ?>
@@ -185,7 +187,7 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
     <?php if (isset($_GET['unitkerja'])) { ?>
     <th>UNIT KERJA</th>
     <?php } ?>
-    <?php if (isset($_GET['eselon'])) { ?>
+    <?php if (isset($_GET['eselon_check'])) { ?>
     <th>ESEL</th>
     <?php } ?>
     <?php if (isset($_GET['gr'])) { ?>
@@ -209,11 +211,12 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
     <?php if (isset($_GET['tmtjabatan'])) { ?>
     <th>TMT JABATAN</th>
     <?php } ?>
-    <?php if (isset($_GET['noskjabatan'])) { ?>
+    <?php if (isset($_GET['nomorskjabatan'])) { ?>
     <th>NO. SK JABATAN</th>
     <?php } ?>
   </tr>
   <?php
+  
 		$z=0;
 		while ($row=mysql_fetch_array($r)) {
 		  	$no++;
@@ -224,7 +227,13 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
                         <tr><td style='border: none;'>".ucwords(strtolower(lokasiKerjaB($row[A_01])))."</td></tr>
                         </table>
                         ";
-		?>
+        if ($row['I_05'] === '00018') {
+            $qjenjang="select * from TABJENJANG_GURU where KJENJANG = '".$row['I_07']."'";
+        } else {
+            $qjenjang="select * from TABJENJANG where KJENJANG = '".$row['I_07']."'";
+        }
+        $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
+        ?>
   <tr>
     <td align="center"><?=$no?></td>
     <?php if (isset($_GET['niplama'])) { ?>
@@ -251,8 +260,8 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
     <?php if (isset($_GET['jekel'])) { ?>
     <td><?= jenisKelamin($row[B_06])?></td>
     <?php } ?>
-    <?php if (isset($_GET['jabatan'])) { ?>
-    <td><?= getNaJab($row[B_02])?></td>
+    <?php if (isset($_GET['jabatan_check'])) { ?>
+    <td><?= getNaJab($row[B_02])?> <?= $nama_jenjang['JENJANG'] ?></td>
     <?php } ?>
     <?php if (isset($_GET['unitkerja'])) { ?>
     <td><?=ucwords(strtolower(subLokasiKerjaB($row[A_01].$row[A_02].$row[A_03].$row[A_04])))?></td>
@@ -263,7 +272,7 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
     <?php if (isset($_GET['subsubunitkerja'])) { ?>
     <td><?=ucwords(strtolower(lokasiKerjaB($row[A_01])))?></td>
     <?php } ?>
-    <?php if (isset($_GET['eselon'])) { ?>
+    <?php if (isset($_GET['eselon_check'])) { ?>
     <td align="center"><?=eselon($row[I_06])?></td>
     <?php } ?>
     <?php if (isset($_GET['gr'])) { ?>
@@ -289,7 +298,7 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
     <td><?=datefmysql($row['I_04']); ?></td>
     <?php } ?>
     <?php if (isset($_GET['nomorskjabatan'])) { ?>
-    <td><?=($row['I_02'])?></td>
+    <td><?=($row['I_02'])?> </td>
     <?php } ?>
   </tr>
   <?php } ?>

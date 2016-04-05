@@ -20,9 +20,9 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
         $(document).on('click', '#checkall', function() {
             var checked = $('#checkall').is(':checked');
             if (checked === true) {
-                $('input[type=checkbox]').attr('checked','checked');
+                $('.checkbox input[type=checkbox]').attr('checked','checked');
             } else {
-                $('input[type=checkbox]').removeAttr('checked');
+                $('.checkbox input[type=checkbox]').removeAttr('checked');
             }
         });
         $('body').on('click', function (e) {
@@ -551,7 +551,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                 </td></tr>
                 <tr><td>
                     <div class='checkbox'>
-                        <label><input type='checkbox' name='jabatan' value=''>Jabatan</label>
+                        <label><input type='checkbox' name='jabatan_check' value=''>Jabatan</label>
                     </div>
                 </td></tr>
                 <tr><td>
@@ -576,7 +576,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                 </td></tr>
                 <tr><td>
                     <div class='checkbox'>
-                        <label><input type='checkbox' name='eselon' value=''>Eselon</label>
+                        <label><input type='checkbox' name='eselon_check' value=''>Eselon</label>
                     </div>
                 </td></tr>
                 <tr><td>
