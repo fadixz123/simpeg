@@ -27,9 +27,10 @@ $thskr1=$tahun-61;
 $tglok=$thskr."-".date("m")."-".date("d");
 $tglok1=$thskr1."-".date("m")."-".date("d");
 
-$pendidikan=array("-","10","20","30","41","42","43","44","70","80","90");
+$pendidikan=array("-","10","20","30","41","42","43","44","50","60","70","80","90","99");
 $kelamin=array("1","2");
 $r=listUnitKerjaNoBiro();
+
 ?>
 <h1>JUMLAH PEGAWAI NEGERI SIPIL MENURUT JENIS KELAMIN DAN PENDIDIKAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h1>
 <table width="100%" class="tabel-laporan">
@@ -37,9 +38,9 @@ $r=listUnitKerjaNoBiro();
     <td width="17" align="center" rowspan="2"><b><font face="Verdana" size="1">
     No</font></b></td>
     <td width="349" align="center" rowspan="2"><font face="Verdana" size="1"><b>INSTANSI</b></font></td>
-    <td width="285" align="center" colspan="12"><b>
+    <td width="285" align="center" colspan="15"><b>
     <font face="Verdana" size="1">LAKI-LAKI</font></b></td>
-    <td width="287" align="center" colspan="12"><b>
+    <td width="287" align="center" colspan="15"><b>
     <font face="Verdana" size="1">PEREMPUAN</font></b></td>
     <td width="42" align="center" rowspan="2"><font face="Verdana" size="1"><b>Jumlah</b></font><?=$row1[8][jml]?></td>
   </tr>
@@ -52,9 +53,12 @@ $r=listUnitKerjaNoBiro();
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">D2</font></td>
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">D3</font></td>
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">D4</font></td>
+    <th width="26">SM.Non Ak</th>
+    <th width="26">SM.Ak</th>
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">S1</font></td>
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">S2</font></td>
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">S3</font></td>
+    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">PROFESI</font></td>
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">JML</font></td>
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">&lt; SD</font></td>
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">SD</font></td>
@@ -64,9 +68,12 @@ $r=listUnitKerjaNoBiro();
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">D2</font></td>
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">D3</font></td>
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">D4</font></td>
+    <th width="26">SM.Non Ak</th>
+    <th width="26">SM.Ak</th>
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">S1</font></td>
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">S2</font></td>
     <td width="27" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">S3</font></td>
+    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">PROFESI</font></td>
     <td width="27" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">JML</font></td>
   </tr>
 <?php
@@ -84,7 +91,7 @@ foreach ($r as $key=>$row) {
     <?php
     $jmll = 0;
     
-    for ($j=0;$j<=10;$j++) {
+    for ($j=0;$j<=count($pendidikan)-1;$j++) {
         $query="select count(*) as jml from MASTFIP08 where B_06='1' and (F_03 is not null or F_03<>'') and H_1A = '".$pendidikan[$j]."' and H_1A<>'' and H_1A is not null and A_01='".substr($row[0],0,2)."' and A_01<>'99'";// and ((substring(B_05,1,7) >= '$tglok' and I_5A<>2) or (B_05 >= '$tglok1' and I_5A=2))";
         $rowsl= mysql_fetch_array(mysql_query($query));
         $jmll = $jmll + $rowsl['jml'];
@@ -96,7 +103,7 @@ foreach ($r as $key=>$row) {
         <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$jmll?></td>
     <?php
     $jmlp = 0;
-    for ($j=0;$j<=10;$j++) {
+    for ($j=0;$j<=count($pendidikan)-1;$j++) {
         $query="select count(*) as jml from MASTFIP08 where B_06='2' and (F_03 is not null or F_03<>'') and H_1A = '".$pendidikan[$j]."' and H_1A<>'' and H_1A is not null and A_01='".substr($row[0],0,2)."' and A_01<>'99'";// and ((substring(B_05,1,7) >= '$tglok' and I_5A<>2) or (B_05 >= '$tglok1' and I_5A=2))";
         $rowsp= mysql_fetch_array(mysql_query($query));
         $jmlp = $jmlp + $rowsp['jml'];
@@ -107,11 +114,11 @@ foreach ($r as $key=>$row) {
     <td width="42" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row3[jml]?></td>
   </tr>
 <?
-$total_atas_ke_bawah += $jml;
+$total_atas_ke_bawah += $row3[jml];
 }
 for ($i=1;$i<=2;$i++) {
-        for ($j=0;$j<=9;$j++) {
-                $query4="select sum(jml) as jml from (select count(*) as jml from MASTFIP08 where B_06='$i' and (F_03 is not null or F_03<>'') and A_01<>'99' and H_1A = '".$pendidikan[$j]."') as jml";// and ((substring(B_05,1,7) >= '$tglok' and I_5A<>2) or (B_05 >= '$tglok1' and I_5A=2))";
+        for ($j=0;$j<=count($pendidikan)-1;$j++) {
+                $query4="select sum(jml) as jml from (select count(*) as jml from MASTFIP08 where B_06='".$i."' and (F_03 is not null or F_03<>'') and H_1A = '".$pendidikan[$j]."' and H_1A<>'' and H_1A is not null and A_01<>'99' and A_01 <> '') as jml";// and ((substring(B_05,1,7) >= '$tglok' and I_5A<>2) or (B_05 >= '$tglok1' and I_5A=2))";
                 
                 $row4[$i][$j]=mysql_fetch_array(mysql_query($query4));
         }
@@ -136,7 +143,11 @@ $row6=mysql_fetch_array(mysql_query($query6));
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row4[1][8][jml]?></td>
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row4[1][9][jml]?></td>
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row4[1][10][jml]?></td>
+    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row4[1][11][jml]?></td>
+    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row4[1][12][jml]?></td>
+    <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row4[1][13][jml]?></td>
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row5[1][jml]?></td>
+    
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row4[2][0][jml]?></td>
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row4[2][1][jml]?></td>
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row4[2][2][jml]?></td>
@@ -148,6 +159,9 @@ $row6=mysql_fetch_array(mysql_query($query6));
     <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row4[2][8][jml]?></td>
     <td width="27" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row4[2][9][jml]?></td>
     <td width="27" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row4[2][10][jml]?></td>
+    <td width="27" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row4[2][11][jml]?></td>
+    <td width="27" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row4[2][12][jml]?></td>
+    <td width="27" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row4[2][13][jml]?> </td>
     <td width="27" align="right" style="font-family: Verdana; font-size: 8pt"><?=$row5[2][jml]?></td>
     <td width="42" align="right" style="font-family: Verdana; font-size: 8pt"><?=$total_atas_ke_bawah ?></td>
   </tr>

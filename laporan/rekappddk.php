@@ -28,7 +28,7 @@ $thskr1=$tahun-61;
 $tglok=$thskr."-".date("m")."-".date("d");
 $tglok1=$thskr1."-".date("m")."-".date("d");
 
-$pendidikan=array("10","20","30","41","42","43","44","50","60","70","80","90");
+$pendidikan=array("10","20","30","41","42","43","44","50","60","70","80","90","99");
 $kelamin=array("1","2");
 $q="select * from TABLOK08 where kd<>'99' order by kd";
 $r=mysql_query($q);
@@ -39,7 +39,7 @@ $r=mysql_query($q);
   <tr>
     <th width="17" align="center" rowspan="2">No.</th>
     <th width="349" align="center" rowspan="2">INSTANSI</th>
-    <th width="285" align="center" colspan="12">TINGKAT PENDIDIKAN</th>
+    <th width="285" align="center" colspan="13">TINGKAT PENDIDIKAN</th>
     <th width="26" align="center" rowspan="2">JML</th>
   </tr>
   
@@ -56,6 +56,7 @@ $r=mysql_query($q);
     <th width="26">S1</th>
     <th width="26">S2</th>
     <th width="26">S3</th>
+    <th width="26">PROFESI</th>
   </tr>
   </thead>
   <tbody>
@@ -89,6 +90,7 @@ while ($row=mysql_fetch_array($r)) {
     <td width="26" align="center"><?=$row1[9][jml]?></td>
     <td width="26" align="center"><?=$row1[10][jml]?></td>
     <td width="26" align="center"><?=$row1[11][jml]?></td>
+    <td width="26" align="center"><?=$row1[12][jml]?></td>
     <td width="26" align="center"><?=$row2[jml]?></td>
   </tr>
 <?
@@ -104,6 +106,7 @@ $total9 += $row1[8]['jml'];
 $total10 += $row1[9]['jml'];
 $total11 += $row1[10]['jml'];
 $total12 += $row1[11]['jml'];
+$total13 += $row1[12]['jml'];
 $total_atas_ke_bawah += $row2['jml'];
 }
 	$j=0;
@@ -132,6 +135,7 @@ $row6=mysql_fetch_array(mysql_query($query6));
     <td width="26" align="center"><?=$total10?></td>
     <td width="26" align="center"><?=$total11?></td>
     <td width="26" align="center"><?=$total12?></td>
+    <td width="26" align="center"><?=$total13?></td>
     <td width="26" align="center"><?=$total_atas_ke_bawah ?></td>
   </tr>
   </tbody>
