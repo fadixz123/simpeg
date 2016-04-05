@@ -237,10 +237,10 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
   <tr>
     <td align="center"><?=$no?></td>
     <?php if (isset($_GET['niplama'])) { ?>
-    <td align="center"><?=$row[B_02]?></td>
+    <td align="center"><?=$row[B_02]?>&nbsp;</td>
     <?php } ?>
     <?php if (isset($_GET['nipbaru'])) { ?>
-    <td><?=$row[B_02B] =='' ? $row[B_02] : format_nip_baru($row[B_02B])?></td>
+    <td><?=$row[B_02B] =='' ? $row[B_02] : format_nip_baru($row[B_02B])?>&nbsp;</td>
     <?php } ?>
     <?php if (isset($_GET['nama'])) { ?>
     <td><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></td>
