@@ -95,12 +95,13 @@ $r=listUnitKerjaNoBiro();
   </tr>
     </thead>
 <?php
+$total_laki = 0; $total_pr = 0;
 foreach ($r as $key=>$value) {
 	for ($i=0;$i<=16;$i++) {
-		$query="select count(*) as jml from MASTFIP08 where F_03='$golongan[$i]' ";
+		$query="select count(*) as jml from MASTFIP08 where F_03='$golongan[$i]' and B_06='1'";
                 if (strlen($value[0])==2) { 
                     $query.="and A_01='".$value[0]."' "; 
-                } else { 
+                } else {
                     $query.="and A_01='".substr($value[0],0,2)."' 
                         and A_02='".substr($value[0],2,2)."' 
                         and A_03='".substr($value[0],4,2)."' ";                     
@@ -110,7 +111,7 @@ foreach ($r as $key=>$value) {
 		$row4[$i][jml]=$row4[$i][jml]+$row1[$i][jml];
 	}
 	for ($i=0;$i<=3;$i++) {
-                $query2="select count(*) as jml from MASTFIP08 where substring(F_03,1,1)='$golbesar[$i]' ";
+                $query2="select count(*) as jml from MASTFIP08 where substring(F_03,1,1)='$golbesar[$i]' and B_06 = '1'";
                 if (strlen($value[0])==2) { $query2.="and A_01='".$value[0]."' "; }
                 else { $query2.="and A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
                 $query2.="and A_01<>'99'";
@@ -118,12 +119,48 @@ foreach ($r as $key=>$value) {
                 $row2[$i]=mysql_fetch_array(mysql_query($query2));
                 $row5[$i][jml]=$row5[$i][jml]+$row2[$i][jml];
         }
-	$query3="select count(*) as jml from MASTFIP08 where ";
+        
+        for ($i=0;$i<=16;$i++) {
+		$query="select count(*) as jml from MASTFIP08 where F_03='$golongan[$i]' and B_06='2'";
+                if (strlen($value[0])==2) { 
+                    $query.="and A_01='".$value[0]."' "; 
+                } else {
+                    $query.="and A_01='".substr($value[0],0,2)."' 
+                        and A_02='".substr($value[0],2,2)."' 
+                        and A_03='".substr($value[0],4,2)."' ";                     
+                }
+		$query.="and A_01<>'99'";
+		$row_pr[$i]=mysql_fetch_array(mysql_query($query));
+		$row4_pr[$i][jml]=$row4_pr[$i][jml]+$row_pr[$i][jml];
+	}
+        for ($i=0;$i<=3;$i++) {
+                $query2="select count(*) as jml from MASTFIP08 where substring(F_03,1,1)='$golbesar[$i]' and B_06 = '2'";
+                if (strlen($value[0])==2) { $query2.="and A_01='".$value[0]."' "; }
+                else { $query2.="and A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
+                $query2.="and A_01<>'99'";
+                //echo $query2."</br>";
+                $row2_pr[$i]=mysql_fetch_array(mysql_query($query2));
+                $row5_pr[$i][jml]=$row5_pr[$i][jml]+$row2_pr[$i][jml];
+        }
+        
+        // LAKI-LAKI
+	$query3="select count(*) as jml from MASTFIP08 where B_06 = '1' and ";
         if (strlen($value[0])==2) { $query3.="A_01='".$value[0]."' "; }
         else { $query3.="A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
 	$query3.="and A_01<>'99' and F_03<>'' and F_03 is not null";
 	$row3=mysql_fetch_array(mysql_query($query3));
-	$row6[jml]=$row6[jml]+$row3[jml];
+        $total_laki += $row3['jml'];
+        
+        // PEREMPUAN
+        $query_pr="select count(*) as jml from MASTFIP08 where B_06 = '2' and ";
+        if (strlen($value[0])==2) { $query_pr.="A_01='".$value[0]."' "; }
+        else { $query_pr.="A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
+	$query_pr.="and A_01<>'99' and F_03<>'' and F_03 is not null";
+	$row3_pr=mysql_fetch_array(mysql_query($query_pr));
+        $total_pr += $row3_pr['jml'];
+        
+        // TOTAL JUMLAH TIAP BARIS
+        $row6[jml]=$row3[jml]+$row3_pr[jml];
         ?>
           <tr>
               <td align="center"><?= ++$key ?></td>
@@ -150,12 +187,36 @@ foreach ($r as $key=>$value) {
             <td width="39" align="center"><?=$row1[16][jml]?></td>
             <td width="40" align="center"><?=$row2[3][jml]?></td>
             <td width="40" align="center"><?=$row3[jml]?></td>
+            
+            <td width="40" align="center"><?=$row_pr[0][jml]?></td>
+            <td width="40" align="center"><?=$row_pr[1][jml]?></td>
+            <td width="40" align="center"><?=$row_pr[2][jml]?></td>
+            <td width="40" align="center"><?=$row_pr[3][jml]?></td>
+            <td width="40" align="center"><?=$row2_pr[0][jml]?></td>
+            <td width="40" align="center"><?=$row_pr[4][jml]?></td>
+            <td width="40" align="center"><?=$row_pr[5][jml]?></td>
+            <td width="40" align="center"><?=$row_pr[6][jml]?></td>
+            <td width="40" align="center"><?=$row_pr[7][jml]?></td>
+            <td width="40" align="center"><?=$row2_pr[1][jml]?></td>
+            <td width="40" align="center"><?=$row_pr[8][jml]?></td>
+            <td width="40" align="center"><?=$row_pr[9][jml]?></td>
+            <td width="40" align="center"><?=$row_pr[10][jml]?></td>
+            <td width="40" align="center"><?=$row_pr[11][jml]?></td>
+            <td width="40" align="center"><?=$row2_pr[2][jml]?></td>
+            <td width="38" align="center"><?=$row_pr[12][jml]?></td>
+            <td width="38" align="center"><?=$row_pr[13][jml]?></td>
+            <td width="39" align="center"><?=$row_pr[14][jml]?></td>
+            <td width="39" align="center"><?=$row_pr[15][jml]?></td>
+            <td width="39" align="center"><?=$row_pr[16][jml]?></td>
+            <td width="40" align="center"><?=$row2_pr[3][jml]?></td>
+            <td width="40" align="center"><?=$row3_pr[jml]?></td>
+            <td width="40" align="center"><?= $row6[jml] ?></td>
           </tr>
 <? } ?>
   
   
   <tr>
-    <td width="350">JUMLAH</td>
+      <td width="350" colspan="2">JUMLAH</td>
     <td width="40" align="center"><?=$row4[0][jml]?></td>
     <td width="40" align="center"><?=$row4[1][jml]?></td>
     <td width="40" align="center"><?=$row4[2][jml]?></td>
@@ -177,7 +238,32 @@ foreach ($r as $key=>$value) {
     <td width="39" align="center"><?=$row4[15][jml]?></td>
     <td width="39" align="center"><?=$row4[16][jml]?></td>
     <td width="40" align="center"><?=$row5[3][jml]?></td>
-    <td width="40" align="center"><?=$row6[jml]?></td>
+    <td width="40" align="center"><?=$total_laki?></td>
+    
+    <td width="40" align="center"><?=$row4_pr[0][jml]?></td>
+    <td width="40" align="center"><?=$row4_pr[1][jml]?></td>
+    <td width="40" align="center"><?=$row4_pr[2][jml]?></td>
+    <td width="40" align="center"><?=$row4_pr[3][jml]?></td>
+    <td width="40" align="center"><?=$row5_pr[0][jml]?></td>
+    <td width="40" align="center"><?=$row4_pr[4][jml]?></td>
+    <td width="40" align="center"><?=$row4_pr[5][jml]?></td>
+    <td width="40" align="center"><?=$row4_pr[6][jml]?></td>
+    <td width="40" align="center"><?=$row4_pr[7][jml]?></td>
+    <td width="40" align="center"><?=$row5_pr[1][jml]?></td>
+    <td width="40" align="center"><?=$row4_pr[8][jml]?></td>
+    <td width="40" align="center"><?=$row4_pr[9][jml]?></td>
+    <td width="40" align="center"><?=$row4_pr[10][jml]?></td>
+    <td width="40" align="center"><?=$row4_pr[11][jml]?></td>
+    <td width="40" align="center"><?=$row5_pr[2][jml]?></td>
+    <td width="38" align="center"><?=$row4_pr[12][jml]?></td>
+    <td width="38" align="center"><?=$row4_pr[13][jml]?></td>
+    <td width="39" align="center"><?=$row4_pr[14][jml]?></td>
+    <td width="39" align="center"><?=$row4_pr[15][jml]?></td>
+    <td width="39" align="center"><?=$row4_pr[16][jml]?></td>
+    <td width="40" align="center"><?=$row5_pr[3][jml]?></td>
+    <td width="40" align="center"><?=$total_pr?></td>
+    
+    <td width="40" align="center"><?=$total_laki+$total_pr?></td>
   </tr>
 </table>
         </div>
