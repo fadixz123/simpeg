@@ -11,7 +11,7 @@ font-size: 13px;
 table td { font-size: 13px; }
 table td.nowrap { white-space: nowrap; }
 input[type=text], input[type=password], select, textarea { padding: 3px; }
-h4.title { margin-top: 0; font-size: 13px; font-weight: bold; border-bottom: 1px solid #ccc; padding: 0 0 5px 0;  }
+h4.title { margin-top: 0; font-size: 13px; font-weight: bold; }
 .clsDatePicker {
 z-index: 100000;
 }
@@ -874,4 +874,30 @@ tr.spaceunder > td
     width: 50%;
     border-radius: 2px;
     margin-top: 10px; 
+}
+
+.table-print {
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
+    border-spacing: 0;
+}
+
+.table-print th {
+    font-size: 11px;
+    background: #a1bcfc;
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+}
+
+.table-print td {
+    font-size: 11px;
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+}
+
+.table-print tr:nth-child(even) {
+    background: #c8d3eb;
+}
+.table-print tr:nth-child(odd) {
+    background: #fff;
 }

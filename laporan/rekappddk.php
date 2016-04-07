@@ -9,6 +9,7 @@ mysql_select_db($db,$conn);
 <title>Jumlah PNS Menurut Pendidikan</title>
 <link rel="stylesheet" href="../css/printing-A4-landscape.css" media="all" />
 <script type="text/javascript" src="../Scripts/jquery.min.js" ></script>
+<link rel="stylesheet" href="../css/template_css.css" media="all" />
 <script type="text/javascript">
     function cetak() {
         //setTimeout(function(){ window.close();},300);
@@ -34,7 +35,7 @@ $q="select * from TABLOK08 where kd<>'99' order by kd";
 $r=mysql_query($q);
 ?>
 <h1>JUMLAH PEGAWAI NEGERI SIPIL MENURUT PENDIDIKAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h1>
-<table width="100%" class="tabel-laporan">
+<table width="100%" class="table-print">
     <thead>
   <tr>
     <th width="17" align="center" rowspan="2">No.</th>

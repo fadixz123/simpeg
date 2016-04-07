@@ -9,6 +9,7 @@ mysql_select_db($db,$conn);
 <title>Jumlah PNS Menurut Umur</title>
 <link rel="stylesheet" href="../css/printing-A4-landscape.css" media="all" />
 <script type="text/javascript" src="../Scripts/jquery.min.js" ></script>
+<link rel="stylesheet" href="../css/template_css.css" media="all" />
 <script type="text/javascript">
     function cetak() {
         //setTimeout(function(){ window.close();},300);
@@ -31,7 +32,7 @@ $umur=array("20","25","30","35","40","45","50","55","1000");
 $r=listUnitKerjaNoBiro();
 ?>
 <h1>JUMLAH PEGAWAI NEGERI SIPIL MENURUT UMUR<br>PEMERINTAH <?=$KABI?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h1>
-  <table width="100%" class="tabel-laporan">
+  <table width="100%" class="table-print">
     <tr>
       <th width="28"><b>No</b></th>
       <th width="374"><b>UNIT KERJA</b></th>

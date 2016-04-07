@@ -10,6 +10,7 @@ mysql_select_db($db,$conn);
 <title>Jumlah Pegawai Negeri Sipil Berdasarkan Agama</title>
 <link rel="stylesheet" href="../css/printing-A4-landscape.css" media="all" />
 <script type="text/javascript" src="../Scripts/jquery.min.js" ></script>
+<link rel="stylesheet" href="../css/template_css.css" media="all" />
 <script type="text/javascript">
     function cetak() {
         //setTimeout(function(){ window.close();},300);
@@ -35,7 +36,7 @@ $r=listUnitKerjaNoBiro();
     AGAMA<br>
     KEADAAN PER: TAHUN ANGGARAN<br>
     PEMERINTAH <?=$KAB?></h1>
-    <table  width="100%" class="tabel-laporan">
+    <table  width="100%" class="table-print">
       <tr>
         <th width="1%" rowspan="2" align="center">NO</th>
         <th width="51%" rowspan="2" align="center">UNIT KERJA</th>

@@ -33,18 +33,19 @@ $golbesar=array("1","2","3","4");
 $r=listUnitKerjaNoBiro();
 ?>
     
-<h1>JUMLAH PEGAWAI NEGERI SIPIL PER PANGKAT/GOLONGAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h1>
-<table class="tabel-laporan">
+        <h3>JUMLAH PEGAWAI NEGERI SIPIL PER PANGKAT/GOLONGAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h3>
+<link rel="stylesheet" href="../css/template_css.css" media="all" />
+<table class="table-print" width="200%">
     <thead>
 <tr>
-    <td width="17" align="center" rowspan="2"><b><font face="Verdana" size="1">
-    No</font></b></td>
-    <td width="349" align="center" rowspan="2"><font face="Verdana" size="1"><b>INSTANSI</b></font></td>
-    <td width="285" align="center" colspan="22"><b>
-    <font face="Verdana" size="1">LAKI-LAKI</font></b></td>
-    <td width="287" align="center" colspan="22"><b>
-    <font face="Verdana" size="1">PEREMPUAN</font></b></td>
-    <td width="42" align="center" rowspan="2"><font face="Verdana" size="1"><b>Jumlah</b></font><?=$row1[8][jml]?></td>
+    <th width="17" align="center" rowspan="2"><b><font face="Verdana" size="1">
+    No</font></b></th>
+    <th width="349" align="center" rowspan="2"><font face="Verdana" size="1"><b>INSTANSI</b></font></th>
+    <th width="285" align="center" colspan="22"><b>
+    <font face="Verdana" size="1">LAKI-LAKI</font></b></th>
+    <th width="287" align="center" colspan="22"><b>
+    <font face="Verdana" size="1">PEREMPUAN</font></b></th>
+    <th width="42" align="center" rowspan="2"><font face="Verdana" size="1"><b>Jumlah</b></font><?=$row1[8][jml]?></th>
   </tr>
   <tr>
     <th width="40" align="center">I/a</th>

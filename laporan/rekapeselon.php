@@ -1,4 +1,4 @@
-<?
+<?php
 include ("../include/config.inc");
 include ("../include/fungsi.inc");
 $conn=mysql_connect($server,$user,$pass);
@@ -9,6 +9,7 @@ mysql_select_db($db,$conn);
 <title>Jumlah PNS Menurut Eselon Jabatan</title>
 <link rel="stylesheet" href="../css/printing-A4-landscape.css" media="all" />
 <script type="text/javascript" src="../Scripts/jquery.min.js" ></script>
+<link rel="stylesheet" href="../css/template_css.css" media="all" />
 <script type="text/javascript">
     function cetak() {
         //setTimeout(function(){ window.close();},300);
@@ -32,8 +33,8 @@ $eselon=array("11","12","21","22","31","32","41","42","51");
 //$q="select * from TABLOK where kd<>'99000000' order by kd";
 $r=listUnitKerjaNoBiro();
 ?>
-        <h1>JUMLAH PEGAWAI NEGERI SIPIL MENURUT ESELON JABATAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h1>
-  <table class="tabel-laporan" width="100%">
+        <h3>JUMLAH PEGAWAI NEGERI SIPIL MENURUT ESELON JABATAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h3>
+  <table class="table-print" width="100%">
       <thead>
     <tr>
       <th width="30">No</th>

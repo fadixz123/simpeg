@@ -9,6 +9,7 @@ mysql_select_db($db,$conn);
 <title>Jumlah PNS Menurut Pendidikan</title>
 <link rel="stylesheet" href="../css/printing-A4-landscape.css" media="all" />
 <script type="text/javascript" src="../Scripts/jquery.min.js" ></script>
+<link rel="stylesheet" href="../css/template_css.css" media="all" />
 <script type="text/javascript">
     function cetak() {
         //setTimeout(function(){ window.close();},300);
@@ -33,16 +34,16 @@ $r=listUnitKerjaNoBiro();
 
 ?>
 <h1>JUMLAH PEGAWAI NEGERI SIPIL MENURUT JENIS KELAMIN DAN PENDIDIKAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h1>
-<table width="100%" class="tabel-laporan">
+<table width="150%" class="table-print">
   <tr>
-    <td width="17" align="center" rowspan="2"><b><font face="Verdana" size="1">
-    No</font></b></td>
-    <td width="349" align="center" rowspan="2"><font face="Verdana" size="1"><b>INSTANSI</b></font></td>
-    <td width="285" align="center" colspan="15"><b>
-    <font face="Verdana" size="1">LAKI-LAKI</font></b></td>
-    <td width="287" align="center" colspan="15"><b>
-    <font face="Verdana" size="1">PEREMPUAN</font></b></td>
-    <td width="42" align="center" rowspan="2"><font face="Verdana" size="1"><b>Jumlah</b></font><?=$row1[8][jml]?></td>
+    <th width="17" align="center" rowspan="2"><b><font face="Verdana" size="1">
+    No</font></b></th>
+    <th width="349" align="center" rowspan="2"><font face="Verdana" size="1"><b>INSTANSI</b></font></th>
+    <th width="285" align="center" colspan="15"><b>
+    <font face="Verdana" size="1">LAKI-LAKI</font></b></th>
+    <th width="287" align="center" colspan="15"><b>
+    <font face="Verdana" size="1">PEREMPUAN</font></b></th>
+    <th width="42" align="center" rowspan="2"><font face="Verdana" size="1"><b>Jumlah</b></font><?=$row1[8][jml]?></th>
   </tr>
   <tr>
       <td width="26" align="right" style="font-family: Verdana; font-size: 8pt"><font size="1">&lt; SD</font></td>
