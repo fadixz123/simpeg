@@ -87,6 +87,10 @@ if (!$uk) $uk='all';
     }
 </script>
 <h4 class="title">REKAP DATA PNS</h4>
+<ul class="breadcrumb">
+    <li><a href="index.php?sid=<?= $_GET['sid'] ?>&do=home"><i class="fa fa-home"></i> Home</a></li>
+    <li><a href="#">Rekap Grafis</a></li>
+</ul>
 <form id="form-search-rekap">
 <table width="100%">
   

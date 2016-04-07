@@ -83,6 +83,10 @@ if (mysql_num_rows($rcu)>1) $hasupt=true;
     }
 </script>
 <h4 class="title">STRUKTUR ORGANISASI PNS</h4>
+<ul class="breadcrumb">
+    <li><a href="index.php?sid=<?= $_GET['sid'] ?>&do=home"><i class="fa fa-home"></i> Home</a></li>
+    <li><a href="#">Struktur Organisasi</a></li>
+</ul>
 <form name="form1" action="?sid=<?=$sid?>&do=struktur" method="post">
 <table width="100%">
   

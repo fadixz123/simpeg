@@ -68,7 +68,11 @@
         });
     }
 </script>
-<h4 class="title">Ubah NIP</h4>
+<h4 class="title">UBAH NIP</h4>
+<ul class="breadcrumb">
+    <li><a href="index.php?sid=<?= $_GET['sid'] ?>&do=home"><i class="fa fa-home"></i> Home</a></li>
+    <li><a href="#">Ubah NIP</a></li>
+</ul>
 <form id="ubahnip_form">
 <table width="100%">
 

@@ -36,6 +36,10 @@ if (isset($_SESSION['username'])) { ?>
 </script>
 
 <h4 class="title">MANAJEMEN SKP</h4>
+<ul class="breadcrumb">
+    <li><a href="index.php?sid=<?= $_GET['sid'] ?>&do=home"><i class="fa fa-home"></i> Home</a></li>
+    <li><a href="#">SKP</a></li>
+</ul>
 <ul id="mytab" class="nav nav-tabs">
   <li class="link_tab" id="inputskp"><a href="#tab1" data-toggle="tab"> Input SKP </a></li>
   <li class="link_tab" id="settingskp"><a href="#tab2" data-toggle="tab"> Setting SKP</a></li>

@@ -58,6 +58,10 @@ if ($tahun=='') $tahun=date("Y");
 </script>
 
 <h4 class="title">NOMINATIF KENAIKAN GAJI BERKALA</h4>
+<ul class="breadcrumb">
+    <li><a href="index.php?sid=<?= $_GET['sid'] ?>&do=home"><i class="fa fa-home"></i> Home</a></li>
+    <li><a href="#">Kenaikan Gaji Berkala</a></li>
+</ul>
 <div class="form-toolbar">
     <div class="toolbar-left">
         <button id="searching" class="btn btn-primary" data-target=".bs-modal-lg"><i class="fa fa-search"></i> Search</button>

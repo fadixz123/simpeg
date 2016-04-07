@@ -21,6 +21,10 @@ $pensiun1=($tglskr-61)."-".date("m")."-".date("d");
     });
 </script>
 <h4 class="title">DAFTAR URUT KEPANGKATAN</h4>
+<ul class="breadcrumb">
+    <li><a href="index.php?sid=<?= $_GET['sid'] ?>&do=home"><i class="fa fa-home"></i> Home</a></li>
+    <li><a href="#">DUK</a></li>
+</ul>
 <form name="cetakDUK">
 <table width="100%">
           <?

@@ -146,6 +146,10 @@
         load_data_pemilihan(page);
     }
 </script>
+<ul class="breadcrumb">
+    <li><a href="index.php?sid=<?= $_GET['sid'] ?>&do=home"><i class="fa fa-home"></i> Home</a></li>
+    <li><a href="#">Baperjakat</a></li>
+</ul>
 <div class="form-toolbar">
     <div class="toolbar-left">
         <button id="adddata" class="btn btn-primary" data-target=".bs-modal-lg"><i class="fa fa-plus-circle"></i> Tambah</button>

@@ -257,6 +257,10 @@ if ($j > 0 ) {
         }
 </script>
 <h4 class="title">EDIT PROFILE PEGAWAI</h4>
+<ul class="breadcrumb">
+    <li><a href="index.php?sid=<?= $_GET['sid'] ?>&do=home"><i class="fa fa-home"></i> Home</a></li>
+    <li><a href="#">Profile</a></li>
+</ul>
 <div class="form-toolbar">
     <div class="toolbar-left">
         <?php if ($_SESSION['nama_group'] !== 'Staffs') { ?>

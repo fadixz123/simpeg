@@ -196,6 +196,10 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
     }
 </script>
 <h4 class="title">NOMINATIF</h4>
+<ul class="breadcrumb">
+    <li><a href="index.php?sid=<?= $_GET['sid'] ?>&do=home"><i class="fa fa-home"></i> Home</a></li>
+    <li><a href="#">Nominatif Pegawai</a></li>
+</ul>
 <div id="datamodal_search" class="modal fade">
     <div class="modal-dialog" style="width: 600px; height: 100%;">
     <div class="modal-content">

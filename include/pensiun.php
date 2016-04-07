@@ -51,6 +51,10 @@ mysql_select_db($db);
     }
 </script>
 <h4 class="title">NOMINATIF PNS YANG AKAN PENSIUN</h4>
+<ul class="breadcrumb">
+    <li><a href="index.php?sid=<?= $_GET['sid'] ?>&do=home"><i class="fa fa-home"></i> Home</a></li>
+    <li><a href="#">Pensiun</a></li>
+</ul>
 <div class="form-toolbar">
     <div class="toolbar-left">
         <button id="searching" class="btn btn-primary" data-target=".bs-modal-lg"><i class="fa fa-search"></i> Search</button>

@@ -44,6 +44,10 @@ if (!isset($ultah) || $ultah=='') $ultah=0;
     }
 </script>
 <h4 class="title">NOMINATIF PNS YANG BERULANG TAHUN</h4>
+<ul class="breadcrumb">
+    <li><a href="index.php?sid=<?= $_GET['sid'] ?>&do=home"><i class="fa fa-home"></i> Home</a></li>
+    <li><a href="#">Ulang Tahun</a></li>
+</ul>
 <div class="form-toolbar">
     <div class="toolbar-left">
         <button id="searching" class="btn btn-primary" data-target=".bs-modal-lg"><i class="fa fa-search"></i> Search</button>

@@ -161,6 +161,10 @@ if ($j > 0 ) {
             search_data_pns(page);
         }
 </script>
+<ul class="breadcrumb">
+    <li><a href="index.php?sid=<?= $_GET['sid'] ?>&do=home"><i class="fa fa-home"></i> Home</a></li>
+    <li><a href="#">Arsip</a></li>
+</ul>
 <div class="form-toolbar">
     <div class="toolbar-left">
         <button id="searching" class="btn btn-primary" data-target=".bs-modal-lg"><i class="fa fa-search"></i> Search</button>
