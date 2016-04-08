@@ -54,15 +54,6 @@
             </div>
         </div>
 
-        <div class="wrapp-icon" onclick="cetak_rekap('rekapdidik.php');">
-            <div class="wrapp-image">
-                <img src="./images/cpanel/kexi.png" />
-            </div>
-            <div class="wrapp-keterangan">
-                <b>JEKEL & TKT PEND.</b><br/><p>Rekapitulasi Berdasar Jenis Kelamin & Tingkat Pendidikan</p>
-            </div>
-        </div>
-
         <div class="wrapp-icon" onclick="cetak_rekap('rekapagama.php');">
             <div class="wrapp-image">
                 <img src="./images/cpanel/kcmdf.png" />
@@ -82,6 +73,57 @@
         </div>
     </div>
 </div>
+
+<div class="container">
+    <div class="row"><h4>Rekap Per Jenis Kelamin</h4></div>
+    <div class="row">
+        <div class="wrapp-icon" onclick="cetak_rekap('golongan_per_jekel.php');">
+            <div class="wrapp-image">
+                <img src="./images/cpanel/army-icon.png" />
+            </div>
+            <div class="wrapp-keterangan">
+                <b>GOLONGAN</b><p>Rekapitulasi Berdasar Golongan PNS</p>
+            </div>
+        </div>
+
+        <div class="wrapp-icon" onclick="cetak_rekap('rekapeselon_per_jekel.php');">
+            <div class="wrapp-image">
+                <img src="./images/cpanel/eselon.jpg" />
+            </div>
+            <div class="wrapp-keterangan">
+                <b>ESELON</b><p>Rekapitulasi Berdasar Eselon</p>
+            </div>
+        </div>
+
+        <div class="wrapp-icon" onclick="cetak_rekap('rekapdidik.php');">
+            <div class="wrapp-image">
+                <img src="./images/cpanel/kexi.png" />
+            </div>
+            <div class="wrapp-keterangan">
+                <b>JEKEL & TKT PEND.</b><br/><p>Rekapitulasi Berdasar Jenis Kelamin & Tingkat Pendidikan</p>
+            </div>
+        </div>
+
+        <div class="wrapp-icon" onclick="cetak_rekap('rekapagama_per_jekel.php');">
+            <div class="wrapp-image">
+                <img src="./images/cpanel/kcmdf.png" />
+            </div>
+            <div class="wrapp-keterangan">
+                <b>AGAMA</b><p>Rekapitulasi Berdasar Agama</p>
+            </div>
+        </div>
+
+        <div class="wrapp-icon" onclick="cetak_rekap('rekapumur_per_jekel.php');">
+            <div class="wrapp-image">
+                <img src="./images/cpanel/grafik.png" />
+            </div>
+            <div class="wrapp-keterangan">
+                <b>USIA</b><p>Rekapitulasi Berdasar Usia</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <div class="row"><h4>Rekap Lain-lain</h4></div>
     <div class="row">

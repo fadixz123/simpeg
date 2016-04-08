@@ -888,6 +888,7 @@ tr.spaceunder > td
     background: #a1bcfc;
     border-bottom: 1px solid #000;
     border-right: 1px solid #000;
+    white-space: nowrap;
 }
 
 .table-print td {

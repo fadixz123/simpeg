@@ -34,18 +34,18 @@ $r=listUnitKerjaNoBiro();
 <h1>JUMLAH PEGAWAI NEGERI SIPIL MENURUT UMUR<br>PEMERINTAH <?=$KABI?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h1>
   <table width="100%" class="table-print">
     <tr>
-      <th width="28"><b>No</b></th>
-      <th width="374"><b>UNIT KERJA</b></th>
-      <th width="58" align="center"><b>&lt;= 20</b></th>
-      <th width="58" align="center"><b>21 s/d 25</b></th>
-      <th width="58" align="center"><b>26 s/d 30</b></th>
-      <th width="58" align="center"><b>31 s/d 35</b></th>
-      <th width="58" align="center"><b>36 s/d 40</b></th>
-      <th width="58" align="center"><b>41 s/d 45</b></th>
-      <th width="58" align="center"><b>46 s/d 50</b></th>
-      <th width="58" align="center"><b>51 s/d 55</b></th>
-      <th width="58" align="center"><b>&gt; 55</b></th>
-      <th width="58" align="center"><b>JUMLAH</b></th>
+      <th width="2%">No</th>
+      <th width="38%">UNIT KERJA</th>
+      <th width="6%">&lt;= 20</th>
+      <th width="6%">21 s/d 25</th>
+      <th width="6%">26 s/d 30</th>
+      <th width="6%">31 s/d 35</th>
+      <th width="6%">36 s/d 40</th>
+      <th width="6%">41 s/d 45</th>
+      <th width="6%">46 s/d 50</th>
+      <th width="6%">51 s/d 55</th>
+      <th width="6%">&gt; 55</th>
+      <th width="6%">JUMLAH</th>
     </tr>
 <?php
     $ii=0;
@@ -67,18 +67,18 @@ $r=listUnitKerjaNoBiro();
    $jmlumur=$row1[0][jml]+$row1[1][jml]+$row1[2][jml]+$row1[3][jml]+$row1[4][jml]+$row1[5][jml]+$row1[6][jml]+$row1[7][jml]+$row1[8][jml];
 ?>
     <tr>
-        <td width="28" align="right"><?=$ii?>&nbsp;</td>
-        <td width="374"><?=$value[1]?>&nbsp;</td>
-        <td width="58" align="right"><?=$row1[0][jml]?></td>
-        <td width="58" align="right"><?=$row1[1][jml]?></td>
-        <td width="58" align="right"><?=$row1[2][jml]?></td>
-        <td width="58" align="right"><?=$row1[3][jml]?></td>
-        <td width="58" align="right"><?=$row1[4][jml]?></td>
-        <td width="58" align="right"><?=$row1[5][jml]?></td>
-        <td width="58" align="right"><?=$row1[6][jml]?></td>
-        <td width="58" align="right"><?=$row1[7][jml]?></td>
-        <td width="58" align="right"><?=$row1[8][jml]?></td>
-        <td width="58" align="right"><?=$jmlumur?></td>
+        <td align="center"><?=$ii?>&nbsp;</td>
+        <td><?=$value[1]?>&nbsp;</td>
+        <td align="center"><?=$row1[0][jml]?></td>
+        <td align="center"><?=$row1[1][jml]?></td>
+        <td align="center"><?=$row1[2][jml]?></td>
+        <td align="center"><?=$row1[3][jml]?></td>
+        <td align="center"><?=$row1[4][jml]?></td>
+        <td align="center"><?=$row1[5][jml]?></td>
+        <td align="center"><?=$row1[6][jml]?></td>
+        <td align="center"><?=$row1[7][jml]?></td>
+        <td align="center"><?=$row1[8][jml]?></td>
+        <td align="center"><?=$jmlumur?></td>
     </tr>
 <?php }
 $tglbawah=0;
@@ -89,21 +89,21 @@ for ($i=0;$i < count($umur);$i++) {
         $row2[$i]=mysql_fetch_array(mysql_query($query));
         $tglbawah=$umur[$i];
         }
-$jmlumur=$row2[0][jml]+$row2[1][jml]+$row2[2][jml]+$row2[3][jml]+$row2[4][jml]+$row2[5][jml]+$row2[6][jml]+$row2[7][jml]+$row2[8][jml];
+        $jmlumur=$row2[0][jml]+$row2[1][jml]+$row2[2][jml]+$row2[3][jml]+$row2[4][jml]+$row2[5][jml]+$row2[6][jml]+$row2[7][jml]+$row2[8][jml];
 ?>
     <tr>
-      <td width="28">&nbsp;</td>
-      <td width="374"><b>JUMLAH</b></td>
-      <td width="58" align="right"><?=$row2[0][jml]?></td>
-      <td width="58" align="right"><?=$row2[1][jml]?></td>
-      <td width="58" align="right"><?=$row2[2][jml]?></td>
-      <td width="58" align="right"><?=$row2[3][jml]?></td>
-      <td width="58" align="right"><?=$row2[4][jml]?></td>
-      <td width="58" align="right"><?=$row2[5][jml]?></td>
-      <td width="58" align="right"><?=$row2[6][jml]?></td>
-      <td width="58" align="right"><?=$row2[7][jml]?></td>
-      <td width="58" align="right"><?=$row2[8][jml]?></td>
-      <td width="58" align="right"><?=$jmlumur?></td>
+      <td>&nbsp;</td>
+      <td><b>JUMLAH</b></td>
+      <td align="center"><?=$row2[0][jml]?></td>
+      <td align="center"><?=$row2[1][jml]?></td>
+      <td align="center"><?=$row2[2][jml]?></td>
+      <td align="center"><?=$row2[3][jml]?></td>
+      <td align="center"><?=$row2[4][jml]?></td>
+      <td align="center"><?=$row2[5][jml]?></td>
+      <td align="center"><?=$row2[6][jml]?></td>
+      <td align="center"><?=$row2[7][jml]?></td>
+      <td align="center"><?=$row2[8][jml]?></td>
+      <td align="center"><?=$jmlumur?></td>
     </tr>
   </table>
 </td></tr>
