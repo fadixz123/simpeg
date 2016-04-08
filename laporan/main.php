@@ -47,7 +47,7 @@
 
         <div class="wrapp-icon" onclick="cetak_rekap('rekappddk.php');">
             <div class="wrapp-image">
-                <img src="./images/cpanel/kexi.png" />
+                <img src="./images/cpanel/graduation.png" />
             </div>
             <div class="wrapp-keterangan">
                 <b>TKT PENDIDIKAN</b><p>Rekapitulasi Berdasar Tingkat Pendidikan PNS</p>
