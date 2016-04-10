@@ -214,6 +214,21 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
     <?php if (isset($_GET['nomorskjabatan'])) { ?>
     <th>NO. SK JABATAN</th>
     <?php } ?>
+    <?php if (isset($_GET['masakerja_check'])) { ?>
+    <th>Masa Kerja</th>
+    <?php } ?>
+    <?php if (isset($_GET['tmteselon_check'])) { ?>
+    <th>TMT Eselon</th>
+    <?php } ?>
+    <?php if (isset($_GET['diklat_check'])) { ?>
+    <th>Diklat</th>
+    <?php } ?>
+    <?php if (isset($_GET['statuspegawai_check'])) { ?>
+    <th>Status Pegawai</th>
+    <?php } ?>
+    <?php if (isset($_GET['agama_check'])) { ?>
+    <th>Agama</th>
+    <?php } ?>
   </tr>
   <?php
   
@@ -300,6 +315,29 @@ if ($agama!='all') { echo "Agama : ".agama1($agama)."<br>"; }
     <?php if (isset($_GET['nomorskjabatan'])) { ?>
     <td><?=($row['I_02'])?> </td>
     <?php } ?>
+    <?php if (isset($_GET['masakerja_check'])) { ?>
+    <td><?= substr($row['F_04'],0,2)." TAHUN ".substr($row['F_04'],2,2)." BULAN"; ?></td>
+    <?php } ?>
+    <?php if (isset($_GET['tmteselon_check'])) { ?>
+    <td><?= format_tanggal($row['I_04']); ?></td>
+    <?php } ?>
+    <?php if (isset($_GET['diklat_check'])) { ?>
+    <td><?= dikstru($row['H_4A']) ?></td>
+    <?php } ?>
+    <?php if (isset($_GET['statuspegawai_check'])) { ?>
+    <td><?php 
+        if ($row["B_09"] === '1') {
+            echo "CPNS";
+        }
+        if ($row["B_09"] === '2') {
+            echo "PNS";
+        }
+    ?></td>
+    <?php } ?>
+    <?php if (isset($_GET['agama_check'])) { ?>
+    <td><?= agama1($row["B_07"]) ?></td>
+    <?php } ?>
+
   </tr>
   <?php } ?>
 </table>

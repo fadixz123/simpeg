@@ -514,118 +514,150 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
             <div class='checkbox'>
                 <label><input type='checkbox' id='checkall'><b>Check all / Uncheck all</b></label>
             </div><br/>
-            <table width='100%' cellpadding='0'>
-            <tbody><tr valign=top><td width='50%'>
-            <table width='100%' class='table table-striped table-hover'>
-            <tbody>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='niplama' value=''>NIP Lama</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='nipbaru' value=''>NIP Baru</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='nama' value=''>Nama</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='alamat' value=''>Alamat</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='tempatlahir' value=''>Tempat Lahir</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='tmtcpns' value=''>TMT CPNS</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='jekel' value=''>Jenis Kelamin</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='jabatan_check' value=''>Jabatan</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='unitkerja' value=''>Unit Kerja</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='subunitkerja' value=''>Sub Unit Kerja</label>
-                    </div>
-                </td></tr>
-            </tbody>
-            </table>
-            </td><td>
-            <table width='100%' class='table table-striped table-hover'>
-            <tbody>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='subsubunitkerja' value=''>Sub Sub Unit Kerja</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='eselon_check' value=''>Eselon</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='gr' value=''>G / R</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='tmt' value=''>TMT</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='pendidikan' value=''>Pendidikan</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='jurusan' value=''>Jurusan</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='lulus' value=''>Lulus</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='namasekolah' value=''>Nama Sekolah</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='tmtjabatan' value=''>TMT Jabatan</label>
-                    </div>
-                </td></tr>
-                <tr><td>
-                    <div class='checkbox'>
-                        <label><input type='checkbox' name='nomorskjabatan' value=''>Nomor SK Jabatan</label>
-                    </div>
-                </td></tr>
-            </tbody>
-            </table>
-            </td></tr>
+            <table width='120%' cellpadding='0'>
+            <tbody><tr valign=top><td width='40%'>
+                <table width='100%' class='table table-striped table-hover'>
+                <tbody>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='niplama' value=''>NIP Lama</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='nipbaru' value=''>NIP Baru</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='nama' value=''>Nama</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='alamat' value=''>Alamat</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='tempatlahir' value=''>Tempat Lahir</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='tmtcpns' value=''>TMT CPNS</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='jekel' value=''>Jenis Kelamin</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='jabatan_check' value=''>Jabatan</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='unitkerja' value=''>Unit Kerja</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='subunitkerja' value=''>Sub Unit Kerja</label>
+                        </div>
+                    </td></tr>
+                </tbody>
+                </table>
+            </td><td width='40%'>
+                <table width='100%' class='table table-striped table-hover'>
+                <tbody>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='subsubunitkerja' value=''>Sub Sub Unit Kerja</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='eselon_check' value=''>Eselon</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='gr' value=''>G / R</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='tmt' value=''>TMT</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='pendidikan' value=''>Pendidikan</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='jurusan' value=''>Jurusan</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='lulus' value=''>Lulus</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='namasekolah' value=''>Nama Sekolah</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='tmtjabatan' value=''>TMT Jabatan</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='nomorskjabatan' value=''>Nomor SK Jabatan</label>
+                        </div>
+                    </td></tr>
+                </tbody>
+                </table>
+            </td>
+            </td><td width='40%'>
+                <table width='100%' class='table table-striped table-hover'>
+                <tbody>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='masakerja_check' value=''>Masa Kerja</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='tmteselon_check' value=''>TMT Eselon</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='diklat_check' value=''>Diklat</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='statuspegawai_check' value=''>Status Pegawai</label>
+                        </div>
+                    </td></tr>
+                    <tr><td>
+                        <div class='checkbox'>
+                            <label><input type='checkbox' name='agama_check' value=''>Agama</label>
+                        </div>
+                    </td></tr>
+                </tbody>
+                </table>
+            </td>
+            </tr>
             <tr><td></td></tr>
             </table></form>
             <button class='btn btn-xs btn-primary' onclick='export_excel();'><i class='fa fa-download'></i> Oke</button>
