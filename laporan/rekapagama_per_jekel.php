@@ -32,7 +32,7 @@ $tglok1=$thskr1."-".date("m")."-".date("d");
 $agama=array("1","2","3","4","5");
 $r=listUnitKerjaNoBiro();
 ?>
-    <h1>JUMLAH PEGAWAI NEGERI SIPIL BERDASARKAN 
+    <h1>JUMLAH PEGAWAI NEGERI SIPIL BERDASARKAN JENIS KELAMIN DAN
     AGAMA<br>
     KEADAAN PER: TAHUN ANGGARAN<br>
     PEMERINTAH <?=$KAB?></h1>

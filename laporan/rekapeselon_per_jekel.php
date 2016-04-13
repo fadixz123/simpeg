@@ -33,7 +33,7 @@ $eselon=array("11","12","21","22","31","32","41","42","51");
 //$q="select * from TABLOK where kd<>'99000000' order by kd";
 $r=listUnitKerjaNoBiro();
 ?>
-        <h3>JUMLAH PEGAWAI NEGERI SIPIL MENURUT ESELON JABATAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h3>
+        <h3>JUMLAH PEGAWAI NEGERI SIPIL MENURUT JENIS KELAMIN DAN ESELON JABATAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h3>
   <table class="table-print" width="100%">
       <thead>
     <tr>

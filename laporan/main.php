@@ -132,8 +132,31 @@
                 <img src="./images/cpanel/grafik.png" />
             </div>
             <div class="wrapp-keterangan">
-                <b>Rekap JFT</b><p>Rejap Jumlah Pejabat Fungsional Tertentu</p>
+                <b>Rekap JFT</b><p>Rekap Jumlah Pejabat Fungsional Tertentu</p>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row"><h4>Status Pegawai</h4></div>
+    <div class="row">
+        <div class="wrapp-icon" onclick="cetak_rekap('golongan_per_status.php');">
+            <div class="wrapp-image">
+                <img src="./images/cpanel/army-icon.png" />
+            </div>
+            <div class="wrapp-keterangan">
+                <b>Golongan</b><p>Status Pegawai Berdasar Golongan</p>
+            </div>
+        </div>
+        <div class="wrapp-icon" onclick="cetak_rekap('pendidikan_per_status.php');">
+            <div class="wrapp-image">
+                <img src="./images/cpanel/graduation.png" />
+            </div>
+            <div class="wrapp-keterangan">
+                <b>TKT PENDIDIKAN</b><p>Rekapitulasi Berdasar Tingkat Pendidikan PNS</p>
+            </div>
+        </div>
+        
     </div>
 </div>

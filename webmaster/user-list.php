@@ -56,11 +56,12 @@ mysql_select_db($db);
                 <td><?=$data['level']?></td>
                 <td width="67">********</td>
                 <td width="67" align="right">
-                    <button type="button" onclick="edit_user('<?= $detail ?>')" class="btn btn-default btn-xs"><i class="fa fa-edit"></i></button> 
+                    <button type="button" onclick="edit_user('<?= $detail ?>')" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></button> 
                     <button type="button" class="btn btn-default btn-xs" onclick="delete_user('<?= $data['id'] ?>','<?= $page ?>');"><i class="fa fa-trash-o"></i></button>
                 </td>
         </tr>
         <? } ?>
     </tbody>
 </table>
+<?= page_summary($total_data, $page, $limit) ?>
 <?= paging_ajax($total_data, $limit, $page, '1', $_GET['search']) ?>

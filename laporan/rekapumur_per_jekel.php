@@ -31,7 +31,7 @@ $tglok1=$thskr1."-".date("m")."-".date("d");
 $umur=array("20","25","30","35","40","45","50","55","1000");
 $r=listUnitKerjaNoBiro();
 ?>
-<h1>JUMLAH PEGAWAI NEGERI SIPIL MENURUT UMUR<br>PEMERINTAH <?=$KABI?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h1>
+<h1>JUMLAH PEGAWAI NEGERI SIPIL MENURUT JENIS KELAMIN DAN UMUR<br>PEMERINTAH <?=$KABI?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h1>
   <table width="100%" class="table-print">
     <tr>
         <th width="2%" rowspan="2">No</th>

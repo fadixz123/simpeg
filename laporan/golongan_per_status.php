@@ -34,7 +34,7 @@ $golbesar=array("1","2","3","4");
 $r=listUnitKerjaNoBiro();
 ?>
     
-        <h3>JUMLAH PEGAWAI NEGERI SIPIL PER JENIS KELAMIN DAN PANGKAT/GOLONGAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h3>
+        <h3>JUMLAH PEGAWAI NEGERI SIPIL PER STATUS PEGAWAI DAN PANGKAT/GOLONGAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h3>
 <link rel="stylesheet" href="../css/template_css.css" media="all" />
 <table class="table-print" width="200%">
     <thead>
@@ -43,9 +43,9 @@ $r=listUnitKerjaNoBiro();
     No</font></b></th>
     <th width="349" align="center" rowspan="2"><font face="Verdana" size="1"><b>INSTANSI</b></font></th>
     <th width="285" align="center" colspan="22"><b>
-    <font face="Verdana" size="1">LAKI-LAKI</font></b></th>
+    <font face="Verdana" size="1">CPNS</font></b></th>
     <th width="287" align="center" colspan="22"><b>
-    <font face="Verdana" size="1">PEREMPUAN</font></b></th>
+    <font face="Verdana" size="1">PNS</font></b></th>
     <th width="42" align="center" rowspan="2"><font face="Verdana" size="1"><b>Jumlah</b></font><?=$row1[8][jml]?></th>
   </tr>
   <tr>
@@ -100,7 +100,7 @@ $r=listUnitKerjaNoBiro();
 $total_laki = 0; $total_pr = 0;
 foreach ($r as $key=>$value) {
 	for ($i=0;$i<=16;$i++) {
-		$query="select count(*) as jml from MASTFIP08 where F_03='$golongan[$i]' and B_06='1'";
+		$query="select count(*) as jml from MASTFIP08 where F_03='$golongan[$i]' and B_09='1'";
                 if (strlen($value[0])==2) { 
                     $query.="and A_01='".$value[0]."' "; 
                 } else {
@@ -113,7 +113,7 @@ foreach ($r as $key=>$value) {
 		$row4[$i][jml]=$row4[$i][jml]+$row1[$i][jml];
 	}
 	for ($i=0;$i<=3;$i++) {
-                $query2="select count(*) as jml from MASTFIP08 where substring(F_03,1,1)='$golbesar[$i]' and B_06 = '1'";
+                $query2="select count(*) as jml from MASTFIP08 where substring(F_03,1,1)='$golbesar[$i]' and B_09 = '1'";
                 if (strlen($value[0])==2) { $query2.="and A_01='".$value[0]."' "; }
                 else { $query2.="and A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
                 $query2.="and A_01<>'99'";
@@ -123,7 +123,7 @@ foreach ($r as $key=>$value) {
         }
         
         for ($i=0;$i<=16;$i++) {
-		$query="select count(*) as jml from MASTFIP08 where F_03='$golongan[$i]' and B_06='2'";
+		$query="select count(*) as jml from MASTFIP08 where F_03='$golongan[$i]' and B_09='2'";
                 if (strlen($value[0])==2) { 
                     $query.="and A_01='".$value[0]."' "; 
                 } else {
@@ -136,7 +136,7 @@ foreach ($r as $key=>$value) {
 		$row4_pr[$i][jml]=$row4_pr[$i][jml]+$row_pr[$i][jml];
 	}
         for ($i=0;$i<=3;$i++) {
-                $query2="select count(*) as jml from MASTFIP08 where substring(F_03,1,1)='$golbesar[$i]' and B_06 = '2'";
+                $query2="select count(*) as jml from MASTFIP08 where substring(F_03,1,1)='$golbesar[$i]' and B_09 = '2'";
                 if (strlen($value[0])==2) { $query2.="and A_01='".$value[0]."' "; }
                 else { $query2.="and A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
                 $query2.="and A_01<>'99'";
@@ -146,7 +146,7 @@ foreach ($r as $key=>$value) {
         }
         
         // LAKI-LAKI
-	$query3="select count(*) as jml from MASTFIP08 where B_06 = '1' and ";
+	$query3="select count(*) as jml from MASTFIP08 where B_09 = '1' and ";
         if (strlen($value[0])==2) { $query3.="A_01='".$value[0]."' "; }
         else { $query3.="A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
 	$query3.="and A_01<>'99' and F_03<>'' and F_03 is not null";
@@ -154,7 +154,7 @@ foreach ($r as $key=>$value) {
         $total_laki += $row3['jml'];
         
         // PEREMPUAN
-        $query_pr="select count(*) as jml from MASTFIP08 where B_06 = '2' and ";
+        $query_pr="select count(*) as jml from MASTFIP08 where B_09 = '2' and ";
         if (strlen($value[0])==2) { $query_pr.="A_01='".$value[0]."' "; }
         else { $query_pr.="A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
 	$query_pr.="and A_01<>'99' and F_03<>'' and F_03 is not null";

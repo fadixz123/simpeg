@@ -68,6 +68,12 @@
             <file>file:/home/arvinnizar/html/simpeg/laporan/rekappddk_per_jekel.php</file>
             <file>file:/home/arvinnizar/html/simpeg/laporan/rekapagama_per_jekel.php</file>
             <file>file:/home/arvinnizar/html/simpeg/laporan/rekapumur_per_jekel.php</file>
+            <file>file:/home/arvinnizar/html/simpeg/laporan/pendidikan_per_status.php</file>
+            <file>file:/home/arvinnizar/html/simpeg/laporan/golongan_per_status.php</file>
+            <file>file:/home/arvinnizar/html/simpeg/webmaster/user-list.php</file>
+            <file>file:/home/arvinnizar/html/simpeg/webmaster/usergroup-list.php</file>
+            <file>file:/home/arvinnizar/html/simpeg/include/lacak.php</file>
+            <file>file:/home/arvinnizar/html/simpeg/include/lacak-list.php</file>
         </group>
     </open-files>
 </project-private>

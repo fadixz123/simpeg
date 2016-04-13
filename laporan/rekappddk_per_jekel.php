@@ -34,7 +34,7 @@ $kelamin=array("1","2");
 $q="select * from TABLOK08 where kd<>'99' order by kd";
 $r=mysql_query($q);
 ?>
-<h1>JUMLAH PEGAWAI NEGERI SIPIL MENURUT PENDIDIKAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h1>
+<h1>JUMLAH PEGAWAI NEGERI SIPIL MENURUT JENIS KELAMIN DAN PENDIDIKAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h1>
 <table width="100%" class="table-print">
     <thead>
   <tr>

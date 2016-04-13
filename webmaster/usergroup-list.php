@@ -33,13 +33,14 @@ mysql_select_db($db);
         <tr class="<?= ($i%2===0)?'odd':'even' ?>">
                 <td width="33" align="center"><?=$i+$offset?></td>
                 <td width="102"><?=$data['nama']?></td>
-                <td width="67">
-                    <button type="button" onclick="edit_akses('<?= $data['id'] ?>')" class="btn btn-default btn-xs"><i class="fa fa-cogs"></i> Hak Akses</button> 
-                    <button type="button" onclick="edit_user('<?= $detail ?>')" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Edit</button> 
-                    <button type="button" class="btn btn-default btn-xs" onclick="delete_user(<?= $data['id'] ?>);"><i class="fa fa-trash-o"></i> Delete</button>
+                <td width="67" align="right">
+                    <button type="button" title="Klik untuk edit hak akses" onclick="edit_akses('<?= $data['id'] ?>')" class="btn btn-default btn-xs"><i class="fa fa-user-secret"></i> </button> 
+                    <button type="button" title="Klik untuk edit" onclick="edit_user('<?= $detail ?>')" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i> </button> 
+                    <button type="button" title="Klik untuk delete" class="btn btn-default btn-xs" onclick="delete_user(<?= $data['id'] ?>);"><i class="fa fa-trash-o"></i> </button>
                 </td>
         </tr>
         <? } ?>
     </tbody>
 </table>
+<?= page_summary($total_data, $page, $limit) ?>
 <?= paging_ajax($total_data, $limit, $page, '1', $_GET['search']) ?>
