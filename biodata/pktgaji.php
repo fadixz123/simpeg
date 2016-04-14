@@ -130,7 +130,7 @@ $row=mysql_fetch_array(mysql_query($q));
         <?
       //------------------------------------ GAJI TERAKHIR -----------------------------------
       ?>
-        <tr class="sectiontableheader"> 
+<!--        <tr class="sectiontableheader"> 
             <td width="3%" bgcolor="<? echo $warnarow2; ?>"> <div><b>E</b></div></td>
             <td colspan="3" bgcolor="<? echo $warnarow2; ?>" height="22"><b>KENAIKAN 
               GAJI BERKALA TERAKHIR</b></td>
@@ -158,7 +158,7 @@ $row=mysql_fetch_array(mysql_query($q));
             <td> :</td>
             <td width="77%"> <input type="text" name="G_03" class="form-control-static" onkeyup="FormNum(this);" value="<? echo $row['G_03']; ?>" style="width: 20%;">
               <- gaji tidak perlu diisi </td>
-        </tr>
+        </tr>-->
         <tr class="sectiontableheader"> 
             <td width="3%" bgcolor="<? echo $warnarow2; ?>"> <div><b>E</b></div></td>
             <td colspan="3" bgcolor="<? echo $warnarow2; ?>" height="22"><b>IJIN PENGGUNAAN GELAR</b></td>

@@ -291,7 +291,7 @@ if (isset($_GET['cari'])) {
                            <td width="4" class="garisbawah">:</td>
                            <td width="335"><? echo format_tanggal($row[H_4B]); ?></td>
                          </tr>
-                         <tr> 
+<!--                         <tr> 
                             <td colspan="3" class="sectiontableheader"><b>KENAIKAN GAJI BERKALA TERAKHIR</b></td>
                           </tr>
                           <tr> 
@@ -308,7 +308,7 @@ if (isset($_GET['cari'])) {
                             <td>GAJI POKOK</td>
                             <td align="center">:</td>
                             <td><? echo gaji($row["F_03"],substr($row["F_04"],0,2)); ?></td>
-                          </tr>
+                          </tr>-->
                          <tr> 
                             <td colspan="3" class="sectiontableheader">JABATAN STRUKTURAL/FUNGSIONAL/FUNGSIONAL UMUM</td>
                           </tr>
@@ -317,12 +317,12 @@ if (isset($_GET['cari'])) {
                             <td align="center">:</td>
                             <td>
                             <?
-                              switch($p[I_00])
+                              switch($row['I_5A'])
                               {
                                   case "1"	: echo "Struktural";break;                                      
                                   case "2"	: echo "Fungsional tertentu";break;                             
                                   case "3"	: echo "Struktural dan Fungsional Tertentu (rangkap)";break;    
-                                  case "4"	: echo "Fungsional Umum/Staf.";break;                           
+                                  case "0"	: echo "Fungsional Umum/Staf.";break;                           
 
                               }
                               ?>  
@@ -332,7 +332,11 @@ if (isset($_GET['cari'])) {
                             <td>JAB. FUNG TERTENTU</td>
                             <td align="center">:</td>
                             <td>
-                            <?if ($row[I_06]=='99' and $row[I_05] !='999') echo $row[I_JB]."&nbsp; TMT : ".format_tanggal($row[I_04])?> 
+                            <?if ($row['I_06']=='99' and $row['I_05'] !='999') {
+                                echo $row['I_JB']."&nbsp; TMT : ".format_tanggal($row[I_04]);
+                            } else {
+                                echo "-";
+                            } ?> 
                             </td>
                           </tr>
                           <?

@@ -160,7 +160,7 @@ if ($j > 0 ) {
             return false;
         }
 		
-		function delete_pegawai(url, page) {
+        function delete_pegawai(url, page) {
 			bootbox.dialog({
           message: "Anda yakin akan menghapus data ini?",
           title: "Konfirmasi",

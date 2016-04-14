@@ -75,7 +75,7 @@ $nama= $_GET['nama'];
   <li class="link_tab" id="pegawai"><a href="#tab1" data-toggle="tab"> Data Pegawai</a></li>
   <li class="link_tab" id="lokid"><a href="#tab2" data-toggle="tab"> Lokasi & Identitas</a></li>
   <li class="link_tab" id="cpnspns"><a href="#tab3" data-toggle="tab">CPNS & PNS</a></li>
-  <li class="link_tab" id="pktgaji"><a href="#tab4" data-toggle="tab">Pangkat & Gaji</a></li>
+  <li class="link_tab" id="pktgaji"><a href="#tab4" data-toggle="tab">Pangkat & Eselon</a></li>
   <li class="link_tab" id="jabakhir"><a href="#tab5" data-toggle="tab">Jabatan Terakhir</a></li>
   <li class="link_tab" id="pddakhir"><a href="#tab6" data-toggle="tab">Pendidikan Akhir</a></li>
   <li class="link_tab" id="ortu"><a href="#tab7" data-toggle="tab">Ortu</a></li>

@@ -73,7 +73,7 @@ mysql_select_db($db);
                 <td class="nowrap"><?=format_nip_baru($row[B_02B])?></td>
                 <td><?=namaPNS($row[B_03A],$row[B_03],$row[B_03B])?></td>
                 <td><?=ucwords(strtolower(getNaJab($row[B_02]).' '.$nama_jenjang['JENJANG']))?></td>
-                <td class="nowrap">
+                <td class="nowrap" align="right">
                     <button type="button" class="btn btn-default btn-xs mypopover" data-container="body" data-toggle="popover" data-placement="top" data-title="Detail Unit Kerja" data-content="<?= $detail ?>">Unit Kerja</button>
                     <button type="button" onclick="load_detail('include/cari-detail.php?sid=<?=$_GET['sid']?>&B_03=<?= $row['B_03'] ?>&uk=<?= $_GET['uk'] ?>&do=cari&nip=<?=$row[B_02]?>&cari=NIP','<?= $row['B_02'] ?>');" class="btn btn-default btn-xs"><i class="fa fa-eye"></i> Detail</button>
                 </td>
