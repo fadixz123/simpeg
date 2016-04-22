@@ -88,55 +88,55 @@ if ($eselon=='str') {
 if ($kelamin!='all') {
         $q.="and B_06='$kelamin' ";
 }
-	$q.="and        (
+$q.="and        (
+                        (
                                 (
-                                        (
-                                                (substring(B_05,1,4) = '$thskr' and substring(B_05,6,2)<>'12')
-                                        or
-                                                (substring(B_05,1,4) = '$thskra' and substring(B_05,6,2)='12')
-                                        )
-                                and
-                                        (I_5A='0' or (I_5A='1' and I_06<>'00') or I_5A='' or I_5A is null)
+                                        (substring(B_05,1,4) = '$thskr' and substring(B_05,6,2)<>'12')
+                                or
+                                        (substring(B_05,1,4) = '$thskra' and substring(B_05,6,2)='12')
                                 )
-                        or
+                        and
+                                (I_5A='0' or (I_5A='1' and I_06<>'00') or I_5A='' or I_5A is null)
+                        )
+                or
+                        (
                                 (
-                                        (
-                                                (substring(B_05,1,4) = '$thskr' and substring(B_05,6,2)<>'12')
-                                        or
-                                                (substring(B_05,1,4) = '$thskra' and substring(B_05,6,2)='12')
-                                        )
-                                and
-                                        (I_5A='2' or I_5A='4' or (I_5A='1'and I_06='00'))
-				and
-					I_05 not in ($qflb)
+                                        (substring(B_05,1,4) = '$thskr' and substring(B_05,6,2)<>'12')
+                                or
+                                        (substring(B_05,1,4) = '$thskra' and substring(B_05,6,2)='12')
                                 )
-                        or
+                        and
+                                (I_5A='2' or I_5A='4' or (I_5A='1'and I_06='00'))
+                        and
+                                I_05 not in ($qflb)
+                        )
+                or
+                        (
                                 (
-                                        (
-                                                (substring(B_05,1,4) = '$thskr1' and substring(B_05,6,2)<>'12')
-                                        or
-                                                (substring(B_05,1,4) = '$thskr1a' and substring(B_05,6,2)='12')
-                                        )
-                                and
-                                        (I_5A='2' or I_5A='4' or (I_5A='1'and I_06='00'))
-				and
-					($qflb60)
+                                        (substring(B_05,1,4) = '$thskr1' and substring(B_05,6,2)<>'12')
+                                or
+                                        (substring(B_05,1,4) = '$thskr1a' and substring(B_05,6,2)='12')
                                 )
-                        or
+                        and
+                                (I_5A='2' or I_5A='4' or (I_5A='1'and I_06='00'))
+                        and
+                                ($qflb60)
+                        )
+                or
+                        (
                                 (
-                                        (
-                                                (substring(B_05,1,4) = '$thskr2' and substring(B_05,6,2)<>'12')
-                                        or
-                                                (substring(B_05,1,4) = '$thskr2a' and substring(B_05,6,2)='12')
-                                        )
-                                and
-                                        (I_5A='2' or I_5A='4' or (I_5A='1'and I_06='00'))
-				and
-					($qflb65)
+                                        (substring(B_05,1,4) = '$thskr2' and substring(B_05,6,2)<>'12')
+                                or
+                                        (substring(B_05,1,4) = '$thskr2a' and substring(B_05,6,2)='12')
                                 )
-			) ";
-		$q.=" order by B_05,F_03 desc";
-		//echo "<pre>".$q."</pre>";
+                        and
+                                (I_5A='2' or I_5A='4' or (I_5A='1'and I_06='00'))
+                        and
+                                ($qflb65)
+                        )
+                ) ";
+        $q.=" order by B_05,F_03 desc";
+		//echo $q;
 		$r=mysql_query($q.'  limit '.$offset.', '.$limit);
                 $total_data = mysql_num_rows(mysql_query($q));
 		$no=0;
