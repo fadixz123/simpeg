@@ -150,8 +150,8 @@ if ($H_1A=='') { $H_1A=$row['H_1A']; }
             <td width="20%">&nbsp;</td>
             <td></td>
             <td width="77%"> 
-            <button class="btn btn-primary" onclick="save_data_pendidikan(); return false;"><i class="fa fa-save"></i> Simpan Pend. Umum Akhir</button>
-            <button class="btn btn-primary" onclick="save_tambah_pendidikan(); return false;"><i class="fa fa-save"></i> Tambah Pendidikan</button>
+            <button type="button" class="btn btn-primary" onclick="save_data_pendidikan(); return false;"><i class="fa fa-save"></i> Simpan Pend. Umum Akhir</button>
+            <button type="button" class="btn btn-primary" onclick="save_tambah_pendidikan(); return false;"><i class="fa fa-save"></i> Tambah Pendidikan</button>
           </tr>
     </table>
 </form>

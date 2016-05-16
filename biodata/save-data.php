@@ -302,7 +302,7 @@ else if ($opsi === 'jabatan') {
     $r=mysql_query($q) or die(mysql_error());
     $xo=mysql_fetch_array($r);
     
-    $I_JB   = $xo['NAJFU'];
+    $I_JB   = $_POST['I_JB'];
     $I_07   = isset($_POST['I_07'])?$_POST['I_07']:'';
     $TGSKJAB= $_POST['TGSKJAB'];
     $TGTMTJAB = $_POST['TGTMTJAB'];
