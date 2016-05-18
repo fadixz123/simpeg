@@ -263,7 +263,7 @@ if ($j > 0 ) {
 </ul>
 <div class="form-toolbar">
     <div class="toolbar-left">
-        <?php if ($_SESSION['nama_group'] !== 'Staffs') { ?>
+        <?php if ($_SESSION['nama_group'] === 'Administrator') { ?>
         <button id="tambah" class="btn btn-primary" data-target=".bs-modal-lg"><i class="fa fa-plus-circle"></i> Tambah Pegawai</button>
         <button id="searching" class="btn" data-target=".bs-modal-lg"><i class="fa fa-search"></i> Search</button>
         <?php } ?>
