@@ -253,7 +253,7 @@ if (isset($_SESSION['username'])) {
                     </div>
                     <?php } ?>
                 <?php if($_SESSION['nama_group'] === 'Administrator') { ?>
-                    <div class="module">
+<!--                    <div class="module">
                         <div>
                             <div>
                                 <div>
@@ -279,7 +279,7 @@ if (isset($_SESSION['username'])) {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 <?php } ?>
                 </div>
                 
