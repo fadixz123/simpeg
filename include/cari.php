@@ -221,9 +221,10 @@ if ($cari) {
                             <td>
                                 <!--<select name="suk" class="form-control" id="suk"></select>-->
                                 <?php 
-                                $subuk = listSubUnitKerja_arvin($_SESSION['skpd'].$_SESSION['subskpd2']);
+                                $subuk = listSubUnitKerja($_SESSION['skpd'].$_SESSION['subskpd1']);
                                 if (strtolower($_SESSION['nama_group']) === 'admin sub skpd') { ?>
                                 <select name="suk" class="form-control" style="width: 300px;">
+                                    <option value="">Semua ...</option>
                                     <?php foreach($subuk as $dataxx) { ?>
                                     <option value="<?= $dataxx[0] ?>"><?= $dataxx[1]  ?></option>
                                     <?php } ?>

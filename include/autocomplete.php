@@ -120,6 +120,8 @@ if (isset($_GET['search'])) {
                         $_SESSION['skpd'] = $ro['A_01'];
                         $_SESSION['nama'] = $ro['nama'];
                         $_SESSION['subskpd'] = $ro['A_02'];
+                        $_SESSION['subsubskpd'] = $ro['A_03'];
+                        $_SESSION['subskpd1'] = $ro['A_02'].$ro['A_03'];
                         $_SESSION['subskpd2'] = $ro['A_02'].$ro['A_03'].$ro['A_04'].$ro['A_05'];
 			mysql_query("delete from LOGUSER where TANGGAL='0000-00-00'") or die (mysql_error());
 			$xtgl=date("Y-m-d",mktime(0,0,0,date("m")  ,date("d")-1,date("Y")));

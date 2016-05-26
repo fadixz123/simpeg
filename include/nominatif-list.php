@@ -99,6 +99,12 @@ if ($kawin !== '') {
 if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
     $query.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."'";
 }
+if (strtolower($_SESSION['nama_group']) === 'admin sub skpd') {
+    $q.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."' and A_03 = '".$_SESSION['subsubskpd']."'";
+}
+if ($_SESSION['nama_group'] === 'Staffs') {
+    $q.=" and B_02 = '".$_SESSION['nip']."'";
+}
 if ($nullinclude === 'Ya') {
     $query.=" or F_03 is NULL ";
 }

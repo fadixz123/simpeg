@@ -458,7 +458,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                                       if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
                                         $id_skpd = $_SESSION['skpd'];
                                       }
-                                      if ($_SESSION['nama_group'] === 'Admin SKPD') {
+                                      if (strtolower($_SESSION['nama_group']) === 'admin skpd' or strtolower($_SESSION['nama_group']) === 'admin sub skpd') {
                                         $id_skpd = $_SESSION['skpd'];
                                       }
                                       if ($id_skpd === NULL) {
