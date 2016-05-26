@@ -196,23 +196,23 @@ if ($cari) {
                             <td width="25%">Unit Kerja:</td>
                             <td>
                                 <select name="uk" class="form-control" id="uk" style="width: 300px;">
-                                      <?php
-                                      $id_skpd = NULL;
-                                      if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
-                                        $id_skpd = $_SESSION['skpd'];
-                                      }
-                                      if ($_SESSION['nama_group'] === 'Admin SKPD') {
-                                        $id_skpd = $_SESSION['skpd'];
-                                      }
-                                      if ($id_skpd === NULL) {
-                                          echo '<option value="all">Semua unit kerja...</option>';
-                                      }
-                                      //echo $id_skpd;
-                                      $lsuk=listUnitKerja($id_skpd);
-                                      foreach($lsuk as $key=>$value) {
-                                      ?>
-                                      <option value="<?=$value[0]?>"><?= ucfirst(strtolower($value[1]))?></option>
-                                      <? } ?>
+                                    <?php
+                                    $id_skpd = NULL;
+                                    if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
+                                      $id_skpd = $_SESSION['skpd'];
+                                    }
+                                    if (strtolower($_SESSION['nama_group']) === 'admin skpd' or strtolower($_SESSION['nama_group']) === 'admin sub skpd') {
+                                      $id_skpd = $_SESSION['skpd'];
+                                    }
+                                    if ($id_skpd === NULL) {
+                                        echo '<option value="all">Semua unit kerja...</option>';
+                                    }
+                                    //echo $id_skpd;
+                                    $lsuk=listUnitKerja($id_skpd);
+                                    foreach($lsuk as $key=>$value) {
+                                    ?>
+                                    <option value="<?=$value[0]?>"><?= ucfirst(strtolower($value[1]))?></option>
+                                    <? } ?>
                                 </select>
                             </td>
                         </tr>
@@ -220,7 +220,17 @@ if ($cari) {
                             <td>Sub Unit Kerja:</td>
                             <td>
                                 <!--<select name="suk" class="form-control" id="suk"></select>-->
+                                <?php 
+                                $subuk = listSubUnitKerja_arvin($_SESSION['skpd'].$_SESSION['subskpd2']);
+                                if (strtolower($_SESSION['nama_group']) === 'admin sub skpd') { ?>
+                                <select name="suk" class="form-control" style="width: 300px;">
+                                    <?php foreach($subuk as $dataxx) { ?>
+                                    <option value="<?= $dataxx[0] ?>"><?= $dataxx[1]  ?></option>
+                                    <?php } ?>
+                                </select>
+                                <?php } else { ?>
                                 <input type="text" name="suk" class="select2-input" id="suk">
+                                <?php } ?>
                             </td>
                       </tr>
                       <tr>

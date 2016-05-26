@@ -334,8 +334,17 @@ function listSubUnitKerja($uk) {
 	if (strlen($uk)==2) $ql.="where A_01='$uk' ";
 	else $ql.="where A_01='".substr($uk,0,2)."' and A_02 ='".substr($uk,2,2)."' and A_03 ='".substr($uk,4,2)."' ";
 	$ql.="order by KOLOK";
+        
 	$rl=mysql_query($ql) or die(mysql_error());
-	for ($i=1;$i < mysql_num_rows($rl);$i++) {$listuk[]=mysql_fetch_array($rl);}
+	for ($i=1;$i <= mysql_num_rows($rl);$i++) {$listuk[]=mysql_fetch_array($rl);}
+	return $listuk;
+}
+
+function listSubUnitKerja_arvin($uk) {
+	$ql="select KOLOK,NALOK from TABLOKB08 where KOLOK = '".$uk."' ";
+	$ql.="order by KOLOK";
+	$rl=mysql_query($ql) or die(mysql_error());
+	for ($i=1;$i <= mysql_num_rows($rl);$i++) {$listuk[]=mysql_fetch_array($rl);}
 	return $listuk;
 }
 

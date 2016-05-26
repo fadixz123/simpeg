@@ -50,6 +50,9 @@ $sid = $_GET['sid'];
         if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
             $q.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."'";
         }
+        if (strtolower($_SESSION['nama_group']) === 'admin sub skpd') {
+            $q.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."'";
+        }
         if ($_SESSION['nama_group'] === 'Staffs') {
             $q.=" and B_02 = '".$_SESSION['nip']."'";
         }
