@@ -41,6 +41,7 @@ if ($uk!='all') {
 }
 
 if ($subuk!=='' && $subuk!=='all') {
+    echo $subuk.' - '.$hasupt;
         if ($hasupt === 'true') { $query.="and A_02='$subuk' "; }
         else { $query.="and concat(A_01,A_02,A_03,A_04,A_05) like '".rtrim($subuk,'0')."%' "; }
 }
@@ -96,17 +97,18 @@ if ($nama_sekolah !== '') {
 if ($kawin !== '') {
     $query.=" and J_01 = '".$kawin."'";
 }
-if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
-    $query.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."'";
-}
-if (strtolower($_SESSION['nama_group']) === 'admin skpd') {
-    $query.=" and A_01 = '".$_SESSION['skpd']."'";
-}
-if (strtolower($_SESSION['nama_group']) === 'admin sub skpd') {
-    $q.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."' and A_03 = '".$_SESSION['subsubskpd']."'";
-}
-if ($_SESSION['nama_group'] === 'Staffs') {
-    $q.=" and B_02 = '".$_SESSION['nip']."'";
+if ($_SESSION['nama_group'] !== 'Administrator' and $_SESSION['nama_group'] !== 'Admin BKD') {
+    //$query.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."'";
+
+    if (strtolower($_SESSION['nama_group']) === 'admin skpd') {
+        $query.=" and A_01 = '".$_SESSION['skpd']."'";
+    }
+    if (strtolower($_SESSION['nama_group']) === 'admin sub skpd') {
+        $query.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."' and A_03 = '".$_SESSION['subsubskpd']."'";
+    }
+    if ($_SESSION['nama_group'] === 'Staffs') {
+        $query.=" and B_02 = '".$_SESSION['nip']."'";
+    }
 }
 if ($nullinclude === 'Ya') {
     $query.=" or F_03 is NULL ";
@@ -120,7 +122,7 @@ if ($_GET['page'] === '') {
     $offset = ($page-1)*$limit;
 }
 if ($urut=='str') { $query.="order by I_05 "; }
-else { $query.="order by F_03 DESC,F_TMT ASC,I_06,F_04 DESC, H_4A ASC, H_1A DESC, H_02 ASC, B_05 ASC "; }
+else { $query.=" order by F_03 DESC,F_TMT ASC,I_06,F_04 DESC, H_4A ASC, H_1A DESC, H_02 ASC, B_05 ASC "; }
 //echo $query.'  limit '.$offset.', '.$limit;
 $result=mysql_query($query.'  limit '.$offset.', '.$limit) or die (mysql_error());
 $total_data=mysql_num_rows(mysql_query($query));
