@@ -58,9 +58,8 @@ mysql_select_db($db);
             $q.=" and B_02 = '".$_SESSION['nip']."'";
         }
         
-        
         $q .=" order by I_06 ASC, F_03 DESC";
-        //echo $q.'  limit '.$offset.', '.$limit;
+        ////echo $q.'  limit '.$offset.', '.$limit;
         $r=mysql_query($q.'  limit '.$offset.', '.$limit) or die (mysql_error());
         $total_data = mysql_num_rows(mysql_query($q));
         while($row=mysql_fetch_array($r)) {
