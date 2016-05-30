@@ -99,6 +99,9 @@ if ($kawin !== '') {
 if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
     $query.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."'";
 }
+if (strtolower($_SESSION['nama_group']) === 'admin skpd') {
+    $query.=" and A_01 = '".$_SESSION['skpd']."'";
+}
 if (strtolower($_SESSION['nama_group']) === 'admin sub skpd') {
     $q.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."' and A_03 = '".$_SESSION['subsubskpd']."'";
 }
