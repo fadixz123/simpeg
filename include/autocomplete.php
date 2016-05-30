@@ -162,8 +162,20 @@ if (isset($_GET['search'])) {
         $hasupt = FALSE;
         if (mysql_num_rows($rcu) > 1) { $hasupt=TRUE; }
         if ($hasupt) {
+            $q = NULL;
+            if (strtolower($_SESSION['nama_group']) === 'admin sub skpd') {
+                $q =" and A_02 = '".$_SESSION['subskpd']."' and A_03 = '".  substr($_SESSION['subskpd1'], 2, 2)."'";
+            }
             $label = 'Induk/UPT';
-            $qupt="select `A_02` as code, `NALOK` from TABLOKB08 where A_01='$uk' and A_02<>'00' and A_03 like '00' and A_04 like '00' order by A_02";
+            $qupt="select `A_02` as code, `NALOK` 
+                from TABLOKB08 
+                where A_01='$uk' 
+                    and A_02<>'00' 
+                    and A_03 like '00' 
+                    and A_04 like '00' $q
+                    order by A_02 
+                    ";
+            //echo $qupt;
             $rupt=mysql_query($qupt) or die(mysql_error());
             $data = array();
             while ($roupt=mysql_fetch_object($rupt)) {
@@ -172,7 +184,11 @@ if (isset($_GET['search'])) {
         } else {
             $label = 'Sub Unit Kerja';
             $query = "select `KOLOK` as code, `NALOK` from tablokb08 ";
-            if (strlen($uk)==2) { $query.="where A_01='$uk' "; }
+            $q = NULL;
+            if (strtolower($_SESSION['nama_group']) === 'admin sub skpd') {
+                $q =" and A_02 = '".$_SESSION['subskpd']."' and A_03 = '".  substr($_SESSION['subskpd1'], 2, 2)."'";
+            }
+            if (strlen($uk)==2) { $query.="where A_01='$uk' $q"; }
             else { $query.="where A_01='".substr($uk,0,2)."' and A_02 ='".substr($uk,2,2)."' and A_03 ='".substr($uk,4,2)."' "; }
             $query.="order by KOLOK";
             //echo $query;
