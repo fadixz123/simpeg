@@ -272,7 +272,7 @@ $row=mysql_fetch_array(mysql_query($q));
             <td width="3%"> 02</td>
             <td width="20%">NIP Baru</td>
 			<td>:</td>
-            <td width="77%"><input type="text" name="B_02B" class="form-control-static" value="<?=$row[B_02B]?>" maxlength="18"></td>
+                        <td width="77%"><input type="text" name="B_02B" class="form-control-static" readonly="" value="<?=$row[B_02B]?>" maxlength="18"></td>
         </tr>
         <tr>
             <td>03</td>
