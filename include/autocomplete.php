@@ -19,6 +19,12 @@ if (isset($_GET['search'])) {
         if (isset($_GET['skpd'])) {
             $param.=" and m.A_01 = '".$_GET['skpd']."'";
         }
+        if (strtolower($_SESSION['nama_group']) === 'admin skpd') {
+            $param.=" and m.A_01 = '".$_SESSION['skpd']."'";
+        }
+        if (strtolower($_SESSION['nama_group']) === 'admin sub skpd') {
+            $param.=" and m.A_01 = '".$_SESSION['skpd']."' and m.A_02 = '".$_SESSION['subskpd']."'";
+        }
         if ($_GET['suk'] !== '') {
             $param.=" having kode_sub_lokasi like ('".$_GET['suk']."')";
         }

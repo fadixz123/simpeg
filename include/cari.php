@@ -66,7 +66,7 @@ if ($cari) {
                             q: term, //search term
                             page: page, // page number
                             uk: $('#uk').val(),
-                            suk: $('#suk').val()
+                            suk: ($('#suk').val() === undefined)?$('#suks').val():$('#suk').val()
                         };
                     },
                     results: function (data, page) {
@@ -223,7 +223,7 @@ if ($cari) {
                                 <?php 
                                 $subuk = listSubUnitKerja($_SESSION['skpd'].$_SESSION['subskpd1']);
                                 if (strtolower($_SESSION['nama_group']) === 'admin sub skpd') { ?>
-                                <select name="suk" class="form-control" style="width: 300px;">
+                                <select name="suk" class="form-control" id="suks" style="width: 300px;">
                                     <option value="">Semua ...</option>
                                     <?php foreach($subuk as $dataxx) { ?>
                                     <option value="<?= $dataxx[0] ?>"><?= $dataxx[1]  ?></option>
