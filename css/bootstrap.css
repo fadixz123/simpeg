@@ -1346,7 +1346,7 @@ th {
     font-size: 10px;
 }
 .table-bordered > tbody > tr.even {
-    background: #fafafa;
+    background: #fff;
 }
 .table-bordered > thead > tr > th.left {
     text-align: left; padding-left: 2px;
@@ -6012,7 +6012,7 @@ td.visible-print {
 }
 .table-bordered .number { text-align: center; }
 .odd {
-    background-color: #f9f9f9;
+    background-color: #f4f4f4;
     cursor: pointer;
 }
 .odd:hover {

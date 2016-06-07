@@ -59,7 +59,7 @@ for ($i=1;$i<=16;$i++)
 					$xjrec=$jrec+$xK;
 					?>
 					</table>
-					<p STYLE="page-break-after: always"><font face="Arial" size="1">halaman <?=$hal?></font>�</p>
+					<p STYLE="page-break-after: always"><font face="Arial" size="1">halamana <?=$hal?></font>�</p>
 					<table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" width="700" id="AutoNumber1">
 					<?
 				        

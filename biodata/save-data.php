@@ -11,7 +11,7 @@ if ($opsi === 'lokasi_pegawai') {
     $q="update MASTFIP08 set A_01='".substr($loker,0,2)."', A_02='".substr($loker,2,2)."',A_03='".substr($loker,4,2)."', A_04='".substr($loker,6,2)."',A_05='".substr($loker,8,2)."' where B_02='".$B_02B."'";
     
     mysql_query($q) or die (mysql_error());
-    if (mysql_affected_rows() > 0) { lethistory($sid,"UPDATE LOKASI KE ".subLokasiKerjaB($loker),$NIP); }
+    if (mysql_affected_rows() > 0) { lethistory($sid,"UPDATE LOKASI KE ".subLokasiKerjaB($loker),$B_02B); }
     die(json_encode(array('act' => 'edit')));
 }
 if ($opsi === 'pegawai') {
@@ -101,7 +101,7 @@ if ($opsi === 'pegawai') {
     //echo $qupdate;
     mysql_query($qupdate) or die(mysql_error());
     if (mysql_affected_rows() > 0) { 
-        lethistory($sid,"UPDATE IDENTITAS",$NIP); 
+        lethistory($sid,"UPDATE IDENTITAS",$B_02B); 
     }
     
     $pegawai = mysql_fetch_array(mysql_query("select CONCAT_WS(' ',`B_02B`,' | ', `B_03`, `B_03B`) as identitas from mastfip08 where `B_02B` = '".$B_02B."' "));
@@ -132,7 +132,7 @@ else if ($opsi === 'cpns') {
     $qupdate="update mastfip08 set D_02='$D_02', D_04='".date2mysql($TGTMTCAPEG)."',D_03='".date2mysql($TGSKCAPEG)."', D_05='$D_05' WHERE B_02='$NIP'";
     $res=mysql_query($qupdate) or die(mysql_error());	
     //upd_cp('1',$D_05,$D_02,$THSKCAPEG."-".$BLSKCAPEG."-".$TGSKCAPEG,$THTMTCAPEG."-".$BLTMTCAPEG."-".$TGTMTCAPEG,$NIP,$sid);
-    //lethistory($sid,'UPDATE CPNS',$NIP);
+    lethistory($sid,'UPDATE CPNS',$NIP);
     //update MASTPKT1 PF_01=1
     $jml=mysql_num_rows(mysql_query("select PF_01 from mastpkt1 where PF_01='$NIP' and PF_02='1' LIMIT 1"));
     if ($jml === 0)
@@ -169,7 +169,7 @@ else if ($opsi === 'pns') {
     $qupdate="update MASTFIP08 set E_02='$E_02', E_03='".date2mysql($TGSKPNS)."', E_04='".date2mysql($TGTMTPNS)."', E_05='$E_05', E_06='$E_06' WHERE B_02='$NIP'";
     $res=mysql_query($qupdate) or die(mysql_error());
     //upd_cp('2',$E_05,$E_02,$THSKPNS."-".$BLSKPNS."-".$TGSKPNS,$THTMTPNS."-".$BLTMTPNS."-".$TGTMTPNS,$NIP,$sid);
-    //lethistory($sid,'UPDATE PNS',$NIP);
+    lethistory($sid,'UPDATE PNS',$NIP);
     //update MASTPKT1 PF_01=2
     $jml=mysql_num_rows(mysql_query("select PF_01 from MASTPKT1 where PF_01='$NIP' and PF_02='2' LIMIT 1"));
     if ($jml == 0)
@@ -211,7 +211,7 @@ else if ($opsi === 'pangkat_gaji') {
     $A_04   = $_POST['A_04'];
     
     /*TAMBAHAN BARU*/
-    $ipg_no_surat  = $_POST['nomor_surat'];
+    $ipg_no_surat  = $_POST['nomorsurat'];
     $ipg_tgl_surat = date2mysql($_POST['tglsurat']);
     $ipg_tmt       = date2mysql($_POST['tmt_ijin_penggunaan_gelar']);
     
@@ -526,8 +526,9 @@ else if ($opsi === 'keluarga') {
     $KF_09      = $_POST['KF_09'];
     $pasangan   = $_POST['pasangan_nonpns'];
     if ($nip_couple !== 'NULL') {
-        $nip = mysql_fetch_array(mysql_query("select B_02 from mastfip08 where B_02B = '$nip_couple'"));
+        $nip = mysql_fetch_array(mysql_query("select B_02, CONCAT_WS(' ',B_03, B_03B) as nama from mastfip08 where B_02B = '$nip_couple'"));
         $nip_couple = $nip['B_02'];
+        $pasangan = $nip['nama'];
     }
     if ($o['count(*)']>'0')
     {
@@ -1279,7 +1280,7 @@ else if ($opsi === 'rhukuman') {
             ";
         mysql_query($sql) or die (mysql_error());
     }
-    lethistory($sid,"UPDATE RIWAYAT HUKUMAN ",$NIP);
+    lethistory($sid,"UPDATE RIWAYAT HUKUMAN ",$nip);
     $result['act'] = 'edit';
     die(json_encode($result));
 }

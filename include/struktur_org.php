@@ -120,7 +120,7 @@ for ($i=1;$i<=$jmlKolom;$i++) {
 		<td width="20">&nbsp;</td>
 		<td width="165" valign="top">
 		<?
-		$q="select B_02,B_02B,B_03A,B_03B,B_03,F_03,I_05 from MASTFIP08 where ";
+		$q="select B_02,B_02B,B_03A,B_03B,B_03,F_03,I_05, foto from MASTFIP08 where ";
                 if ($isbiro) { $q.="A_01='".substr($uk,0,2)."' and A_02='".substr($uk,2,2)."' and A_03='".substr($uk,4,2)."' and A_04='".substr($uk,6,2)."' and "; }
                 else { $q.="A_01 = '$uk' and "; }
 		$q.="I_05='".$KOJABA[0]."' LIMIT 1";
@@ -132,8 +132,11 @@ for ($i=1;$i<=$jmlKolom;$i++) {
                         <tr bgColor="#93C3FC" height="50" >
 				<td width="165" align="center"><b><?=jabatan($KOJABA[0])?></b></td>
 			</tr>
-			<tr>
+			<tr><?php if ($row['foto'] !== '') { ?>
+                                <td width="165" align="center" class="backfoto"><img src="Foto/<? echo $row['foto']?>" width="100" height="130"></td>
+                        <?php } else { ?>
 				<td width="165" align="center" class="backfoto"><img src="showfoto.php?nip=<?=$row[B_02]?>" width="100" height="130"></td>
+                        <?php } ?>
 			</tr>
 			
 			<tr height="30">
@@ -242,7 +245,7 @@ for ($i=1;$i<=$jmlKolom;$i++) {
 		<td width="20">&nbsp; </td>
 		<td width="165" valign="top">
 		<?
-		$q="select B_02,B_02B,B_03A,B_03B,B_03,F_03,I_05 from MASTFIP08 where ";
+		$q="select B_02,B_02B,B_03A,B_03B,B_03,F_03,I_05, foto from MASTFIP08 where ";
                 if ($isbiro) { $q.="A_01='".substr($uk,0,2)."' and A_02='".substr($uk,2,2)."' and A_03='".substr($uk,4,2)."' and A_04='".substr($uk,6,2)."' and "; }
                 else { $q.="A_01 = '$uk' and "; }
 		$q.="I_05='".$KOJABA[1]."' LIMIT 1";
@@ -255,7 +258,11 @@ for ($i=1;$i<=$jmlKolom;$i++) {
 				<td width="165" align="center"><b><?=jabatan($KOJABA[1])?></b></td>
 			</tr>
                         <tr>
-				<td width="165" align="center"><img src="showfoto.php?nip=<?=$row[B_02]?>" width="100" height="130"></td>
+                            <?php if ($row['foto'] !== '') { ?>
+                                    <td width="165" align="center" class="backfoto"><img src="Foto/<? echo $row['foto']?>" width="100" height="130"></td>
+                            <?php } else { ?>
+                                    <td width="165" align="center" class="backfoto"><img src="showfoto.php?nip=<?=$row[B_02]?>" width="100" height="130"></td>
+                            <?php } ?>
 			</tr>
 			
 			<tr height="30">
@@ -396,7 +403,7 @@ if ($esel15 !== '') {
 			<?
 			$foto='';
 			if ($KOLOKW[$j] != '') {
-			$q="select B_02,B_02B,B_03A,B_03B,B_03,F_03,I_05 from MASTFIP08 where A_01 = '$uk' and I_05='".$KOLOKW[$j]."' LIMIT 1";
+			$q="select B_02,B_02B,B_03A,B_03B,B_03,F_03,I_05, foto from MASTFIP08 where A_01 = '$uk' and I_05='".$KOLOKW[$j]."' LIMIT 1";
                         
 			$r=mysql_query($q);
 			$row=mysql_fetch_array($r);
@@ -407,7 +414,11 @@ if ($esel15 !== '') {
 					<td width="165" align="center"><b><?=jabatan($kodJab)?></b></td>
 				</tr>
                                 <tr>
-					<td width="165" align="center"><img src="showfoto.php?nip=<?=$row[B_02]?>" width="100" height="130"></td>
+                        <?php if ($row['foto'] !== '') { ?>
+                                <td width="165" align="center" class="backfoto"><img src="Foto/<? echo $row['foto']?>" width="100" height="130"></td>
+                        <?php } else { ?>
+				<td width="165" align="center" class="backfoto"><img src="showfoto.php?nip=<?=$row[B_02]?>" width="100" height="130"></td>
+                        <?php } ?>
 				</tr>
 				
 				<tr height="30">
@@ -610,7 +621,7 @@ for ($y=1;$y<=$jmlX[0];$y++) {
 			<?
 			$foto='';
 			if ($KOJABX[$i][$y] != '') {
-			$q="select B_02,B_02B,B_03A,B_03B,B_03,F_03,I_05 from MASTFIP08 where ";
+			$q="select B_02,B_02B,B_03A,B_03B,B_03,F_03,I_05, foto from MASTFIP08 where ";
                         if ($isbiro) { $q.="A_01='".substr($KOJABX[$i][$y],0,2)."' and A_02='".substr($KOJABX[$i][$y],2,2)."' and A_03='".substr($KOJABX[$i][$y],4,2)."' and A_04='".substr($KOJABX[$i][$y],6,2)."' and "; }
                         else { $q.="A_01 = '$uk' and "; }
 			$q.="I_05='".$KOJABX[$i][$y]."' LIMIT 1";
@@ -623,7 +634,11 @@ for ($y=1;$y<=$jmlX[0];$y++) {
 					<td width="165" align="center"><b><?=jabatan($kodJab)?></b></td>
 				</tr>
                                 <tr>
-					<td width="165" align="center"><img src="showfoto.php?nip=<?=$row[B_02]?>" width="100" height="130"></td>
+					<?php if ($row['foto'] !== '') { ?>
+                                <td width="165" align="center" class="backfoto"><img src="Foto/<? echo $row['foto']?>" width="100" height="130"></td>
+                        <?php } else { ?>
+				<td width="165" align="center" class="backfoto"><img src="showfoto.php?nip=<?=$row[B_02]?>" width="100" height="130"></td>
+                        <?php } ?>
 				</tr>
 				<tr height="50">
 					<td width="165" align="center">

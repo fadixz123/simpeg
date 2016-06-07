@@ -11,6 +11,7 @@ include ("fungsi.inc");
 include ("detil.inc");
 
 $q="select * from MASTFIP08 where B_02='$NIP' LIMIT 1";
+
 $r=mysql_query($q) or die (mysql_error());
 $row=mysql_fetch_array($r);
 
@@ -59,7 +60,7 @@ span.break {page-break-after: always}
       <td>
       <table width="100%" border="0" cellspacing="1" cellpadding="1">
           <tr>
-          <TD align="center"><B>BIODATA PNS</B></TD>
+          <TD align="center"><B>BIODATA PNS</B> </TD>
           
           </TR> 
     </table>
@@ -72,9 +73,9 @@ span.break {page-break-after: always}
           <td colspan="4" bgcolor="#CCCCCC"><b>LOKASI KERJA </b></td>
           <td rowspan="15" align="center" valign="top"> 
               <?php if ($row['foto'] !== '') { ?>
-                <img src="../Foto/<?=$row['foto']?>" border="1" width="120"> 
+                <img src="../Foto/<? echo $row['foto']?>" border="1" width="120"> 
               <?php } else { ?>
-            &nbsp;<img src="../showfoto.php?nip=<?=$row[B_02]?>" border="1" width="120"> 
+            &nbsp;<img src="../showfoto.php?nip=<? echo $row[B_02]?>" border="1" width="120"> 
               <?php } ?>
           </td>
         </tr>
@@ -104,8 +105,8 @@ span.break {page-break-after: always}
           <td width="2%" align="right">01.</td>
           <td width="27%">NIP </td>
           <td width="4%" align="center">:</td>
-          <td width="49%"> 
-            <?= $row[B_02B]!='' ? print_nip_baru(trim($row[B_02B])) : print_nip($row[B_02]) ?>
+          <td width="49%"> <?= $row['ip_nomor'] ?>
+            <? echo  $row[B_02B]!='' ? print_nip_baru(trim($row[B_02B])) : print_nip($row[B_02]) ?>
           </td>
         </tr>
         <tr> 
@@ -120,7 +121,7 @@ span.break {page-break-after: always}
           <td width="2%" align="right">03.</td>
           <td width="27%">TEMPAT/TANGGAL LAHIR</td>
           <td width="4%" align="center">:</td>
-          <td width="49%"><?=$row[B_04]?>
+          <td width="49%"><? echo $row[B_04]?>
             / 
             <? echo format_tanggal_1($row['B_05']); ?>
           </td>
@@ -209,7 +210,7 @@ span.break {page-break-after: always}
           <td valign="top" width="2%" align="right">11.</td>
           <td valign="top" width="27%">TINGKAT PENDIDIKAN SEKOLAH 
 	    <td valign="top" width="4%" align="center">:</td>
-          <td valign="top" width="49%"><?=tktDidik($row[H_1A])?></td>
+          <td valign="top" width="49%"><? echo tktDidik($row[H_1A])?></td>
           
         </tr>
         <tr> 
@@ -300,7 +301,7 @@ span.break {page-break-after: always}
           <td width="2%" align="right">04.</td>
           <td width="27%">PANGKAT/GOLONGAN</td>
           <td width="4%" align="center">:</td>
-          <td width="49%"><?=namapkt($row[D_05])." (".pktH($row['D_05']).")" ?></td>
+          <td width="49%"><? echo namapkt($row[D_05])." (".pktH($row['D_05']).")" ?></td>
           <td width="18%">&nbsp;</td>
         </tr>
         <tr> 
@@ -332,7 +333,7 @@ span.break {page-break-after: always}
           <td width="2%" align="right">04.</td>
           <td width="27%">PANGKAT/GOLONGAN</td>
           <td width="4%" align="center">:</td>
-          <td width="49%"><?=namapkt($row[E_05])." (".pktH($row['E_05']).")"?></td>
+          <td width="49%"><? echo namapkt($row[E_05])." (".pktH($row['E_05']).")"?></td>
           <td width="18%">&nbsp;</td>
         </tr>
         <tr> 
@@ -383,7 +384,7 @@ span.break {page-break-after: always}
           <td width="2%" align="right">04.</td>
           <td width="27%">PANGKAT/GOLONGAN</td>
           <td width="4%" align="center">:</td>
-          <td width="49%"><?=namapkt($row[F_03])." (".pktH($row['F_03']).")"?></td>
+          <td width="49%"><? echo namapkt($row[F_03])." (".pktH($row['F_03']).")"?></td>
           <td width="18%">&nbsp;</td>
         </tr>
         <tr> 
@@ -398,33 +399,10 @@ span.break {page-break-after: always}
           <td width="27%">MASA KERJA</td>
           <td width="4%" align="center">:</td>
           <td width="49%"><? echo substr($row["F_04"],0,2)." TAHUN ".substr($row["F_04"],2,2)." BULAN"; ?></td>
-          <td width="18%">&nbsp;</td>
+          <td width="18%">&nbsp; </td>
         </tr>
-        <tr> 
-          <td colspan="4" bgcolor="#CCCCCC"><b>KENAIKAN GAJI BERKALA TERAKHIR</b></td>
-          <td width="18%">&nbsp;</td>
-        </tr>
-        <tr> 
-          <td width="2%" align="right">01.</td>
-          <td width="27%">TMT GAJI BERKALA</td>
-          <td width="4%" align="center">:</td>
-          <td width="49%"><? echo format_tanggal($row["G_01"]); ?></td>
-          <td width="18%">&nbsp;</td>
-        </tr>
-        <tr> 
-          <td width="2%" align="right">02.</td>
-          <td width="27%">MASA KERJA GAJI</td>
-          <td width="4%" align="center">:</td>
-          <td width="49%"><? echo substr($row["G_02"],0,2) ; ?> TAHUN <? echo substr($row["G_02"],2,2) ; ?> BULAN</td>
-          <td width="18%">&nbsp;</td>
-        </tr>
-        <tr> 
-          <td width="2%" align="right">03.</td>
-          <td width="27%">GAJI POKOK</td>
-          <td width="4%" align="center">:</td>
-          <td width="49%"><? echo gaji($row["F_03"],substr($row["F_04"],0,2)); ?></td>
-          <td width="18%">&nbsp;</td>
-        </tr>
+        
+        
         <tr> 
           <td colspan="4" bgcolor="#CCCCCC"><b>JABATAN STRUKTURAL/FUNGSIONAL/FUNGSIONAL 
             UMUM</b></td>
@@ -495,7 +473,7 @@ span.break {page-break-after: always}
           <td width="2%" align="right">05.</td>
           <td width="27%">NAMA JABATAN</td>
           <td width="4%" align="center">:</td>
-          <td width="49%"><? echo $row["I_JB"]; ?> <?= $nama_jenjang['JENJANG'] ?> <?= ($row['I_05'] === '00018')?$ouk['nm'].', '.$olo['NALOK'].' '.  namaLokasiKerja($row['A_01'].$row['A_02'].$row['A_03'].$row['A_04'].$row['A_05']):'' ?></td>
+          <td width="49%"><? echo $row["I_JB"]; ?> <? echo  $nama_jenjang['JENJANG'] ?> <? echo  ($row['I_05'] === '00018')?$ouk['nm'].', '.$olo['NALOK'].' '.  namaLokasiKerja($row['A_01'].$row['A_02'].$row['A_03'].$row['A_04'].$row['A_05']):'' ?></td>
           <td width="18%">&nbsp;</td>
         </tr>
         <tr> 
@@ -512,10 +490,57 @@ span.break {page-break-after: always}
           <td width="49%"><? echo eselon($row['I_06']); ?></td>
           <td width="18%">&nbsp;</td>
         </tr>
+        <tr> 
+          <td colspan="4" bgcolor="#CCCCCC"><b>IJIN PENGGUNAAN GELAR</b></td>
+          <td width="18%">&nbsp;</td>
+        </tr>
+        <tr> 
+          <td width="2%" align="right">01.</td>
+          <td width="27%">No. Surat</td>
+          <td width="4%" align="center">:</td>
+          <td width="49%"><? echo $row["ipg_nomor"]; ?></td>
+          <td width="18%">&nbsp;</td>
+        </tr>
+        <tr> 
+          <td width="2%" align="right">02.</td>
+          <td width="27%">Tanggal Surat</td>
+          <td width="4%" align="center">:</td>
+          <td width="49%"><? echo format_tanggal($row["ipg_tgl_surat"]); ?></td>
+          <td width="18%">&nbsp;</td>
+        </tr>
+        <tr> 
+          <td width="2%" align="right">03.</td>
+          <td width="27%">TMT</td>
+          <td width="4%" align="center">:</td>
+          <td width="49%"><? echo format_tanggal($row["ipg_tmt"]); ?></td>
+          <td width="18%">&nbsp;</td>
+        </tr>
+        <tr> 
+          <td colspan="4" bgcolor="#CCCCCC"><b>IJIN BELAJAR</b></td>
+          <td width="18%">&nbsp;</td>
+        </tr>
+        <tr> 
+          <td width="2%" align="right">01.</td>
+          <td width="27%">No. Surat</td>
+          <td width="4%" align="center">:</td>
+          <td width="49%"><? echo $row["ib_nomor"]; ?></td>
+          <td width="18%">&nbsp;</td>
+        </tr>
+        <tr> 
+          <td width="2%" align="right">02.</td>
+          <td width="27%">Tanggal Surat</td>
+          <td width="4%" align="center">:</td>
+          <td width="49%"><? echo format_tanggal($row["ib_tgl_surat"]); ?></td>
+          <td width="18%">&nbsp;</td>
+        </tr>
+        <tr> 
+          <td width="2%" align="right">03.</td>
+          <td width="27%">TMT</td>
+          <td width="4%" align="center">:</td>
+          <td width="49%"><? echo format_tanggal($row["ib_tmt"]); ?></td>
+          <td width="18%">&nbsp;</td>
+        </tr>
         
-        
-        
-
       </table>
       </td>
     </tr>

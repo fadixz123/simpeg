@@ -58,6 +58,10 @@
             }
         });
     }
+    
+    function paging(p) {
+        search_data_aktivitas(p);
+    }
 </script>
 <ul class="breadcrumb">
     <li><a href="index.php?sid=<?= $_GET['sid'] ?>&do=home"><i class="fa fa-home"></i> Home</a></li>
@@ -98,7 +102,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-refresh"></i> Batal</button>
-            <button type="button" class="btn btn-primary" onclick="search_data_aktivitas(1);"><i class="fa fa-save"></i> Tampilkan</button>
+            <button type="button" class="btn btn-primary" onclick="search_data_aktivitas(1);"><i class="fa fa-eye"></i> Tampilkan</button>
         </div>
     </div>
     </div>
@@ -140,7 +144,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-minus-circle"></i> Batal</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-refresh"></i> Close</button>
         </div>
     </div>
     </div>

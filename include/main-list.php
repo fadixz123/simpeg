@@ -26,7 +26,7 @@ $sid = $_GET['sid'];
         <?php
         $uk    = $_GET['uk'];
         $B_03 = ($_GET['B_03'] !== '')?$_GET['B_03']:'-';
-        $limit = 10;
+        $limit = 15;
         $page  = $_GET['page'];
         if ($_GET['page'] === '') {
             $page = 1;
