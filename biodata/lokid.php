@@ -121,7 +121,7 @@ $q="select * from MASTFIP08 where B_02='".$_GET['nip']."' LIMIT 1";
             },
             error: function() {
                 hide_ajax_indicator();
-                dinamic_alert('File yang di upload harus bertipe PDF!');
+                dinamic_alert('Check kembali file yang anda upload !');
             }
         });
     }

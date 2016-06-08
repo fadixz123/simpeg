@@ -248,7 +248,7 @@ $row=mysql_fetch_array(mysql_query($q));
             <td width="20%">&nbsp;</td>
             <td>&nbsp;</td>
             <td width="77%">  
-                <button class="tombol2 btn btn-primary" onclick="save_data_pangkat_gaji(); return false;"><i class='fa fa-save'></i> Simpan Pangkat & Gaji</button>
+                <button class="tombol2 btn btn-primary" onclick="save_data_pangkat_gaji(); return false;"><i class='fa fa-save'></i> Simpan Pangkat & Golongan</button>
             </td>
         </tr>
     </table>
