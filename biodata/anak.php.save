@@ -124,7 +124,7 @@ while ($oa=mysql_fetch_array($ra))
     <td valign="top">
     <input type="text" name="KF_09[]" size="10" value="<?=$oa[KF_09]?>">
     </td>
-    <td valign="top"><input type="text" name="TGKF_05[]" value="<?=datefmysql($oa[KF_05]); ?>"class="dpicker"></td>
+    <td valign="top"><input type="text" name="TGKF_05size="1" maxlength="2" value="<?=datefmysql($oa[KF_05]); ?>"></td>
     <td valign="top">
     <select name="KF_10[]" >
       <option value="">-</option>

@@ -95,7 +95,7 @@ $NIP = $_GET['nip'];
           </tr>
           <tr> 
             <td width="3%"> 01</td>
-            <td width="20%">Nama <small><i>Jika <?= $pasangan ?> PNS</i></small></td>
+            <td width="20%">Nama <small><i>Jika <?= $pasangan ?> PNS Kabupaten Pekalongan</i></small></td>
             <td>:</td>
             <td width="77%"> 
                 <input type="text" name="KF_04" class="select2-input" id="nomorinduk" value="<?= $o['NIP_COUPLE'] ?>">
@@ -103,7 +103,7 @@ $NIP = $_GET['nip'];
           </tr>
         <tr> 
             <td width="3%"> 02</td>
-            <td width="20%">Nama  <small><i>Jika <?= $pasangan ?> bukan PNS</i></small></td>
+            <td width="20%">Nama  <small><i>Jika <?= $pasangan ?> bukan PNS Kabupaten Pekalongan</i></small></td>
             <td>:</td>
             <td width="77%"> 
               <input type="text" name="pasangan_nonpns" size="40" class="form-control-static" value="<? echo $o["KF_04"]; ?>">

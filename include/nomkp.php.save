@@ -52,7 +52,7 @@ if ($th=='') $th=date("Y");
         search_data_kpreg(page);
     }
 </script>
-<h4 class="title">NOMINNATIF KENAIKAN PANGKAT REGULER</h4>
+<h4 class="title">NOMINATIF KENAIKAN PANGKAT REGULER</h4>
 <ul class="breadcrumb">
     <li><a href="index.php?sid=<?= $_GET['sid'] ?>&do=home"><i class="fa fa-home"></i> Home</a></li>
     <li><a href="#">Kenaikan Pangkat</a></li>
