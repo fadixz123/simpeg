@@ -24,7 +24,7 @@ if ($unitkerja !='') {
 	$tahun=date("Y");
 	$thskr=$tahun-56;
 	$thskr1=$tahun-61;
-	$th=date("Y");
+	$th=$_GET['th'];
 	$th1=$th-4;$th11=$th-5;
 	$th2=$th-5;$th21=$th-6;
 	$tglok=$thskr."-".date("m");//."-".date("d");
