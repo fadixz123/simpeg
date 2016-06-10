@@ -32,7 +32,7 @@ if ($unitkerja !='') {
 
 	
 ?>
-<b>NOMINATIF KENAIKAN PANGKAT REGULER PERIODE <?=$namabl?> <?=$tahun?>
+<b>NOMINATIF KENAIKAN PANGKAT REGULER PERIODE <?=$namabl?> <?=$th?>
     <div style="text-align: right; float: right;">UNIT KERJA : 
 <?php if ($unitkerja!='all') {
 	if (strlen($unitkerja)==2) echo lokasiKerjaB($unitkerja);
