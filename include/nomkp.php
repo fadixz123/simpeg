@@ -32,6 +32,12 @@ if ($th=='') $th=date("Y");
         });
     });
     
+    function reload_data() {
+        $('#bln, #uk').val('');
+        $('#th').val('<?= date("Y") ?>');
+        search_data_kpreg(1);
+    }
+    
     function search_data_kpreg(page) {
         $('#datamodal_search').modal('hide');
         $.ajax({
@@ -90,7 +96,7 @@ if ($th=='') $th=date("Y");
                                   <td width="610" align="left"><select name="bln" id="bln" class="form-control-static">
                                                 <option value="4" <?= $bln=='4' ? "selected" : ""?>>April</option>
                                                 <option value="10" <?= $bln=='10' ? "selected" : ""?>>Oktober</option>
-                                      </select> <input type="number" name="th" class="form-control-static" value="<?=$th?>"></td>
+                                      </select> <input type="number" name="th" id="th" class="form-control-static" value="<?=$th?>"></td>
                                 </tr>
                                 <tr>
                                   <td>Unit Kerja:</td>
