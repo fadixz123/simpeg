@@ -14,7 +14,7 @@ $kpl_sekolah = $row['is_kepala_sekolah'];
         $('#inolnam').val('<?= $row['I_06'] ?>');
         $('.autohide').show();
         $('.autoshow').hide();
-        $('#tgtmtjab, #tgskjab').datepicker({
+        $('#tgtmtjab, #tgskjab, #tgtmtjabx, #tgskjabx').datepicker({
             format: 'dd/mm/yyyy'
         }).on('changeDate', function(){
             $(this).datepicker('hide');
@@ -249,6 +249,9 @@ $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
           </tr>
           
           <!-- JIKA KEPALA SEKOLAH MAKA OPSI INI MUNCUL -->
+          <?php
+            $row_head = mysql_fetch_array(mysql_query("select * from mastjab1 where JF_01 = '".$row['B_02']."' order by JF_02 desc limit 1"));
+          ?>
           <tr class="sectiontableheader if_kepsek"> 
                 <td width="3%"><b></b></td>
                 <td colspan="4" height="22"><b>Kepala Sekolah</b></td>
@@ -268,16 +271,16 @@ $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
 	?>
               <select name="I_06x" id="inolnamx" class="form-control-static">
                 <option value="99">-</option>
-                <option value="11">I.a</option>
-                <option value="12">I.b</option>
-                <option value="21">II.a</option>
-                <option value="22">II.b</option>
-                <option value="31">III.a</option>
-                <option value="32">III.b</option>
-                <option value="41">IV.a</option>
-                <option value="42">IV.b</option>
-                <option value="51">V.a</option>
-                <option value="52">V.b</option>
+                <option value="11" <?= ($row_head['JF_04'] === '11')?'selected':'' ?>>I.a</option>
+                <option value="12" <?= ($row_head['JF_04'] === '12')?'selected':'' ?>>I.b</option>
+                <option value="21" <?= ($row_head['JF_04'] === '21')?'selected':'' ?>>II.a</option>
+                <option value="22" <?= ($row_head['JF_04'] === '22')?'selected':'' ?>>II.b</option>
+                <option value="31" <?= ($row_head['JF_04'] === '31')?'selected':'' ?>>III.a</option>
+                <option value="32" <?= ($row_head['JF_04'] === '32')?'selected':'' ?>>III.b</option>
+                <option value="41" <?= ($row_head['JF_04'] === '41')?'selected':'' ?>>IV.a</option>
+                <option value="42" <?= ($row_head['JF_04'] === '42')?'selected':'' ?>>IV.b</option>
+                <option value="51" <?= ($row_head['JF_04'] === '51')?'selected':'' ?>>V.a</option>
+                <option value="52" <?= ($row_head['JF_04'] === '52')?'selected':'' ?>>V.b</option>
              </select> 
               	
               </td>
@@ -296,7 +299,7 @@ $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
 	              	while ($ro=mysql_fetch_array($res))
 	              	{
 	              		?>
-	                	<option value="<?=$ro[KODE]?>"><?=$ro[NAMA]?></option>
+	                	<option value="<?=$ro[KODE]?>" <?= ($ro['KODE'] === $row['I_01_kepsek'])?'selected':'' ?>><?=$ro[NAMA]?></option>
 	                	<?
 	              	}
 	    	?>
@@ -308,7 +311,7 @@ $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
             <td width="20%">Nomor SK Jabatan</td>
             <td> :</td>
             <td width="77%">  
-            	<input type="text" class="form-control-static" name="I_02x" value="" size="50"> 
+            	<input type="text" class="form-control-static" name="I_02x" value="<?= $row_head['JF_05'] ?>" size="50"> 
             </td>
           </tr>
           <tr class="if_kepsek"> 
@@ -316,7 +319,7 @@ $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
             <td width="20%">Tanggal SK Jabatan</td>
             <td> :</td>
             <td width="77%"> 
-              <input name="TGSKJABx" class="form-control-static" id="tgskjabx" value="">
+              <input name="TGSKJABx" class="form-control-static" id="tgskjabx" value="<?= datefmysql($row_head['JF_06']) ?>">
             </td>
           </tr>
           <tr class="if_kepsek"> 
@@ -324,7 +327,7 @@ $nama_jenjang = mysql_fetch_array(mysql_query($qjenjang));
             <td width="20%">TMT Jabatan</td>
             <td> :</td>
             <td width="77%">
-              <input name="TGTMTJABx" class="form-control-static" id="tgtmtjabx" value="">
+              <input name="TGTMTJABx" class="form-control-static" id="tgtmtjabx" value="<?= datefmysql($row_head['JF_07']) ?>">
             </td>
           </tr>
           
