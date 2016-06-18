@@ -346,6 +346,7 @@ else if ($opsi === 'jabatan') {
             if (isset($_POST['is_kepala_sekolah'])) {
                 $I_06 = $_POST['I_06x'];
                 $I_02 = $_POST['I_02x'];
+                $I_01 = $_POST['I_01x'];
                 $xskj=date2mysql($_POST['TGSKJABx']);
                 $xtmt=date2mysql($_POST['TGTMTJABx']);
                 
@@ -357,9 +358,9 @@ else if ($opsi === 'jabatan') {
                 //echo $ks;
                 mysql_query($ks) or die (mysql_error());
                 
-                mysql_query("update mastfip08 set is_kepala_sekolah = 'Ya' where `B_02B` = '".$NIP."' or `B_02` = '".$NIP."'");
+                mysql_query("update mastfip08 set is_kepala_sekolah = 'Ya', I_01_kepsek = '$I_01' where `B_02B` = '".$NIP."' or `B_02` = '".$NIP."'");
             } else {
-                mysql_query("update mastfip08 set is_kepala_sekolah = 'Tidak' where `B_02B` = '".$NIP."' or `B_02` = '".$NIP."'");
+                mysql_query("update mastfip08 set is_kepala_sekolah = 'Tidak', I_01_kepsek = '' where `B_02B` = '".$NIP."' or `B_02` = '".$NIP."'");
             }
     }
     else
@@ -372,26 +373,48 @@ else if ($opsi === 'jabatan') {
             
             $q  ="update MASTJAB1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', "; 
             $q .="JF_05='$I_02',JF_06='$xskj', JF_07='$xtmt' where ID='$nor'";
-            //echo $q;
+            
             mysql_query($q) or die (mysql_error());
             if (isset($_POST['is_kepala_sekolah'])) {
                 
                 $I_06 = $_POST['I_06x'];
                 $I_02 = $_POST['I_02x'];
+                $I_01 = $_POST['I_01x'];
                 $xskj=date2mysql($_POST['TGSKJABx']);
                 $xtmt=date2mysql($_POST['TGTMTJABx']);
                 
                 $get_lokasi = tampil_lokasi($A_01, $A_02, $A_03, $A_04);
                 $lokasi = ($get_lokasi !== '')?$get_lokasi:NULL;
-                $ks  ="insert into MASTJAB1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', "; 	
-                $ks .="JF_01='$NIP',JF_02='".($jmlr)."',JF_03='KEPALA SEKOLAH ".$lokasi."',";
-                $ks .="JF_04='$I_06',JF_05='$I_02',JF_06='$xskj', JF_07='$xtmt'";
-                //echo $ks;
-                mysql_query($ks) or die (mysql_error());
                 
-                mysql_query("update mastfip08 set is_kepala_sekolah = 'Ya' where `B_02B` = '".$NIP."' or `B_02` = '".$NIP."'");
+                // check jika sudah kepala sekolah
+                $check = mysql_num_rows(mysql_query("select * from MASTJAB1 where 
+                    A_01 = '$A_01' and A_02 = '$A_02' and A_03 = '$A_03' and A_04 = '$A_04' and
+                    JF_01 = '$NIP' and JF_03 = 'KEPALA SEKOLAH ".$lokasi."'"));
+                if ($check === 0) {
+                    $ks  ="insert into MASTJAB1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', "; 	
+                    $ks .="JF_01='$NIP',JF_02='".($jmlr)."',JF_03='KEPALA SEKOLAH ".$lokasi."',";
+                    $ks .="JF_04='$I_06',JF_05='$I_02',JF_06='$xskj', JF_07='$xtmt'";
+                    //echo $ks;
+                    mysql_query($ks) or die (mysql_error());
+                } else {
+                    mysql_query("delete from MASTJAB1 where 
+                    A_01 = '$A_01' and A_02 = '$A_02' and A_03 = '$A_03' and A_04 = '$A_04' and
+                    JF_01 = '$NIP' and JF_03 = 'KEPALA SEKOLAH ".$lokasi."'");
+                    
+                    $jmlrr=mysql_fetch_array(mysql_query("select JF_02 from MASTJAB1 where JF_01='$NIP' order by JF_02 desc limit 1"));
+                    $jmlr=$jmlrr[JF_02];
+                    $jmlr++;
+                    
+                    $ks  ="insert into MASTJAB1 set A_01='$A_01',A_02='$A_02',A_03='$A_03',A_04='$A_04', "; 	
+                    $ks .="JF_01='$NIP',JF_02='".($jmlr)."',JF_03='KEPALA SEKOLAH ".$lokasi."',";
+                    $ks .="JF_04='$I_06',JF_05='$I_02',JF_06='$xskj', JF_07='$xtmt'";
+                    //echo $ks;
+                    mysql_query($ks) or die (mysql_error());
+                }
+                
+                mysql_query("update mastfip08 set is_kepala_sekolah = 'Ya', I_01_kepsek = '$I_01' where `B_02B` = '".$NIP."' or `B_02` = '".$NIP."'");
             } else {
-                mysql_query("update mastfip08 set is_kepala_sekolah = 'Tidak' where `B_02B` = '".$NIP."' or `B_02` = '".$NIP."'");
+                mysql_query("update mastfip08 set is_kepala_sekolah = 'Tidak', I_01_kepsek = '' where `B_02B` = '".$NIP."' or `B_02` = '".$NIP."'");
             }
     }
     if (mysql_affected_rows() > 0) lethistory($sid,"UPDATE RIWAYAT JABATAN".getNaJab($NIP),$NIP);
