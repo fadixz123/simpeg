@@ -32,7 +32,7 @@ if (isset($_GET['search'])) {
         $query = "select CONCAT(m.A_01,m.A_02, m.A_03, m.A_04, m.A_05) as kode_sub_lokasi, m.B_02 as id, m.B_02B as nip_baru, 
                 CONCAT_WS(' ',m.B_02B, ' | ',m.B_03,m.B_03B , '<br/>', t.nm) as list, CONCAT_WS(' ',B_03,B_03B) as nama_pegawai 
                 from mastfip08 m
-                join tablok08 t on (m.A_01 = t.kd)
+                left join tablok08 t on (m.A_01 = t.kd)
                 where (m.B_02 like ('%".$q."%') or m.B_02B like ('%".$q."%') or m.B_03 like ('%".$q."%')) $param";
         //echo $query.' limit '.$start.', '.$limit;
         $sql = mysql_query($query.' limit '.$start.', '.$limit);

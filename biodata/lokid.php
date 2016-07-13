@@ -21,11 +21,17 @@ $q="select * from MASTFIP08 where B_02='".$_GET['nip']."' LIMIT 1";
 <script type="text/javascript" src="Scripts/jquery.form.js"></script>
 <script type="text/javascript">
     $(function() {
+        $('#B_02B').attr('readonly','readonly');
         $('#tgllahir').datepicker({
             format: 'dd/mm/yyyy'
         }).on('changeDate', function(){
             $(this).datepicker('hide');
         });
+        
+        <?php if ($_GET['nip'] === '') { ?>
+        
+        $('#B_02B').removeAttr('readonly');
+        <?php } ?>
         
         $('#kecamatan').select2({
             ajax: {
@@ -250,10 +256,12 @@ $q="select * from MASTFIP08 where B_02='".$_GET['nip']."' LIMIT 1";
 </form>
 <?php // ----------------------- identitas ------------------------------------ ?>
 <?php
-$q="select m.*, i.lokasi_nama from MASTFIP08 m left join inf_lokasi i on (m.id_lokasi = i.lokasi_ID) where m.B_02='".$_GET['nip']."' LIMIT 1";
-$row=mysql_fetch_array(mysql_query($q));
+if ($_GET['nip'] !== '') {
+    $q="select m.*, i.lokasi_nama from MASTFIP08 m left join inf_lokasi i on (m.id_lokasi = i.lokasi_ID) where m.B_02='".$_GET['nip']."' LIMIT 1";
+    $row=mysql_fetch_array(mysql_query($q));
+}
 ?>      
-<form  id="formpegawai" enctype="multipart/form-data" action="biodata/save-data.php?save=pegawai" method="POST">
+<form id="formpegawai" enctype="multipart/form-data" action="biodata/save-data.php?save=pegawai" method="POST">
     <input type="hidden" name="nip" value="<?= $_GET['nip'] ?>" />
 	<table width="100%" class="table table-condensed table-bordered table-hover no-margin">
           <tr class="sectiontableheader"> 
@@ -272,7 +280,7 @@ $row=mysql_fetch_array(mysql_query($q));
             <td width="3%"> 02</td>
             <td width="20%">NIP Baru</td>
 			<td>:</td>
-                        <td width="77%"><input type="text" name="B_02B" class="form-control-static" readonly="" value="<?=$row[B_02B]?>" maxlength="18"></td>
+                        <td width="77%"><input type="text" name="B_02B" id="B_02B" class="form-control-static" readonly="" value="<?=$row[B_02B]?>" maxlength="18"></td>
         </tr>
         <tr>
             <td>03</td>
