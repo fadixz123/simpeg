@@ -46,8 +46,17 @@ mysql_select_db($db);
         if ($_GET['suk'] !== '') {
             $q.=" having kode_sub_lokasi like ('%".$_GET['suk']."%')";
         }
-        if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
-            $q.=" and A_01 = '".$_SESSION['skpd']."'";
+        if ($_SESSION['nama_group'] !== 'Administrator' and $_SESSION['nama_group'] !== 'Admin BKD') {
+            //$q.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."'";
+            if (strtolower($_SESSION['nama_group']) === 'admin skpd') {
+                $q.=" and A_01 = '".$_SESSION['skpd']."'";
+            }
+            if (strtolower($_SESSION['nama_group']) === 'admin sub skpd') {
+                $q.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."' and A_03 = '".$_SESSION['subsubskpd']."'";
+            }
+            if ($_SESSION['nama_group'] === 'Staffs') {
+                $q.=" and B_02 = '".$_SESSION['nip']."'";
+            }
         }
         
         $q .="order by I_06 ASC, F_03 DESC";
