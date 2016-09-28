@@ -727,7 +727,7 @@ else if ($opsi === 'arsip_digital') {
                 if ($foto !== '') {
                     @unlink('../arsip/'.$foto);
                 }
-                switch(strtolower($FileType))
+                /*switch(strtolower($FileType))
                 {
                         //allowed file types
 //                        case 'image/png': //png file
@@ -742,7 +742,7 @@ else if ($opsi === 'arsip_digital') {
                                 break;
                         default:
                                 die('Unsupported File!'); //output error
-                }
+                }*/
 
 
                 //File Title will be used as new File name
