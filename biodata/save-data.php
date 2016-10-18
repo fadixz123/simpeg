@@ -417,7 +417,7 @@ else if ($opsi === 'jabatan') {
                 mysql_query("update mastfip08 set is_kepala_sekolah = 'Tidak', I_01_kepsek = '' where `B_02B` = '".$NIP."' or `B_02` = '".$NIP."'");
             }
     }
-    if (mysql_affected_rows() > 0) lethistory($sid,"UPDATE RIWAYAT JABATAN".getNaJab($NIP),$NIP);
+    lethistory($sid,"UPDATE RIWAYAT JABATAN ".getNaJab($NIP),$NIP);
     die(json_encode(array('status' => TRUE)));
 }
 
@@ -757,6 +757,10 @@ else if ($opsi === 'arsip_digital') {
                 nama_file = '$NewFileName',
                 keterangan = '$keterangan'";
                 mysql_query($query);
+                
+                $arsip = mysql_fetch_array(mysql_query("select nama from arsip_kategori where id = '".$id_kategori."'"));
+                
+                lethistory($sid,"UPLOAD BERKAS ".$arsip['nama'].",  ".$keterangan." NAMA FILE: ".$NewFileName." ",$nip);
            } else {
                 //die('error uploading File!');
            }
@@ -935,7 +939,7 @@ else if ($opsi === 'rtanda_jasa') {
                     mysql_query($q) or die (mysql_error());
                     $result['act'] = 'edit';
                 }
-                if (mysql_affected_rows() > 0) $u++;
+                if (mysql_affected_rows() > 0) { $u++; }
         }
     }
     if ($u > 0) lethistory($sid,"UPDATE RIWAYAT TANDA JASA",$NIP);
