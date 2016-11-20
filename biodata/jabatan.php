@@ -124,6 +124,18 @@ $kpl_sekolah = $row['is_kepala_sekolah'];
         });
     }
     
+    function get_ijb(id) {
+        $.ajax({
+            type: 'GET',
+            url: 'biodata/load-extend.php',
+            data: 'id='+id+'&get_ijb=true',
+            dataType: 'json',
+            success: function(data) {
+                $('#I_JB').val(data.NAJFU);
+            }
+        });
+    }
+    
 </script>
 <br/>
 <?php 
