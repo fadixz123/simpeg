@@ -1,3 +1,4 @@
+
 <?php
 include('include/config.inc');
 include('include/fungsi.inc');
@@ -305,9 +306,9 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                           <td width="610" align="left">
                             <select name="jabatan" id="jabatan" class="form-control" style="width: 300px;">
                               <option value="all" <? if ($jabatan=='all') echo "selected" ; ?>>Semua ...</option>
-                              <option value="0" <? if ($jabatan=='0') echo "selected" ; ?>>Staff</option>
+                              <option value="0" <? if ($jabatan=='0') echo "selected" ; ?>>Fungsional Umum</option>
                               <option value="1" <? if ($jabatan=='1') echo "selected" ; ?>>Struktural</option>
-                              <option value="2" <? if ($jabatan=='2') echo "selected" ; ?>>Fungsional</option>
+                              <option value="2" <? if ($jabatan=='2') echo "selected" ; ?>>Fungsional Tertentu</option>
                             </select>
                           </td>
                         </tr>
