@@ -4,7 +4,7 @@ include('../include/fungsi.inc');
 $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
 if ($_GET['pilihjab'] === '3') { ?>
-        <select name="I_05" class="form-control-static" style="width: 300px;">
+        <select name="I_05" onchange="get_ijb(this.value);" class="form-control-static" style="width: 300px;">
         <option value=""><?= ucwords(strtolower('PILIH KELOMPOK JAB FUNGSIONAL UMUM')) ?></option>
                                 <?
                                 $qjfu="select * from TABJFU order by NAJFU";
@@ -16,11 +16,12 @@ if ($_GET['pilihjab'] === '3') { ?>
                                 </select>
                                 <?
         $q="select KOJFU,NAJFU from TABJFU where KOJFU='$I_05'";
+        
         $r=mysql_query($q) or die(mysql_error());
         $xo=mysql_fetch_array($r);
         $I_06='99';
         ?>-
-        <input type="hidden" name="I_JB" value="<?=$xo[NAJFU]?>">
+        <input type="hidden" name="I_JB" id="I_JB" value="<?=$xo[NAJFU]?>">
         <input type="hidden" name="I_5A" value="0">
         <input type="hidden" name="pilihjab" value="0">
         <button type="button" class="btn btn-default btn-xs" onclick="refresh_submit();"><i class="fa fa-minus-circle"></i> Batal</button>
@@ -121,5 +122,13 @@ if ($_GET['geteselon'] === 'yes') {
     $q="select * from MASTFIP08 where B_02='$NIP' LIMIT 1";
     $row=mysql_fetch_array(mysql_query($q));
     die(json_encode($row));
+}
+
+if ($_GET['get_ijb'] === 'true') {
+    $q="select KOJFU,NAJFU from TABJFU where KOJFU='".$_GET['id']."'";
+        
+    $r=mysql_query($q) or die(mysql_error());
+    $xo=mysql_fetch_array($r);
+    die(json_encode($xo));
 }
 ?>
