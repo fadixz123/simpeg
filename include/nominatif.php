@@ -462,6 +462,9 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                                       if (strtolower($_SESSION['nama_group']) === 'admin skpd' or strtolower($_SESSION['nama_group']) === 'admin sub skpd') {
                                         $id_skpd = $_SESSION['skpd'];
                                       }
+                                      if (strtolower($_SESSION['nama_group']) === 'opd baru') {
+                                        $id_skpd = NULL;
+                                    }
                                       if ($id_skpd === NULL) {
                                           echo '<option value="all">Semua unit kerja...</option>';
                                       }

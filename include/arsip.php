@@ -362,6 +362,9 @@ else if (strlen($NIP)!=0) {
                                       if ($_SESSION['skpd'] !== '20' and $_SESSION['nama_group'] !== 'Administrator') {
                                         $id_skpd = $_SESSION['skpd'];
                                       }
+                                      if (strtolower($_SESSION['nama_group']) === 'opd baru') {
+                                            $id_skpd = NULL;
+                                        }
                                       $lsuk=listUnitKerja($id_skpd);
                                       foreach($lsuk as $key=>$value) {
                                       ?>
