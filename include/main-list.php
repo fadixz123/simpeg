@@ -48,24 +48,20 @@ $sid = $_GET['sid'];
             $q.=" having kode_sub_lokasi like ('%".$_GET['suk']."%')";
         }
         if ($_SESSION['nama_group'] !== 'Administrator' and $_SESSION['nama_group'] !== 'Admin BKD') {
-            echo "1";
             //$q.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."'";
             if (strtolower($_SESSION['nama_group']) === 'admin skpd') {
-                echo "2";
                 $q.=" and A_01 = '".$_SESSION['skpd']."'";
             }
             if (strtolower($_SESSION['nama_group']) === 'admin sub skpd') {
-                echo "3";
                 $q.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."' and A_03 = '".$_SESSION['subsubskpd']."'";
             }
             if ($_SESSION['nama_group'] === 'Staffs') {
-                echo "4";
                 $q.=" and B_02 = '".$_SESSION['nip']."'";
             }
         }
         
         $q .=" order by I_06 ASC, F_03 DESC";
-        echo $q;
+        //echo $q;
         $r=mysql_query($q.'  limit '.$offset.', '.$limit) or die (mysql_error());
         $total_data = mysql_num_rows(mysql_query($q));
         while($row=mysql_fetch_array($r)) {

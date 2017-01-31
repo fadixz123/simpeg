@@ -100,7 +100,7 @@ if (!isset($ultah) || $ultah=='') $ultah=0;
                                     <option value="all">Semua</option>
                                     <?
                                     $id_skpd = NULL;
-                                  if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
+                                  if ($_SESSION['skpd'] !== '20' and $_SESSION['nama_group'] !== 'Administrator') {
                                     $id_skpd = $_SESSION['skpd'];
                                   }
                                     $lsuk=listUnitKerja($id_skpd);

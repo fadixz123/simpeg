@@ -37,7 +37,7 @@ mysql_select_db($db);
         if ($_GET['suk'] !== '') {
             $q.=" having kode_sub_lokasi like ('%".$_GET['suk']."%')";
         }
-        if ($_SESSION['skpd'] !== '12' and $_SESSION['nama_group'] !== 'Administrator') {
+        if ($_SESSION['skpd'] !== '20' and $_SESSION['nama_group'] !== 'Administrator') {
             $q.=" and A_01 = '".$_SESSION['skpd']."'";
         }
         
