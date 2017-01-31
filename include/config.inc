@@ -1,7 +1,7 @@
 <?php
 $server='localhost';
 $user='root';
-$pass='error403';
+$pass='';
 $db='kabpkl';
 $KAB='BKD KABUPATEN PEKALONGAN';
 $KABI='KABUPATEN PEKALONGAN';
