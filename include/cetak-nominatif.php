@@ -5,6 +5,12 @@ $link=mysql_connect($server,$user,$pass);
 mysql_select_db($db);
 ?>
 <link rel="stylesheet" href="../css/printing-A4-landscape.css" media="all" />
+<script type="text/javascript">
+    function cetak() {
+        setTimeout(function(){ window.close();},300);
+        window.print();    
+    }
+</script>
 <body>
 <?php
 $unitkerja  = $_GET['uk'];
@@ -12,7 +18,7 @@ $unitkerja  = $_GET['uk'];
 $qcu="select distinct A_02 from TABLOKB08 where A_01='$unitkerja'";
 $rcu=mysql_query($qcu) or die(mysql_error());
 if (mysql_num_rows($rcu)>1) $hasupt=true;
-//$uk     = $_GET['uk'];
+$uk     = $_GET['uk'];
 $subuk  = $_GET['subuk'];
 $hasupt = $_GET['hasupt'];
 $radio1 = $_GET['radio1'];
@@ -27,7 +33,7 @@ $agama  = $_GET['agama'];
 $diklat = $_GET['diklat'];
 $dik    = $_GET['dik'];
 $jur    = $_GET['jur'];
-//$urut   = $_GET['urut'];
+$urut   = $_GET['urut'];
 $kecamatan = $_GET['kecamatan'];
 $nama_sekolah = $_GET['nama_sekolah'];
 $kawin  = $_GET['J_01'];
@@ -53,18 +59,19 @@ if ($unitkerja !='') {
 	$thskr1=$tahun-61;
 	$tglok=$thskr."-".date("m");//."-".date("d");
 	$tglok1=$thskr1."-".date("m");//."-".date("d");
+        $query="select * from MASTFIP08 where `A_01` != '99' ";
+	if ($uk!='all') {
+            if (strlen($uk)==2) { $query.="and A_01='".$uk."' "; }
+            else { $query.="and A_01='".substr($uk,0,2)."' and A_02='".substr($uk,2,2)."' and A_03='".substr($uk,4,2)."' "; }
+        } else { 
+            //$query.="and A_01<>'99' ";  // di comment karena data pegawai pensiun tetep akan ditampilkan
+        }
 
-	$query="select * from MASTFIP08 where `A_01` != '99' ";
-	if ($unitkerja!='all') {
-                if (strlen($unitkerja)==2) { $query.="and A_01='".$unitkerja."' "; }
-                else { $query.="and A_01='".substr($unitkerja,0,2)."' and A_02='".substr($unitkerja,2,2)."' and A_03='".substr($unitkerja,4,2)."' "; }
-        } else { $query.="and A_01<>'99' "; }
+        if ($subuk!=='' && $subuk!=='all') {
+                if ($hasupt === 'true') { $query.="and A_02='$subuk' "; }
+                else { $query.="and concat(A_01,A_02,A_03,A_04,A_05) like '".$subuk."%' "; }
+        }
 
-	if ($subuk!='' && $subuk!='all') {
-                if ($hasupt) { $query.="and A_02='$subuk' "; }
-                else { $query.="and concat(A_01,A_02,A_03,A_04,A_05) like '".rtrim($subuk,'0')."%' "; }
-	}
-	
         //if ($radio1=='') { $radio1=1; }
         //switch($radio1) {
         //	case 1: $query.="and F_03 >= '" . $gol1. "' ";break;
@@ -76,38 +83,37 @@ if ($unitkerja !='') {
 
         //}
 
-	if ($status!='all') {
-		$query.="and B_09='$status' ";
-	}
-	if ($jabatan!='all') {
+        if ($status!=='all') {
+                $query.="and B_09='$status' ";
+        }
+        if ($jabatan!=='all') {
                 if ($jabatan==2) { $query.="and (I_5A='2' or I_5A='4') "; }
                 else { $query.="and I_5A='$jabatan' "; }
-	}
-	if ($jabfung!='') {
-		$query.="and (I_5A='2' or I_5A='4') and I_05='$jabfung' ";
-	}
-	if ($eselon!='all' && $eselon!='str') {
+        }
+        if ($jabfung!=='') {
+                $query.="and (I_5A='2' or I_5A='4') and I_05='$jabfung' ";
+        }
+        if ($eselon!=='all' && $eselon!=='str') {
                 if (strlen($eselon)==1) { $query.="and I_06 like '".$eselon."%' "; } else { $query.="and I_06='$eselon' "; }
-	}
-	if ($eselon=='str') {
-		$query.="and I_06<>'99' and I_06 is not null and I_5A='1' ";
-	}
-	if ($kelamin!='all') {
-		$query.="and B_06='$kelamin' ";
-	}
-	if ($agama!='all') {
-		$query.="and B_07='$agama' ";
-	}
-	if ($diklat!='all') {
-		$query.="and H_4A='$diklat' ";
-	}
-	if ($dik!='all') {
-		$query.="and H_1A='$dik' ";
-	}
-	if ($jur!='') {
-		$query.="and H_1B='$jur' ";
-	}
-        
+        }
+        if ($eselon=='str') {
+                $query.="and I_06<>'99' and I_06 is not null and I_5A='1' ";
+        }
+        if ($kelamin!='all') {
+                $query.="and B_06='$kelamin' ";
+        }
+        if ($agama!='all') {
+                $query.="and B_07='$agama' ";
+        }
+        if ($diklat!='all') {
+                $query.="and H_4A='$diklat' ";
+        }
+        if ($dik!='all') {
+                $query.="and H_1A='$dik' ";
+        }
+        if ($jur!='') {
+                $query.="and H_1B='$jur' ";
+        }
         if ($kecamatan !== '') {
             $query.=" and id_lokasi = '$kecamatan'";
         }
@@ -117,13 +123,33 @@ if ($unitkerja !='') {
         if ($kawin !== '') {
             $query.=" and J_01 = '".$kawin."'";
         }
+        if ($_SESSION['nama_group'] !== 'Administrator' and $_SESSION['nama_group'] !== 'Admin BKD') {
+            //$query.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."'";
+
+            if (strtolower($_SESSION['nama_group']) === 'admin skpd') {
+                $query.=" and A_01 = '".$_SESSION['skpd']."'";
+            }
+            if (strtolower($_SESSION['nama_group']) === 'admin sub skpd') {
+                $query.=" and A_01 = '".$_SESSION['skpd']."' and A_02 = '".$_SESSION['subskpd']."' and A_03 = '".$_SESSION['subsubskpd']."'";
+            }
+            if ($_SESSION['nama_group'] === 'Staffs') {
+                $query.=" and B_02 = '".$_SESSION['nip']."'";
+            }
+        }
         if ($nullinclude === 'Ya') {
             $query.=" or F_03 is NULL ";
         }
-	$query.="order by F_03 DESC,F_TMT ASC, I_06,F_04 DESC, H_4A ASC, H_1A DESC, H_02 ASC, B_05 ASC ";
-	$no=0;
-        //echo $query;
-	$r=mysql_query($query) or die (mysql_error());
+        $limit = 10;
+        $page  = $_GET['page'];
+        if ($_GET['page'] === '') {
+            $page = 1;
+            $offset = 0;
+        } else {
+            $offset = ($page-1)*$limit;
+        }
+        if ($urut=='str') { $query.="order by I_05 "; }
+        else { $query.=" order by F_03 DESC,F_TMT ASC,I_06,F_04 DESC, H_4A ASC, H_1A DESC, H_02 ASC, B_05 ASC "; }
+        $r=mysql_query($query) or die (mysql_error());
 ?>
 <table>
 <tr><td align="center" colspan="17"><h3>UNIT KERJA : 
