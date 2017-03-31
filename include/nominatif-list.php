@@ -42,7 +42,7 @@ if ($uk!='all') {
 
 if ($subuk!=='' && $subuk!=='all') {
         if ($hasupt === 'true') { $query.="and A_02='$subuk' "; }
-        else { $query.="and concat(A_01,A_02,A_03,A_04,A_05) like '".rtrim($subuk,'0')."%' "; }
+        else { $query.="and concat(A_01,A_02,A_03,A_04,A_05) like '".$subuk."%' "; }
 }
 
 //if ($radio1=='') { $radio1=1; }

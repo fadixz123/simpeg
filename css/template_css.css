@@ -146,6 +146,7 @@ margin-right:auto;
 background: #fff;
 margin-bottom: 20px;
 padding-right: 10px;
+margin-top: 60px;
 -webkit-box-shadow: 0 0 10px #333;
         box-shadow: 0 0 10px #333;
 }
@@ -224,8 +225,9 @@ padding-top: 5px;
  width: 15%;
  float: left;
  position: relative;
- } 
- #leftcol h3 { padding-left: 3px; font-weight: normal; text-transform: uppercase; padding-bottom: 3px; }
+ /*height: calc(100% - 60px);*/
+} 
+#leftcol h3 { padding-left: 3px; font-weight: normal; text-transform: uppercase; padding-bottom: 3px; }
 
 #rightcol-normal{
  width: 155px;
@@ -345,9 +347,9 @@ background-image: -o-linear-gradient(right, #F1F1F1 0%, #CDCDCD 100%);
 background-image: -moz-linear-gradient(right, #F1F1F1 0%, #CDCDCD 100%);
 background-image: -webkit-linear-gradient(right, #F1F1F1 0%, #CDCDCD 100%);
 background-image: -ms-linear-gradient(right, #F1F1F1 0%, #CDCDCD 100%);
-background-image: linear-gradient(to right, #F1F1F1 0%, #CDCDCD 100%);
+/*background-image: linear-gradient(to right, #F1F1F1 0%, #CDCDCD 100%);*/
 margin-bottom: 10px;
-border-right: 2px solid #d0b1b1;
+border-right: 1px solid #d0b1b1;
 }
 
 #leftcol div.module div, #rightcol-normal div.module div {
@@ -510,6 +512,7 @@ line-height: 26px;
 margin-bottom: 2px;
 text-decoration: none;
 font-weight: normal;
+border-bottom: 1px solid #d0b1b1;
 }
 
 
@@ -792,7 +795,12 @@ padding: 0px;
     margin-bottom: 5px;
     font-size: 10px;
     color: #fff;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    height: 60px;
+    background: #6493a5;
 }
 #Layer1 a {
     font-size: 11px;
@@ -831,6 +839,7 @@ span.utama { font-size: 16px; }
     float: left;
     margin-right: 10px;
     margin-bottom: 10px;
+    word-break: break-all;
 }
 .wrapp-icon:hover {
     background: #d6d5ca;

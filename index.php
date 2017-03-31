@@ -114,6 +114,22 @@ if (isset($_SESSION['username'])) {
       $('body').unblock(); 
     }
     
+    function load_menu(url) {
+        var position = url;
+
+        localStorage.setItem("dkv3_url_position", position);
+        $.ajax({
+            url: url,
+            data: '',
+            cache: false,
+            success: function (data) {
+                //$('form').remove();
+                $('#main-content').empty();
+                $('#main-content').html(data);
+            }
+        });
+    }
+    
 </script>
 </head>
 
@@ -180,6 +196,7 @@ if (isset($_SESSION['username'])) {
                 $detail.="</table>";
             ?>
         <button class="btn btn-xs btn-primary mypopover" data-container="body" data-toggle="popover" data-placement="top" data-content="<?= $detail ?>"><i class="fa fa-envelope"></i> <?= ($rowx['jumlah'] === '0')?'Tidak ada pesan baru':'Ada '.$rowx['jumlah'].' pesan baru' ?> </button> | Anda Login Sebagai: <b><?= $_SESSION['nama'] ?></b>
+        
         <?php } else { ?>
             Tamu
         <?php } ?>
@@ -188,14 +205,7 @@ if (isset($_SESSION['username'])) {
 <div id="pagewidth-1024">
 	
 	<div id="outer-1024">
-		<div id="pathway">
-                    <?php 
-                    $q="select username,password from USER where username='$username' and password='$password' LIMIT 1";
-                    $r=mysql_query($q) or die(mysql_error());
-                    $j=mysql_num_rows($r);
-                    ?>
-                    <span class="pathway">Simpeg Online BKD 2012  </span>
-                </div>
+		
 		<div id="leftcol">
                     <?php if (isset($_SESSION['username'])) { ?>
                     <?php
@@ -283,12 +293,12 @@ if (isset($_SESSION['username'])) {
                 <?php } ?>
                 </div>
                 
-        <div id="maincol-wide-1024">
-                <div class="clr"></div>
+                <div id="maincol-wide-1024">
+                        <div class="clr"></div>
 			<div class="content">
 				<a name="content"></a>
 				<table class="blog" cellpadding="0" cellspacing="0"><tbody><tr>
-				  <td valign="top">&nbsp;
+				  <td valign="top" id="main-content">&nbsp;
 				  <!-- content goes here -->
 				  <?php
 	switch($_GET['do']) {
