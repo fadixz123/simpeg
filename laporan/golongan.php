@@ -66,22 +66,22 @@ $r=listUnitKerjaNoBiro();
 <?php
 foreach ($r as $key=>$value) {
 	for ($i=0;$i<=16;$i++) {
-		$query="select count(*) as jml from MASTFIP08 where F_03='$golongan[$i]' ";
-                if (strlen($value[0])==2) { $query.="and A_01='".$value[0]."' "; }
-                else { $query.="and A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
-		$query.="and A_01<>'99'";
-		$row1[$i]=mysql_fetch_array(mysql_query($query));
-		$row4[$i][jml]=$row4[$i][jml]+$row1[$i][jml];
+            $query="select count(*) as jml from MASTFIP08 where F_03='$golongan[$i]' ";
+            if (strlen($value[0])==2) { $query.="and A_01='".$value[0]."' "; }
+            else { $query.="and A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
+            $query.="and A_01<>'99'";
+            $row1[$i]=mysql_fetch_array(mysql_query($query));
+            $row4[$i][jml]=$row4[$i][jml]+$row1[$i][jml];
 	}
 	for ($i=0;$i<=3;$i++) {
-	$query2="select count(*) as jml from MASTFIP08 where substring(F_03,1,1)='$golbesar[$i]' ";
-        if (strlen($value[0])==2) { $query2.="and A_01='".$value[0]."' "; }
-        else { $query2.="and A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
-	$query2.="and A_01<>'99'";
-	//echo $query2."</br>";
-	$row2[$i]=mysql_fetch_array(mysql_query($query2));
-	$row5[$i][jml]=$row5[$i][jml]+$row2[$i][jml];
-}
+            $query2="select count(*) as jml from MASTFIP08 where substring(F_03,1,1)='$golbesar[$i]' ";
+            if (strlen($value[0])==2) { $query2.="and A_01='".$value[0]."' "; }
+            else { $query2.="and A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
+            $query2.="and A_01<>'99'";
+            //echo $query2."</br>";
+            $row2[$i]=mysql_fetch_array(mysql_query($query2));
+            $row5[$i][jml]=$row5[$i][jml]+$row2[$i][jml];
+        }
 	$query3="select count(*) as jml from MASTFIP08 where ";
         if (strlen($value[0])==2) { $query3.="A_01='".$value[0]."' "; }
         else { $query3.="A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
@@ -114,7 +114,35 @@ foreach ($r as $key=>$value) {
     <td width="40" align="center"><?=$row2[3][jml]?></td>
     <td width="40" align="center"><?=$row3[jml]?></td>
   </tr>
-<? } ?>
+<?php
+    $var_check = array(1,2,3,4);
+    if ($value['kd'] === '04' or $value['kd'] === '07') {
+        $query = mysql_query("select substring(KOLOK,1,8) as KODELOK,NALOK from TABLOKB08 where substring(KOLOK,1,2)='".$value['kd']."' and KOLOK like '%0000' order by KOLOK");
+        
+        while ($result = mysql_fetch_array($query)) { ?>
+        <tr>
+            <td width="350" style="padding-left: 10px;"> - <?=$result['NALOK']?></td>
+            <?php 
+            $n = 1;
+            $total_1 = 0;
+            for ($i=0;$i<=16;$i++) {
+                $query2 = "select count(*) as pieces from MASTFIP08 where F_03 = '".$golongan[$i]."' and A_01='".substr($result['KODELOK'],0,2)."' and A_02='".substr($result['KODELOK'],2,2)."' and A_03='".substr($result['KODELOK'],4,2)."'";
+                //echo $query2.'<br/>';
+                $jumlah = mysql_fetch_array(mysql_query($query2));
+                ?>
+            <td align="center"><?= $jumlah['pieces'] ?></td>
+            <?php if (in_array(($n / 4), $var_check)) { ?>
+            <td></td>
+            <?php } ?>
+            <?php 
+            $n++;
+            } ?>
+            <td></td>
+        </tr>
+<?php    
+        }
+    }
+} ?>
   <tr>
     <td width="350">JUMLAH</td>
     <td width="40" align="center"><?=$row4[0][jml]?></td>
