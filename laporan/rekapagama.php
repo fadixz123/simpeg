@@ -30,7 +30,7 @@ $tglok=$thskr."-".date("m")."-".date("d");
 $tglok1=$thskr1."-".date("m")."-".date("d");
 
 $agama=array("1","2","3","4","5");
-$r=listUnitKerjaNoBiro();
+$r=listUnitKerjaNoBiro($_GET['uk']);
 ?>
     <h1>JUMLAH PEGAWAI NEGERI SIPIL BERDASARKAN 
     AGAMA<br>
@@ -63,8 +63,8 @@ $r=listUnitKerjaNoBiro();
         <th width="9%" align="center">8</th>
       </tr>
 <?
-    $ii=0;
-    foreach ($r as $key=>$row) {
+$ii=0;
+foreach ($r as $key=>$row) {
         $ii++;
         for ($i=0;$i<=4;$i++) {
                 $query="select count(*) as jml from MASTFIP08 where B_07='$agama[$i]' and (F_03 is not null or F_03<>'') and A_01='".substr($row[0],0,2)."' and A_01<>'99'";// and ((substring(B_05,1,7) >= '$tglok' and I_5A<>2) or (B_05 >= '$tglok1' and I_5A=2))";
@@ -83,9 +83,40 @@ $r=listUnitKerjaNoBiro();
         <td width="8%" align="center"><?=$row1[4][jml]?></td>
         <td width="9%" align="center"><?=$row2[jml]?></td>
       </tr>
-<?}
+<?
+    if (isset($_GET['uk'])) {
+    if ($row['kd'] === '04' or $row['kd'] === '07') {
+        $query = mysql_query("select substring(KOLOK,1,8) as KODELOK,NALOK from TABLOKB08 where substring(KOLOK,1,2)='".$row['kd']."' and KOLOK like '%0000' order by KOLOK");
+        
+        while ($result = mysql_fetch_array($query)) { ?>
+        <tr>
+            <td></td>
+            <td width="350" style="padding-left: 10px;"> - <?=$result['NALOK']?></td>
+            <?php 
+            $n = 1;
+            $subtotal = 0;
+            for ($i=0;$i <= 4;$i++) {
+                $query2 = "select count(*) as jml from MASTFIP08 where B_07='$agama[$i]' and (F_03 is not null or F_03<>'') and A_01='".substr($row[0],0,2)."' and A_02='".substr($result['KODELOK'],2,2)."' and A_03='".substr($result['KODELOK'],4,2)."' and A_01<>'99'";
+                //echo $query2.'<br/>';
+                $jumlah = mysql_fetch_array(mysql_query($query2));
+                $subtotal += $jumlah['jml'];
+                ?>
+            <td align="center"><?= $jumlah['jml'] ?></td>
+            <?php 
+            $n++;
+            } ?>
+            <td align="center"><?= $subtotal ?></td>
+        </tr>
+<?php    
+        }
+    }
+    }
+}
 for ($i=0;$i<=4;$i++) {
                 $query2="select count(*) as jml from MASTFIP08 where B_07='$agama[$i]' and F_03 is not null and F_03<>'' and A_01<>'99'";
+                if (isset($_GET['uk'])) {
+                    $query2.=" and A_01 IN ('04','07')";
+                }
                 $row3[$i]=mysql_fetch_array(mysql_query($query2));
         }
         $query3="select count(*) as jml from MASTFIP08 where B_07<>'' and B_07 is not null and F_03 is not null and F_03<>'' and A_01<>'99'";
@@ -94,12 +125,12 @@ for ($i=0;$i<=4;$i++) {
       <tr>
         <td width="1%" align="right">&nbsp;</td>
         <td width="51%"><b>JUMLAH</b></td>
-        <td width="8%" align="right"><?=$row3[0][jml]?></td>
-        <td width="8%" align="right"><?=$row3[1][jml]?></td>
-        <td width="8%" align="right"><?=$row3[2][jml]?></td>
-        <td width="8%" align="right"><?=$row3[3][jml]?></td>
-        <td width="8%" align="right"><?=$row3[4][jml]?></td>
-        <td width="9%" align="right"><?=$row4[jml]?></td>
+        <td width="8%" align="center"><?=$row3[0][jml]?></td>
+        <td width="8%" align="center"><?=$row3[1][jml]?></td>
+        <td width="8%" align="center"><?=$row3[2][jml]?></td>
+        <td width="8%" align="center"><?=$row3[3][jml]?></td>
+        <td width="8%" align="center"><?=$row3[4][jml]?></td>
+        <td width="9%" align="center"><?=$row4[jml]?></td>
       </tr>
     </table>
 <center><button onclick="cetak();">Cetak</button></center>

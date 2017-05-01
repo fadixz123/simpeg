@@ -31,7 +31,7 @@ $tglok1=$thskr1."-".date("m")."-".date("d");
 
 $golongan=array("11","12","13","14","21","22","23","24","31","32","33","34","41","42","43","44","45");
 $golbesar=array("1","2","3","4");
-$r=listUnitKerjaNoBiro();
+$r=listUnitKerjaNoBiro($_GET['uk']);
 ?>
     
 <h1>JUMLAH PEGAWAI NEGERI SIPIL PER PANGKAT/GOLONGAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h1>
@@ -116,6 +116,7 @@ foreach ($r as $key=>$value) {
   </tr>
 <?php
     $var_check = array(1,2,3,4);
+    if (isset($_GET['uk'])) {
     if ($value['kd'] === '04' or $value['kd'] === '07') {
         $query = mysql_query("select substring(KOLOK,1,8) as KODELOK,NALOK from TABLOKB08 where substring(KOLOK,1,2)='".$value['kd']."' and KOLOK like '%0000' order by KOLOK");
         
@@ -141,6 +142,7 @@ foreach ($r as $key=>$value) {
         </tr>
 <?php    
         }
+    }
     }
 } ?>
   <tr>

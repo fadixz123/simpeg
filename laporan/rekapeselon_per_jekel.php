@@ -31,7 +31,7 @@ $tglok1=$thskr1."-".date("m")."-".date("d");
 
 $eselon=array("11","12","21","22","31","32","41","42","51");
 //$q="select * from TABLOK where kd<>'99000000' order by kd";
-$r=listUnitKerjaNoBiro();
+$r=listUnitKerjaNoBiro($_GET['uk']);
 ?>
         <h3>JUMLAH PEGAWAI NEGERI SIPIL MENURUT JENIS KELAMIN DAN ESELON JABATAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h3>
   <table class="table-print" width="100%">
@@ -115,7 +115,50 @@ $r=listUnitKerjaNoBiro();
       <td width="58" align="center"><?=$row3[8][jml]?></td>
       <td width="58" align="center"><?=$jumlah2?></td>
     </tr>
-<? }
+<?php
+    if (isset($_GET['uk'])) {
+    if ($row['kd'] === '04' or $row['kd'] === '07') {
+        $query = mysql_query("select substring(KOLOK,1,8) as KODELOK,NALOK from TABLOKB08 where substring(KOLOK,1,2)='".$row['kd']."' and KOLOK like '%0000' order by KOLOK");
+        
+        while ($result = mysql_fetch_array($query)) { ?>
+        <tr>
+            <td></td>
+            <td width="350" style="padding-left: 10px;"> - <?=$result['NALOK']?></td>
+            <?php 
+            $n = 1;
+            $subtotal = 0;
+            for ($i=0;$i<=8;$i++) {
+                $query2 = "select count(*) as jml from MASTFIP08 where I_06='$eselon[$i]' and B_06 = '1' and A_01='".substr($result[0],0,2)."'and A_02='".substr($result['KODELOK'],2,2)."' and A_03='".substr($result['KODELOK'],4,2)."' and A_01<>'99' and I_5A='1'";
+                //echo $query2.'<br/>';
+                $jumlah = mysql_fetch_array(mysql_query($query2));
+                $subtotal += $jumlah['jml'];
+                ?>
+            <td align="center"><?= $jumlah['jml'] ?></td>
+            <?php 
+            $n++;
+            } ?>
+            <td align="center"><?= $subtotal ?></td>
+            
+            <?php 
+            $m = 1;
+            $subtotal2 = 0;
+            for ($i=0;$i<=8;$i++) {
+                $query2 = "select count(*) as jml from MASTFIP08 where I_06='$eselon[$i]' and B_06 = '2' and A_01='".substr($result[0],0,2)."'and A_02='".substr($result['KODELOK'],2,2)."' and A_03='".substr($result['KODELOK'],4,2)."' and A_01<>'99' and I_5A='1'";
+                //echo $query2.'<br/>';
+                $jumlah = mysql_fetch_array(mysql_query($query2));
+                $subtotal2 += $jumlah['jml'];
+                ?>
+            <td align="center"><?= $jumlah['jml'] ?></td>
+            <?php 
+            $m++;
+            } ?>
+            <td align="center"><?= $subtotal2 ?></td>
+        </tr>
+<?php    
+        }
+    }
+    }
+}
 /*for ($i=0;$i<=7;$i++) {
 	$query="select count(*) as jml from MASTFIP1 where I_06='$eselon[$i]' and A_01<>'99' and ((substring(B_05,1,7) >= '$tglok' and I_5A<>2) or (B_05 >= '$tglok1' and I_5A=2))";
 	//echo $query;

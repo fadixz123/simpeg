@@ -30,7 +30,7 @@ $tglok=$thskr."-".date("m")."-".date("d");
 $tglok1=$thskr1."-".date("m")."-".date("d");
 
 $agama=array("1","2","3","4","5");
-$r=listUnitKerjaNoBiro();
+$r=listUnitKerjaNoBiro($_GET['uk']);
 ?>
     <h1>JUMLAH PEGAWAI NEGERI SIPIL BERDASARKAN JENIS KELAMIN DAN
     AGAMA<br>
@@ -115,9 +115,55 @@ $r=listUnitKerjaNoBiro();
         <td align="center"><?=$row3[4][jml]?></td>
         <td align="center"><?=$row4[jml]?></td>
       </tr>
-<?}
+<?php
+    if (isset($_GET['uk'])) {
+    if ($row['kd'] === '04' or $row['kd'] === '07') {
+        $query = mysql_query("select substring(KOLOK,1,8) as KODELOK,NALOK from TABLOKB08 where substring(KOLOK,1,2)='".$row['kd']."' and KOLOK like '%0000' order by KOLOK");
+        
+        while ($result = mysql_fetch_array($query)) { ?>
+        <tr>
+            <td></td>
+            <td width="350" style="padding-left: 10px;"> - <?=$result['NALOK']?></td>
+            <?php 
+            $n = 1;
+            $subtotal = 0;
+            for ($i=0;$i <= 4;$i++) {
+                $query2 = "select count(*) as jml from MASTFIP08 where B_07='$agama[$i]' and B_06 = '1' and (F_03 is not null or F_03<>'') and A_01='".substr($row[0],0,2)."' and A_02='".substr($result['KODELOK'],2,2)."' and A_03='".substr($result['KODELOK'],4,2)."' and A_01<>'99'";
+                //echo $query2.'<br/>';
+                $jumlah = mysql_fetch_array(mysql_query($query2));
+                $subtotal += $jumlah['jml'];
+                ?>
+            <td align="center"><?= $jumlah['jml'] ?></td>
+            <?php 
+            $n++;
+            } ?>
+            <td align="center"><?= $subtotal ?></td>
+            
+            <?php 
+            $n2 = 1;
+            $subtotal2 = 0;
+            for ($i=0;$i <= 4;$i++) {
+                $query2 = "select count(*) as jml from MASTFIP08 where B_07='$agama[$i]' and B_06 = '2' and (F_03 is not null or F_03<>'') and A_01='".substr($row[0],0,2)."' and A_02='".substr($result['KODELOK'],2,2)."' and A_03='".substr($result['KODELOK'],4,2)."' and A_01<>'99'";
+                //echo $query2.'<br/>';
+                $jumlah = mysql_fetch_array(mysql_query($query2));
+                $subtotal2 += $jumlah['jml'];
+                ?>
+            <td align="center"><?= $jumlah['jml'] ?></td>
+            <?php 
+            $n2++;
+            } ?>
+            <td align="center"><?= $subtotal2 ?></td>
+        </tr>
+<?php    
+        }
+    }
+    }
+}
         for ($i=0;$i<=4;$i++) {
             $query2="select count(*) as jml from MASTFIP08 where B_07='$agama[$i]' and B_06 = '1' and F_03 is not null and F_03<>'' and A_01<>'99'";
+            if (isset($_GET['uk'])) {
+                $query2.=" and A_01 IN ('04','07')";
+            }
             $row3[$i]=mysql_fetch_array(mysql_query($query2));
         }
         $query3="select count(*) as jml from MASTFIP08 where B_07<>'' and B_06 = '1' and B_07 is not null and F_03 is not null and F_03<>'' and A_01<>'99'";
@@ -125,6 +171,9 @@ $r=listUnitKerjaNoBiro();
         
         for ($i=0;$i<=4;$i++) {
             $queryp="select count(*) as jml from MASTFIP08 where B_07='$agama[$i]' and B_06 = '2' and F_03 is not null and F_03<>'' and A_01<>'99'";
+            if (isset($_GET['uk'])) {
+                $queryp.=" and A_01 IN ('04','07')";
+            }
             $rowp[$i]=mysql_fetch_array(mysql_query($queryp));
         }
         $query4p="select count(*) as jml from MASTFIP08 where B_07<>'' and B_06 = '2' and B_07 is not null and F_03 is not null and F_03<>'' and A_01<>'99'";

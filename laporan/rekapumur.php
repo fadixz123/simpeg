@@ -29,7 +29,7 @@ $tglok=$thskr."-".date("m")."-".date("d");
 $tglok1=$thskr1."-".date("m")."-".date("d");
 
 $umur=array("20","25","30","35","40","45","50","55","1000");
-$r=listUnitKerjaNoBiro();
+$r=listUnitKerjaNoBiro($_GET['uk']);
 ?>
 <h1>JUMLAH PEGAWAI NEGERI SIPIL MENURUT UMUR<br>PEMERINTAH <?=$KABI?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h1>
   <table width="100%" class="table-print">
@@ -52,7 +52,7 @@ $r=listUnitKerjaNoBiro();
     $thskr=date("Y");
     $blskr=date("m");
     $tgskr=date("d");
-    foreach ($r as $key=>$value) {
+foreach ($r as $key=>$value) {
         $ii++;
         $tglbawah=0;
         for ($i=0;$i < count($umur);$i++) {
@@ -61,6 +61,7 @@ $r=listUnitKerjaNoBiro();
                 $query="select count(*) as jml from MASTFIP08 where B_05<='".$u1."-".$blskr."-".$tgskr."' and B_05>'".$u2."-".$blskr."-".$tgskr."' ";
                                 if (strlen($value[0])==2) { $query.="and A_01='".$value[0]."' "; }
                                 else { $query.="and A_01='".substr($value[0],0,2)."' and A_02='".substr($value[0],2,2)."' and A_03='".substr($value[0],4,2)."' "; }
+                //echo $query.'</br>';
                 $row1[$i]=mysql_fetch_array(mysql_query($query));
                 $tglbawah=$umur[$i];
         }
@@ -80,12 +81,48 @@ $r=listUnitKerjaNoBiro();
         <td align="center"><?=$row1[8][jml]?></td>
         <td align="center"><?=$jmlumur?></td>
     </tr>
-<?php }
+<?php 
+    if (isset($_GET['uk'])) {
+    if ($value['kd'] === '04' or $value['kd'] === '07') {
+        $query = mysql_query("select substring(KOLOK,1,8) as KODELOK,NALOK from TABLOKB08 where substring(KOLOK,1,2)='".$value['kd']."' and KOLOK like '%0000' order by KOLOK");
+        
+        while ($result = mysql_fetch_array($query)) { ?>
+        <tr>
+            <td></td>
+            <td width="350" style="padding-left: 10px;"> - <?=$result['NALOK']?></td>
+            <?php 
+            $n = 1;
+            $tglbawah=0;
+            $subtotal = 0;
+            for ($i=0;$i < count($umur);$i++) {
+                $u1=intval($thskr)-$tglbawah;
+		$u2=intval($thskr)-$umur[$i];
+                $query2="select count(*) as jml from MASTFIP08 where B_05<='".$u1."-".$blskr."-".$tgskr."' and B_05>'".$u2."-".$blskr."-".$tgskr."' ";                                
+                $query2.="and A_01='".substr($value[0],0,2)."' and A_02='".substr($result['KODELOK'],2,2)."' and A_03='".substr($result['KODELOK'],4,2)."' and A_01<>'99'";
+                //echo $query2.'<br/>';
+                $jumlah = mysql_fetch_array(mysql_query($query2));
+                $subtotal += $jumlah['jml'];
+                $tglbawah=$umur[$i];
+                ?>
+            <td align="center"><?= $jumlah['jml'] ?></td>
+            <?php 
+            $n++;
+            } ?>
+            <td align="center"><?= $subtotal ?></td>
+        </tr>
+<?php    
+        }
+    }
+    }
+}
 $tglbawah=0;
 for ($i=0;$i < count($umur);$i++) {
         $u1=intval($thskr)-$tglbawah;
         $u2=intval($thskr)-$umur[$i];
         $query="select count(*) as jml from MASTFIP08 where B_05<='".$u1."-".$blskr."-".$tgskr."' and B_05>'".$u2."-".$blskr."-".$tgskr."' and A_01<>'99'";
+        if (isset($_GET['uk'])) {
+            $query.=" and A_01 IN ('04','07')";
+        }
         $row2[$i]=mysql_fetch_array(mysql_query($query));
         $tglbawah=$umur[$i];
         }

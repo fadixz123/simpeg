@@ -30,7 +30,7 @@ $tglok1=$thskr1."-".date("m")."-".date("d");
 
 $pendidikan=array("-","10","20","30","41","42","43","44","50","60","70","80","90","99");
 $kelamin=array("1","2");
-$r=listUnitKerjaNoBiro();
+$r=listUnitKerjaNoBiro($_GET['uk']);
 
 ?>
 <h1>JUMLAH PEGAWAI NEGERI SIPIL MENURUT JENIS KELAMIN DAN PENDIDIKAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h1>
@@ -112,6 +112,49 @@ foreach ($r as $key=>$row) {
     <td width="42" align="center"><?=$row3[jml]?></td>
   </tr>
 <?
+    if (isset($_GET['uk'])) {
+    if ($row['kd'] === '04' or $row['kd'] === '07') {
+        $query = mysql_query("select substring(KOLOK,1,8) as KODELOK,NALOK from TABLOKB08 where substring(KOLOK,1,2)='".$row['kd']."' and KOLOK like '%0000' order by KOLOK");
+        
+        while ($result = mysql_fetch_array($query)) { ?>
+        <tr>
+            <td></td>
+            <td width="350" style="padding-left: 10px;"> - <?=$result['NALOK']?></td>
+            <?php 
+            $n = 1;
+            $subtotal = 0;
+            for ($i=0;$i < count($pendidikan);$i++) {
+                $query2 = "select count(*) as jml from MASTFIP08 where (F_03 is not null or F_03<>'') and B_06 = '1' and H_1A = '$pendidikan[$i]' and H_1A<>'' and H_1A is not null and A_01='".substr($row[kd],0,2)."' and A_02='".substr($result['KODELOK'],2,2)."' and A_03='".substr($result['KODELOK'],4,2)."' and A_01<>'99'";
+                //echo $query2.'<br/>';
+                $jumlah = mysql_fetch_array(mysql_query($query2));
+                $subtotal += $jumlah['jml'];
+                ?>
+            <td align="center"><?= $jumlah['jml'] ?></td>
+            <?php 
+            $n++;
+            } ?>
+            <td align="center"><?= $subtotal ?></td>
+            
+            <?php 
+            $n2 = 1;
+            $subtotal2 = 0;
+            for ($i=0;$i < count($pendidikan);$i++) {
+                $query2 = "select count(*) as jml from MASTFIP08 where (F_03 is not null or F_03<>'') and B_06 = '2' and H_1A = '$pendidikan[$i]' and H_1A<>'' and H_1A is not null and A_01='".substr($row[kd],0,2)."' and A_02='".substr($result['KODELOK'],2,2)."' and A_03='".substr($result['KODELOK'],4,2)."' and A_01<>'99'";
+                //echo $query2.'<br/>';
+                $jumlah = mysql_fetch_array(mysql_query($query2));
+                $subtotal2 += $jumlah['jml'];
+                ?>
+            <td align="center"><?= $jumlah['jml'] ?></td>
+            <?php 
+            $n2++;
+            } ?>
+            <td align="center"><?= $subtotal2 ?></td>
+            <td align="center"><?= $subtotal+$subtotal2 ?></td>
+        </tr>
+<?php    
+        }
+    }
+    }
 $total_atas_ke_bawah += $row3[jml];
 }
 for ($i=1;$i<=2;$i++) {

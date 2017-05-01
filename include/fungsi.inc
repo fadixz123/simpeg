@@ -322,8 +322,12 @@ function listUnitKerja($kd = NULL) {
 	return $listuk;
 }
 
-function listUnitKerjaNoBiro() {
-        $q1="select kd,nm from TABLOK08 where kd<>'99' order by kd";
+function listUnitKerjaNoBiro($array_uk = NULL) {
+        $q = NULL;
+        if (is_array($array_uk)) {
+            $q.=" and kd in ('04','07')";
+        }
+        $q1="select kd,nm from TABLOK08 where kd<>'99' $q order by kd";
         $r1=mysql_query($q1);
         for ($i=0;$i < mysql_num_rows($r1);$i++) {$listuk[]=mysql_fetch_array($r1);}
         return $listuk;

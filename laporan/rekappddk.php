@@ -31,7 +31,11 @@ $tglok1=$thskr1."-".date("m")."-".date("d");
 
 $pendidikan=array("10","20","30","41","42","43","44","50","60","70","80","90","99");
 $kelamin=array("1","2");
-$q="select * from TABLOK08 where kd<>'99' order by kd";
+$q = NULL;
+if (is_array($_GET['uk'])) {
+    $q.=" and kd in ('04','07')";
+}
+$q="select * from TABLOK08 where kd<>'99' $q order by kd";
 $r=mysql_query($q);
 ?>
 <h1>JUMLAH PEGAWAI NEGERI SIPIL MENURUT PENDIDIKAN<br>PEMERINTAH <?=$KAB?><br>KEADAAN PER: <?=tanggalnya(date("Y-m-d"),0);?></h1>
@@ -71,6 +75,7 @@ while ($row=mysql_fetch_array($r)) {
         $row3=mysql_fetch_array(mysql_query($query3));
                 for ($j=0;$j<count($pendidikan);$j++) {
                         $query="select count(*) as jml from MASTFIP08 where (F_03 is not null or F_03<>'') and H_1A = '$pendidikan[$j]' and H_1A<>'' and H_1A is not null and A_01='".substr($row[kd],0,2)."' and A_01<>'99'";
+                        //echo $query.'<br/>';
                         $row1[$j]=mysql_fetch_array(mysql_query($query));
                 }
                 $query2="select count(*) as jml from MASTFIP08 where (F_03 is not null or F_03<>'') and H_1A<>'' and H_1A is not null and A_01='".substr($row[kd],0,2)."' and A_01<>'99'";
@@ -109,6 +114,33 @@ $total11 += $row1[10]['jml'];
 $total12 += $row1[11]['jml'];
 $total13 += $row1[12]['jml'];
 $total_atas_ke_bawah += $row2['jml'];
+    if (isset($_GET['uk'])) {
+    if ($row['kd'] === '04' or $row['kd'] === '07') {
+        $query = mysql_query("select substring(KOLOK,1,8) as KODELOK,NALOK from TABLOKB08 where substring(KOLOK,1,2)='".$row['kd']."' and KOLOK like '%0000' order by KOLOK");
+        
+        while ($result = mysql_fetch_array($query)) { ?>
+        <tr>
+            <td></td>
+            <td width="350" style="padding-left: 10px;"> - <?=$result['NALOK']?></td>
+            <?php 
+            $n = 1;
+            $subtotal = 0;
+            for ($i=0;$i < count($pendidikan);$i++) {
+                $query2 = "select count(*) as jml from MASTFIP08 where (F_03 is not null or F_03<>'') and H_1A = '$pendidikan[$i]' and H_1A<>'' and H_1A is not null and A_01='".substr($row[kd],0,2)."' and A_02='".substr($result['KODELOK'],2,2)."' and A_03='".substr($result['KODELOK'],4,2)."' and A_01<>'99'";
+                //echo $query2.'<br/>';
+                $jumlah = mysql_fetch_array(mysql_query($query2));
+                $subtotal += $jumlah['jml'];
+                ?>
+            <td align="center"><?= $jumlah['jml'] ?></td>
+            <?php 
+            $n++;
+            } ?>
+            <td align="center"><?= $subtotal ?></td>
+        </tr>
+<?php    
+        }
+    }
+    }
 }
 	$j=0;
         for ($j=0;$j<count($pendidikan);$j++) {
