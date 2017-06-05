@@ -511,7 +511,7 @@ else if (strlen($NIP)!=0) {
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-refresh"></i> Batal</button>
-            <button type="button" class="btn btn-primary" onclick="search_data_pns(1);"><i class="fa fa-save"></i> Tampilkan</button>
+            <button type="button" class="btn btn-primary" onclick="search_data_pns(1);"><i class="fa fa-eye"></i> Tampilkan</button>
         </div>
     </div>
     </div>
