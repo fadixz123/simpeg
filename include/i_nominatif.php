@@ -61,7 +61,7 @@ if ($unitkerja !='') {
         } else { $query.="and A_01<>'99' "; }
 
 	if ($subuk!='' && $subuk!='all') {
-                if ($hasupt) { $query.="and A_02='$subuk' "; }
+                if ($hasupt === 'true') { $query.="and A_02='$subuk' "; }
                 else { $query.="and concat(A_01,A_02,A_03,A_04,A_05) like '".rtrim($subuk,'0')."%' "; }
 	}
 	
@@ -124,6 +124,7 @@ if ($unitkerja !='') {
         }
 	$query.="order by F_03 DESC,F_TMT ASC, I_06,F_04 DESC, H_4A ASC, H_1A DESC, H_02 ASC, B_05 ASC ";
 	$no=0;
+        //echo $query;
 	$r=mysql_query($query) or die (mysql_error());
 ?>
 <table>
