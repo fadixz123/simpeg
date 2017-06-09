@@ -82,6 +82,9 @@ if (isset($_GET['search'])) {
             $data[] = $rows;
         }
         $pilih[] = array('id'=>'', 'list' => '<i>Semua ...</i>');
+        if ($_GET['uk'] === '04' or $_GET['uk'] === '07') {
+            $pilih[] = array('id'=>'induk', 'list' => 'INDUK');
+        }
         $total = mysql_num_rows(mysql_query($query));
         die(json_encode(array('data' => array_merge($pilih, $data), 'total' => $total)));
     }
@@ -162,8 +165,12 @@ if (isset($_GET['search'])) {
     }
     
     if ($cari === 'suk_upt') {
+        $x = NULL;
+        if ($_GET['q'] !== '') {
+            $x.=" and NALOK like '%".$_GET['q']."%'";
+        }
         $uk    = $_GET['uk'];
-        $qcu="select distinct A_02 from TABLOKB08 where A_01='$uk'";
+        $qcu="select distinct A_02 from TABLOKB08 where A_01='$uk' $x";
         $rcu=mysql_query($qcu);
         $hasupt = FALSE;
         if (mysql_num_rows($rcu) > 1) { $hasupt=TRUE; }

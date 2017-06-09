@@ -26,6 +26,35 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                 $('.checkbox input[type=checkbox]').removeAttr('checked');
             }
         });
+        
+        $('#subuk').select2({
+            ajax: {
+                url: 'include/autocomplete.php?search=suk',
+                dataType: 'json',
+                quietMillis: 100,
+                data: function (term, page) { // page is the one-based page number tracked by Select2
+                    return {
+                        q: term, //search term
+                        page: page, // page number
+                        uk: $('#uk').val()
+                    };
+                },
+                results: function (data, page) {
+                    var more = (page * 20) < data.total; // whether or not there are more results available
+
+                    // notice we return the value of more so Select2 knows if more results can be loaded
+                    return {results: data.data, more: more};
+                }
+            },
+            formatResult: function(data){
+                var markup = data.list;
+                return markup;
+            }, 
+            formatSelection: function(data){
+                return data.list;
+            }
+        });
+
         $('body').on('click', function (e) {
             if ($(e.target).data('toggle') !== 'popover'
                 && $(e.target).parents('.popover.in').length === 0) { 
@@ -73,7 +102,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
             }); 
         });
         
-        $('#uk').blur(function() {
+        /*$('#uk').blur(function() {
             $.ajax({
                 url: 'include/autocomplete.php?search=suk_upt',
                 dataType: 'json',
@@ -102,8 +131,8 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                     hide_ajax_indicator();
                 }
             });
-        });
-        $('#subuk').focus(function() {
+        });*/
+        /*$('#subuk').focus(function() {
             $.ajax({
                 url: 'include/autocomplete.php?search=suk_upt',
                 dataType: 'json',
@@ -122,17 +151,18 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                     $('#label-uk').html(data.label);
                     $('#hasupt').val(data.hasupt);
                     $('#subuk').append(stri);
+                    var str = '<option value="00">Induk/UPT</option>';
                     $.each(data.data, function(i, v) {
-                        str = '<option value="'+v.code+'">'+v.NALOK+'</option>';
-                        $('#subuk').append(str);
+                        str+= '<option value="'+v.code+'">'+v.NALOK+'</option>';
                     });
+                    $('#subuk').append(str);
                 }, complete: function() {
                     hide_ajax_indicator();
                 }, error: function() {
                     hide_ajax_indicator();
                 }
             });
-        });
+        });*/
 //        $('#kecamatan').select2({
 //            ajax: {
 //                url: 'include/autocomplete.php?search=kecamatan',
@@ -480,11 +510,12 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                         </tr>
                 
                         <tr>
-                          <td id="label-uk"></td>
+                          <td id="label-uk">Sub Unit Kerja</td>
                           <td>
-                            <select name="subuk" id="subuk" class="form-control" style="width: 300px;">
+                              <input type="text" name="subuk" id="subuk" class="select2-input" />
+<!--                            <select name="subuk" id="subuk" class="form-control" style="width: 300px;">
                                 
-                            </select>
+                            </select>-->
                           </td>
                         </tr>
                 

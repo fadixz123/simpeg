@@ -42,6 +42,14 @@ if ($uk!='all') {
 
 if ($subuk!=='' && $subuk!=='all') {
         if ($hasupt === 'true') { $query.="and A_02='$subuk' "; }
+        else if ($subuk === 'induk') {
+            if ($uk === '04') {
+                $query.="and A_03 in ('00','01','02','03','04','05')";
+            }
+            if ($uk === '07') {
+                $query.="and A_03 in ('00','01','02','03','04')";
+            }
+        }
         else { $query.="and concat(A_01,A_02,A_03,A_04,A_05) like '".$subuk."%' "; }
 }
 
@@ -124,6 +132,7 @@ if ($urut=='str') { $query.="order by I_05 "; }
 else { $query.=" order by F_03 DESC,F_TMT ASC,I_06,F_04 DESC, H_4A ASC, H_1A DESC, H_02 ASC, B_05 ASC "; }
 //echo $query.'  limit '.$offset.', '.$limit;
 $result=mysql_query($query.'  limit '.$offset.', '.$limit) or die (mysql_error());
+//die(json_encode($result));
 $total_data=mysql_num_rows(mysql_query($query));
 ?>
 <script type="text/javascript">
