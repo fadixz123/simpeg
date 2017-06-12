@@ -331,6 +331,7 @@ if (isset($_SESSION['username'])) {
                 case 'arsip_kategori': include("include/arsip-kategori.php"); break;
                 case 'message': include("include/message.php"); break;
                 case 'lacak': include("include/lacak.php"); break;
+                case 'profil_sekolah': include("include/profile_sekolah.php"); break;
 		default : include("include/berita.php");
 	}
 	?>
