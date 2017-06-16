@@ -15,7 +15,7 @@ $sid = $_GET['sid'];
     <thead>
     <tr>
       <th width="3%">No</th>
-      <th width="20%" class="left">Nama Sekolah</th>
+      <th width="30%" class="left">Nama Sekolah</th>
       <th width="10%" class="left">ROmbel</th>
       <th width="10%" class="left">Jml Siswa</th>
       <th width="20%" class="left">Alamat</th>
@@ -57,15 +57,15 @@ $sid = $_GET['sid'];
                 ?>
               <tr valign="top" class="<?= ($no%2===0)?'even':'odd' ?>">
                 <td class="nowrap" align="center"><?=$no+$offset?></td>
-                <td><?= $row['NALOK'] ?></td>
-                <td><input type="text" name="rombel" class="form-control" /></td>
-                <td><input type="text" name="jml_siswa" class="form-control" /></td>
-                <td><input type="text" name="alamat" class="form-control" /></td>
-                <td><input type="text" name="email" class="form-control" /></td>
-                <td><input type="text" name="telp" class="form-control" /></td>
+                <td><?= $row['NALOK'] ?><input type="hidden" name="id_lok" id="id_lok<?= $no ?>" /></td>
+                <td><input type="text" name="rombel" id="rombel<?= $no ?>" class="form-control" /></td>
+                <td><input type="text" name="jml_siswa" id="jml_siswa<?= $no ?>" class="form-control" /></td>
+                <td><input type="text" name="alamat" id="alamat<?= $no ?>" class="form-control" /></td>
+                <td><input type="email" name="email" id="email<?= $no ?>" class="form-control" /></td>
+                <td><input type="text" name="telp" id="telp<?= $no ?>" class="form-control" /></td>
                 <td class="nowrap" align="right">
-                    <button class="btn btn-default btn-xs"><i class="fa fa-pencil"></i> Edit</button>
-                    <button class="btn btn-default btn-xs"><i class="fa fa-save"></i> Save</button>
+                    <!--<button class="btn btn-default btn-xs"><i class="fa fa-pencil"></i> Edit</button>-->
+                    <button class="btn btn-primary" onclick="save_profile(<?= $no ?>);"><i class="fa fa-save"></i> Simpan</button>
                     
                 </td>
               </tr>

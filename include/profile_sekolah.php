@@ -140,6 +140,10 @@ if ($j > 0 ) {
             });
         }
         
+        function save_profile(i) {
+            alert('In progress 70%, stay calm dude :)');
+        }
+        
         function load_detail(url, id) {
             $('#detail-pegawai').empty();
             $('#datamodal_search_detail').modal('show');

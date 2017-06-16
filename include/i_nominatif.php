@@ -60,10 +60,18 @@ if ($unitkerja !='') {
                 else { $query.="and A_01='".substr($unitkerja,0,2)."' and A_02='".substr($unitkerja,2,2)."' and A_03='".substr($unitkerja,4,2)."' "; }
         } else { $query.="and A_01<>'99' "; }
 
-	if ($subuk!='' && $subuk!='all') {
+	if ($subuk!=='' && $subuk!=='all') {
                 if ($hasupt === 'true') { $query.="and A_02='$subuk' "; }
-                else { $query.="and concat(A_01,A_02,A_03,A_04,A_05) like '".rtrim($subuk,'0')."%' "; }
-	}
+                else if ($subuk === 'induk') {
+                    if ($uk === '04') {
+                        $query.="and A_03 in ('00','01','02','03','04','05')";
+                    }
+                    if ($uk === '07') {
+                        $query.="and A_03 in ('00','01','02','03','04')";
+                    }
+                }
+                else { $query.="and concat(A_01,A_02,A_03,A_04,A_05) like '".$subuk."%' "; }
+        }
 	
         //if ($radio1=='') { $radio1=1; }
         //switch($radio1) {
