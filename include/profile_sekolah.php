@@ -141,7 +141,35 @@ if ($j > 0 ) {
         }
         
         function save_profile(i) {
-            alert('In progress 70%, stay calm dude :)');
+            var id_lok  = $('#id_lok'+i).val();
+            var rombel  = $('#rombel'+i).val();
+            var jml_siswa = $('#jml_siswa'+i).val();
+            var alamat  = $('#alamat'+i).val();
+            var email   = $('#email'+i).val();
+            var telp    = $('#telp'+i).val();
+            $.ajax({
+                type: 'POST',
+                url: 'biodata/save-data.php?save=profil_sekolah',
+                data: 'id_lok='+id_lok+'&rombel='+rombel+'&jml_siswa='+jml_siswa+'&alamat='+alamat+'&email='+email+'&telp='+telp,
+                dataType: 'json',
+                beforeSend: function() {
+                    show_ajax_indicator();
+                },
+                success: function(data) {
+                    hide_ajax_indicator();
+                    if (data.act === 'add') {
+                        message_add_success();
+                    } else {
+                        message_edit_success();
+                    }
+                    var page = $('.noblock').html();
+                    search_data_pns(page);
+                },
+                error: function() {
+                    hide_ajax_indicator();
+                    message_edit_failed();
+                }
+            });
         }
         
         function load_detail(url, id) {

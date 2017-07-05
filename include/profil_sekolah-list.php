@@ -37,11 +37,15 @@ $sid = $_GET['sid'];
             $offset = ($page-1)*$limit;
         }
         $no=0;
-        $q="select *, substring(KOLOK,1,8) as KODELOK from TABLOKB08 where substring(KOLOK,1,2)='04' order by KOLOK ";
+        $q="select tl.*, substring(tl.KOLOK,1,8) as KODELOK, ps.rombel, ps.jml_siswa, ps.alamat, ps.email, ps.telp
+            from TABLOKB08 tl 
+            left join tb_profil_sekolah ps on (tl.KOLOK = ps.kolok) 
+            where substring(tl.KOLOK,1,2)='04' order by tl.KOLOK ";
         //echo $q;
         $r=mysql_query($q.'  limit '.$offset.', '.$limit) or die (mysql_error());
         $total_data = mysql_num_rows(mysql_query($q));
         while($row=mysql_fetch_array($r)) {
+            
             $detail = "<table>
                 <tr><td class=nowrap>".ucwords(strtolower(subLokasiKerjaB($row[A_01],$row[A_02],$row[A_03],$row[A_04],$row[A_05])))."</td></tr>
                 <tr><td class=nowrap>".ucwords(strtolower(lokasiKerjaB($row[A_01])))."</td></tr>
@@ -57,12 +61,12 @@ $sid = $_GET['sid'];
                 ?>
               <tr valign="top" class="<?= ($no%2===0)?'even':'odd' ?>">
                 <td class="nowrap" align="center"><?=$no+$offset?></td>
-                <td><?= $row['NALOK'] ?><input type="hidden" name="id_lok" id="id_lok<?= $no ?>" /></td>
-                <td><input type="text" name="rombel" id="rombel<?= $no ?>" class="form-control" /></td>
-                <td><input type="text" name="jml_siswa" id="jml_siswa<?= $no ?>" class="form-control" /></td>
-                <td><input type="text" name="alamat" id="alamat<?= $no ?>" class="form-control" /></td>
-                <td><input type="email" name="email" id="email<?= $no ?>" class="form-control" /></td>
-                <td><input type="text" name="telp" id="telp<?= $no ?>" class="form-control" /></td>
+                <td><?= $row['NALOK'] ?><input type="hidden" name="id_lok" id="id_lok<?= $no ?>" value="<?= $row['KOLOK'] ?>" /></td>
+                <td><input type="text" name="rombel" id="rombel<?= $no ?>" value="<?= $row['rombel'] ?>" class="form-control" /></td>
+                <td><input type="text" name="jml_siswa" id="jml_siswa<?= $no ?>" value="<?= $row['jml_siswa'] ?>" class="form-control" /></td>
+                <td><input type="text" name="alamat" id="alamat<?= $no ?>" value="<?= $row['alamat'] ?>" class="form-control" /></td>
+                <td><input type="email" name="email" id="email<?= $no ?>" value="<?= $row['email'] ?>" class="form-control" /></td>
+                <td><input type="text" name="telp" id="telp<?= $no ?>" value="<?= $row['telp'] ?>" class="form-control" /></td>
                 <td class="nowrap" align="right">
                     <!--<button class="btn btn-default btn-xs"><i class="fa fa-pencil"></i> Edit</button>-->
                     <button class="btn btn-primary" onclick="save_profile(<?= $no ?>);"><i class="fa fa-save"></i> Simpan</button>

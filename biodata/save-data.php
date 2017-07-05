@@ -1362,4 +1362,43 @@ else if ($opsi === 'ubahnip') {
     }
     die(json_encode($result));
 }
+
+else if ($opsi === 'profil_sekolah') {
+    
+    $kolok  = $_POST['id_lok'];
+    $rombel = $_POST['rombel'];
+    $jml_siswa = $_POST['jml_siswa'];
+    $alamat = $_POST['alamat'];
+    $email  = $_POST['email'];
+    $telp   = $_POST['telp'];
+    
+    $check = mysql_fetch_array(mysql_query("select id from tb_profil_sekolah where kolok = '".$kolok."'"));
+    if (isset($check['id'])) {
+        $query = "update tb_profil_sekolah set 
+            kolok = '".$kolok."',
+            rombel = '".$rombel."',
+            jml_siswa = '".$jml_siswa."',
+            alamat = '".$alamat."',
+            email = '".$email."',
+            telp = '".$telp."'
+            where kolok = '".$kolok."'
+            ";
+        mysql_query($query) or die(mysql_error());
+        lethistory($sid,"TAMBAH PROFILE SEKOLAH ".$kolok." ",$NIP);
+        $result['act'] = 'add';
+    } else {
+        $query = "insert into tb_profil_sekolah set 
+            kolok = '".$kolok."',
+            rombel = '".$rombel."',
+            jml_siswa = '".$jml_siswa."',
+            alamat = '".$alamat."',
+            email = '".$email."',
+            telp = '".$telp."'
+            ";
+        mysql_query($query) or die(mysql_error());
+        lethistory($sid,"UPDATE PROFILE SEKOLAH ".$kolok." ",$NIP);
+        $result['act'] = 'edit';
+    }
+    die(json_encode($result));
+}
 ?>
