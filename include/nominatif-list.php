@@ -151,6 +151,7 @@ $total_data=mysql_num_rows(mysql_query($query));
         <th width="7%">UNIT&nbsp;KERJA</th>
         <th width="5%">Esl</th>
         <th width="5%">GOL/RNG</th>
+        <th></th>
     </tr>
     </thead>
 <?php
@@ -180,6 +181,7 @@ $detail = "<table>
         <td class="nowrap"><button type="button" class="btn btn-default btn-xs mypopover" data-container="body" data-toggle="popover" data-placement="top" data-title="Detail Unit Kerja" data-content="<?= $detail ?>">Show</button></td>
         <td class="nowrap" align="center"><?= $row[I_06]=='99' ? "-" : eselon($row[I_06])?></td>
         <td class="nowrap" align="center"><?=pktH($row[F_03])?></td>
+        <td><button onclick="load_detail('include/main-tabs.php?sid=<?=$sid?>&do=cari&nip=<?=$row['B_02']?>&nama=<?=$row['B_03']?>&cari=NIP','<?= $row['B_02'] ?>');" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></button></td>
     </tr>
 <? } ?>
 </table>

@@ -49,12 +49,14 @@ span.break {page-break-after: always}
 <script type="text/javascript">
     function cetak() {
         setTimeout(function(){ window.close();},300);
-        window.print();    
+        window.print();  
+        var x = document.getElementById("buttons");
+        x.parentNode.removeChild(x);
     }
 </script>
 </head>
 
-<body leftmargin="0" topmargin="0" onload="cetak();">
+<body leftmargin="0" topmargin="0" onload="">
 <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" width="700" id="AutoNumber1">
   <tr>
       <td>
@@ -548,6 +550,9 @@ span.break {page-break-after: always}
   </table>
   <p STYLE="page-break-after: always"><font face="Arial" size="1">halaman 1</font></p>
   <? include ("CetakBaru_next.inc"); ?>
+  <br/>
+<center><button style="padding: 3px 10px;" id="buttons" onclick="cetak()">Cetak</button></center>
+<br/><br/>
 </body>
 </html>
 <?

@@ -102,6 +102,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
             }); 
         });
         
+        
         /*$('#uk').blur(function() {
             $.ajax({
                 url: 'include/autocomplete.php?search=suk_upt',
@@ -192,6 +193,16 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
 //        });
     });
     
+    function cetak(id) {
+        var wWidth = $(window).width();
+        var dWidth = wWidth * 0.5;
+        var wHeight= $(window).height();
+        var dHeight= wHeight * 1;
+        var x = screen.width/2 - dWidth/2;
+        var y = screen.height/2 - dHeight/2;
+        window.open('CETAKFIP/index.php?nip='+id+'&sid=<?= $sid ?>','Cetak Profile','width='+dWidth+', height='+dHeight+', left='+x+',top='+y);
+    }
+    
     function export_excel() {
         window.location='include/i_nominatif.php?'+$('#nominatif1').serialize()+'&'+$('#dinamic_kolom').serialize();
     }
@@ -208,6 +219,24 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
     function reload_data() {
         reset_form();
         get_list_nominatif(1);
+    }
+    
+    function load_detail(url, id) {
+        $('#detail-pegawai').empty();
+        $('#datamodal_search_detail').modal('show');
+        $('#cetak_profile').attr('onclick','cetak(\''+id+'\')');
+        $.ajax({
+            type: 'GET',
+            url: url,
+            beforeSend: function() {
+                show_ajax_indicator();
+            },
+            success: function(data) {
+                hide_ajax_indicator();
+                $('#detail-pegawai').html(data);
+            }
+        });
+        return false;
     }
     
     function get_list_nominatif(page) {
@@ -443,7 +472,7 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
                         <tr> 
                           <td width="175" align="left">Alamat Kecamatan:</td>
                           <td width="610" align="left">
-                            <select name="kecamatan" id="kecamatan" class="form-control" style="width: 300px;">
+                            <select name="kecamatan" class="form-control" style="width: 300px;">
                                 <option value="">Semua ...</option>
                                 <?php 
                                 $query = mysql_query("select lokasi_ID as id, lokasi_nama 
@@ -704,6 +733,35 @@ if (mysql_num_rows($rcu)>1) { $hasupt=true; }
         
     </div>
 </div> 
+
+<div id="datamodal_search_detail" class="modal fade">
+    <div class="modal-dialog" style="width: 1124px; height: 100%;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <div class="widget-header">
+                <div class="title">
+                    <h4>Detail Data Pegawai - <span id="nip_nama"></span></h4>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget-body">
+                        <div id="detail-pegawai"></div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-refresh"></i> Close</button>
+            <button type="button" class="btn btn-primary" id="cetak_profile"><i class="fa fa-print"></i> Print</button>
+        </div>
+    </div>
+    </div>
+</div>
 
 <div id="result" style="overflow-x: auto; width: 100%;">
     
